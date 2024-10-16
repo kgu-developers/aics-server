@@ -1,0 +1,12 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(':aics-core:aics-infra')
+    implementation project(':aics-global-utils')
+}

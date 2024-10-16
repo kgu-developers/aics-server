@@ -1,0 +1,7 @@
+rootProject.name = 'aics-server'
+include 'aics-apis:aics-api'
+include 'aics-core:aics-common'
+include 'aics-core:aics-domain'
+include 'aics-core:aics-infra'
+include 'aics-global-utils'
+
