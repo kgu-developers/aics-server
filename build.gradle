@@ -1,0 +1,62 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+bootJar {
+	enabled = false
+}
+
+repositories {
+	mavenCentral()
+}
+
+subprojects {
+	group = 'kgu.developers'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+		runtimeOnly 'org.postgresql:postgresql'
+		implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+		annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+		annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+		implementation 'io.jsonwebtoken:jjwt:0.9.1'
+		implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}
