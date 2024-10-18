@@ -1,76 +1,82 @@
 package kgu.developers.core.domain.user;
 
-import jakarta.persistence.*;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static kgu.developers.core.domain.user.Role.GUEST;
+import static kgu.developers.core.domain.user.Status.INSCHOOL;
+import static lombok.AccessLevel.PROTECTED;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
 @Entity
 @Getter
-@Table(name = "users")
-@NoArgsConstructor(access = PROTECTED)
+@Builder
+@Table(name = "\"user\"")
 @AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class User extends BaseTimeEntity {
-    @Id
-    @Column(name = "user_id")
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
 
-    @Column(unique = true, nullable = false, updatable = false, length = 10)
-    private String personalId;
+	@Id
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String password;
+	@Column(unique = true, nullable = false, updatable = false, length = 10)
+	private String personalId;
 
-    @Column(nullable = false, length = 20)
-    private String name;
+	@Column(nullable = false, length = 20)
+	private String password;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+	@Column(nullable = false, length = 20)
+	private String name;
 
-    @Column(nullable = false, length = 8)
-    private String birth;
+	@Column(nullable = false, length = 8)
+	private String birth;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Grade grade;
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private Gender gender;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private Grade grade;
 
-    @Column(name = "user_role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private Status status;
 
-    @Column(nullable = false)
-    private boolean hasAiAccess;
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private Role role;
 
-    /*
-    // 전공 테이블 연결
-    @Column(nullable = false)
-    @ManyToOne(fetch = LAZY)
-    private Major majorId;
-     */
+	@Column(nullable = false)
+	private boolean hasAiAccess;
 
-    private User(String personalId, String password, String name, Gender gender, String birth, Grade grade, Status status, Role role) {
-        this.personalId = personalId;
-        this.password = password;
-        this.name = name;
-        this.gender = gender;
-        this.birth = birth;
-        this.status = status;
-        this.grade = grade;
-        this.role = role;
-    }
+    // @ManyToOne(fetch = LAZY)
+	// @JoinColumn(name = "major_id")
+    // private Major major;
 
-    public static User of(String personalId, String password, String name, Gender gender, String birth, Grade grade, Status status, Role role){
-        return new User(personalId, password, name, gender, birth, grade, status, role);
-    }
+	public static User create(String personalId, String password, String name, String birth, Gender gender, Grade grade) {
+		return User.builder()
+			.personalId(personalId)
+			.password(password)
+			.name(name)
+			.birth(birth)
+			.gender(gender)
+			.grade(grade)
+			.status(INSCHOOL)
+			.role(GUEST)
+			.hasAiAccess(false)
+			.build();
+	}
 }
