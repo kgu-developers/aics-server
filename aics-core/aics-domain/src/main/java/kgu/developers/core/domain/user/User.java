@@ -55,10 +55,10 @@ public class User extends BaseTimeEntity {
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(nullable = false)
-	private Major majorId;
+	private Major major;
 
 	private User(String personalId, String password, String name, Gender gender, String birth, Grade grade,
-		Status status, Role role, Major majorId) {
+		Status status, Role role, Major major) {
 		this.personalId = personalId;
 		this.password = password;
 		this.name = name;
@@ -67,11 +67,11 @@ public class User extends BaseTimeEntity {
 		this.status = status;
 		this.grade = grade;
 		this.role = role;
-		this.majorId = majorId;
+		this.major = major;
 	}
 
 	public static User of(String personalId, String password, String name, Gender gender, String birth, Grade grade,
-		Status status, Role role, Major majorId) {
-		return new User(personalId, password, name, gender, birth, grade, status, role, majorId);
+		Status status, Role role, Major major) {
+		return new User(personalId, password, name, gender, birth, grade, status, role, major);
 	}
 }
