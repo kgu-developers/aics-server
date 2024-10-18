@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kgu.developers.core.common.domain.BaseTimeEntity;
+import kgu.developers.core.domain.major.Major;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -62,9 +63,9 @@ public class User extends BaseTimeEntity {
 	@Column(nullable = false)
 	private boolean hasAiAccess;
 
-    // @ManyToOne(fetch = LAZY)
-	// @JoinColumn(name = "major_id")
-    // private Major major;
+  @ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "major_id")
+  private Major major;
 
 	public static User create(String personalId, String password, String name, String birth, Gender gender, Grade grade) {
 		return User.builder()
