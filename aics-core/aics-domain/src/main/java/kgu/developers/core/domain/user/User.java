@@ -1,6 +1,7 @@
 package kgu.developers.core.domain.user;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.MapJoin;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,19 +51,23 @@ public class User extends BaseTimeEntity {
 
     /*
     // 전공 테이블 연결
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Major> majors = new ArrayList<>();
-    */
+    @Column(name = "major_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Major majorId;
+     */
 
-    @Builder
-    public User(String personalId, String password, String name, Gender gender, String birth, Status status, Role role) {
+    private User(String personalId, String password, String name, Gender gender, String birth, Grade grade, Status status, Role role) {
         this.personalId = personalId;
         this.password = password;
         this.name = name;
         this.gender = gender;
         this.birth = birth;
         this.status = status;
+        this.grade = grade;
         this.role = role;
     }
 
+    public static User of(String personalId, String password, String name, Gender gender, String birth, Grade grade, Status status, Role role){
+        return new User(personalId, password, name, gender, birth, grade, status, role);
+    }
 }
