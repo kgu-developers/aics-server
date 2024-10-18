@@ -12,6 +12,7 @@ public enum Role {
     POSTGRAD("대학원생"),
     STUDENT("학부생"),
     CONCURRENT("복전생"),
+    GUEST("게스트"),
     ETC("기타")
     ;
 
