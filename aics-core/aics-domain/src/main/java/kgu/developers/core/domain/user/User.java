@@ -1,22 +1,32 @@
 package kgu.developers.core.domain.user;
 
-import jakarta.persistence.*;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static kgu.developers.core.domain.user.Role.GUEST;
+import static kgu.developers.core.domain.user.Status.INSCHOOL;
+import static lombok.AccessLevel.PROTECTED;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.major.Major;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
 @Entity
 @Getter
-@Table(name = "users")
-@NoArgsConstructor(access = PROTECTED)
+@Builder
+@Table(name = "\"user\"")
 @AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 public class User extends BaseTimeEntity {
+
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = IDENTITY)
@@ -31,47 +41,43 @@ public class User extends BaseTimeEntity {
 	@Column(nullable = false, length = 20)
 	private String name;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
-
 	@Column(nullable = false, length = 8)
 	private String birth;
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
+	@Enumerated(STRING)
+	private Gender gender;
+
+	@Column(nullable = false)
+	@Enumerated(STRING)
 	private Grade grade;
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
+	@Enumerated(STRING)
 	private Status status;
 
-	@Column(name = "user_role", nullable = false)
-	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	@Enumerated(STRING)
 	private Role role;
 
 	@Column(nullable = false)
 	private boolean hasAiAccess;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(nullable = false)
-	private Major major;
+  @ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "major_id")
+  private Major major;
 
-	private User(String personalId, String password, String name, Gender gender, String birth, Grade grade,
-		Status status, Role role, Major major) {
-		this.personalId = personalId;
-		this.password = password;
-		this.name = name;
-		this.gender = gender;
-		this.birth = birth;
-		this.status = status;
-		this.grade = grade;
-		this.role = role;
-		this.major = major;
-	}
-
-	public static User of(String personalId, String password, String name, Gender gender, String birth, Grade grade,
-		Status status, Role role, Major major) {
-		return new User(personalId, password, name, gender, birth, grade, status, role, major);
+	public static User create(String personalId, String password, String name, String birth, Gender gender, Grade grade) {
+		return User.builder()
+			.personalId(personalId)
+			.password(password)
+			.name(name)
+			.birth(birth)
+			.gender(gender)
+			.grade(grade)
+			.status(INSCHOOL)
+			.role(GUEST)
+			.hasAiAccess(false)
+			.build();
 	}
 }
