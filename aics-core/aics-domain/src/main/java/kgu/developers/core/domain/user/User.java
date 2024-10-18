@@ -1,44 +1,47 @@
 package kgu.developers.core.domain.user;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.MapJoin;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
 @Table(name = "users")
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 public class User extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(name = "personal_id", unique = true, nullable = false, updatable = false, length = 10)
+    @Column(unique = true, nullable = false, updatable = false, length = 10)
     private String personalId;
 
-    @Column(name = "password", nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String password;
 
-    @Column(name = "name", nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(name = "gender", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name = "birth", nullable = false, length = 8)
+    @Column(nullable = false, length = 8)
     private String birth;
 
-    @Column(name = "grade", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    @Column(name = "status", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -46,13 +49,13 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "has_ai_access", nullable = false)
+    @Column(nullable = false)
     private boolean hasAiAccess;
 
     /*
     // 전공 테이블 연결
-    @Column(name = "major_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(nullable = false)
+    @ManyToOne(fetch = LAZY)
     private Major majorId;
      */
 
