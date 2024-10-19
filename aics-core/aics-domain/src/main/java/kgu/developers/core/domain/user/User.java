@@ -81,15 +81,15 @@ public class User extends BaseTimeEntity {
 
     public static User create(String personalId, String password, String name, String birth, Gender gender, Grade grade) {
         return User.builder()
-                .personalId(personalId)
-                .password(password)
-                .name(name)
-                .birth(birth)
-                .gender(gender)
-                .grade(grade)
-                .status(INSCHOOL)
-                .role(GUEST)
-                .hasAiAccess(false)
-                .build();
+            .personalId(personalId)
+            .password(password)
+            .name(name)
+            .birth(birth)
+            .gender(gender)
+            .grade(grade)
+            .status(INSCHOOL)
+            .role(GUEST)
+            .hasAiAccess(false)
+            .build();
     }
 }

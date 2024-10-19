@@ -1,10 +1,13 @@
 package kgu.developers.core.domain.post;
 
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+
+import java.util.List;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
@@ -13,7 +16,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.OneToMany;
 import kgu.developers.core.common.domain.BaseTimeEntity;
+import kgu.developers.core.domain.comment.Comment;
 import kgu.developers.core.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +53,8 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User author;
 
+    @OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     /*
     TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
@@ -58,11 +65,11 @@ public class Post extends BaseTimeEntity {
 
     public static Post create(String title, String content, Category category, User author) {
         return Post.builder()
-                .title(title)
-                .content(content)
-                .views(0)
-                .category(category)
-                .author(author)
-                .build();
+            .title(title)
+            .content(content)
+            .views(0)
+            .category(category)
+            .author(author)
+            .build();
     }
 }

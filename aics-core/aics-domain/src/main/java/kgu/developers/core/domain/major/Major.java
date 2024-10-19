@@ -23,11 +23,11 @@ public class Major extends BaseTimeEntity {
 	private Long id;
 
 	@Column(nullable = false, length = 10)
-	private String majorName;
+	private String name;
 
-	public static Major create(String majorName) {
+	public static Major create(String name) {
 		return Major.builder()
-			.majorName(majorName)
+			.name(name)
 			.build();
 	}
 }
