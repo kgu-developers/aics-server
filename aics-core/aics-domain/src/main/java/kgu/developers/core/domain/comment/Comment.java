@@ -41,7 +41,9 @@ public class Comment extends BaseTimeEntity {
 	private User author;
 
 	public static Comment create(String content, User author/*todo: 주석 해제 ,Post post*/) {
-		return Comment.builder().content(content).author(author)
+		return Comment.builder()
+			.content(content)
+			.author(author)
 			//todo: 주석해제 .post(post)
 			.build();
 	}
