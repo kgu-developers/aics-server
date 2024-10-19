@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import kgu.developers.core.common.domain.BaseTimeEntity;
-import kgu.developers.core.domain.user.User;
+import kgu.developers.core.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,9 +41,7 @@ public class Comment extends BaseTimeEntity {
 	private User author;
 
 	public static Comment create(String content, User author/*todo: 주석 해제 ,Post post*/) {
-		return Comment.builder()
-			.content(content)
-			.author(author)
+		return Comment.builder().content(content).author(author)
 			//todo: 주석해제 .post(post)
 			.build();
 	}
