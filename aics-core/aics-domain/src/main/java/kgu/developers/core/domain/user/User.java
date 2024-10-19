@@ -1,5 +1,6 @@
 package kgu.developers.core.domain.user;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -7,7 +8,15 @@ import static kgu.developers.core.domain.user.Role.GUEST;
 import static kgu.developers.core.domain.user.Status.INSCHOOL;
 import static lombok.AccessLevel.PROTECTED;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.major.Major;
 import kgu.developers.core.domain.post.Post;
@@ -67,7 +76,7 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "major_id")
     private Major major;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = LAZY)
+    @OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
     List<Post> posts = new ArrayList<>();
 
     public static User create(String personalId, String password, String name, String birth, Gender gender, Grade grade) {
