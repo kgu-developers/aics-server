@@ -7,6 +7,7 @@ import static lombok.AccessLevel.PROTECTED;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Id;
@@ -54,7 +55,7 @@ public class Post extends BaseTimeEntity {
     private User author;
 
     @OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     /*
     TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
