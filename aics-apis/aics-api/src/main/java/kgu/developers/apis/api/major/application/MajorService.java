@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MajorService {
@@ -23,7 +25,9 @@ public class MajorService {
     }
 
     private void validateIsDuplicatedMajor(String majorName) {
-        majorRepository.findByName(majorName)
-            .orElseThrow(MajorDuplicatedException::new);
+        Optional<Major> found = majorRepository.findByName(majorName);
+        if (found.isPresent()) {
+            throw new MajorDuplicatedException();
+        }
     }
 }
