@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import kgu.developers.apis.api.user.presentation.exception.UserPersonalIdDuplicateException;
 import kgu.developers.apis.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.core.domain.major.Major;
+import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.user.domain.User;
 import kgu.developers.core.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
