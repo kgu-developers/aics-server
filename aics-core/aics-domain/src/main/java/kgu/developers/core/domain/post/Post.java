@@ -20,7 +20,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.OneToMany;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.comment.Comment;
-import kgu.developers.core.domain.user.User;
+import kgu.developers.core.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
