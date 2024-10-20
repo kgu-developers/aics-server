@@ -34,7 +34,7 @@ public class SecurityConfig {
 				.requestMatchers(SWAGGER_PATTERNS).permitAll()
 				.requestMatchers(STATIC_RESOURCES_PATTERNS).permitAll()
 				.requestMatchers(PERMIT_ALL_PATTERNS).permitAll()
-				.requestMatchers(USER_PERMIT_ALL_PATTERNS).permitAll()
+				.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
 				.anyRequest().authenticated()
 			)
 			.build();
@@ -59,7 +59,7 @@ public class SecurityConfig {
 		"/",
 	};
 
-	private static final String[] USER_PERMIT_ALL_PATTERNS = {
+	private static final String[] PUBLIC_ENDPOINTS = {
 		"/api/v1/users/signup",
 	};
 
