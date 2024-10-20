@@ -15,6 +15,6 @@ public record MajorPersistResponse(
     String majorName
 ) {
     public static MajorPersistResponse from(Major major) {
-        return new MajorPersistResponse(major.getId(), major.getMajorName());
+        return new MajorPersistResponse(major.getId(), major.getName());
     }
 }

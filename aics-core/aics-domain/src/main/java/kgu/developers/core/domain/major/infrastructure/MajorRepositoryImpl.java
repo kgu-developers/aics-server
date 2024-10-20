@@ -18,7 +18,7 @@ public class MajorRepositoryImpl implements MajorRepository {
     }
 
     @Override
-    public Optional<Major> findByMajorName(String majorName) {
-        return jpaMajorRepository.findByMajorName(majorName);
+    public Optional<Major> findByName(String majorName) {
+        return jpaMajorRepository.findByName(majorName);
     }
 }

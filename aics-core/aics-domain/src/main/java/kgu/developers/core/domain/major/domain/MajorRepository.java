@@ -5,5 +5,5 @@ import java.util.Optional;
 public interface MajorRepository {
     Major save(Major major);
 
-    Optional<Major> findByMajorName(String s);
+    Optional<Major> findByName(String s);
 }

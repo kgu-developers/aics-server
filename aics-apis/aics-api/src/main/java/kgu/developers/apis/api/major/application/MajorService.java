@@ -16,14 +16,14 @@ public class MajorService {
 
     @Transactional
     public MajorPersistResponse createMajor(MajorCreateRequest request) {
-        String inutToString = request.MajorName().toUpperCase();
+        String inutToString = request.name().toUpperCase();
         validateIsDuplicatedMajor(inutToString);
         Major saved = majorRepository.save(Major.create(inutToString));
         return MajorPersistResponse.from(saved);
     }
 
     private void validateIsDuplicatedMajor(String majorName) {
-        majorRepository.findByMajorName(majorName)
+        majorRepository.findByName(majorName)
             .orElseThrow(MajorDuplicatedException::new);
     }
 }
