@@ -74,6 +74,7 @@ public class User extends BaseTimeEntity {
 	@JoinColumn(name = "major_id")
 	private Major major;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
