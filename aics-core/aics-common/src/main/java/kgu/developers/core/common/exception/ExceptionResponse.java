@@ -16,7 +16,6 @@ public record ExceptionResponse(@JsonIgnore HttpStatus status, String code, Stri
 		return ExceptionResponse.builder()
 			.status(exception.getCode().getStatus())
 			.code(exception.getCode().getCode())
-			.message(exception.getCode().getMessage())
 			.build();
 	}
 
@@ -24,7 +23,6 @@ public record ExceptionResponse(@JsonIgnore HttpStatus status, String code, Stri
 		return ExceptionResponse.builder()
 			.status(code.getStatus())
 			.code(code.getCode())
-			.message(code.getMessage())
 			.build();
 	}
 
