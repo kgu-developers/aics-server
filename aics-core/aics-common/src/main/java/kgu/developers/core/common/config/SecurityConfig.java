@@ -34,6 +34,7 @@ public class SecurityConfig {
 				.requestMatchers(SWAGGER_PATTERNS).permitAll()
 				.requestMatchers(STATIC_RESOURCES_PATTERNS).permitAll()
 				.requestMatchers(PERMIT_ALL_PATTERNS).permitAll()
+				.requestMatchers(USER_PERMIT_ALL_PATTERNS).permitAll()
 				.anyRequest().authenticated()
 			)
 			.build();
@@ -57,6 +58,11 @@ public class SecurityConfig {
 		"/index.html",
 		"/",
 	};
+
+	private static final String[] USER_PERMIT_ALL_PATTERNS = {
+		"/api/v1/users/signup",
+	};
+
 
 	CorsConfigurationSource corsConfigurationSource() {
 		return request -> {
