@@ -1,16 +1,12 @@
 package kgu.developers.core.domain.user.domain;
 
-import static jakarta.persistence.CascadeType.*;
-import static jakarta.persistence.EnumType.*;
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
-import static kgu.developers.core.domain.user.domain.Role.*;
-import static kgu.developers.core.domain.user.domain.Status.*;
-import static lombok.AccessLevel.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static kgu.developers.core.domain.user.domain.Role.GUEST;
+import static kgu.developers.core.domain.user.domain.Status.INSCHOOL;
+import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -20,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.major.Major;
 import kgu.developers.core.domain.post.Post;
@@ -44,7 +42,7 @@ public class User extends BaseTimeEntity {
 	@Column(unique = true, nullable = false, updatable = false, length = 10)
 	private String personalId;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false)
 	private String password;
 
 	@Column(nullable = false, length = 20)
@@ -80,7 +78,7 @@ public class User extends BaseTimeEntity {
 	List<Post> posts = new ArrayList<>();
 
 	public static User create(String personalId, String password, String name, String birth, Gender gender,
-		Grade grade) {
+							  Grade grade, Major major) {
 		return User.builder()
 			.personalId(personalId)
 			.password(password)
@@ -91,6 +89,7 @@ public class User extends BaseTimeEntity {
 			.status(INSCHOOL)
 			.role(GUEST)
 			.hasAiAccess(false)
+			//TODO: 메이저 관련 로직 추가 뒤 주석 제거 .major(major)
 			.build();
 	}
 }
