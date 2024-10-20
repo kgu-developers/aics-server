@@ -1,8 +1,7 @@
 package kgu.developers.core.domain.comment;
 
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
-
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,7 +40,9 @@ public class Comment extends BaseTimeEntity {
 	private User author;
 
 	public static Comment create(String content, User author/*todo: 주석 해제 ,Post post*/) {
-		return Comment.builder().content(content).author(author)
+		return Comment.builder()
+			.content(content)
+			.author(author)
 			//todo: 주석해제 .post(post)
 			.build();
 	}
