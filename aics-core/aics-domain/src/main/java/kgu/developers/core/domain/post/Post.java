@@ -1,10 +1,9 @@
 package kgu.developers.core.domain.post;
 
-import static jakarta.persistence.EnumType.*;
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
-import static lombok.AccessLevel.*;
-
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -56,6 +55,12 @@ public class Post extends BaseTimeEntity {
     */
 
 	public static Post create(String title, String content, Category category, User author) {
-		return Post.builder().title(title).content(content).views(0).category(category).author(author).build();
+		return Post.builder()
+			.title(title)
+			.content(content)
+			.views(0)
+			.category(category)
+			.author(author)
+			.build();
 	}
 }
