@@ -18,7 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import kgu.developers.core.common.domain.BaseTimeEntity;
-import kgu.developers.core.domain.major.Major;
+import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

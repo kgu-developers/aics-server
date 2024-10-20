@@ -1,4 +1,4 @@
-package kgu.developers.core.domain.major;
+package kgu.developers.core.domain.major.domain;
 
 import jakarta.persistence.*;
 import kgu.developers.core.common.domain.BaseTimeEntity;
