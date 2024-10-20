@@ -5,8 +5,6 @@ import kgu.developers.core.domain.major.domain.MajorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 @RequiredArgsConstructor
 public class MajorRepositoryImpl implements MajorRepository {
@@ -18,7 +16,7 @@ public class MajorRepositoryImpl implements MajorRepository {
     }
 
     @Override
-    public Optional<Major> findByName(String majorName) {
-        return jpaMajorRepository.findByName(majorName);
+    public boolean existByName(String majorName) {
+        return jpaMajorRepository.existsByName(majorName);
     }
 }
