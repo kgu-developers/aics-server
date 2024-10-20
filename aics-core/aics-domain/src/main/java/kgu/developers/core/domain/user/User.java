@@ -76,20 +76,21 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "major_id")
     private Major major;
 
-    @OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
+    @Builder.Default
+    @OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY, orphanRemoval = true)
     List<Post> posts = new ArrayList<>();
 
     public static User create(String personalId, String password, String name, String birth, Gender gender, Grade grade) {
         return User.builder()
-                .personalId(personalId)
-                .password(password)
-                .name(name)
-                .birth(birth)
-                .gender(gender)
-                .grade(grade)
-                .status(INSCHOOL)
-                .role(GUEST)
-                .hasAiAccess(false)
-                .build();
+            .personalId(personalId)
+            .password(password)
+            .name(name)
+            .birth(birth)
+            .gender(gender)
+            .grade(grade)
+            .status(INSCHOOL)
+            .role(GUEST)
+            .hasAiAccess(false)
+            .build();
     }
 }
