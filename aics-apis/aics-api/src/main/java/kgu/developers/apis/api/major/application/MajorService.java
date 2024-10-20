@@ -19,7 +19,7 @@ public class MajorService {
         String inutToString = request.name().toUpperCase();
         validateIsDuplicatedMajor(inutToString);
         Major saved = majorRepository.save(Major.create(inutToString));
-        return MajorPersistResponse.of(saved.getId(), saved.getName());
+        return MajorPersistResponse.of(saved.getId());
     }
 
     private void validateIsDuplicatedMajor(String majorName) {
