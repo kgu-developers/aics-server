@@ -33,7 +33,7 @@ public class UserController {
 		),
 		@ApiResponse(
 			responseCode = "409",
-			description = "중복된 닉네임 입니다.",
+			description = "이미 동일한 학번으로 가입이 되어있습니다.",
 			content = @Content(schema = @Schema(implementation = ExceptionResponse.class))
 		)
 	})
