@@ -4,17 +4,14 @@ import jakarta.transaction.Transactional;
 import kgu.developers.apis.api.user.presentation.exception.UserPersonalIdDuplicateException;
 import kgu.developers.apis.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.core.common.config.SecurityConfig;
 import kgu.developers.core.domain.major.Major;
 import kgu.developers.core.domain.user.domain.User;
 import kgu.developers.core.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@Import(SecurityConfig.class)
 @RequiredArgsConstructor
 public class UserService {
 	private final UserRepository userRepository;
