@@ -8,12 +8,13 @@ import kgu.developers.apis.api.major.application.MajorService;
 import kgu.developers.apis.api.major.presentation.request.MajorCreateRequest;
 import kgu.developers.apis.api.major.presentation.response.MajorPersistResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class MajorController {
     @PostMapping
     public ResponseEntity<MajorPersistResponse> createMajor(@RequestBody MajorCreateRequest request) {
         MajorPersistResponse response = majorService.createMajor(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(CREATED).body(response);
     }
 
 }
