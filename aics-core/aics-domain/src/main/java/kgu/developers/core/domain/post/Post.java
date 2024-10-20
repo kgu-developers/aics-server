@@ -54,6 +54,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User author;
 
+    @Builder.Default
     @OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
