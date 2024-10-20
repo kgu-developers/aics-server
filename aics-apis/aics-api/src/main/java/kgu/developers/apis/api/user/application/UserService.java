@@ -1,5 +1,6 @@
 package kgu.developers.apis.api.user.application;
 
+import jakarta.transaction.Transactional;
 import kgu.developers.apis.api.user.presentation.exception.UserPersonalIdDuplicateException;
 import kgu.developers.apis.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
@@ -19,6 +20,7 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Transactional
 	public UserPersistResponse createUser(UserCreateRequest request) {
 		validateDuplicatePersonalId(request.personalId());
 		User createUser = User.create(
