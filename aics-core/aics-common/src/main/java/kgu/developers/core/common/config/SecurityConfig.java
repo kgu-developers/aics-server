@@ -3,10 +3,6 @@ package kgu.developers.core.common.config;
 import java.util.Arrays;
 import java.util.Collections;
 
-import kgu.developers.core.common.auth.application.UserDetailService;
-import kgu.developers.core.common.auth.filter.TokenAuthenticationFilter;
-import kgu.developers.core.common.auth.jwt.TokenProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import kgu.developers.core.common.auth.filter.TokenAuthenticationFilter;
+import kgu.developers.core.common.auth.jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -76,7 +76,6 @@ public class SecurityConfig {
 		"/api/v1/auth/**",
 	};
 
-
 	CorsConfigurationSource corsConfigurationSource() {
 		return request -> {
 			CorsConfiguration config = new CorsConfiguration();
@@ -96,11 +95,9 @@ public class SecurityConfig {
 
 	@Bean
 	public AuthenticationManager authenticationManager(
-		BCryptPasswordEncoder bCryptPasswordEncoder,
-		UserDetailService userDetailService
-	){
+		BCryptPasswordEncoder bCryptPasswordEncoder
+	) {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailService);
 		authProvider.setPasswordEncoder(bCryptPasswordEncoder);
 		return new ProviderManager(authProvider);
 	}
