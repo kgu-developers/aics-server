@@ -7,6 +7,7 @@ import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
 import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.user.domain.User;
 import kgu.developers.core.domain.user.domain.UserRepository;
+import kgu.developers.core.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class UserService {
 		if (userRepository.existsByPersonalId(personalId)) {
 			throw new UserPersonalIdDuplicateException();
 		}
+	}
+
+	public User getUserByPersonalId(String personalId) {
+		return userRepository.findByPersonalId(personalId)
+				.orElseThrow(UserNotFoundException::new);
 	}
 }

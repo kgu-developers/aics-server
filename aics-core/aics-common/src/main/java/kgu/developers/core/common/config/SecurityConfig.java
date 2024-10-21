@@ -2,22 +2,33 @@ package kgu.developers.core.common.config;
 
 import java.util.Arrays;
 import java.util.Collections;
+
+import kgu.developers.core.common.auth.application.UserDetailService;
+import kgu.developers.core.common.auth.filter.TokenAuthenticationFilter;
+import kgu.developers.core.common.auth.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
+	private final TokenProvider tokenProvider;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -30,6 +41,7 @@ public class SecurityConfig {
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			)
+			.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers(SWAGGER_PATTERNS).permitAll()
 				.requestMatchers(STATIC_RESOURCES_PATTERNS).permitAll()
@@ -61,6 +73,7 @@ public class SecurityConfig {
 
 	private static final String[] PUBLIC_ENDPOINTS = {
 		"/api/v1/users/signup",
+		"/api/v1/auth/**",
 	};
 
 
@@ -75,6 +88,21 @@ public class SecurityConfig {
 			config.setAllowCredentials(true);
 			return config;
 		};
+	}
+
+	public TokenAuthenticationFilter tokenAuthenticationFilter() {
+		return new TokenAuthenticationFilter(tokenProvider);
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(
+		BCryptPasswordEncoder bCryptPasswordEncoder,
+		UserDetailService userDetailService
+	){
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailService);
+		authProvider.setPasswordEncoder(bCryptPasswordEncoder);
+		return new ProviderManager(authProvider);
 	}
 
 	@Bean

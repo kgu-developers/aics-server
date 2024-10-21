@@ -17,7 +17,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.post.Post;
@@ -32,7 +39,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "\"user\"")
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class User extends BaseTimeEntity {
+public class User extends BaseTimeEntity implements UserDetails {
 
 	@Id
 	@Column(name = "user_id")
@@ -92,5 +99,20 @@ public class User extends BaseTimeEntity {
 			.hasAiAccess(false)
 			//TODO: 메이저 관련 로직 추가 뒤 주석 제거 .major(major)
 			.build();
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+	@Override
+	public String getUsername() {
+		return personalId;
+	}
+
+	@Override
+	public String getPassword(){
+		return password;
 	}
 }
