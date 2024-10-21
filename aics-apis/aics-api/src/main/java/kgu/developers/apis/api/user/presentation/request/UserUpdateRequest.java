@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 
 public record UserUpdateRequest(
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
-	@Pattern(regexp = "^\\d+-\\d+-\\d", message = "유효한 전화번호 형식이 아닙니다.")
+	@Pattern(regexp = "^\\d{2,4}-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다.")
 	String phoneNumber,
 
 	@Schema(description = "생년월일", example = "19991022", requiredMode = REQUIRED)
