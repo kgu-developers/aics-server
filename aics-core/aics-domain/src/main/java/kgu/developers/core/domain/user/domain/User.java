@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import kgu.developers.core.common.domain.BaseTimeEntity;
-import kgu.developers.core.domain.major.Major;
+import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
