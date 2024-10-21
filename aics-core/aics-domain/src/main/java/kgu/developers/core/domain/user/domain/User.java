@@ -20,11 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.post.Post;
@@ -32,6 +27,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -101,6 +99,13 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.build();
 	}
 
+	public void update(String email, String phoneNumber, String birth) {
+		/* TODO: 충돌 해결하면서 주석 해제
+		this.email = email;
+		this.phoneNumber = phoneNumber;*/
+		this.birth = birth;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
@@ -112,7 +117,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 	}
 
 	@Override
-	public String getPassword(){
+	public String getPassword() {
 		return password;
 	}
 }
