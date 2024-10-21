@@ -37,6 +37,14 @@ public record UserCreateRequest(
 
 	@Schema(description = "전공 이름", example = "컴퓨터공학부", requiredMode = REQUIRED)
 	@NotNull
-	String majorName
+	String majorName,
+
+	@Schema(description = "이메일", example = "example111@gmail.com", requiredMode = REQUIRED)
+	@NotNull
+	String email,
+
+	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
+	@NotNull
+	String phone
 ) {
 }

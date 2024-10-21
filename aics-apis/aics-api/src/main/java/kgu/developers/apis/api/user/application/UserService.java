@@ -28,8 +28,10 @@ public class UserService {
 			request.gender(),
 			request.grade(),
 			//TODO: 메이저 이름으로 db에서 가져오는 메소드 구현 후 저장
-			Major.create("컴퓨터공학부")
+			Major.create("컴퓨터공학부"),
 			//request.majorName()
+			request.email(),
+			request.phone()
 		);
 
 		Long id = userRepository.save(createUser).getId();
