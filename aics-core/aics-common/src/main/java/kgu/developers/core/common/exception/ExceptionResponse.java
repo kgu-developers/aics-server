@@ -6,7 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Builder;
 
-public record ExceptionResponse(@JsonIgnore HttpStatus status, String code, String message) {
+public record ExceptionResponse(
+	@JsonIgnore HttpStatus status,
+	String code,
+	@JsonIgnore String message
+) {
 
 	@Builder
 	public ExceptionResponse {

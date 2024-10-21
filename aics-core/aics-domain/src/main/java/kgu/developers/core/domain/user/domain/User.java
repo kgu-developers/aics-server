@@ -17,7 +17,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 
 import jakarta.validation.constraints.Email;
 import kgu.developers.core.common.domain.BaseTimeEntity;
@@ -34,7 +41,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "\"user\"")
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class User extends BaseTimeEntity {
+public class User extends BaseTimeEntity implements UserDetails {
 
 	@Id
 	@Column(name = "user_id")
@@ -103,5 +110,20 @@ public class User extends BaseTimeEntity {
 			.email(email)
 			.phone(phone)
 			.build();
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+	@Override
+	public String getUsername() {
+		return personalId;
+	}
+
+	@Override
+	public String getPassword(){
+		return password;
 	}
 }
