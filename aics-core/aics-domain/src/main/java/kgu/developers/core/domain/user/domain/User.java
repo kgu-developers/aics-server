@@ -50,8 +50,14 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@Column(nullable = false)
 	private String password;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 10)
 	private String name;
+
+	@Column(unique = true, nullable = false, length = 50)
+	private String email;
+
+	@Column(unique = true, nullable = false, length = 15)
+	private String phoneNumber;
 
 	@Column(nullable = false, length = 8)
 	private String birth;
@@ -83,12 +89,16 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-	public static User create(String personalId, String password, String name, String birth, Gender gender,
+
+	public static User create(String personalId, String password, String name, String email, String phoneNumber,
+							  String birth, Gender gender,
 							  Grade grade, Major major) {
 		return User.builder()
 			.personalId(personalId)
 			.password(password)
 			.name(name)
+			.email(email)
+			.phoneNumber(phoneNumber)
 			.birth(birth)
 			.gender(gender)
 			.grade(grade)
@@ -100,9 +110,9 @@ public class User extends BaseTimeEntity implements UserDetails {
 	}
 
 	public void update(String email, String phoneNumber, String birth) {
-		/* TODO: 충돌 해결하면서 주석 해제
+		// TODO: 충돌 해결하면서 주석 해제
 		this.email = email;
-		this.phoneNumber = phoneNumber;*/
+		this.phoneNumber = phoneNumber;
 		this.birth = birth;
 	}
 

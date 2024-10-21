@@ -1,7 +1,6 @@
 package kgu.developers.core.domain.user.infrastructure;
 
 import java.util.Optional;
-
 import kgu.developers.core.domain.user.domain.User;
 import kgu.developers.core.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +19,16 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public boolean existsByPersonalId(String personalId) {
 		return jpaUserRepository.existsByPersonalId(personalId);
+	}
+
+	@Override
+	public boolean existsByEmail(String email) {
+		return jpaUserRepository.existsByEmail(email);
+	}
+
+	@Override
+	public boolean existsByPhoneNumber(String phoneNumber) {
+		return jpaUserRepository.existsByPhoneNumber(phoneNumber);
 	}
 
 	@Override
