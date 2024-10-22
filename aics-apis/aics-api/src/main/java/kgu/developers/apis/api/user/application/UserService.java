@@ -31,7 +31,6 @@ public class UserService {
 		validateDuplicateEmail(request.email());
 		validateDuplicatePhoneNumber(request.phoneNumber());
 
-
 		User createUser = User.create(
 			request.personalId(),
 			bCryptPasswordEncoder.encode(request.password()),
@@ -84,17 +83,7 @@ public class UserService {
 	@Transactional
 	public UserDetailResponse getUserDetail() {
 		User user = me();
-		return UserDetailResponse.of(
-			user.getName(),
-			user.getPhoneNumber(),
-			user.getBirth(),
-			user.getEmail(),
-			user.getRole(),
-			user.getMajor(),
-			user.getPersonalId(),
-			user.getGrade(),
-			user.getStatus()
-		);
+		return UserDetailResponse.from(user);
 	}
 
 	public User me() {

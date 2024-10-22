@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,10 +47,10 @@ public class UserController {
 		description = "마이페이지 로드 완료",
 		content = @Content(schema = @Schema(implementation = UserDetailResponse.class))
 	)
-	@GetMapping
+	@GetMapping("/my")
 	public ResponseEntity<UserDetailResponse> myPage() {
 		UserDetailResponse response = userService.getUserDetail();
-		return ResponseEntity.status(OK).body(response);
+		return ResponseEntity.ok(response);
 	}
 
 	@PatchMapping

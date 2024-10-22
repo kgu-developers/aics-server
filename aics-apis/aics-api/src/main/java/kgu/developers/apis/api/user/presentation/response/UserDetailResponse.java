@@ -5,19 +5,23 @@ import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.user.domain.Grade;
 import kgu.developers.core.domain.user.domain.Role;
 import kgu.developers.core.domain.user.domain.Status;
+import kgu.developers.core.domain.user.domain.User;
+import lombok.Builder;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
+@Builder
 public record UserDetailResponse(
 	@Schema(description = "이름", example = "홍길동", requiredMode = REQUIRED)
 	String name,
 
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
-	String phone,
+	String phoneNumber,
 
 	@Schema(description = "생년월일", example = "00.11.22", requiredMode = REQUIRED)
 	Timestamp birth,
@@ -40,21 +44,23 @@ public record UserDetailResponse(
 	@Schema(description = "상태", example = "재학중", requiredMode = REQUIRED)
 	Status status
 ) {
-	public static UserDetailResponse of(
-		String name,
-		String phone,
-		String birth,
-		String email,
-		Role role,
-		Major major,
-		String personalId,
-		Grade grade,
-		Status status
+	public static UserDetailResponse from(
+		User user
 	) {
-		LocalDate localDate = LocalDate.parse(birth, ofPattern("yyyyMMdd"));
-		Timestamp timestamp = Timestamp.valueOf(localDate.atStartOfDay());
+		DateTimeFormatter formatter = ofPattern("yyyyMMdd");
+		LocalDate localDate = LocalDate.parse(user.getBirth(), formatter);
+		Timestamp birth = Timestamp.valueOf(localDate.atStartOfDay());
 
-		return new UserDetailResponse(name, phone, timestamp, email,
-			role, major, personalId, grade, status);
+		return UserDetailResponse.builder()
+			.name(user.getName())
+			.phoneNumber(user.getPhoneNumber())
+			.birth(birth)
+			.email(user.getEmail())
+			.role(user.getRole())
+			.major(user.getMajor())
+			.personalId(user.getPersonalId())
+			.grade(user.getGrade())
+			.status(user.getStatus())
+			.build();
 	}
 }
