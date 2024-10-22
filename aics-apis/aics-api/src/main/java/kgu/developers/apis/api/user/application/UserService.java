@@ -8,6 +8,7 @@ import kgu.developers.apis.api.user.presentation.exception.UserPersonalIdDuplica
 import kgu.developers.apis.api.user.presentation.exception.UserPhoneNumberDuplicateException;
 import kgu.developers.apis.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.apis.api.user.presentation.request.UserUpdateRequest;
+import kgu.developers.apis.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
 import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.user.domain.User;
@@ -63,6 +64,11 @@ public class UserService {
 		}
 	}
 
+	public User getUserByPersonalId(String personalId) {
+		return userRepository.findByPersonalId(personalId)
+			.orElseThrow(UserNotFoundException::new);
+	}
+
 	private void validateDuplicateEmail(String email) {
 		if (userRepository.existsByEmail(email)) {
 			throw new UserEmailDuplicateException();
@@ -75,9 +81,10 @@ public class UserService {
 		}
 	}
 
-	public User getUserByPersonalId(String personalId) {
-		return userRepository.findByPersonalId(personalId)
-			.orElseThrow(UserNotFoundException::new);
+	@Transactional
+	public UserDetailResponse getUserDetail() {
+		User user = me();
+		return UserDetailResponse.from(user);
 	}
 
 	public User me() {
