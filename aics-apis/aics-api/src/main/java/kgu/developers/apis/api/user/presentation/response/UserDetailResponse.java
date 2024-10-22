@@ -8,12 +8,7 @@ import kgu.developers.core.domain.user.domain.Status;
 import kgu.developers.core.domain.user.domain.User;
 import lombok.Builder;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
-import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Builder
 public record UserDetailResponse(
@@ -24,7 +19,7 @@ public record UserDetailResponse(
 	String phoneNumber,
 
 	@Schema(description = "생년월일", example = "00.11.22", requiredMode = REQUIRED)
-	Timestamp birth,
+	String birth,
 
 	@Schema(description = "이메일", example = "example@gmail.com", requiredMode = REQUIRED)
 	String email,
@@ -47,14 +42,10 @@ public record UserDetailResponse(
 	public static UserDetailResponse from(
 		User user
 	) {
-		DateTimeFormatter formatter = ofPattern("yyyyMMdd");
-		LocalDate localDate = LocalDate.parse(user.getBirth(), formatter);
-		Timestamp birth = Timestamp.valueOf(localDate.atStartOfDay());
-
 		return UserDetailResponse.builder()
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
-			.birth(birth)
+			.birth(user.getBirth())
 			.email(user.getEmail())
 			.role(user.getRole())
 			.major(user.getMajor())
