@@ -49,7 +49,7 @@ public class UserController {
 		content = @Content(schema = @Schema(implementation = UserDetailResponse.class))
 	)
 	@GetMapping
-	public ResponseEntity<UserDetailResponse> myPage(){
+	public ResponseEntity<UserDetailResponse> myPage() {
 		UserDetailResponse response = userService.getUserDetail();
 		return ResponseEntity.status(OK).body(response);
 	}

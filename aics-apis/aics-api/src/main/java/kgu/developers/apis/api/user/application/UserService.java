@@ -22,88 +22,88 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final UserRepository userRepository;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Transactional
-    public UserPersistResponse createUser(UserCreateRequest request) {
-        validateDuplicatePersonalId(request.personalId());
-        validateDuplicateEmail(request.email());
-        validateDuplicatePhoneNumber(request.phoneNumber());
+	@Transactional
+	public UserPersistResponse createUser(UserCreateRequest request) {
+		validateDuplicatePersonalId(request.personalId());
+		validateDuplicateEmail(request.email());
+		validateDuplicatePhoneNumber(request.phoneNumber());
 
 
-        User createUser = User.create(
-            request.personalId(),
-            bCryptPasswordEncoder.encode(request.password()),
-            request.name(),
-            request.email(),
-            request.phoneNumber(),
-            request.birth(),
-            request.gender(),
-            request.grade(),
-            //TODO: 메이저 이름으로 db에서 가져오는 메소드 구현 후 저장
-            Major.create("컴퓨터공학부")
-            //request.majorName()
-        );
+		User createUser = User.create(
+			request.personalId(),
+			bCryptPasswordEncoder.encode(request.password()),
+			request.name(),
+			request.email(),
+			request.phoneNumber(),
+			request.birth(),
+			request.gender(),
+			request.grade(),
+			//TODO: 메이저 이름으로 db에서 가져오는 메소드 구현 후 저장
+			Major.create("컴퓨터공학부")
+			//request.majorName()
+		);
 
-        Long id = userRepository.save(createUser).getId();
-        return UserPersistResponse.of(id);
-    }
+		Long id = userRepository.save(createUser).getId();
+		return UserPersistResponse.of(id);
+	}
 
-    @Transactional
-    public void updateUser(UserUpdateRequest request) {
-        User updateUser = me();
-        updateUser.updateEmail(request.email());
-        updateUser.updatePhoneNumber(request.phoneNumber());
-        updateUser.updateBirth(request.birth());
-    }
+	@Transactional
+	public void updateUser(UserUpdateRequest request) {
+		User updateUser = me();
+		updateUser.updateEmail(request.email());
+		updateUser.updatePhoneNumber(request.phoneNumber());
+		updateUser.updateBirth(request.birth());
+	}
 
-    private void validateDuplicatePersonalId(String personalId) {
-        if (userRepository.existsByPersonalId(personalId)) {
-            throw new UserPersonalIdDuplicateException();
-        }
-    }
+	private void validateDuplicatePersonalId(String personalId) {
+		if (userRepository.existsByPersonalId(personalId)) {
+			throw new UserPersonalIdDuplicateException();
+		}
+	}
 
-    public User getUserByPersonalId(String personalId) {
-        return userRepository.findByPersonalId(personalId)
-            .orElseThrow(UserNotFoundException::new);
-    }
+	public User getUserByPersonalId(String personalId) {
+		return userRepository.findByPersonalId(personalId)
+			.orElseThrow(UserNotFoundException::new);
+	}
 
-    private void validateDuplicateEmail(String email) {
-        if (userRepository.existsByEmail(email)) {
-            throw new UserEmailDuplicateException();
-        }
-    }
+	private void validateDuplicateEmail(String email) {
+		if (userRepository.existsByEmail(email)) {
+			throw new UserEmailDuplicateException();
+		}
+	}
 
-    private void validateDuplicatePhoneNumber(String phoneNumber) {
-        if (userRepository.existsByPhoneNumber(phoneNumber)) {
-            throw new UserPhoneNumberDuplicateException();
-        }
-    }
+	private void validateDuplicatePhoneNumber(String phoneNumber) {
+		if (userRepository.existsByPhoneNumber(phoneNumber)) {
+			throw new UserPhoneNumberDuplicateException();
+		}
+	}
 
-    @Transactional
-    public UserDetailResponse getUserDetail() {
-        User user = me();
-        return UserDetailResponse.of(
-            user.getName(),
-            user.getPhoneNumber(),
-            user.getBirth(),
-            user.getEmail(),
-            user.getRole(),
-            user.getMajor(),
-            user.getPersonalId(),
-            user.getGrade(),
-            user.getStatus()
-        );
-    }
+	@Transactional
+	public UserDetailResponse getUserDetail() {
+		User user = me();
+		return UserDetailResponse.of(
+			user.getName(),
+			user.getPhoneNumber(),
+			user.getBirth(),
+			user.getEmail(),
+			user.getRole(),
+			user.getMajor(),
+			user.getPersonalId(),
+			user.getGrade(),
+			user.getStatus()
+		);
+	}
 
-    public User me() {
-        try {
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String personalId = ((UserDetails) principal).getUsername();
-            return getUserByPersonalId(personalId);
-        } catch (Exception e) {
-            throw new UserNotAuthenticatedException();
-        }
-    }
+	public User me() {
+		try {
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String personalId = ((UserDetails) principal).getUsername();
+			return getUserByPersonalId(personalId);
+		} catch (Exception e) {
+			throw new UserNotAuthenticatedException();
+		}
+	}
 }
