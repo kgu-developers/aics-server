@@ -7,5 +7,9 @@ public interface UserRepository {
 
 	boolean existsByPersonalId(String personalId);
 
+	boolean existsByEmail(String email);
+
+	boolean existsByPhoneNumber(String phoneNumber);
+
 	Optional<User> findByPersonalId(String personalId);
 }
