@@ -54,7 +54,7 @@ public class UserService {
 
 	@Transactional
 	public void updateUser(UserUpdateRequest request) {
-		User updateUser = this.me();
+		User updateUser = me();
 		updateUser.updateEmail(request.email());
 		updateUser.updatePhoneNumber(request.phoneNumber());
 		updateUser.updateBirth(request.birth());
