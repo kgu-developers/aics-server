@@ -1,5 +1,7 @@
 package kgu.developers.core.domain.major.infrastructure;
 
+import java.util.Optional;
+
 import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.major.domain.MajorRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +20,10 @@ public class MajorRepositoryImpl implements MajorRepository {
     @Override
     public boolean existByName(String majorName) {
         return jpaMajorRepository.existsByName(majorName);
+    }
+
+    @Override
+    public Optional<Major> findByName(String name) {
+        return jpaMajorRepository.findByName(name);
     }
 }
