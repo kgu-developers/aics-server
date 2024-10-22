@@ -1,8 +1,11 @@
 package kgu.developers.apis.api.user.presentation;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
+import kgu.developers.apis.api.user.presentation.response.UserDetailResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +39,17 @@ public class UserController {
 	) {
 		UserPersistResponse response = userService.createUser(request);
 		return ResponseEntity.status(CREATED).body(response);
+	}
+
+	@Operation(summary = "마이페이지", description = "유저의 마이페이지를 반환합니다.")
+	@ApiResponse(
+		responseCode = "200",
+		description = "마이페이지 로드 완료",
+		content = @Content(schema = @Schema(implementation = UserDetailResponse.class))
+	)
+	@GetMapping
+	public ResponseEntity<UserDetailResponse> myPage(){
+		UserDetailResponse response = userService.getUserDetail();
+		return ResponseEntity.status(OK).body(response);
 	}
 }
