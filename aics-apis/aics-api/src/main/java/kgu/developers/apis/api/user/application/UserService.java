@@ -55,7 +55,9 @@ public class UserService {
 	@Transactional
 	public void updateUser(UserUpdateRequest request) {
 		User updateUser = this.me();
-		updateUser.update(request.email(), request.phoneNumber(), request.birth());
+		updateUser.updateEmail(request.email());
+		updateUser.updatePhoneNumber(request.phoneNumber());
+		updateUser.updateBirth(request.birth());
 	}
 
 	private void validateDuplicatePersonalId(String personalId) {

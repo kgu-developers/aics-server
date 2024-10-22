@@ -111,10 +111,15 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.build();
 	}
 
-	public void update(String email, String phoneNumber, String birth) {
-		// TODO: 충돌 해결하면서 주석 해제
+	public void updateEmail(String email) {
 		this.email = email;
+	}
+
+	public void updatePhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public void updateBirth(String birth) {
 		this.birth = birth;
 	}
 
