@@ -20,11 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import kgu.developers.core.common.domain.BaseTimeEntity;
 import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.post.Post;
@@ -32,6 +27,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -52,8 +50,14 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@Column(nullable = false)
 	private String password;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 10)
 	private String name;
+
+	@Column(unique = true, nullable = false, length = 50)
+	private String email;
+
+	@Column(unique = true, nullable = false, length = 15)
+	private String phoneNumber;
 
 	@Column(nullable = false, length = 8)
 	private String birth;
@@ -85,12 +89,18 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-	public static User create(String personalId, String password, String name, String birth, Gender gender,
+
+	public static User create(String personalId, String password, String name,/* String email, String phoneNumber,*/
+							  String birth, Gender gender,
 							  Grade grade, Major major) {
 		return User.builder()
 			.personalId(personalId)
 			.password(password)
 			.name(name)
+			/*
+			.email(email)
+			.phoneNumber(phoneNumber)
+			*/
 			.birth(birth)
 			.gender(gender)
 			.grade(grade)
@@ -99,6 +109,18 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.hasAiAccess(false)
 			//TODO: 메이저 관련 로직 추가 뒤 주석 제거 .major(major)
 			.build();
+	}
+
+	public void updateEmail(String email) {
+		this.email = email;
+	}
+
+	public void updatePhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void updateBirth(String birth) {
+		this.birth = birth;
 	}
 
 	@Override
@@ -112,7 +134,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 	}
 
 	@Override
-	public String getPassword(){
+	public String getPassword() {
 		return password;
 	}
 }
