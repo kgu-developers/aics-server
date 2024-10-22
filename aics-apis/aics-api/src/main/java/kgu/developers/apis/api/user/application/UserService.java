@@ -55,6 +55,7 @@ public class UserService {
             .orElseThrow(UserNotFoundException::new);
     }
 
+    @Transactional
     public UserDetailResponse getUserDetail() {
         User user = me();
         return UserDetailResponse.of(

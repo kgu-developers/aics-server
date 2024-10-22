@@ -7,8 +7,9 @@ import kgu.developers.core.domain.user.domain.Role;
 import kgu.developers.core.domain.user.domain.Status;
 
 import java.sql.Timestamp;
-
+import java.time.LocalDate;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 public record UserDetailResponse(
     @Schema(description = "이름", example = "홍길동", requiredMode = REQUIRED)
@@ -49,6 +50,10 @@ public record UserDetailResponse(
         Grade grade,
         Status status
     ) {
-        return new UserDetailResponse(name, phone, Timestamp.valueOf(birth), email, role, major, personalId, grade, status);
+        LocalDate localDate = LocalDate.parse(birth, ofPattern("yyyyMMdd"));
+        Timestamp timestamp = Timestamp.valueOf(localDate.atStartOfDay());
+
+        return new UserDetailResponse(name, phone, timestamp, email,
+            role, major, personalId, grade, status);
     }
 }
