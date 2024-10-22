@@ -38,7 +38,7 @@ public class UserController {
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
-	@PatchMapping()
+	@PatchMapping
 	@ApiResponse(
 		responseCode = "204",
 		description = "유저 정보 수정 성공",
