@@ -27,15 +27,19 @@ public class UserService {
 	@Transactional
 	public UserPersistResponse createUser(UserCreateRequest request) {
 		validateDuplicatePersonalId(request.personalId());
+		/*
 		validateDuplicateEmail(request.email());
 		validateDuplicatePhoneNumber(request.phoneNumber());
+		*/
 
 		User createUser = User.create(
 			request.personalId(),
 			bCryptPasswordEncoder.encode(request.password()),
 			request.name(),
+			/*
 			request.email(),
 			request.phoneNumber(),
+			*/
 			request.birth(),
 			request.gender(),
 			request.grade(),

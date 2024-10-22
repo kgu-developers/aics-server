@@ -90,15 +90,17 @@ public class User extends BaseTimeEntity implements UserDetails {
 	List<Post> posts = new ArrayList<>();
 
 
-	public static User create(String personalId, String password, String name, String email, String phoneNumber,
+	public static User create(String personalId, String password, String name,/* String email, String phoneNumber,*/
 							  String birth, Gender gender,
 							  Grade grade, Major major) {
 		return User.builder()
 			.personalId(personalId)
 			.password(password)
 			.name(name)
+			/*
 			.email(email)
 			.phoneNumber(phoneNumber)
+			*/
 			.birth(birth)
 			.gender(gender)
 			.grade(grade)
