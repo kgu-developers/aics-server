@@ -14,7 +14,7 @@ public record UserCreateRequest(
 	@NotNull
 	String personalId,
 
-	@Schema(description = "비밀번호", requiredMode = REQUIRED)
+	@Schema(description = "비밀번호", example = "password1234", requiredMode = REQUIRED)
 	@NotNull
 	String password,
 
