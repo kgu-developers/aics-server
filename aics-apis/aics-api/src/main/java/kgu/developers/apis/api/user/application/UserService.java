@@ -1,6 +1,7 @@
 package kgu.developers.apis.api.user.application;
 
 import jakarta.transaction.Transactional;
+import kgu.developers.apis.api.major.application.MajorService;
 import kgu.developers.apis.api.user.presentation.exception.UserEmailDuplicateException;
 import kgu.developers.apis.api.user.presentation.exception.UserNotAuthenticatedException;
 import kgu.developers.apis.api.user.presentation.exception.UserPersonalIdDuplicateException;
@@ -22,8 +23,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final UserRepository userRepository;
+	private final MajorService majorService;
 
 	@Transactional
 	public UserPersistResponse createUser(UserCreateRequest request) {
@@ -31,6 +33,7 @@ public class UserService {
 		validateDuplicateEmail(request.email());
 		validateDuplicatePhoneNumber(request.phoneNumber());
 
+		Major major = majorService.getMajorByName(request.majorName());
 		User createUser = User.create(
 			request.personalId(),
 			bCryptPasswordEncoder.encode(request.password()),
@@ -40,9 +43,7 @@ public class UserService {
 			request.birth(),
 			request.gender(),
 			request.grade(),
-			//TODO: 메이저 이름으로 db에서 가져오는 메소드 구현 후 저장
-			Major.create("컴퓨터공학부")
-			//request.majorName()
+			major
 		);
 
 		Long id = userRepository.save(createUser).getId();

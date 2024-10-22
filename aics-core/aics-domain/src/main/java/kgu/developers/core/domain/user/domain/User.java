@@ -107,7 +107,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.status(INSCHOOL)
 			.role(GUEST)
 			.hasAiAccess(false)
-			//TODO: 메이저 관련 로직 추가 뒤 주석 제거 .major(major)
+			.major(major)
 			.build();
 	}
 

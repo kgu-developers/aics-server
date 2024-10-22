@@ -1,6 +1,7 @@
 package kgu.developers.apis.api.major.application;
 
 import kgu.developers.apis.api.major.presentation.exception.MajorDuplicatedException;
+import kgu.developers.apis.api.major.presentation.exception.MajorNotFoundException;
 import kgu.developers.apis.api.major.presentation.request.MajorCreateRequest;
 import kgu.developers.apis.api.major.presentation.response.MajorPersistResponse;
 import kgu.developers.core.domain.major.domain.Major;
@@ -26,5 +27,10 @@ public class MajorService {
         if (majorRepository.existByName(majorName)) {
             throw new MajorDuplicatedException();
         }
+    }
+
+    public Major getMajorByName(String name) {
+        return majorRepository.findByName(name)
+            .orElseThrow(MajorNotFoundException::new);
     }
 }
