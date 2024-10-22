@@ -21,18 +21,15 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
-@Tag(name = "Login", description = "로그인 api")
+@Tag(name = "Auth", description = "로그인 API")
 public class AuthController {
 	private final AuthService authService;
 
-	@Operation(summary = "로그인", description = "로그인을 수행합니다.")
-	@ApiResponses({
-		@ApiResponse(
-			responseCode = "200",
-			description = "로그인 성공",
-			content = @Content(schema = @Schema(implementation = TokenResponse.class))
-		),
-	})
+	@Operation(summary = "로그인 API", description = """
+			- Description : 이 API는 jwt 토큰 기반 로그인을 처리합니다.
+			- Assignee : 이한음
+		""")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = TokenResponse.class)))
 	@PostMapping("/login")
 	public ResponseEntity<TokenResponse> login(
 		@Valid @RequestBody LoginRequest request
