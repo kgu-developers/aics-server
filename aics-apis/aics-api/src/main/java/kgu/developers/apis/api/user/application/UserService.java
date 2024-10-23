@@ -1,16 +1,14 @@
 package kgu.developers.apis.api.user.application;
 
 import jakarta.transaction.Transactional;
-import kgu.developers.apis.api.major.application.MajorService;
 import kgu.developers.apis.api.user.presentation.exception.UserEmailDuplicateException;
+import kgu.developers.apis.api.user.presentation.exception.UserIdDuplicateException;
 import kgu.developers.apis.api.user.presentation.exception.UserNotAuthenticatedException;
-import kgu.developers.apis.api.user.presentation.exception.UserPersonalIdDuplicateException;
 import kgu.developers.apis.api.user.presentation.exception.UserPhoneNumberDuplicateException;
 import kgu.developers.apis.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.apis.api.user.presentation.request.UserUpdateRequest;
 import kgu.developers.apis.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.core.domain.major.domain.Major;
 import kgu.developers.core.domain.user.domain.User;
 import kgu.developers.core.domain.user.domain.UserRepository;
 import kgu.developers.core.domain.user.exception.UserNotFoundException;
@@ -25,28 +23,23 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserRepository userRepository;
-	private final MajorService majorService;
 
 	@Transactional
 	public UserPersistResponse createUser(UserCreateRequest request) {
-		validateDuplicatePersonalId(request.personalId());
+		validateDuplicateUserId(request.userId());
 		validateDuplicateEmail(request.email());
 		validateDuplicatePhoneNumber(request.phoneNumber());
 
-		Major major = majorService.getMajorByName(request.majorName());
 		User createUser = User.create(
-			request.personalId(),
+			request.userId(),
 			bCryptPasswordEncoder.encode(request.password()),
 			request.name(),
 			request.email(),
 			request.phoneNumber(),
-			request.birth(),
-			request.gender(),
-			request.grade(),
-			major
+			request.majorName()
 		);
 
-		Long id = userRepository.save(createUser).getId();
+		String id = userRepository.save(createUser).getUserId();
 		return UserPersistResponse.of(id);
 	}
 
@@ -55,17 +48,16 @@ public class UserService {
 		User updateUser = me();
 		updateUser.updateEmail(request.email());
 		updateUser.updatePhoneNumber(request.phoneNumber());
-		updateUser.updateBirth(request.birth());
 	}
 
-	private void validateDuplicatePersonalId(String personalId) {
-		if (userRepository.existsByPersonalId(personalId)) {
-			throw new UserPersonalIdDuplicateException();
+	private void validateDuplicateUserId(String userId) {
+		if (userRepository.existsByUserId(userId)) {
+			throw new UserIdDuplicateException();
 		}
 	}
 
-	public User getUserByPersonalId(String personalId) {
-		return userRepository.findByPersonalId(personalId)
+	public User getUserByUserId(String userId) {
+		return userRepository.findByUserId(userId)
 			.orElseThrow(UserNotFoundException::new);
 	}
 
@@ -90,8 +82,8 @@ public class UserService {
 	public User me() {
 		try {
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String personalId = ((UserDetails) principal).getUsername();
-			return getUserByPersonalId(personalId);
+			String userId = ((UserDetails) principal).getUsername();
+			return getUserByUserId(userId);
 		} catch (Exception e) {
 			throw new UserNotAuthenticatedException();
 		}

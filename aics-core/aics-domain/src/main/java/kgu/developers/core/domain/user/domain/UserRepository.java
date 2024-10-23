@@ -5,11 +5,11 @@ import java.util.Optional;
 public interface UserRepository {
 	User save(User user);
 
-	boolean existsByPersonalId(String personalId);
+	boolean existsByUserId(String personalId);
 
 	boolean existsByEmail(String email);
 
 	boolean existsByPhoneNumber(String phoneNumber);
 
-	Optional<User> findByPersonalId(String personalId);
+	Optional<User> findByUserId(String personalId);
 }
