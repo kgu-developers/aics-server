@@ -9,7 +9,7 @@ public enum Role {
 
 	USER("일반사용자"),
 	ADMIN("관리자"),
-	SUPER("슈퍼관리자");
+	SUPER("최고관리자");
 
 	private final String description;
 }
