@@ -18,8 +18,8 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public boolean existsByUserId(String personalId) {
-		return jpaUserRepository.existsByUserId(personalId);
+	public boolean existsByUserId(String userId) {
+		return jpaUserRepository.existsByUserId(userId);
 	}
 
 	@Override

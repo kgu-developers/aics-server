@@ -23,20 +23,20 @@ import lombok.RequiredArgsConstructor;
 public class TokenProvider {
     private final JwtProperties jwtProperties;
 
-    public String generateToken(String personalId, Duration expiredAt) {
+    public String generateToken(String userId, Duration expiredAt) {
         Date now = new Date();
-        return makeToken(new Date(now.getTime() + expiredAt.toMillis()), personalId);
+        return makeToken(new Date(now.getTime() + expiredAt.toMillis()), userId);
     }
 
-    private String makeToken(Date expiry, String personalId) {
+    private String makeToken(Date expiry, String userId) {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam(TYPE, JWT_TYPE)
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-                .setSubject(personalId)
-                .claim("personalId", personalId)
+                .setSubject(userId)
+                .claim("userId", userId)
                 .signWith(HS256, jwtProperties.getSecretKey())
                 .compact();
     }
@@ -68,7 +68,7 @@ public class TokenProvider {
 
     public String getUserId(String token) {
         Claims claims = getClaims(token);
-        return claims.get("personalId", String.class);
+        return claims.get("userId", String.class);
     }
 
     private Claims getClaims(String token) {

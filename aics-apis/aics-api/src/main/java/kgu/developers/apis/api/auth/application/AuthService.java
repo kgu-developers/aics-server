@@ -22,10 +22,10 @@ public class AuthService {
 
 	@Transactional
 	public TokenResponse login(LoginRequest request) {
-		String personalId = request.personalId();
+		String userId = request.userId();
 		String password = request.password();
 
-		User user = userService.getUserByUserId(personalId);
+		User user = userService.getUserByUserId(userId);
 		if (!passwordEncoder.matches(password, user.getPassword())) {
 			throw new InvalidPasswordException();
 		}
