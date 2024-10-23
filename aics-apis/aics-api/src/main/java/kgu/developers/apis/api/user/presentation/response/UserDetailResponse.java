@@ -1,10 +1,8 @@
 package kgu.developers.apis.api.user.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.core.domain.major.domain.Major;
-import kgu.developers.core.domain.user.domain.Grade;
+import kgu.developers.core.domain.user.domain.Major;
 import kgu.developers.core.domain.user.domain.Role;
-import kgu.developers.core.domain.user.domain.Status;
 import kgu.developers.core.domain.user.domain.User;
 import lombok.Builder;
 
@@ -18,9 +16,6 @@ public record UserDetailResponse(
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
 	String phoneNumber,
 
-	@Schema(description = "생년월일", example = "00.11.22", requiredMode = REQUIRED)
-	String birth,
-
 	@Schema(description = "이메일", example = "example@gmail.com", requiredMode = REQUIRED)
 	String email,
 
@@ -31,13 +26,7 @@ public record UserDetailResponse(
 	Major major,
 
 	@Schema(description = "학번(교번)", example = "201912345", requiredMode = REQUIRED)
-	String personalId,
-
-	@Schema(description = "학년", example = "1학년", requiredMode = REQUIRED)
-	Grade grade,
-
-	@Schema(description = "상태", example = "재학중", requiredMode = REQUIRED)
-	Status status
+	String userId
 ) {
 	public static UserDetailResponse from(
 		User user
@@ -45,13 +34,10 @@ public record UserDetailResponse(
 		return UserDetailResponse.builder()
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
-			.birth(user.getBirth())
 			.email(user.getEmail())
 			.role(user.getRole())
 			.major(user.getMajor())
-			.personalId(user.getPersonalId())
-			.grade(user.getGrade())
-			.status(user.getStatus())
+			.userId(user.getUserId())
 			.build();
 	}
 }
