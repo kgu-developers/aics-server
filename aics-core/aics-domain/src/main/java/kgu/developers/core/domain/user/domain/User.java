@@ -68,9 +68,9 @@ public class User extends BaseTimeEntity implements UserDetails {
 							  String name, String email,
 							  String phoneNumber, String majorName) {
 		Major major = switch (majorName) {
-			case "AI" -> Major.AI;
-			case "CS" -> Major.CS;
-			default -> Major.SW;
+			case "CSE" -> Major.CSE;
+			case "AIT" -> Major.AIT;
+			default -> Major.SSS;
 		};
 
 		return User.builder()
