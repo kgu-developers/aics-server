@@ -24,7 +24,7 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
-import static kgu.developers.core.domain.user.domain.Role.GUEST;
+import static kgu.developers.core.domain.user.domain.Role.USER;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -79,7 +79,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.name(name)
 			.email(email)
 			.phoneNumber(phoneNumber)
-			.role(GUEST)
+			.role(USER)
 			.major(major)
 			.build();
 	}
