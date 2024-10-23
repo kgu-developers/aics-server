@@ -36,7 +36,7 @@ public class UserService {
 			request.name(),
 			request.email(),
 			request.phoneNumber(),
-			request.majorName()
+			request.major()
 		);
 
 		String id = userRepository.save(createUser).getUserId();

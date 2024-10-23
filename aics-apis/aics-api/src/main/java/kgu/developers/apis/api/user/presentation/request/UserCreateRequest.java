@@ -3,6 +3,7 @@ package kgu.developers.apis.api.user.presentation.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import kgu.developers.core.domain.user.domain.Major;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
@@ -31,6 +32,6 @@ public record UserCreateRequest(
 
 	@Schema(description = "전공 이름", example = "컴퓨터공학부", requiredMode = REQUIRED)
 	@NotNull
-	String majorName
+	Major major
 ) {
 }
