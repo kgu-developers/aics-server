@@ -1,7 +1,7 @@
 package kgu.developers.apis.api.post.presentation;
 
 import kgu.developers.apis.api.post.application.FileService;
-import kgu.developers.globalutils.file.response.FilePersistResponse;
+import kgu.developers.apis.api.post.presentation.response.FilePersistResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

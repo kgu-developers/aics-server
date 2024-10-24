@@ -1,4 +1,4 @@
-package kgu.developers.globalutils.file.response;
+package kgu.developers.apis.api.post.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

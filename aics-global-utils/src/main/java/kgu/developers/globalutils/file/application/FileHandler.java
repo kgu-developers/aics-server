@@ -1,15 +1,10 @@
 package kgu.developers.globalutils.file.application;
 
-import kgu.developers.globalutils.file.response.FilePersistResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
 public class FileHandler {
-	public FilePersistResponse saveFile(MultipartFile file, String originalFilename, String filePath) {
-		// TODO
-		return null;
-	}
+	// TODO 관심사 분리, 허용된 확장자인지 검증하고 로컬 파일 삭제
 }

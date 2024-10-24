@@ -1,11 +1,13 @@
 package kgu.developers.apis.api.post.application;
 
 import kgu.developers.apis.api.post.presentation.exception.FileIsNullException;
-import kgu.developers.globalutils.file.application.FileHandler;
-import kgu.developers.globalutils.file.response.FilePersistResponse;
+import kgu.developers.apis.api.post.presentation.response.FilePersistResponse;
+import kgu.developers.core.domain.file.domain.FileEntity;
+import kgu.developers.core.domain.file.domain.FileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -18,8 +20,9 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class FileService {
-	private final FileHandler fileHandler;
+	private final FileRepository fileRepository;
 
+	@Transactional
 	public FilePersistResponse uploadFile(String domain, MultipartFile file) {
 		validateFileIsNull(file);
 
@@ -41,7 +44,7 @@ public class FileService {
 			String filePath = basePath + domain + formatted + uuid + extension;
 			log.info("Uploading file to {}", filePath);
 
-			FilePersistResponse response = fileHandler.saveFile(tempFile, originalFilename, filePath);
+			FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
 
 			if (tempFile.delete()) {
 				return response;
@@ -61,6 +64,29 @@ public class FileService {
 			|| file.getOriginalFilename() == null) {
 			log.error("File is null or empty");
 			throw new FileIsNullException();
+		}
+	}
+
+	@Transactional
+	public FilePersistResponse saveFile(File file, String logicalName, String physicalPath) {
+		try {
+			File destinationFile = new File(physicalPath);
+			if (!destinationFile.getParentFile().exists()) {
+				destinationFile.getParentFile().mkdirs();
+			}
+			file.renameTo(destinationFile);
+
+			FileEntity saved = fileRepository.save(
+				FileEntity.create(logicalName, physicalPath)
+			);
+
+			return FilePersistResponse.builder()
+				.id(saved.getId().toString())
+				.build();
+
+		} catch (Exception e) {
+			log.error("파일 저장 중 Exception 발생 {}", e.getMessage());
+			return null;
 		}
 	}
 
