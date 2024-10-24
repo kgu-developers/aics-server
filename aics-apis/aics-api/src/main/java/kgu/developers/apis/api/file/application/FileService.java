@@ -39,8 +39,8 @@ public class FileService {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("/yy/MM/dd/");
 			String formatted = LocalDate.now().format(formatter);
 			UUID uuid = UUID.randomUUID();
-			// TODO 경로 지정 논의
-			String basePath = "/KGU-Developers/uploaded";
+			// TODO 경로 지정 일단 테스트용
+			String basePath = "/Users/snhng/uploaded-demo/";
 			String filePath = basePath + domain + formatted + uuid + extension;
 			log.info("Uploading file to {}", filePath);
 
@@ -50,7 +50,7 @@ public class FileService {
 				return response;
 			} else {
 				log.error("임시 파일 삭제 실패 {}", tempFilePath);
-				return null;
+				return response;
 			}
 		} catch (IOException e) {
 			log.error("파일 변환 중 IOException 발생 {}", e.getMessage());
@@ -76,14 +76,13 @@ public class FileService {
 			}
 			file.renameTo(destinationFile);
 
-			FileEntity saved = fileRepository.save(
+			FileEntity entity = fileRepository.save(
 				FileEntity.create(logicalName, physicalPath)
 			);
 
 			return FilePersistResponse.builder()
-				.id(saved.getId().toString())
+				.id(entity.getId().toString())
 				.build();
-
 		} catch (Exception e) {
 			log.error("파일 저장 중 Exception 발생 {}", e.getMessage());
 			return null;
