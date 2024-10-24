@@ -1,4 +1,4 @@
-package kgu.developers.apis.api.post.presentation.exception;
+package kgu.developers.apis.api.file.presentation.exception;
 
 import kgu.developers.core.common.exception.ExceptionCode;
 import lombok.AllArgsConstructor;

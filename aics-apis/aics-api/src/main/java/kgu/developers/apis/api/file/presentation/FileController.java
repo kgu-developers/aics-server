@@ -1,7 +1,7 @@
-package kgu.developers.apis.api.post.presentation;
+package kgu.developers.apis.api.file.presentation;
 
-import kgu.developers.apis.api.post.application.FileService;
-import kgu.developers.apis.api.post.presentation.response.FilePersistResponse;
+import kgu.developers.apis.api.file.application.FileService;
+import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
-public class PostController {
+public class FileController {
 	private final FileService fileService;
 
 	// TODO: 추후에 Post 업로드 기능 구현 시에 합치기

@@ -1,7 +1,7 @@
-package kgu.developers.apis.api.post.application;
+package kgu.developers.apis.api.file.application;
 
-import kgu.developers.apis.api.post.presentation.exception.FileIsNullException;
-import kgu.developers.apis.api.post.presentation.response.FilePersistResponse;
+import kgu.developers.apis.api.file.presentation.exception.FileIsNullException;
+import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
 import kgu.developers.core.domain.file.domain.FileEntity;
 import kgu.developers.core.domain.file.domain.FileRepository;
 import lombok.RequiredArgsConstructor;
