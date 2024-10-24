@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -21,16 +23,34 @@ public class FileService {
 	public FilePersistResponse uploadFile(String domain, MultipartFile file) {
 		validateFileIsNull(file);
 
-		String originalFilename = file.getOriginalFilename();
-		String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+		String tempDir = System.getProperty("java.io.tmpdir");
+		String tempFilePath = tempDir + "/" + file.getOriginalFilename();
+		File tempFile = new File(tempFilePath);
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("/yy/MM/dd/");
-		String formatted = LocalDate.now().format(formatter);
-		UUID uuid = UUID.randomUUID();
-		String filePath = "./" + domain + formatted + uuid + extension;
-		log.info("Uploading file to {}", filePath);
+		try {
+			file.transferTo(tempFile);
 
-		return fileHandler.saveFile(file, originalFilename, filePath);
+			String originalFilename = tempFile.getName();
+			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("/yy/MM/dd/");
+			String formatted = LocalDate.now().format(formatter);
+			UUID uuid = UUID.randomUUID();
+			String filePath = "./" + domain + formatted + uuid + extension;
+			log.info("Uploading file to {}", filePath);
+
+			FilePersistResponse response = fileHandler.saveFile(file, originalFilename, filePath);
+
+			if (tempFile.delete()) {
+				return response;
+			} else {
+				log.error("임시 파일 삭제 실패 {}", tempFilePath);
+				return null;
+			}
+		} catch (IOException e) {
+			log.error("IOException 발생 {}", e.getMessage());
+			return null;
+		}
 	}
 
 	private void validateFileIsNull(MultipartFile file) {
