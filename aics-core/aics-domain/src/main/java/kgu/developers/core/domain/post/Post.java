@@ -58,20 +58,26 @@ public class Post extends BaseTimeEntity {
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-    /*
-    TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
-    @ManyToOne
+    /* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
+    @OneToOne
     @JoinColumn(name = "file_id")
     private File fileID;
     */
 
 	public static Post create(String title, String content, Category category, User author) {
-		return Post.builder()
+		Post createPost = Post.builder()
 			.title(title)
 			.content(content)
 			.views(0)
 			.category(category)
-			.author(author)
 			.build();
+
+		author.addPost(createPost);
+
+		return createPost;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 }
