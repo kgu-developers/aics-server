@@ -36,10 +36,12 @@ public class FileService {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("/yy/MM/dd/");
 			String formatted = LocalDate.now().format(formatter);
 			UUID uuid = UUID.randomUUID();
-			String filePath = "./" + domain + formatted + uuid + extension;
+			// TODO 경로 지정 논의
+			String basePath = "/KGU-Developers/uploaded";
+			String filePath = basePath + domain + formatted + uuid + extension;
 			log.info("Uploading file to {}", filePath);
 
-			FilePersistResponse response = fileHandler.saveFile(file, originalFilename, filePath);
+			FilePersistResponse response = fileHandler.saveFile(tempFile, originalFilename, filePath);
 
 			if (tempFile.delete()) {
 				return response;
@@ -48,7 +50,7 @@ public class FileService {
 				return null;
 			}
 		} catch (IOException e) {
-			log.error("IOException 발생 {}", e.getMessage());
+			log.error("파일 변환 중 IOException 발생 {}", e.getMessage());
 			return null;
 		}
 	}
