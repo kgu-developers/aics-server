@@ -1,11 +1,11 @@
 package kgu.developers.apis.api.user.presentation.request;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import kgu.developers.core.domain.user.domain.Major;
-
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 public record UserCreateRequest(
 
@@ -15,6 +15,10 @@ public record UserCreateRequest(
 	String userId,
 
 	@Schema(description = "비밀번호", example = "password1234", requiredMode = REQUIRED)
+	@Pattern(
+		regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{8,15}$",
+		message = "비밀번호는 영문, 숫자, 특수문자를 포함하여 8~15자리여야 합니다."
+	)
 	@NotNull
 	String password,
 
@@ -23,7 +27,7 @@ public record UserCreateRequest(
 	String name,
 
 	@Schema(description = "이메일", example = "qkralswnsWkd@kyonggi.ac.kr", requiredMode = REQUIRED)
-	@Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "유효한 이메일 형식이 아닙니다.")
+	@Pattern(regexp = "^[A-Za-z0-9._%+-]+@(kyonggi|kgu)\\.ac\\.kr$", message = "학교 이메일 형식으로 입력해주세요.")
 	String email,
 
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
