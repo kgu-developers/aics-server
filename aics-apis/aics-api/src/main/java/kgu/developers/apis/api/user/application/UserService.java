@@ -1,10 +1,8 @@
 package kgu.developers.apis.api.user.application;
 
 import jakarta.transaction.Transactional;
-import kgu.developers.apis.api.user.presentation.exception.UserEmailDuplicateException;
 import kgu.developers.apis.api.user.presentation.exception.UserIdDuplicateException;
 import kgu.developers.apis.api.user.presentation.exception.UserNotAuthenticatedException;
-import kgu.developers.apis.api.user.presentation.exception.UserPhoneNumberDuplicateException;
 import kgu.developers.apis.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.apis.api.user.presentation.request.UserUpdateRequest;
 import kgu.developers.apis.api.user.presentation.response.UserDetailResponse;
@@ -27,8 +25,6 @@ public class UserService {
 	@Transactional
 	public UserPersistResponse createUser(UserCreateRequest request) {
 		validateDuplicateUserId(request.userId());
-		validateDuplicateEmail(request.email());
-		validateDuplicatePhoneNumber(request.phoneNumber());
 
 		User createUser = User.create(
 			request.userId(),
@@ -59,18 +55,6 @@ public class UserService {
 	public User getUserByUserId(String userId) {
 		return userRepository.findByUserId(userId)
 			.orElseThrow(UserNotFoundException::new);
-	}
-
-	private void validateDuplicateEmail(String email) {
-		if (userRepository.existsByEmail(email)) {
-			throw new UserEmailDuplicateException();
-		}
-	}
-
-	private void validateDuplicatePhoneNumber(String phoneNumber) {
-		if (userRepository.existsByPhoneNumber(phoneNumber)) {
-			throw new UserPhoneNumberDuplicateException();
-		}
 	}
 
 	@Transactional
