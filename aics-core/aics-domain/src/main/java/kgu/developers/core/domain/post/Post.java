@@ -24,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -50,6 +51,7 @@ public class Post extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private Category category;
 
+	@Setter
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User author;
@@ -77,7 +79,4 @@ public class Post extends BaseTimeEntity {
 		return createPost;
 	}
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
 }

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import kgu.developers.apis.api.post.application.PostService;
 import kgu.developers.apis.api.post.presentation.request.PostCreateRequest;
 import kgu.developers.apis.api.post.presentation.response.PostCreateResponse;
-import kgu.developers.apis.api.user.application.UserService;
-import kgu.developers.core.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,12 +18,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/posts")
 public class PostController {
 	private final PostService postService;
-	private final UserService userService;
 
 	@PostMapping
 	public ResponseEntity<PostCreateResponse> createPost(@RequestBody PostCreateRequest request) {
-		User author = userService.me();
-		PostCreateResponse response = postService.createPost(request, author);
+		PostCreateResponse response = postService.createPost(request);
 
 		return ResponseEntity.status(CREATED).body(response);
 	}
