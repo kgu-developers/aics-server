@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -29,7 +32,7 @@ public class FileService {
 	private final FileHandler fileHandler;
 
 	@Transactional
-	public FilePersistResponse uploadFile(String domain, MultipartFile file) {
+	public FilePersistResponse uploadFile(String domain, MultipartFile file) throws IOException {
 		if (fileHandler.fileIsNull(file)) {
 			log.error("파일이 널이나 존재하지 않음");
 			throw new FileIsNullException();
@@ -46,19 +49,13 @@ public class FileService {
 
 		try {
 			file.transferTo(tempFile);
-
 			if (fileHandler.isNotValidExtension(tempFile.getName())) {
 				log.error("파일 확장자가 유효하지 않음");
 				throw new ExtensionIsNotValidException();
 			}
 
-			// TODO 경로 지정. 일단 로컬 테스트용
-			String basePath = "/Users/snhng/uploaded-demo/";
-			String formatted = LocalDate.now().format(ofPattern("/yy/MM/dd/"));
-			UUID uuid = UUID.randomUUID();
 			String originalFilename = tempFile.getName();
-			String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-			String filePath = basePath + domain + formatted + uuid + extension;
+			String filePath = makeFilePath(domain, originalFilename);
 
 			FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
 
@@ -67,32 +64,35 @@ public class FileService {
 				throw new FilePathIsNotValidException();
 			}
 
-			fileHandler.deleteTmpFile(tempFile);
 			return response;
-		} catch (IOException e) {
-			log.error("파일 변환 중 IOException 발생 {}", e.getMessage());
-			return null;
+		} finally {
+			fileHandler.deleteTmpFile(tempFile);
 		}
 	}
 
+	private String makeFilePath(String domain, String originalFilename) {
+		// TODO 경로 지정. 일단 로컬 테스트용
+		String basePath = "/Users/snhng/uploaded-demo/";
+		String formatted = LocalDate.now().format(ofPattern("/yy/MM/dd/"));
+		UUID uuid = UUID.randomUUID();
+		String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+		return basePath + domain + formatted + uuid + extension;
+	}
+
 	@Transactional
-	public FilePersistResponse saveFile(File file, String logicalName, String physicalPath) {
-		try {
-			File destinationFile = new File(physicalPath);
-			if (!destinationFile.getParentFile().exists()) {
-				destinationFile.getParentFile().mkdirs();
-			}
-			file.renameTo(destinationFile);
-
-			FileEntity entity = fileRepository.save(
-				FileEntity.create(logicalName, physicalPath)
-			);
-
-			return FilePersistResponse.of(entity.getId().toString());
-		} catch (Exception e) {
-			log.error("파일 저장 중 Exception 발생 {}", e.getMessage());
-			return null;
+	public FilePersistResponse saveFile(File file, String logicalName, String physicalPath) throws IOException {
+		File destinationFile = new File(physicalPath);
+		if (!destinationFile.getParentFile().exists()) {
+			destinationFile.getParentFile().mkdirs();
 		}
+		Files.move(file.toPath(), Path.of(physicalPath), StandardCopyOption.REPLACE_EXISTING);
+
+		FileEntity entity = fileRepository.save(
+			FileEntity.create(logicalName, physicalPath)
+		);
+
+		return FilePersistResponse.of(entity.getId().toString());
 	}
 
 }

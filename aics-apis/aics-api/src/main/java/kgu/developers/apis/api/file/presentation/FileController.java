@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import kgu.developers.apis.api.file.application.FileService;
+import kgu.developers.apis.api.file.presentation.exception.FileSavingException;
 import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
@@ -30,7 +35,13 @@ public class FileController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePersistResponse.class)))
 	@PostMapping("/file-upload")
 	public ResponseEntity<FilePersistResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-		FilePersistResponse response = fileService.uploadFile("posts", file);
-		return ResponseEntity.status(CREATED).body(response);
+		try {
+			FilePersistResponse response = fileService.uploadFile("posts", file);
+			return ResponseEntity.status(CREATED).body(response);
+		} catch (IOException e) {
+			// 추후 AOP 등으로 분리
+			log.error("파일 변환 중 IOException 발생 {}", e.getMessage());
+			throw new FileSavingException();
+		}
 	}
 }
