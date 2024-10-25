@@ -47,7 +47,6 @@ public class Post extends BaseTimeEntity {
 	private int views;
 
 	//TODO: category 확정 후 nullable = true로 변경
-	@Column(nullable = true)
 	@Enumerated(STRING)
 	private Category category;
 
