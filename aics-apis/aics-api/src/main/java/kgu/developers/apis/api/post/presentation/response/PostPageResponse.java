@@ -29,8 +29,8 @@ public record PostPageResponse<T>(
 	@Schema(description = "페이징 정보", requiredMode = REQUIRED)
 	PageableResponse<T> pageable
 ) {
-	public static PostPageResponse of(List<PostInfoResponse> contents, PageableResponse pageable) {
-		return PostPageResponse.builder()
+	public static <T> PostPageResponse<T> of(List<PostInfoResponse> contents, PageableResponse<T> pageable) {
+		return PostPageResponse.<T>builder()
 			.contents(contents)
 			.pageable(pageable)
 			.build();

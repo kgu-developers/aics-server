@@ -47,7 +47,8 @@ public class PostService {
 			.map(PostInfoResponse::from)
 			.collect(Collectors.toList());
 
-		PageableResponse pageableResponse = PageableResponse.of(pageable, postsPage.getTotalElements());
+		PageableResponse<PostInfoResponse> pageableResponse = PageableResponse.of(pageable,
+			postsPage.getTotalElements());
 		return PostPageResponse.of(postInfoResponses, pageableResponse);
 	}
 
