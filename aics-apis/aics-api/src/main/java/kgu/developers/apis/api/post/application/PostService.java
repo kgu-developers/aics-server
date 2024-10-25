@@ -1,11 +1,21 @@
 package kgu.developers.apis.api.post.application;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.apis.api.post.presentation.request.PostCreateRequest;
+import kgu.developers.apis.api.post.presentation.response.PostInfoResponse;
+import kgu.developers.apis.api.post.presentation.response.PostPageResponse;
 import kgu.developers.apis.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.apis.api.user.application.UserService;
+import kgu.developers.core.common.response.PageableResponse;
 import kgu.developers.core.domain.post.Post;
 import kgu.developers.core.domain.post.PostRepository;
 import kgu.developers.core.domain.user.domain.User;
@@ -28,5 +38,20 @@ public class PostService {
 		postRepository.save(createPost);
 
 		return PostPersistResponse.from(createPost.getId());
+	}
+
+	public PostPageResponse<PostInfoResponse> getPosts(String keyword, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+		Page<Post> postsPage = getPostsWithUserByKeyword(keyword, pageable);
+		List<PostInfoResponse> postInfoResponses = postsPage.stream()
+			.map(PostInfoResponse::from)
+			.collect(Collectors.toList());
+
+		PageableResponse pageableResponse = PageableResponse.of(pageable, postsPage.getTotalElements());
+		return PostPageResponse.of(postInfoResponses, pageableResponse);
+	}
+
+	public Page<Post> getPostsWithUserByKeyword(String keyword, Pageable pageable) {
+		return postRepository.findPostsWithUserByKeyword(keyword, pageable);
 	}
 }
