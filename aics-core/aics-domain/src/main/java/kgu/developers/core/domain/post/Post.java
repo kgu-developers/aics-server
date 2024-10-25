@@ -66,15 +66,13 @@ public class Post extends BaseTimeEntity {
     private File fileID;
     */
 
-	public static Post create(String title, String content, Category category, User author) {
+	public static Post create(String title, String content, Category category) {
 		Post createPost = Post.builder()
 			.title(title)
 			.content(content)
 			.views(0)
 			.category(category)
 			.build();
-
-		author.addPost(createPost);
 
 		return createPost;
 	}

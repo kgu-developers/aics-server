@@ -23,12 +23,13 @@ public class PostService {
 		// user 서비스에서 post 서비스를 사용할 일은 없을 것 같고
 		// 페치조인을 사용하면 다시 사용할 일이 있을까? 해서 이렇게 구현했슴다
 		User author = userService.me();
-		Post savePost = Post.create(
-			request.title(), request.content(), request.category(), author
+		Post createPost = Post.create(
+			request.title(), request.content(), request.category()
 		);
 
-		postRepository.save(savePost);
+		author.addPost(createPost);
+		postRepository.save(createPost);
 
-		return PostCreateResponse.from(savePost);
+		return PostCreateResponse.from(createPost);
 	}
 }
