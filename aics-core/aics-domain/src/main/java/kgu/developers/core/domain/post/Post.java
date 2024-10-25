@@ -62,7 +62,11 @@ public class Post extends BaseTimeEntity {
     /* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
     @OneToOne
     @JoinColumn(name = "file_id")
-    private File fileID;
+    private File attachment;
+
+    public boolean hasAttachment(){
+		return attachment != null;
+	}
     */
 
 	public static Post create(String title, String content) {
