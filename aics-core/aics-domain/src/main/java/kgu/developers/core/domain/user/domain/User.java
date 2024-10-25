@@ -1,5 +1,20 @@
 package kgu.developers.core.domain.user.domain;
 
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.FetchType.*;
+import static kgu.developers.core.domain.user.domain.Role.*;
+import static lombok.AccessLevel.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -12,20 +27,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import static jakarta.persistence.CascadeType.ALL;
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.FetchType.LAZY;
-import static kgu.developers.core.domain.user.domain.Role.USER;
-import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -63,10 +64,9 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-
 	public static User create(String userId, String password,
-							  String name, String email,
-							  String phoneNumber, Major major) {
+		String name, String email,
+		String phoneNumber, Major major) {
 		return User.builder()
 			.userId(userId)
 			.password(password)
@@ -99,5 +99,10 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	public void addPost(Post post) {
+		posts.add(post);
+		post.setAuthor(this);
 	}
 }
