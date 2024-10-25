@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.apis.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.apis.api.post.presentation.response.PostCreateResponse;
+import kgu.developers.apis.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.apis.api.user.application.UserService;
 import kgu.developers.core.domain.post.Post;
 import kgu.developers.core.domain.post.PostRepository;
@@ -18,7 +18,7 @@ public class PostService {
 	private final UserService userService;
 
 	@Transactional
-	public PostCreateResponse createPost(PostCreateRequest request) {
+	public PostPersistResponse createPost(PostCreateRequest request) {
 		// fetch join을 사용할까요 ...? 아님 이 방법이 좋을까요?
 		// user 서비스에서 post 서비스를 사용할 일은 없을 것 같고
 		// 페치조인을 사용하면 다시 사용할 일이 있을까? 해서 이렇게 구현했슴다
@@ -30,6 +30,6 @@ public class PostService {
 		author.addPost(createPost);
 		postRepository.save(createPost);
 
-		return PostCreateResponse.from(createPost);
+		return PostPersistResponse.from(createPost);
 	}
 }

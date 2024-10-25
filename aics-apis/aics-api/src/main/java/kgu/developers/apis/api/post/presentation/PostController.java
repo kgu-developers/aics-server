@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kgu.developers.apis.api.post.application.PostService;
 import kgu.developers.apis.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.apis.api.post.presentation.response.PostCreateResponse;
+import kgu.developers.apis.api.post.presentation.response.PostPersistResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,8 +27,8 @@ public class PostController {
 			- Assignee : 박민준
 		""")
 	@PostMapping
-	public ResponseEntity<PostCreateResponse> createPost(@RequestBody PostCreateRequest request) {
-		PostCreateResponse response = postService.createPost(request);
+	public ResponseEntity<PostPersistResponse> createPost(@RequestBody PostCreateRequest request) {
+		PostPersistResponse response = postService.createPost(request);
 
 		return ResponseEntity.status(CREATED).body(response);
 	}
