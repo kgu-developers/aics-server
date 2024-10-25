@@ -60,9 +60,12 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	private long fetchTotalCount(QPost post, BooleanExpression condition) {
-		return queryFactory
-			.select(post.id)
+		Long count = queryFactory
+			.select(post.id.count())
+			.from(post)
 			.where(condition)
-			.fetch().size();
+			.fetchOne();
+
+		return count != null ? count : 0L;
 	}
 }
