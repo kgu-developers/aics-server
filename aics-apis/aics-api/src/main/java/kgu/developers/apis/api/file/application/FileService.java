@@ -80,9 +80,7 @@ public class FileService {
 				FileEntity.create(logicalName, physicalPath)
 			);
 
-			return FilePersistResponse.builder()
-				.id(entity.getId().toString())
-				.build();
+			return FilePersistResponse.of(entity.getId().toString());
 		} catch (Exception e) {
 			log.error("파일 저장 중 Exception 발생 {}", e.getMessage());
 			return null;
