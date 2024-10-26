@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -40,9 +38,8 @@ public class PostService {
 		return PostPersistResponse.from(createPost.getId());
 	}
 
-	public PostPageResponse<PostInfoResponse> getPosts(String keyword, int page, int size) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-		Page<Post> postsPage = getPostsWithUserByKeyword(keyword, pageable);
+	public PostPageResponse<PostInfoResponse> getPosts(String keyword, Pageable pageable) {
+		Page<Post> postsPage = postRepository.findPostsWithUserByKeyword(keyword, pageable);
 		List<PostInfoResponse> postInfoResponses = postsPage.stream()
 			.map(PostInfoResponse::from)
 			.collect(Collectors.toList());
@@ -50,9 +47,5 @@ public class PostService {
 		PageableResponse<PostInfoResponse> pageableResponse = PageableResponse.of(pageable,
 			postsPage.getTotalElements());
 		return PostPageResponse.of(postInfoResponses, pageableResponse);
-	}
-
-	public Page<Post> getPostsWithUserByKeyword(String keyword, Pageable pageable) {
-		return postRepository.findPostsWithUserByKeyword(keyword, pageable);
 	}
 }

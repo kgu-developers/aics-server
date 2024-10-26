@@ -2,6 +2,7 @@ package kgu.developers.apis.api.post.presentation;
 
 import static org.springframework.http.HttpStatus.*;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class PostController {
 		@RequestParam(defaultValue = "0") int page,
 		@RequestParam(defaultValue = "10") int size
 	) {
-		PostPageResponse<PostInfoResponse> response = postService.getPosts(keyword, page, size);
+		PostPageResponse<PostInfoResponse> response = postService.getPosts(keyword, PageRequest.of(page, size));
 
 		return ResponseEntity.ok(response);
 	}
