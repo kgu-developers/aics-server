@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import kgu.developers.apis.api.file.application.FileService;
 import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/files")
@@ -32,7 +30,7 @@ public class FileController {
 			- Assignee : 이신행
 		""")
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePersistResponse.class)))
-	@PostMapping("/file-upload")
+	@PostMapping
 	public ResponseEntity<FilePersistResponse> uploadFile(@RequestParam("file") MultipartFile file,
 														  HttpServletRequest request) {
 		// 업로드한 API의 도메인을 저장시에 도메인으로 사용
