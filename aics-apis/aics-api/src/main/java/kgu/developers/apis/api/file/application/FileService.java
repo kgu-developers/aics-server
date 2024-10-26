@@ -16,10 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
-import java.util.UUID;
-
-import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Slf4j
 @Service
@@ -40,25 +36,15 @@ public class FileService {
 
 		file.transferTo(tempFile);
 		String originalFilename = tempFile.getName();
-		String filePath = makeFilePath(domain, originalFilename);
+		String filePath = fileHandler.makeFilePath(domain, originalFilename);
 		FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
 
-		if (!fileHandler.checkAfterSaving(tempFile)) {
+		if (!fileHandler.checkAfterSaving(filePath)) {
 			throw new FileSavingException();
 		}
 
 		fileHandler.deleteTmpFile(tempFile);
 		return response;
-	}
-
-	private String makeFilePath(String domain, String originalFilename) {
-		// TODO 경로 지정. 일단 로컬 테스트용
-		String basePath = "/Users/snhng/uploaded-demo/";
-		String formatted = LocalDate.now().format(ofPattern("/yy/MM/dd/"));
-		UUID uuid = UUID.randomUUID();
-		String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-
-		return basePath + domain + formatted + uuid + extension;
 	}
 
 	@Transactional
