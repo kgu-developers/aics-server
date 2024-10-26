@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import kgu.developers.apis.api.file.application.FileService;
 import kgu.developers.apis.api.file.presentation.exception.FileSavingException;
 import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
@@ -28,7 +29,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class FileController {
 	private final FileService fileService;
 
-	// TODO: 추후에 Post 업로드 기능 구현 시에 합치기
 	@Hidden
 	@Operation(summary = "파일 업로드 API", description = """
 			- Description : 이 API는 파일을 저장합니다. MultiPartFile을 Body에 넣어서 전달해주세요.
@@ -36,9 +36,12 @@ public class FileController {
 		""")
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePersistResponse.class)))
 	@PostMapping("/file-upload")
-	public ResponseEntity<FilePersistResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<FilePersistResponse> uploadFile(@RequestParam("file") MultipartFile file,
+														  HttpServletRequest request) {
 		try {
-			FilePersistResponse response = fileService.uploadFile("posts", file);
+			// 업로드한 API의 도메인을 저장시에 도메인으로 사용
+			String domain = request.getRequestURI().split("/")[1];
+			FilePersistResponse response = fileService.uploadFile(domain, file);
 			return ResponseEntity.status(CREATED).body(response);
 		} catch (IOException e) {
 			// 추후 AOP 등으로 분리
