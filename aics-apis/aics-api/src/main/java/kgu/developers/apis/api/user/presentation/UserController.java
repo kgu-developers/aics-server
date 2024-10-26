@@ -1,5 +1,15 @@
 package kgu.developers.apis.api.user.presentation;
 
+import static org.springframework.http.HttpStatus.*;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,15 +22,6 @@ import kgu.developers.apis.api.user.presentation.request.UserUpdateRequest;
 import kgu.developers.apis.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.apis.api.user.presentation.response.UserPersistResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,11 +44,7 @@ public class UserController {
 	}
 
 	@Operation(summary = "마이페이지", description = "유저의 마이페이지를 반환합니다.")
-	@ApiResponse(
-		responseCode = "200",
-		description = "마이페이지 로드 완료",
-		content = @Content(schema = @Schema(implementation = UserDetailResponse.class))
-	)
+	@ApiResponse(responseCode = "200", description = "마이페이지 로드 완료", content = @Content(schema = @Schema(implementation = UserDetailResponse.class)))
 	@GetMapping("/my")
 	public ResponseEntity<UserDetailResponse> myPage() {
 		UserDetailResponse response = userService.getUserDetail();
