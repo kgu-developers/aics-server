@@ -28,9 +28,7 @@ public class PostService {
 	@Transactional
 	public PostPersistResponse createPost(PostCreateRequest request) {
 		User author = userService.me();
-		Post createPost = Post.create(
-			request.title(), request.content()
-		);
+		Post createPost = Post.create(request.title(), request.content());
 
 		author.addPost(createPost);
 		postRepository.save(createPost);
@@ -40,12 +38,14 @@ public class PostService {
 
 	public PostPageResponse<PostInfoResponse> getPosts(String keyword, Pageable pageable) {
 		Page<Post> postsPage = postRepository.findPostsWithUserByKeyword(keyword, pageable);
+
 		List<PostInfoResponse> postInfoResponses = postsPage.stream()
 			.map(PostInfoResponse::from)
 			.collect(Collectors.toList());
 
 		PageableResponse<PostInfoResponse> pageableResponse = PageableResponse.of(pageable,
 			postsPage.getTotalElements());
+
 		return PostPageResponse.of(postInfoResponses, pageableResponse);
 	}
 }
