@@ -1,21 +1,16 @@
 package kgu.developers.apis.api.post.application;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.apis.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.apis.api.post.presentation.response.PostInfoResponse;
-import kgu.developers.apis.api.post.presentation.response.PostPageResponse;
 import kgu.developers.apis.api.post.presentation.response.PostPersistResponse;
+import kgu.developers.apis.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.apis.api.user.application.UserService;
-import kgu.developers.core.common.response.PageableResponse;
-import kgu.developers.core.domain.post.Post;
-import kgu.developers.core.domain.post.PostRepository;
+import kgu.developers.core.common.response.PaginatedListResponse;
+import kgu.developers.core.domain.post.domain.Post;
+import kgu.developers.core.domain.post.domain.PostRepository;
 import kgu.developers.core.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
@@ -28,24 +23,21 @@ public class PostService {
 	@Transactional
 	public PostPersistResponse createPost(PostCreateRequest request) {
 		User author = userService.me();
-		Post createPost = Post.create(request.title(), request.content());
-
-		author.addPost(createPost);
+		Post createPost = Post.create(request.title(), request.content(), author);
 		postRepository.save(createPost);
-
 		return PostPersistResponse.from(createPost.getId());
 	}
 
-	public PostPageResponse<PostInfoResponse> getPosts(String keyword, Pageable pageable) {
-		Page<Post> postsPage = postRepository.findPostsWithUserByKeyword(keyword, pageable);
-
-		List<PostInfoResponse> postInfoResponses = postsPage.stream()
-			.map(PostInfoResponse::from)
-			.collect(Collectors.toList());
-
-		PageableResponse<PostInfoResponse> pageableResponse = PageableResponse.of(pageable,
-			postsPage.getTotalElements());
-
-		return PostPageResponse.of(postInfoResponses, pageableResponse);
+	@Transactional
+	public PostSummaryPageResponse getPostsByKeyword(PageRequest request, String keyword) {
+		try {
+			PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
+				keyword, request);
+			return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

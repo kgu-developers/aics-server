@@ -3,39 +3,44 @@ package kgu.developers.apis.api.post.presentation.response;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.core.domain.post.Post;
+import kgu.developers.core.domain.post.domain.Post;
 import lombok.Builder;
 
 @Builder
-public record PostInfoResponse(
+public record PostSummaryResponse(
 	@Schema(description = "게시글 ID", example = "1022", requiredMode = REQUIRED)
 	Long postId,
 
 	@Schema(description = "게시글 제목", example = "KGU DEVELOPERS 화이팅", requiredMode = REQUIRED)
-	String postTitle,
+	String title,
 
 	@Schema(description = "작성자 이름", example = "zi존민준짱짱123", requiredMode = REQUIRED)
-	String authorName,
-
-	@Schema(description = "작성일", example = "1999-10-22", requiredMode = REQUIRED)
-	LocalDate createDate,
+	String author,
 
 	@Schema(description = "조회수", example = "19", requiredMode = REQUIRED)
 	int views,
 
 	@Schema(description = "첨부파일 여부", example = "false", requiredMode = REQUIRED)
-	boolean hasAttachment
+	boolean hasAttachment,
+
+	@Schema(description = "작성일", example = "1999-10-22", requiredMode = REQUIRED)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	String createdAt
 ) {
-	public static PostInfoResponse from(Post post) {
-		return PostInfoResponse.builder()
+	public static PostSummaryResponse from(Post post) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return PostSummaryResponse.builder()
 			.postId(post.getId())
-			.postTitle(post.getTitle())
-			.authorName(post.getAuthor().getName())
-			.createDate(post.getCreatedAt().toLocalDate())
+			.title(post.getTitle())
+			.author(post.getAuthor().getName())
 			.views(post.getViews())
-			//		.hasAttachment(post.hasAttachment())
+			.hasAttachment(false) // TODO : 첨부파일 여부 확인
+			.createdAt(post.getCreatedAt().format(formatter))
 			.build();
 	}
 }

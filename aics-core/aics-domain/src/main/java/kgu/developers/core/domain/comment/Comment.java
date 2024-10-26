@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import kgu.developers.core.common.domain.BaseTimeEntity;
-import kgu.developers.core.domain.post.Post;
+import kgu.developers.core.domain.post.domain.Post;
 import kgu.developers.core.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

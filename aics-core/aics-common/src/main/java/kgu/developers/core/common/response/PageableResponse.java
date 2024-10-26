@@ -2,6 +2,8 @@ package kgu.developers.core.common.response;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,7 +37,7 @@ public record PageableResponse<T>(
 		description = "전체 요소 개수 입니다.",
 		requiredMode = REQUIRED
 	)
-	Long totalElements,
+	int totalElements,
 
 	@Schema(
 		defaultValue = "false",
@@ -45,14 +47,14 @@ public record PageableResponse<T>(
 	boolean isEnd
 ) {
 
-	public static <T> PageableResponse<T> of(Pageable pageable, Long totalElements) {
-		int totalPageSize = (int) Math.ceil(totalElements / (double) pageable.getPageSize());
+	public static <T> PageableResponse<T> of(Pageable pageable, List<T> totalElements) {
+		int totalPageSize = (int)Math.ceil((double)totalElements.size() / pageable.getPageSize());
 		boolean isEnd = pageable.getPageNumber() + 1 >= totalPageSize;
 		return PageableResponse.<T>builder()
 			.page(pageable.getPageNumber())
 			.size(pageable.getPageSize())
 			.totalPages(totalPageSize)
-			.totalElements(totalElements)
+			.totalElements(totalElements.size())
 			.isEnd(isEnd)
 			.build();
 	}

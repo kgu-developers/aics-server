@@ -1,4 +1,4 @@
-package kgu.developers.core.domain.post;
+package kgu.developers.core.domain.post.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
