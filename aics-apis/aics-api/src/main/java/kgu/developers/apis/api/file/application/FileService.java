@@ -27,26 +27,31 @@ public class FileService {
 	private final FileHandler fileHandler;
 
 	@Transactional
-	public FilePersistResponse uploadFile(String domain, MultipartFile file) throws IOException {
+	public FilePersistResponse uploadFile(String domain, MultipartFile file) {
 		if (!fileHandler.checkBeforeSave(file)) {
 			throw new FileSavingException();
 		}
 
-		String tempDir = System.getProperty("java.io.tmpdir");
-		String tempFilePath = tempDir + "/" + file.getOriginalFilename();
-		File tempFile = new File(tempFilePath);
+		try {
+			String tempDir = System.getProperty("java.io.tmpdir");
+			String tempFilePath = tempDir + "/" + file.getOriginalFilename();
+			File tempFile = new File(tempFilePath);
 
-		file.transferTo(tempFile);
-		String originalFilename = tempFile.getName();
-		String filePath = fileHandler.makeFilePath(domain, originalFilename);
-		FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
+			file.transferTo(tempFile);
+			String originalFilename = tempFile.getName();
+			String filePath = fileHandler.makeFilePath(domain, originalFilename);
+			FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
 
-		if (!fileHandler.checkAfterSaving(filePath)) {
+			if (!fileHandler.checkAfterSaving(filePath)) {
+				throw new FileSavingException();
+			}
+
+			fileHandler.deleteTmpFile(tempFile);
+			return response;
+		} catch (IOException e) {
+			log.error("파일 변환 중 IOException 발생 {}", e.getMessage());
 			throw new FileSavingException();
 		}
-
-		fileHandler.deleteTmpFile(tempFile);
-		return response;
 	}
 
 	@Transactional

@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import kgu.developers.apis.api.file.application.FileService;
-import kgu.developers.apis.api.file.presentation.exception.FileSavingException;
 import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -38,15 +35,9 @@ public class FileController {
 	@PostMapping("/file-upload")
 	public ResponseEntity<FilePersistResponse> uploadFile(@RequestParam("file") MultipartFile file,
 														  HttpServletRequest request) {
-		try {
-			// 업로드한 API의 도메인을 저장시에 도메인으로 사용
-			String domain = request.getRequestURI().split("/")[1];
-			FilePersistResponse response = fileService.uploadFile(domain, file);
-			return ResponseEntity.status(CREATED).body(response);
-		} catch (IOException e) {
-			// 추후 AOP 등으로 분리
-			log.error("파일 변환 중 IOException 발생 {}", e.getMessage());
-			throw new FileSavingException();
-		}
+		// 업로드한 API의 도메인을 저장시에 도메인으로 사용
+		String domain = request.getRequestURI().split("/")[1];
+		FilePersistResponse response = fileService.uploadFile(domain, file);
+		return ResponseEntity.status(CREATED).body(response);
 	}
 }
