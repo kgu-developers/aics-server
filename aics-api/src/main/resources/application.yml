@@ -1,11 +1,13 @@
 spring:
   application:
     name: aics-api
+
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:aics}
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:root}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -15,11 +17,25 @@ spring:
     defer-datasource-initialization: true
     show-sql: true
     open-in-view: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:10MB}
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD}
+
+resource:
+  file:
+    url: /upload/files
+    path: ${user.dir}/files
+    disallow-extension: .exe, .bat, .sh, .cmd, .js, .html, .jsp, .php, .asp, .aspx, .dll, .so
+    allow-extension: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .csv, .zip, .rar
 
 springdoc:
   default-consumes-media-type: application/json

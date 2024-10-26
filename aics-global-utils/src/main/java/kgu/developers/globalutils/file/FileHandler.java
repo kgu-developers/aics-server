@@ -19,11 +19,10 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 @Component
 @RequiredArgsConstructor
 public class FileHandler {
-	@Value("${file.multipart.maxFileSize}")
-	private String MAX_FILE_SIZE;
-	@Value("${file.upload.path}")
+
+	@Value("${resource.file.path}")
 	private String BASE_PATH;
-	@Value("#{'${file.allowed-extensions}'.split(',')}")
+	@Value("#{'${resource.file.allow-extension}'.split(',')}")
 	private String[] allowedExtensions;
 
 	/*
@@ -34,12 +33,6 @@ public class FileHandler {
 			log.error("파일이 널이나 존재하지 않음");
 			return false;
 		}
-
-		if (isSizeBig(file)) {
-			log.error("파일 크기가 너무 큼");
-			return false;
-		}
-
 		if (isNotValidExtension(file.getOriginalFilename())) {
 			log.error("파일 확장자가 유효하지 않음");
 			return false;
@@ -60,10 +53,6 @@ public class FileHandler {
 		return file == null
 			|| file.isEmpty()
 			|| file.getOriginalFilename() == null;
-	}
-
-	public boolean isSizeBig(MultipartFile file) {
-		return file.getSize() > Long.parseLong(MAX_FILE_SIZE);
 	}
 
 	public boolean isNotValidExtension(String fileName) {
