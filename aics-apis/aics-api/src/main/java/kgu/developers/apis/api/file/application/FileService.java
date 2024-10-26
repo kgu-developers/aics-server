@@ -1,9 +1,6 @@
 package kgu.developers.apis.api.file.application;
 
-import kgu.developers.apis.api.file.presentation.exception.ExtensionIsNotValidException;
-import kgu.developers.apis.api.file.presentation.exception.FileIsNullException;
-import kgu.developers.apis.api.file.presentation.exception.FileIsTooBigException;
-import kgu.developers.apis.api.file.presentation.exception.FilePathIsNotValidException;
+import kgu.developers.apis.api.file.presentation.exception.FileSavingException;
 import kgu.developers.apis.api.file.presentation.response.FilePersistResponse;
 import kgu.developers.core.domain.file.domain.FileEntity;
 import kgu.developers.core.domain.file.domain.FileRepository;
@@ -33,41 +30,25 @@ public class FileService {
 
 	@Transactional
 	public FilePersistResponse uploadFile(String domain, MultipartFile file) throws IOException {
-		if (fileHandler.fileIsNull(file)) {
-			log.error("파일이 널이나 존재하지 않음");
-			throw new FileIsNullException();
-		}
-
-		if (fileHandler.isSizeBig(file)) {
-			log.error("파일 크기가 너무 큼");
-			throw new FileIsTooBigException();
+		if (!fileHandler.checkBeforeSave(file)) {
+			throw new FileSavingException();
 		}
 
 		String tempDir = System.getProperty("java.io.tmpdir");
 		String tempFilePath = tempDir + "/" + file.getOriginalFilename();
 		File tempFile = new File(tempFilePath);
 
-		try {
-			file.transferTo(tempFile);
-			if (fileHandler.isNotValidExtension(tempFile.getName())) {
-				log.error("파일 확장자가 유효하지 않음");
-				throw new ExtensionIsNotValidException();
-			}
+		file.transferTo(tempFile);
+		String originalFilename = tempFile.getName();
+		String filePath = makeFilePath(domain, originalFilename);
+		FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
 
-			String originalFilename = tempFile.getName();
-			String filePath = makeFilePath(domain, originalFilename);
-
-			FilePersistResponse response = saveFile(tempFile, originalFilename, filePath);
-
-			if (fileHandler.filePathIsNotValid(filePath)) {
-				log.error("파일 저장 위치가 확인되지 않음");
-				throw new FilePathIsNotValidException();
-			}
-
-			return response;
-		} finally {
-			fileHandler.deleteTmpFile(tempFile);
+		if (!fileHandler.checkAfterSaving(tempFile)) {
+			throw new FileSavingException();
 		}
+
+		fileHandler.deleteTmpFile(tempFile);
+		return response;
 	}
 
 	private String makeFilePath(String domain, String originalFilename) {
