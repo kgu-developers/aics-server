@@ -7,6 +7,7 @@ import kgu.developers.core.domain.file.domain.FileRepository;
 import kgu.developers.globalutils.file.FileHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import java.nio.file.StandardCopyOption;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@ComponentScan(basePackageClasses = kgu.developers.globalutils.file.FileHandler.class)
 public class FileService {
 	private final FileRepository fileRepository;
 	private final FileHandler fileHandler;
