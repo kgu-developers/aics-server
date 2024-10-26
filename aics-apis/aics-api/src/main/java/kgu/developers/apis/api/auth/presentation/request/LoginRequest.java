@@ -10,7 +10,7 @@ public record LoginRequest(
 	@NotNull
 	String userId,
 
-	@Schema(description = "비밀번호", example = "password1234", requiredMode = REQUIRED)
+	@Schema(description = "비밀번호", example = "password1234!", requiredMode = REQUIRED)
 	@NotNull
 	String password
 ) {

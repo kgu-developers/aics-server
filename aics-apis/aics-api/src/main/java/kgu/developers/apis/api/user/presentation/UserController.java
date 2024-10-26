@@ -43,8 +43,15 @@ public class UserController {
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
-	@Operation(summary = "마이페이지", description = "유저의 마이페이지를 반환합니다.")
-	@ApiResponse(responseCode = "200", description = "마이페이지 로드 완료", content = @Content(schema = @Schema(implementation = UserDetailResponse.class)))
+	@Operation(summary = "마이페이지", description = """
+			- Description : 이 API는 회원의 정보를 출력합니다.
+			- Assignee : 이신행
+		""")
+	@ApiResponse(
+		responseCode = "200",
+		description = "마이페이지 로드 완료",
+		content = @Content(schema = @Schema(implementation = UserDetailResponse.class))
+	)
 	@GetMapping("/my")
 	public ResponseEntity<UserDetailResponse> myPage() {
 		UserDetailResponse response = userService.getUserDetail();

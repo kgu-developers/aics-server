@@ -14,7 +14,7 @@ public record UserCreateRequest(
 	@NotNull
 	String userId,
 
-	@Schema(description = "비밀번호", example = "password1234", requiredMode = REQUIRED)
+	@Schema(description = "비밀번호", example = "password1234!", requiredMode = REQUIRED)
 	@Pattern(
 		regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{8,15}$",
 		message = "비밀번호는 영문, 숫자, 특수문자를 포함하여 8~15자리여야 합니다."
@@ -34,7 +34,7 @@ public record UserCreateRequest(
 	@Pattern(regexp = "^\\d{2,4}-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다.")
 	String phoneNumber,
 
-	@Schema(description = "전공 이름", example = "컴퓨터공학부", requiredMode = REQUIRED)
+	@Schema(description = "전공 이름", example = "CSE", requiredMode = REQUIRED)
 	@NotNull
 	Major major
 ) {
