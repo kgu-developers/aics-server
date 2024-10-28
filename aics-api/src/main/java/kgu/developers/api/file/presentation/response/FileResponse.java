@@ -7,15 +7,15 @@ import lombok.Builder;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
-public record FilePostDetailResponse(
+public record FileResponse(
 	@Schema(description = "업로드 때 사용한 파일명", example = "사용자가 업로드 한 파일 이름.png", requiredMode = REQUIRED)
 	String logicalName,
 
 	@Schema(description = "저장할 때 사용한 파일명", example = "저장된/경로와/저장된/유니크이름.png", requiredMode = REQUIRED)
 	String physicalPath
 ) {
-	public static FilePostDetailResponse from(FileEntity file) {
-		return FilePostDetailResponse.builder()
+	public static FileResponse from(FileEntity file) {
+		return FileResponse.builder()
 			.logicalName(file.getLogicalName())
 			.physicalPath(file.getPhysicalPath())
 			.build();

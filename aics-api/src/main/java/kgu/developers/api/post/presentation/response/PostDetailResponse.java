@@ -44,9 +44,9 @@ public record PostDetailResponse(
 	@Schema(description = "게시글에 첨부된 파일",
 		example = "[{"
 			+ "\"logicalName\": \"사용자가 업로드 한 파일 이름.png\", "
-			+ "\"physicalPath\": \"저장된/경로와/저장된/유니크이름.png\"]",
+			+ "\"physicalPath\": \"upload/도메인명/yy/MM/dd/유니크이름.png\"]",
 		requiredMode = REQUIRED)
-	FilePostDetailResponse file
+	FileResponse file
 */
 ) {
 	public static PostDetailResponse from(Post post) {
