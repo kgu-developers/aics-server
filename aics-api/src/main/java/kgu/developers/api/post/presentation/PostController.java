@@ -70,7 +70,7 @@ public class PostController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}")
 	public ResponseEntity<Void> updatePost(
-		@PathVariable Long postId,
+		@Parameter(description = "수정할 게시글의 ID", required = true) @PathVariable @Positive Long postId,
 		@RequestBody PostUpdateRequest request
 	) {
 		postService.updatePost(postId, request);

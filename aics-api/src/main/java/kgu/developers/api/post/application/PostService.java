@@ -1,13 +1,10 @@
 package kgu.developers.api.post.application;
 
-import static kgu.developers.api.post.presentation.exception.PostExceptionCode.*;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
-import kgu.developers.api.post.presentation.exception.UnauthorizedAuthorException;
 import kgu.developers.api.post.presentation.request.PostCreateRequest;
 import kgu.developers.api.post.presentation.request.PostUpdateRequest;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
@@ -47,19 +44,10 @@ public class PostService {
 
 	@Transactional
 	public void updatePost(Long postId, PostUpdateRequest request) {
-		User author = userService.me();
 		Post updatePost = postRepository.findById(postId)
-			.orElseThrow(() -> new PostNotFoundException(POST_NOT_FOUND));
-
-		validateAuthor(updatePost, author.getUserId());
+			.orElseThrow(PostNotFoundException::new);
 
 		updatePost.updateTitle(request.title());
 		updatePost.updateContent(request.content());
-	}
-
-	private void validateAuthor(Post post, String userId) {
-		if (!post.isAuthor(userId)) {
-			throw new UnauthorizedAuthorException(UNAUTHORIZED_AUTHOR);
-		}
 	}
 }

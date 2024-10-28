@@ -11,7 +11,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PostExceptionCode implements ExceptionCode {
-	UNAUTHORIZED_AUTHOR(FORBIDDEN, "작성자만 수정 또는 삭제할 수 있습니다."),
 	POST_NOT_FOUND(NOT_FOUND, "해당 게시글을 찾을 수 없습니다."),
 	;
 
