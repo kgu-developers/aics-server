@@ -5,6 +5,8 @@ import static org.springframework.http.HttpStatus.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +23,9 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.api.post.application.PostService;
 import kgu.developers.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
+import kgu.developers.api.post.presentation.request.PostUpdateRequest;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
+import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -58,5 +61,19 @@ public class PostController {
 	) {
 		PostSummaryPageResponse response = postService.getPostsByKeyword(PageRequest.of(page, size), keyword);
 		return ResponseEntity.ok(response);
+	}
+
+	@Operation(summary = "게시글 수정 API", description = """
+		    - Description : 이 API는 게시글을 수정합니다.
+		    - Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{postId}")
+	public ResponseEntity<PostPersistResponse> updatePost(
+		@PathVariable Long postId,
+		@RequestBody PostUpdateRequest request
+	) {
+		postService.updatePost(postId, request);
+		return ResponseEntity.noContent().build();
 	}
 }
