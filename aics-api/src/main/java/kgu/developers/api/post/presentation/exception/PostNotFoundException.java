@@ -1,10 +1,11 @@
 package kgu.developers.api.post.presentation.exception;
 
+import static kgu.developers.api.post.presentation.exception.PostExceptionCode.*;
+
 import kgu.developers.common.exception.CustomException;
-import kgu.developers.common.exception.ExceptionCode;
 
 public class PostNotFoundException extends CustomException {
-	public PostNotFoundException(ExceptionCode code) {
-		super(code);
+	public PostNotFoundException() {
+		super(POST_NOT_FOUND);
 	}
 }
