@@ -21,11 +21,17 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
+	public Optional<Post> findById(Long postId) {
+		return jpaPostRepository.findById(postId);
+	}
+
+	@Override
 	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable) {
 		return queryPostRepository.findAllByTitleContainingOrderByCreatedAtDesc(keyword, pageable);
 	}
 
-	public Optional<Post> findById(Long postId) {
+	@Override
+	public Optional<Post> findByIdWithAuthorAndComments(Long postId) {
 		return queryPostRepository.findByIdWithAuthorAndComments(postId);
 	}
 }

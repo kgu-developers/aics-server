@@ -2,7 +2,7 @@ package kgu.developers.api.post.application;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
-import kgu.developers.api.post.presentation.request.PostCreateRequest;
+import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
@@ -22,7 +22,7 @@ public class PostService {
 	private final UserService userService;
 
 	@Transactional
-	public PostPersistResponse createPost(PostCreateRequest request) {
+	public PostPersistResponse createPost(PostRequest request) {
 		User author = userService.me();
 		Post createPost = Post.create(request.title(), request.content(), author);
 		postRepository.save(createPost);
@@ -46,7 +46,16 @@ public class PostService {
 	}
 
 	public Post getById(Long postId) {
-		return postRepository.findById(postId)
+		return postRepository.findByIdWithAuthorAndComments(postId)
 			.orElseThrow(PostNotFoundException::new);
+	}
+
+	@Transactional
+	public void updatePost(Long postId, PostRequest request) {
+		Post updatePost = postRepository.findById(postId)
+			.orElseThrow(PostNotFoundException::new);
+
+		updatePost.updateTitle(request.title());
+		updatePost.updateContent(request.content());
 	}
 }
