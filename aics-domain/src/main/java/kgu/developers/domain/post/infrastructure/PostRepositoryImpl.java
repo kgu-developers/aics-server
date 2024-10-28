@@ -26,6 +26,6 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	public Optional<Post> findById(Long postId) {
-		return jpaPostRepository.findByIdWithAuthorAndComments(postId);
+		return queryPostRepository.findByIdWithAuthorAndComments(postId);
 	}
 }
