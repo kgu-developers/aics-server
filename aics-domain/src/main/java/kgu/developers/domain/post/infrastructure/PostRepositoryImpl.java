@@ -1,14 +1,13 @@
 package kgu.developers.domain.post.infrastructure;
 
-import java.util.Optional;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

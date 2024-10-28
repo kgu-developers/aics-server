@@ -1,15 +1,14 @@
 package kgu.developers.domain.post.domain;
 
-import java.util.Optional;
-
+import kgu.developers.common.response.PaginatedListResponse;
 import org.springframework.data.domain.Pageable;
 
-import kgu.developers.common.response.PaginatedListResponse;
+import java.util.Optional;
 
 public interface PostRepository {
 	Post save(Post post);
 
-	Optional<Post> findById(Long id);
-
 	PaginatedListResponse<Post> findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable);
+
+	Optional<Post> findById(Long postId);
 }

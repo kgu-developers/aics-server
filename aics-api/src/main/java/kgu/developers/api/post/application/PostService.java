@@ -1,11 +1,9 @@
 package kgu.developers.api.post.application;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import jakarta.transaction.Transactional;
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.api.user.application.UserService;
@@ -14,6 +12,8 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -42,9 +42,19 @@ public class PostService {
 	}
 
 	@Transactional
-	public void updatePost(Long postId, PostRequest request) {
-		Post updatePost = postRepository.findById(postId)
+	public PostDetailResponse getPostById(Long postId) {
+		return PostDetailResponse.from(getById(postId));
+	}
+
+	@Transactional
+	public Post getById(Long postId) {
+		return postRepository.findById(postId)
 			.orElseThrow(PostNotFoundException::new);
+	}
+
+	@Transactional
+	public void updatePost(Long postId, PostRequest request) {
+		Post updatePost = getById(postId);
 
 		updatePost.updateTitle(request.title());
 		updatePost.updateContent(request.content());

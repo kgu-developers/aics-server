@@ -1,10 +1,10 @@
 package kgu.developers.api.post.presentation.request;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 public record PostRequest(
 	@Schema(description = "게시물 제목", example = "박민준은 살아있다", requiredMode = REQUIRED)
