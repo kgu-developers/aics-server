@@ -8,12 +8,12 @@ import jakarta.validation.constraints.Size;
 
 public record PostUpdateRequest(
 	@Schema(description = "게시물 제목", example = "박민준은 살아있다", requiredMode = REQUIRED)
-	@NotBlank(message = "제목은 필수입니다.")
-	@Size(max = 100, message = "제목은 100자 이내여야 합니다.")
+	@NotBlank
+	@Size(max = 100)
 	String title,
 
 	@Schema(description = "게시물 내용", example = "살아 숨셔", requiredMode = REQUIRED)
-	@NotBlank(message = "내용은 필수입니다.")
+	@NotBlank
 	String content
 ) {
 }
