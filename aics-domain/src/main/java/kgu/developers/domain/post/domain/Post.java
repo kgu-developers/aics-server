@@ -74,4 +74,16 @@ public class Post extends BaseTimeEntity {
 			.author(author) // NOTE: User Setter 주입 방지 위해 생성자 주입
 			.build();
 	}
+
+	public void updateTitle(String title) {
+		this.title = title;
+	}
+
+	public void updateContent(String content) {
+		this.content = content;
+	}
+
+	public boolean isAuthor(String authorId) {
+		return this.author.getUserId().equals(authorId);
+	}
 }
