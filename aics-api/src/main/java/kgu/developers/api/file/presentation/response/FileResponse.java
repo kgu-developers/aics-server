@@ -11,7 +11,7 @@ public record FileResponse(
 	@Schema(description = "업로드 때 사용한 파일명", example = "사용자가 업로드 한 파일 이름.png", requiredMode = REQUIRED)
 	String logicalName,
 
-	@Schema(description = "저장할 때 사용한 파일명", example = "저장된/경로와/저장된/유니크이름.png", requiredMode = REQUIRED)
+	@Schema(description = "저장할 때 사용한 파일명", example = "upload/도메인명/yy/MM/dd/유니크이름.png", requiredMode = REQUIRED)
 	String physicalPath
 ) {
 	public static FileResponse from(FileEntity file) {
