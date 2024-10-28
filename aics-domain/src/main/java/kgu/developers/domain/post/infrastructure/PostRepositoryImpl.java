@@ -1,12 +1,13 @@
 package kgu.developers.domain.post.infrastructure;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,5 +23,9 @@ public class PostRepositoryImpl implements PostRepository {
 	@Override
 	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable) {
 		return queryPostRepository.findAllByTitleContainingOrderByCreatedAtDesc(keyword, pageable);
+	}
+
+	public Optional<Post> findById(Long postId) {
+		return jpaPostRepository.findByIdWithAuthorAndComments(postId);
 	}
 }

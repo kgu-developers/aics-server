@@ -33,10 +33,10 @@ public record PostDetailResponse(
 
 	@Schema(description = "게시글에 첨부된 파일",
 		example = "[{"
-			+ "\"commentId\": \"사용자가 업로드 한 파일 이름.png\", "
-			+ "\"author\": \"사용자가 업로드 한 파일 이름.png\", "
-			+ "\"createdAt\": \"사용자가 업로드 한 파일 이름.png\", "
-			+ "\"content\": \"저장된/경로와/저장된/유니크이름.png\"]",
+			+ "\"commentId\": 1122, "
+			+ "\"author\": \"이신행\", "
+			+ "\"createdAt\": \"1999-10-22\", "
+			+ "\"content\": \"예시 코멘트 입니다~~\"]",
 		requiredMode = REQUIRED)
 	List<CommentPostDetailResponse> comments
 /*
