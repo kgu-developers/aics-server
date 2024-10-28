@@ -36,7 +36,7 @@ public record PostDetailResponse(
 			+ "\"commentId\": 1122, "
 			+ "\"author\": \"이신행\", "
 			+ "\"createdAt\": \"1999-10-22\", "
-			+ "\"content\": \"예시 코멘트 입니다~~\"]",
+			+ "\"content\": \"예시 코멘트 입니다~~\"}]",
 		requiredMode = REQUIRED)
 	List<CommentPostDetailResponse> comments
 /*
