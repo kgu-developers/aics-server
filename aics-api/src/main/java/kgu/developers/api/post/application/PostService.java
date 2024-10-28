@@ -1,5 +1,6 @@
 package kgu.developers.api.post.application;
 
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,11 @@ public class PostService {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	// TODO
+	public PostDetailResponse getPostById(Long postId) {
 		return null;
 	}
 }

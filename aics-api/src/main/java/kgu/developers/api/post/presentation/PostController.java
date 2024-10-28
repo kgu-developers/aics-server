@@ -2,9 +2,11 @@ package kgu.developers.api.post.presentation;
 
 import static org.springframework.http.HttpStatus.*;
 
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +59,17 @@ public class PostController {
 		@Parameter(description = "검색 키워드", example = "컴퓨터공학과") @RequestParam(required = false) String keyword
 	) {
 		PostSummaryPageResponse response = postService.getPostsByKeyword(PageRequest.of(page, size), keyword);
+		return ResponseEntity.ok(response);
+	}
+
+	@Operation(summary = "게시글 상세 조회 API", description = """
+		    - Description : 이 API는 게시글의 상세 정보를 조회합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostDetailResponse.class)))
+	@GetMapping("/{postId}")
+	public ResponseEntity<PostDetailResponse> getPostById(@PathVariable Long postId) {
+		PostDetailResponse response = postService.getPostById(postId);
 		return ResponseEntity.ok(response);
 	}
 }

@@ -1,14 +1,5 @@
 package kgu.developers.domain.post.domain;
 
-import static jakarta.persistence.CascadeType.*;
-import static jakarta.persistence.EnumType.*;
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
-import static lombok.AccessLevel.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -24,6 +15,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -59,7 +59,7 @@ public class Post extends BaseTimeEntity {
     /* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
     @OneToOne
     @JoinColumn(name = "file_id")
-    private File attachment;
+    private FileEntity attachment;
 
     public boolean hasAttachment(){
 		return attachment != null;
