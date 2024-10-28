@@ -69,7 +69,7 @@ public class PostController {
 		""")
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}")
-	public ResponseEntity<PostPersistResponse> updatePost(
+	public ResponseEntity<Void> updatePost(
 		@PathVariable Long postId,
 		@RequestBody PostUpdateRequest request
 	) {
