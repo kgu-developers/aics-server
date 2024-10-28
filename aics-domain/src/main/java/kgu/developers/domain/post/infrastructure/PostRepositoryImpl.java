@@ -1,5 +1,7 @@
 package kgu.developers.domain.post.infrastructure;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,11 @@ public class PostRepositoryImpl implements PostRepository {
 	@Override
 	public Post save(Post post) {
 		return jpaPostRepository.save(post);
+	}
+
+	@Override
+	public Optional<Post> findById(Long postId) {
+		return jpaPostRepository.findById(postId);
 	}
 
 	@Override
