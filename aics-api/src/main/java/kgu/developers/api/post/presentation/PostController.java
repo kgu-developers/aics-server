@@ -22,8 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.api.post.application.PostService;
-import kgu.developers.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.api.post.presentation.request.PostUpdateRequest;
+import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +41,7 @@ public class PostController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = PostPersistResponse.class)))
 	@PostMapping
 	public ResponseEntity<PostPersistResponse> createPost(
-		@RequestBody PostCreateRequest request
+		@RequestBody PostRequest request
 	) {
 		PostPersistResponse response = postService.createPost(request);
 		return ResponseEntity.status(CREATED).body(response);
@@ -70,8 +69,8 @@ public class PostController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}")
 	public ResponseEntity<Void> updatePost(
-		@Parameter(description = "수정할 게시글의 ID", required = true) @PathVariable @Positive Long postId,
-		@RequestBody PostUpdateRequest request
+		@Parameter(description = "수정할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long postId,
+		@RequestBody PostRequest request
 	) {
 		postService.updatePost(postId, request);
 		return ResponseEntity.noContent().build();
