@@ -11,6 +11,4 @@ public interface PostRepository {
 	PaginatedListResponse<Post> findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable);
 
 	Optional<Post> findById(Long postId);
-
-	Optional<Post> findByIdWithAuthorAndComments(Long postId);
 }

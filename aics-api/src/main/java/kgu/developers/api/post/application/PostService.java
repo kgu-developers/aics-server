@@ -41,19 +41,20 @@ public class PostService {
 		return null;
 	}
 
+	@Transactional
 	public PostDetailResponse getPostById(Long postId) {
 		return PostDetailResponse.from(getById(postId));
 	}
 
+	@Transactional
 	public Post getById(Long postId) {
-		return postRepository.findByIdWithAuthorAndComments(postId)
+		return postRepository.findById(postId)
 			.orElseThrow(PostNotFoundException::new);
 	}
 
 	@Transactional
 	public void updatePost(Long postId, PostRequest request) {
-		Post updatePost = postRepository.findById(postId)
-			.orElseThrow(PostNotFoundException::new);
+		Post updatePost = getById(postId);
 
 		updatePost.updateTitle(request.title());
 		updatePost.updateContent(request.content());

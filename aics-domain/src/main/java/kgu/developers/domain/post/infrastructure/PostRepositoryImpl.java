@@ -29,9 +29,4 @@ public class PostRepositoryImpl implements PostRepository {
 	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable) {
 		return queryPostRepository.findAllByTitleContainingOrderByCreatedAtDesc(keyword, pageable);
 	}
-
-	@Override
-	public Optional<Post> findByIdWithAuthorAndComments(Long postId) {
-		return queryPostRepository.findByIdWithAuthorAndComments(postId);
-	}
 }
