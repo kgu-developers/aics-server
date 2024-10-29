@@ -1,16 +1,5 @@
 package kgu.developers.api.post.presentation;
 
-import static org.springframework.http.HttpStatus.*;
-
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,10 +9,23 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.api.post.application.PostService;
-import kgu.developers.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
+import kgu.developers.api.post.presentation.request.PostRequest;
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
+import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,7 +41,7 @@ public class PostController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = PostPersistResponse.class)))
 	@PostMapping
 	public ResponseEntity<PostPersistResponse> createPost(
-		@RequestBody PostCreateRequest request
+		@RequestBody PostRequest request
 	) {
 		PostPersistResponse response = postService.createPost(request);
 		return ResponseEntity.status(CREATED).body(response);
@@ -58,5 +60,30 @@ public class PostController {
 	) {
 		PostSummaryPageResponse response = postService.getPostsByKeyword(PageRequest.of(page, size), keyword);
 		return ResponseEntity.ok(response);
+	}
+
+	@Operation(summary = "게시글 상세 조회 API", description = """
+		    - Description : 이 API는 게시글의 상세 정보를 조회합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostDetailResponse.class)))
+	@GetMapping("/{postId}")
+	public ResponseEntity<PostDetailResponse> getPostById(@PathVariable Long postId) {
+		PostDetailResponse response = postService.getPostById(postId);
+		return ResponseEntity.ok(response);
+	}
+
+	@Operation(summary = "게시글 수정 API", description = """
+		    - Description : 이 API는 게시글을 수정합니다.
+		    - Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{postId}")
+	public ResponseEntity<Void> updatePost(
+		@Parameter(description = "수정할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long postId,
+		@RequestBody PostRequest request
+	) {
+		postService.updatePost(postId, request);
+		return ResponseEntity.noContent().build();
 	}
 }

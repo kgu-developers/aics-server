@@ -82,7 +82,6 @@ public class FileHandler {
 	}
 
 	public String makeFilePath(String domain, String originalFilename) {
-		// TODO 경로 지정. 일단 로컬 테스트용
 		String formatted = LocalDate.now().format(ofPattern("/yy/MM/dd/"));
 		UUID uuid = UUID.randomUUID();
 		String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
