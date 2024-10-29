@@ -1,16 +1,18 @@
 package kgu.developers.domain.post.infrastructure;
 
+import static kgu.developers.domain.post.domain.QPost.*;
+
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import kgu.developers.common.response.PageableResponse;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Post;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-import static kgu.developers.domain.post.domain.QPost.post;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,13 +20,14 @@ public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
 	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword,
-																			  Pageable pageable) {
-		if (keyword == null) keyword = "";
+		Pageable pageable) {
+		if (keyword == null)
+			keyword = "";
 		List<Post> posts = queryFactory
 			.select(post)
 			.from(post)
 			.where(post.title.contains(keyword))
-			.orderBy(post.createdAt.desc())
+			.orderBy(post.isPinned.desc(), post.createdAt.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
