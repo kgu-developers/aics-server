@@ -4,9 +4,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import kgu.developers.api.post.presentation.exception.PostNotFoundException;
-import kgu.developers.api.post.presentation.request.PostRequest;
-import kgu.developers.api.post.presentation.response.PostDetailResponse;
+
+import kgu.developers.api.post.presentation.request.PostCreateRequest;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.api.user.application.UserService;
@@ -32,25 +31,23 @@ public class PostService {
 
 	@Transactional
 	public PostSummaryPageResponse getPostsByKeyword(PageRequest request, String keyword) {
-		try {
-			PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
-				keyword, request);
-			return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Transactional
-	public PostDetailResponse getPostById(Long postId) {
-		return PostDetailResponse.from(getById(postId));
+		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
+			keyword, request);
+		return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
 	}
 
 	@Transactional
 	public Post getById(Long postId) {
 		return postRepository.findById(postId)
+			.filter(post -> post.getDeletedAt() == null)
 			.orElseThrow(PostNotFoundException::new);
+	}
+
+	@Transactional
+	public PostDetailResponse getPostById(Long postId) {
+		Post post = getById(postId);
+		post.increaseViews();
+		return PostDetailResponse.from(post);
 	}
 
 	@Transactional
@@ -65,5 +62,11 @@ public class PostService {
 	public void togglePostPinStatus(Long postId) {
 		Post pinPost = getById(postId);
 		pinPost.togglePinned();
+  }
+  
+  @Transactional
+	public void deletePost(Long postId) {
+		Post deletePost = getById(postId);
+		deletePost.delete();
 	}
 }

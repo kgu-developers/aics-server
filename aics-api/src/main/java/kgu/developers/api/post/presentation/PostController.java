@@ -69,7 +69,9 @@ public class PostController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostDetailResponse.class)))
 	@GetMapping("/{postId}")
-	public ResponseEntity<PostDetailResponse> getPostById(@PathVariable Long postId) {
+	public ResponseEntity<PostDetailResponse> getPostById(
+		@Parameter(description = "조회할 게시글의 ID", example = "3", required = true) @PathVariable @Positive Long postId
+	) {
 		PostDetailResponse response = postService.getPostById(postId);
 		return ResponseEntity.ok(response);
 	}
@@ -88,6 +90,7 @@ public class PostController {
 		return ResponseEntity.noContent().build();
 	}
 
+
 	@Operation(summary = "게시글 고정 상태 변경 API", description = """
 		    - Description : 이 API는 지정된 게시글의 고정 여부를 토글하여 고정 또는 해제합니다.
 		    - Assignee : 박민준
@@ -98,6 +101,19 @@ public class PostController {
 		@Parameter(description = "고정 상태를 변경할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long postId
 	) {
 		postService.togglePostPinStatus(postId);
+		return ResponseEntity.noContent().build();
+	}
+             
+  @Operation(summary = "게시글 삭제 API", description = """
+		    - Description : 이 API는 게시글을 삭제합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{postId}/delete")
+	public ResponseEntity<Void> deletePostById(
+		@Parameter(description = "조회할 게시글의 ID", example = "3", required = true) @PathVariable @Positive Long postId
+	) {
+		postService.deletePost(postId);
 		return ResponseEntity.noContent().build();
 	}
 }

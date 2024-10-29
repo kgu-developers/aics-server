@@ -89,4 +89,8 @@ public class Post extends BaseTimeEntity {
 	public void togglePinned() {
 		isPinned = !isPinned;
 	}
+
+	public void increaseViews() {
+		this.views++;
+	}
 }
