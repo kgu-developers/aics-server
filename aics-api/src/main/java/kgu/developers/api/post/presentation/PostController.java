@@ -68,7 +68,9 @@ public class PostController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostDetailResponse.class)))
 	@GetMapping("/{postId}")
-	public ResponseEntity<PostDetailResponse> getPostById(@PathVariable Long postId) {
+	public ResponseEntity<PostDetailResponse> getPostById(
+		@Parameter(description = "조회할 게시글의 ID", example = "3", required = true) @PathVariable @Positive Long postId
+	) {
 		PostDetailResponse response = postService.getPostById(postId);
 		return ResponseEntity.ok(response);
 	}
@@ -84,6 +86,19 @@ public class PostController {
 		@RequestBody PostRequest request
 	) {
 		postService.updatePost(postId, request);
+		return ResponseEntity.noContent().build();
+	}
+
+	@Operation(summary = "게시글 삭제 API", description = """
+		    - Description : 이 API는 게시글을 삭제합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{postId}/delete")
+	public ResponseEntity<Void> deletePostById(
+		@Parameter(description = "조회할 게시글의 ID", example = "3", required = true) @PathVariable @Positive Long postId
+	) {
+		postService.deletePost(postId);
 		return ResponseEntity.noContent().build();
 	}
 }

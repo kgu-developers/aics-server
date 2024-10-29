@@ -25,5 +25,9 @@ public abstract class BaseTimeEntity {
 
 	@Column
 	protected LocalDateTime deletedAt;
+
+	public void delete(){
+		deletedAt = LocalDateTime.now();
+	}
 }
 

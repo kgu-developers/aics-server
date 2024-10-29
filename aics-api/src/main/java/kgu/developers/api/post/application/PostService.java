@@ -42,14 +42,14 @@ public class PostService {
 	}
 
 	@Transactional
-	public PostDetailResponse getPostById(Long postId) {
-		return PostDetailResponse.from(getById(postId));
-	}
-
-	@Transactional
 	public Post getById(Long postId) {
 		return postRepository.findById(postId)
 			.orElseThrow(PostNotFoundException::new);
+	}
+
+	@Transactional
+	public PostDetailResponse getPostById(Long postId) {
+		return PostDetailResponse.from(getById(postId));
 	}
 
 	@Transactional
@@ -59,4 +59,13 @@ public class PostService {
 		updatePost.updateTitle(request.title());
 		updatePost.updateContent(request.content());
 	}
+
+	@Transactional
+	public void deletePost(Long postId) {
+		Post deletePost = getById(postId);
+		deletePost.delete();
+	}
+
+	// TODO 삭제된 게시물 표시 안하게 변경
+
 }
