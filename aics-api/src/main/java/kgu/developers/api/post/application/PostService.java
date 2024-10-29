@@ -4,8 +4,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-
-import kgu.developers.api.post.presentation.request.PostCreateRequest;
+import kgu.developers.api.post.presentation.exception.PostNotFoundException;
+import kgu.developers.api.post.presentation.request.PostRequest;
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.api.user.application.UserService;
@@ -37,36 +38,36 @@ public class PostService {
 	}
 
 	@Transactional
-	public Post getById(Long postId) {
-		return postRepository.findById(postId)
-			.filter(post -> post.getDeletedAt() == null)
-			.orElseThrow(PostNotFoundException::new);
-	}
-
-	@Transactional
 	public PostDetailResponse getPostById(Long postId) {
 		Post post = getById(postId);
 		post.increaseViews();
+
 		return PostDetailResponse.from(post);
 	}
 
-	@Transactional
 	public void updatePost(Long postId, PostRequest request) {
 		Post updatePost = getById(postId);
 
 		updatePost.updateTitle(request.title());
 		updatePost.updateContent(request.content());
+		postRepository.save(updatePost);
 	}
 
-	@Transactional
 	public void togglePostPinStatus(Long postId) {
 		Post pinPost = getById(postId);
 		pinPost.togglePinned();
-  }
-  
-  @Transactional
+		postRepository.save(pinPost);
+	}
+
 	public void deletePost(Long postId) {
 		Post deletePost = getById(postId);
 		deletePost.delete();
+		postRepository.save(deletePost);
+	}
+
+	private Post getById(Long postId) {
+		return postRepository.findById(postId)
+			.filter(post -> post.getDeletedAt() == null)
+			.orElseThrow(PostNotFoundException::new);
 	}
 }
