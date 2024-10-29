@@ -86,4 +86,8 @@ public class Post extends BaseTimeEntity {
 	public boolean isAuthor(String authorId) {
 		return this.author.getUserId().equals(authorId);
 	}
+
+	public void updateViews(int views) {
+		this.views = views;
+	}
 }

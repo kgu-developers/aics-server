@@ -53,7 +53,9 @@ public class PostService {
 
 	@Transactional
 	public PostDetailResponse getPostById(Long postId) {
-		return PostDetailResponse.from(getById(postId));
+		Post post = getById(postId);
+		post.updateViews(post.getViews() + 1);
+		return PostDetailResponse.from(post);
 	}
 
 	@Transactional
