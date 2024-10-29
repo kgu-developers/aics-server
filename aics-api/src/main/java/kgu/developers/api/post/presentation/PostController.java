@@ -94,10 +94,10 @@ public class PostController {
 		""")
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}/pin")
-	public ResponseEntity<Void> updatePost(
+	public ResponseEntity<Void> togglePostPinStatus(
 		@Parameter(description = "고정 상태를 변경할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long postId
 	) {
-		postService.togglePinnedStatus(postId);
+		postService.togglePostPinStatus(postId);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -62,7 +62,7 @@ public class PostService {
 	}
 
 	@Transactional
-	public void togglePinnedStatus(Long postId) {
+	public void togglePostPinStatus(Long postId) {
 		Post pinPost = getById(postId);
 		pinPost.togglePinned();
 	}
