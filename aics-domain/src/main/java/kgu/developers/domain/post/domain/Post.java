@@ -48,7 +48,7 @@ public class Post extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private Category category;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = EAGER)
 	@JoinColumn(name = "user_id")
 	private User author;
 

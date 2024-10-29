@@ -30,7 +30,6 @@ public class PostService {
 		return PostPersistResponse.from(createPost.getId());
 	}
 
-	@Transactional
 	public PostSummaryPageResponse getPostsByKeyword(PageRequest request, String keyword) {
 		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
 			keyword, request);
@@ -41,28 +40,26 @@ public class PostService {
 	public PostDetailResponse getPostById(Long postId) {
 		Post post = getById(postId);
 		post.increaseViews();
-
 		return PostDetailResponse.from(post);
 	}
 
+	@Transactional
 	public void updatePost(Long postId, PostRequest request) {
 		Post updatePost = getById(postId);
-
 		updatePost.updateTitle(request.title());
 		updatePost.updateContent(request.content());
-		postRepository.save(updatePost);
 	}
 
+	@Transactional
 	public void togglePostPinStatus(Long postId) {
 		Post pinPost = getById(postId);
 		pinPost.togglePinned();
-		postRepository.save(pinPost);
 	}
 
+	@Transactional
 	public void deletePost(Long postId) {
 		Post deletePost = getById(postId);
 		deletePost.delete();
-		postRepository.save(deletePost);
 	}
 
 	private Post getById(Long postId) {
