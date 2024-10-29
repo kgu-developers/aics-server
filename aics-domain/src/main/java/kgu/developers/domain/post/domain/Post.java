@@ -85,11 +85,7 @@ public class Post extends BaseTimeEntity {
 		this.content = content;
 	}
 
-	public boolean isAuthor(String authorId) {
-		return this.author.getUserId().equals(authorId);
-	}
-
-	public boolean togglePinned() {
+	public void togglePinned() {
 		isPinned = !isPinned;
 	}
 }
