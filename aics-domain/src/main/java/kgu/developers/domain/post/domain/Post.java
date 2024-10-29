@@ -1,5 +1,14 @@
 package kgu.developers.domain.post.domain;
 
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -15,15 +24,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static jakarta.persistence.CascadeType.ALL;
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -66,6 +66,8 @@ public class Post extends BaseTimeEntity {
 	}
     */
 
+	private boolean isPinned;
+
 	public static Post create(String title, String content, User author) {
 		return Post.builder()
 			.title(title)
@@ -85,5 +87,9 @@ public class Post extends BaseTimeEntity {
 
 	public boolean isAuthor(String authorId) {
 		return this.author.getUserId().equals(authorId);
+	}
+
+	public boolean togglePinned() {
+		isPinned = !isPinned;
 	}
 }
