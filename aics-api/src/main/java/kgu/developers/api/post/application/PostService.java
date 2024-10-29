@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.api.post.presentation.request.PostCreateRequest;
-import kgu.developers.api.user.application.UserService;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
+import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
@@ -30,14 +30,8 @@ public class PostService {
 
 	@Transactional
 	public PostSummaryPageResponse getPostsByKeyword(PageRequest request, String keyword) {
-		try {
-			PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
-				keyword, request);
-			return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
+			keyword, request);
+		return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
 	}
 }
