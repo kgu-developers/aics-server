@@ -56,16 +56,16 @@ public class Post extends BaseTimeEntity {
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-    /* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
-    @OneToOne
-    @JoinColumn(name = "file_id")
-    private FileEntity attachment;
+	/* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private FileEntity attachment;
 
-    public boolean hasAttachment(){
+	public boolean hasAttachment(){
 		return attachment != null;
 	}
-    */
-
+	*/
+	@Column(nullable = false)
 	private boolean isPinned;
 
 	public static Post create(String title, String content, User author) {
@@ -73,6 +73,7 @@ public class Post extends BaseTimeEntity {
 			.title(title)
 			.content(content)
 			.views(0)
+			.isPinned(false)
 			.author(author) // NOTE: User Setter 주입 방지 위해 생성자 주입
 			.build();
 	}
