@@ -90,7 +90,6 @@ public class PostController {
 		return ResponseEntity.noContent().build();
 	}
 
-
 	@Operation(summary = "게시글 고정 상태 변경 API", description = """
 		    - Description : 이 API는 지정된 게시글의 고정 여부를 토글하여 고정 또는 해제합니다.
 		    - Assignee : 박민준
@@ -103,8 +102,8 @@ public class PostController {
 		postService.togglePostPinStatus(postId);
 		return ResponseEntity.noContent().build();
 	}
-             
-  @Operation(summary = "게시글 삭제 API", description = """
+
+	@Operation(summary = "게시글 삭제 API", description = """
 		    - Description : 이 API는 게시글을 삭제합니다.
 		    - Assignee : 이신행
 		""")
