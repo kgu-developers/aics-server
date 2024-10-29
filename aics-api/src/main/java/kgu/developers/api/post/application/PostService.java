@@ -43,8 +43,12 @@ public class PostService {
 
 	@Transactional
 	public Post getById(Long postId) {
-		return postRepository.findById(postId)
+		Post post = postRepository.findById(postId)
 			.orElseThrow(PostNotFoundException::new);
+		if (post.getDeletedAt() == null) {
+			return post;
+		}
+		throw new PostNotFoundException();
 	}
 
 	@Transactional
@@ -65,7 +69,4 @@ public class PostService {
 		Post deletePost = getById(postId);
 		deletePost.delete();
 	}
-
-	// TODO 삭제된 게시물 표시 안하게 변경
-
 }

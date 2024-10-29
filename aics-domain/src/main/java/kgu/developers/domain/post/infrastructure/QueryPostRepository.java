@@ -24,6 +24,7 @@ public class QueryPostRepository {
 			.select(post)
 			.from(post)
 			.where(post.title.contains(keyword))
+			.where(post.deletedAt.isNull())
 			.orderBy(post.createdAt.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
@@ -33,6 +34,7 @@ public class QueryPostRepository {
 			.select(post.id)
 			.from(post)
 			.where(post.title.contains(keyword))
+			.where(post.deletedAt.isNull())
 			.orderBy(post.createdAt.desc())
 			.fetch();
 
