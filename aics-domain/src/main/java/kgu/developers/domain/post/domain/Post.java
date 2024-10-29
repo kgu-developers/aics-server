@@ -87,7 +87,7 @@ public class Post extends BaseTimeEntity {
 		return this.author.getUserId().equals(authorId);
 	}
 
-	public void updateViews(int views) {
-		this.views = views;
+	public void increaseViews() {
+		this.views++;
 	}
 }

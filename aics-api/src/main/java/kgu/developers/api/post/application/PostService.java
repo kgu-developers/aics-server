@@ -43,18 +43,15 @@ public class PostService {
 
 	@Transactional
 	public Post getById(Long postId) {
-		Post post = postRepository.findById(postId)
+		return postRepository.findById(postId)
+			.filter(post -> post.getDeletedAt() == null)
 			.orElseThrow(PostNotFoundException::new);
-		if (post.getDeletedAt() == null) {
-			return post;
-		}
-		throw new PostNotFoundException();
 	}
 
 	@Transactional
 	public PostDetailResponse getPostById(Long postId) {
 		Post post = getById(postId);
-		post.updateViews(post.getViews() + 1);
+		post.increaseViews();
 		return PostDetailResponse.from(post);
 	}
 
