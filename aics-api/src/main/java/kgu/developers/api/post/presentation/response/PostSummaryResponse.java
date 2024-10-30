@@ -27,6 +27,9 @@ public record PostSummaryResponse(
 	@Schema(description = "첨부파일 여부", example = "false", requiredMode = REQUIRED)
 	boolean hasAttachment,
 
+	@Schema(description = "상단 고정 여부", example = "false", requiredMode = REQUIRED)
+	boolean isPinned,
+
 	@Schema(description = "작성일", example = "1999-10-22", requiredMode = REQUIRED)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	String createdAt
@@ -39,6 +42,7 @@ public record PostSummaryResponse(
 			.author(post.getAuthor().getName())
 			.views(post.getViews())
 			.hasAttachment(false) // TODO : 첨부파일 여부 확인
+			.isPinned(post.isPinned())
 			.createdAt(post.getCreatedAt().format(formatter))
 			.build();
 	}

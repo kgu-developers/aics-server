@@ -59,14 +59,14 @@ public class PostService {
 
 	@Transactional
 	public void togglePostPinStatus(Long postId) {
-		Post pinPost = getById(postId);
-		pinPost.togglePinned();
+		Post post = getById(postId);
+		post.togglePinned();
 	}
 
 	@Transactional
 	public void deletePost(Long postId) {
-		Post deletePost = getById(postId);
-		deletePost.delete();
+		Post post = getById(postId);
+		post.delete();
 	}
 
 	@Scheduled(cron = "#{@postCleanupCron}")

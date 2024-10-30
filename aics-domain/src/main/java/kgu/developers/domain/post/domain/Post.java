@@ -17,8 +17,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.comment.Comment;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,21 +54,16 @@ public class Post extends BaseTimeEntity {
 	@JoinColumn(name = "user_id")
 	private User author;
 
+	@Column(nullable = false)
+	private boolean isPinned;
+
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private FileEntity file;
+
 	@Builder.Default
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
-
-	/* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
-	@OneToOne
-	@JoinColumn(name = "file_id")
-	private FileEntity attachment;
-
-	public boolean hasAttachment(){
-		return attachment != null;
-	}
-	*/
-	@Column(nullable = false)
-	private boolean isPinned;
 
 	public static Post create(String title, String content, User author) {
 		return Post.builder()
@@ -87,7 +84,7 @@ public class Post extends BaseTimeEntity {
 	}
 
 	public void togglePinned() {
-		isPinned = !isPinned;
+		this.isPinned = !this.isPinned;
 	}
 
 	public void increaseViews() {

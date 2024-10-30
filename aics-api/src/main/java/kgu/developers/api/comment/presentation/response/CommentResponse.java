@@ -1,4 +1,4 @@
-package kgu.developers.api.post.presentation.response;
+package kgu.developers.api.comment.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.comment.Comment;
@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
-public record CommentPostDetailResponse(
+public record CommentResponse(
 	@Schema(description = "댓글 ID", example = "1122", requiredMode = REQUIRED)
 	Long commentId,
 
@@ -23,9 +23,9 @@ public record CommentPostDetailResponse(
 	@Schema(description = "내용", example = "예시 코멘트 입니다~~", requiredMode = REQUIRED)
 	String content
 ) {
-	public static CommentPostDetailResponse from(Comment comment) {
+	public static CommentResponse from(Comment comment) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		return CommentPostDetailResponse.builder()
+		return CommentResponse.builder()
 			.commentId(comment.getId())
 			.author(comment.getAuthor().getName())
 			.createdAt(comment.getCreatedAt().format(formatter))

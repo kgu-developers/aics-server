@@ -18,6 +18,7 @@ public record PostSummaryPageResponse<T>(
 			+ "\"author\": \"zi존민준짱짱123\", "
 			+ "\"views\": 19, "
 			+ "\"hasAttachment\": false, "
+			+ "\"isPinned\": false, "
 			+ "\"createdAt\": \"1999-10-22\"}]",
 		requiredMode = REQUIRED)
 	List<PostSummaryResponse> contents,
