@@ -25,6 +25,6 @@ public class CommentService {
 			postService.getById(request.postId())
 		);
 		Long id = commentRepository.save(createComment).getId();
-		return CommentPersistResponse.from(id);
+		return CommentPersistResponse.of(id);
 	}
 }
