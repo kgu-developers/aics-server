@@ -35,7 +35,6 @@ public class CommentController {
 		@PathVariable Long postId,
 		@RequestBody CommentRequest commentRequest
 	) {
-		System.out.println("CommentController.createComment");
 		return ResponseEntity.status(CREATED).body(commentService.createComment(postId, commentRequest));
 	}
 
