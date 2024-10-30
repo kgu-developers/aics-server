@@ -25,7 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
 	private final PostRepository postRepository;
 	private final UserService userService;
-	private final int postRetentionDays;
+
+	public static final int POST_RETENTION_DAYS = 60 * 60 * 24 * 30;
 
 	private LocalDateTime lastScheduledRun;
 
@@ -69,14 +70,13 @@ public class PostService {
 		post.delete();
 	}
 
-	@Scheduled(cron = "#{@postCleanupCron}")
+	@Scheduled(cron = "0 0 0 * * *")
 	@Transactional
 	public void cleanupOldDeletedPosts() {
-		postRepository.deleteAllByDeletedAtBefore(postRetentionDays);
+		postRepository.deleteAllByDeletedAtBefore(POST_RETENTION_DAYS);
 		lastScheduledRun = LocalDateTime.now();
 	}
 
-	// 마지막 클린업 실행 시간을 형식화하여 반환하는 메서드
 	public String getFormattedLastCleanupRunTime() {
 		if (lastScheduledRun == null) {
 			return "아직 클린업 작업이 실행되지 않았습니다.";
