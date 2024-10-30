@@ -19,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import kgu.developers.common.domain.BaseTimeEntity;
-import kgu.developers.domain.comment.Comment;
+import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.user.domain.User;
 import lombok.AllArgsConstructor;

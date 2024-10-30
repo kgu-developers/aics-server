@@ -1,4 +1,4 @@
-package kgu.developers.domain.comment;
+package kgu.developers.domain.comment.domain;
 
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;

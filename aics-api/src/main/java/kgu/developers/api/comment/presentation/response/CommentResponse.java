@@ -1,7 +1,7 @@
 package kgu.developers.api.comment.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.domain.comment.Comment;
+import kgu.developers.domain.comment.domain.Comment;
 import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.format.DateTimeFormatter;

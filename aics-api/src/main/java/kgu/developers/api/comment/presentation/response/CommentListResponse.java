@@ -5,7 +5,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.domain.comment.Comment;
+import kgu.developers.domain.comment.domain.Comment;
 import lombok.Builder;
 
 @Builder
