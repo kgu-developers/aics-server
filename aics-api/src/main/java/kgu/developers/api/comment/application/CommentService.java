@@ -19,11 +19,12 @@ public class CommentService {
 
 	@Transactional
 	public CommentPersistResponse createComment(CommentRequest request) {
-		Comment saved = commentRepository.save(Comment.create(
+		Comment createComment = Comment.create(
 			request.content(),
 			userService.me(),
 			postService.getById(request.postId())
-		));
-		return CommentPersistResponse.from(saved.getId());
+		);
+		commentRepository.save(createComment);
+		return CommentPersistResponse.from(createComment.getId());
 	}
 }

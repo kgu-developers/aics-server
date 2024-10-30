@@ -34,7 +34,8 @@ public class CommentController {
 	public ResponseEntity<CommentPersistResponse> createComment(
 		@RequestBody CommentRequest commentRequest
 	) {
-		return ResponseEntity.status(CREATED).body(commentService.createComment(commentRequest));
+		CommentPersistResponse response = commentService.createComment(commentRequest);
+		return ResponseEntity.status(CREATED).body(response);
 	}
 
 
