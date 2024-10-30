@@ -17,8 +17,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.comment.Comment;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,15 +58,10 @@ public class Post extends BaseTimeEntity {
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-	/* TODO: 파일 엔티티 생성 후 연결 & create 메서드에 추가
 	@OneToOne
 	@JoinColumn(name = "file_id")
-	private FileEntity attachment;
+	private FileEntity file;
 
-	public boolean hasAttachment(){
-		return attachment != null;
-	}
-	*/
 	@Column(nullable = false)
 	private boolean isPinned;
 

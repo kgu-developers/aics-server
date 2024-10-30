@@ -1,8 +1,12 @@
 package kgu.developers.api.post.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import kgu.developers.api.comment.presentation.response.CommentListResponse;
+import kgu.developers.api.comment.presentation.response.CommentResponse;
+import kgu.developers.api.file.presentation.response.FileResponse;
 import kgu.developers.domain.post.domain.Post;
 import lombok.Builder;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.format.DateTimeFormatter;
@@ -33,21 +37,10 @@ public record PostDetailResponse(
 
 	@Schema(description = "게시글에 첨부된 파일",
 		example = "[{"
-			+ "\"commentId\": 1122, "
-			+ "\"author\": \"이신행\", "
-			+ "\"createdAt\": \"1999-10-22\", "
-			+ "\"content\": \"예시 코멘트 입니다~~\"}]",
-		requiredMode = REQUIRED)
-	List<CommentPostDetailResponse> comments
-/*
-	// TODO 파일 붙이고 나서 주석 해제
-	@Schema(description = "게시글에 첨부된 파일",
-		example = "[{"
 			+ "\"logicalName\": \"사용자가 업로드 한 파일 이름.png\", "
 			+ "\"physicalPath\": \"upload/도메인명/yy/MM/dd/유니크이름.png\"]",
 		requiredMode = REQUIRED)
 	FileResponse file
-*/
 ) {
 	public static PostDetailResponse from(Post post) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -58,12 +51,7 @@ public record PostDetailResponse(
 			.views(post.getViews())
 			.createdAt(post.getCreatedAt().format(formatter))
 			.content(post.getContent())
-			.comments(
-				post.getComments().stream()
-					.map(CommentPostDetailResponse::from)
-					.toList()
-			)
-//			.file(FilePostDetailResponse.from(post.getAttachment()))
+			.file(FileResponse.from(post.getFile()))
 			.build();
 	}
 }
