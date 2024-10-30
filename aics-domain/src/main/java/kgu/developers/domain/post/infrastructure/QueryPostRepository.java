@@ -2,6 +2,7 @@ package kgu.developers.domain.post.infrastructure;
 
 import static kgu.developers.domain.post.domain.QPost.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -20,7 +21,8 @@ public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
 	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable) {
-		if (keyword == null) keyword = "";
+		if (keyword == null)
+			keyword = "";
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
 			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
@@ -36,5 +38,13 @@ public class QueryPostRepository {
 			.fetch();
 
 		return PaginatedListResponse.of(posts, PageableResponse.of(pageable, postIds));
+	}
+
+	public void deleteAllByDeletedAtBefore(int retentionDays) {
+		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
+
+		queryFactory.delete(post)
+			.where(post.deletedAt.isNotNull().and(post.deletedAt.before(thresholdDate)))
+			.execute();
 	}
 }
