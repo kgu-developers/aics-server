@@ -21,7 +21,8 @@ public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
 	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable) {
-		if (keyword == null) keyword = "";
+		if (keyword == null)
+			keyword = "";
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
 			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
@@ -43,10 +44,7 @@ public class QueryPostRepository {
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
 
 		queryFactory.delete(post)
-			.where(
-				post.deletedAt.isNotNull()
-					.and(post.deletedAt.before(thresholdDate))
-			)
+			.where(post.deletedAt.isNotNull().and(post.deletedAt.before(thresholdDate)))
 			.execute();
 	}
 }
