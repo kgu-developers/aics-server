@@ -9,7 +9,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
 public record CommentRequest(
-	@Schema(description = "댓글 내용", example = "댓글 예시 문장입니다!!", requiredMode = REQUIRED)
+	@Schema(description = "댓글 내용", example = "예시 코멘트 입니다~~", requiredMode = REQUIRED)
 	@NotBlank
 	String content
 ) {

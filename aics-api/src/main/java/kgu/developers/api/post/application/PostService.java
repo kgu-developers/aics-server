@@ -1,8 +1,5 @@
 package kgu.developers.api.post.application;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import jakarta.transaction.Transactional;
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
@@ -15,6 +12,8 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +61,7 @@ public class PostService {
 		post.delete();
 	}
 
-	private Post getById(Long postId) {
+	public Post getById(Long postId) {
 		return postRepository.findById(postId)
 			.filter(post -> post.getDeletedAt() == null)
 			.orElseThrow(PostNotFoundException::new);

@@ -20,8 +20,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1//comments")
-@Tag(name = "Post", description = "댓글 API")
+@RequestMapping("/api/v1/comments")
+@Tag(name = "Comment", description = "댓글 API")
 public class CommentController {
 	private final CommentService commentService;
 
@@ -32,9 +32,10 @@ public class CommentController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = CommentResponse.class)))
 	@PostMapping("/{postId}")
 	public ResponseEntity<CommentResponse> createComment(
-		@PathVariable("postId") Long postId,
+		@PathVariable Long postId,
 		@RequestBody CommentRequest commentRequest
 	) {
+		System.out.println("CommentController.createComment");
 		return ResponseEntity.status(CREATED).body(commentService.createComment(postId, commentRequest));
 	}
 
