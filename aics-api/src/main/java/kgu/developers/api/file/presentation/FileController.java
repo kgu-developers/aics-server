@@ -31,9 +31,10 @@ public class FileController {
 		""")
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePersistResponse.class)))
 	@PostMapping
-	public ResponseEntity<FilePersistResponse> uploadFile(@RequestParam("file") MultipartFile file,
-														  HttpServletRequest request) {
-		// 업로드한 API의 도메인을 저장시에 도메인으로 사용
+	public ResponseEntity<FilePersistResponse> uploadFile(
+		@RequestParam("file") MultipartFile file,
+		HttpServletRequest request
+	) {
 		String domain = request.getRequestURI().split("/")[1];
 		FilePersistResponse response = fileService.uploadFile(domain, file);
 		return ResponseEntity.status(CREATED).body(response);
