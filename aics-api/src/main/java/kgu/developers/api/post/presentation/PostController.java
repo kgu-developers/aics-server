@@ -48,8 +48,8 @@ public class PostController {
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
-	@Operation(summary = "게시글 조회 API", description = """
-		    - Description : 이 API는 키워드를 이용하여 게시글을 조회합니다.
+	@Operation(summary = "게시글 페이징 조회 API", description = """
+		    - Description : 이 API는 키워드를 이용하여 게시글을 페이징 조회합니다.
 		    - Assignee : 박민준
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostSummaryPageResponse.class)))
@@ -90,7 +90,7 @@ public class PostController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@Operation(summary = "게시글 고정 상태 변경 API", description = """
+	@Operation(summary = "게시글 상단 고정 상태 토글 API", description = """
 		    - Description : 이 API는 지정된 게시글의 고정 여부를 토글하여 고정 또는 해제합니다.
 		    - Assignee : 박민준
 		""")
