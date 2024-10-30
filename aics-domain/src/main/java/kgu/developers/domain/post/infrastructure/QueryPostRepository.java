@@ -2,6 +2,7 @@ package kgu.developers.domain.post.infrastructure;
 
 import static kgu.developers.domain.post.domain.QPost.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -46,5 +47,16 @@ public class QueryPostRepository {
 			.fetch();
 
 		return PaginatedListResponse.of(posts, PageableResponse.of(pageable, postIds));
+	}
+
+	public void deleteAllByDeletedAtBefore(int retentionDays) {
+		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
+
+		queryFactory.delete(post)
+			.where(
+				post.deletedAt.isNotNull()
+					.and(post.deletedAt.before(thresholdDate))
+			)
+			.execute();
 	}
 }
