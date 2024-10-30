@@ -1,6 +1,7 @@
 package kgu.developers.api.post.application;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
 	private final PostRepository postRepository;
 	private final UserService userService;
+	private final String postCleanupCron;
+	private final int postRetentionDays;
 
 	@Transactional
 	public PostPersistResponse createPost(PostRequest request) {
@@ -60,6 +63,12 @@ public class PostService {
 	public void deletePost(Long postId) {
 		Post deletePost = getById(postId);
 		deletePost.delete();
+	}
+
+	@Scheduled(cron = "#{@postCleanupCron}")
+	@Transactional
+	public void cleanupOldDeletedPosts() {
+		postRepository.deleteAllByDeletedAtBefore(postRetentionDays);
 	}
 
 	private Post getById(Long postId) {
