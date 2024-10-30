@@ -1,5 +1,8 @@
 package kgu.developers.api.post.application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -22,8 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
 	private final PostRepository postRepository;
 	private final UserService userService;
-	private final String postCleanupCron;
 	private final int postRetentionDays;
+
+	private LocalDateTime lastScheduledRun;
 
 	@Transactional
 	public PostPersistResponse createPost(PostRequest request) {
@@ -69,6 +73,16 @@ public class PostService {
 	@Transactional
 	public void cleanupOldDeletedPosts() {
 		postRepository.deleteAllByDeletedAtBefore(postRetentionDays);
+		lastScheduledRun = LocalDateTime.now();
+	}
+
+	// 마지막 클린업 실행 시간을 형식화하여 반환하는 메서드
+	public String getFormattedLastCleanupRunTime() {
+		if (lastScheduledRun == null) {
+			return "아직 클린업 작업이 실행되지 않았습니다.";
+		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
+		return "최근 삭제된 게시글 정리 시간: " + lastScheduledRun.format(formatter);
 	}
 
 	private Post getById(Long postId) {

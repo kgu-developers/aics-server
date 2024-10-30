@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -114,5 +115,12 @@ public class PostController {
 	) {
 		postService.deletePost(postId);
 		return ResponseEntity.noContent().build();
+	}
+
+	@Hidden
+	@GetMapping("/cleanup-last-run")
+	public ResponseEntity<String> getLastCleanupRunTime() {
+		String response = postService.getFormattedLastCleanupRunTime();
+		return ResponseEntity.ok(response);
 	}
 }
