@@ -24,7 +24,7 @@ public class CommentService {
 			userService.me(),
 			postService.getById(request.postId())
 		);
-		commentRepository.save(createComment);
-		return CommentPersistResponse.from(createComment.getId());
+		Long id = commentRepository.save(createComment).getId();
+		return CommentPersistResponse.from(id);
 	}
 }
