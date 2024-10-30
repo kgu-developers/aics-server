@@ -2,7 +2,7 @@ package kgu.developers.api.comment.application;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
-import kgu.developers.api.comment.presentation.response.CommentResponse;
+import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
 import kgu.developers.api.post.application.PostService;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.domain.comment.domain.Comment;
@@ -18,12 +18,12 @@ public class CommentService {
 	private final UserService userService;
 
 	@Transactional
-	public CommentResponse createComment(Long postId, CommentRequest request) {
-		Comment comment = Comment.create(
+	public CommentPersistResponse createComment(CommentRequest request) {
+		Comment saved = commentRepository.save(Comment.create(
 			request.content(),
 			userService.me(),
-			postService.getById(postId)
-		);
-		return CommentResponse.from(commentRepository.save(comment));
+			postService.getById(request.postId())
+		));
+		return CommentPersistResponse.from(saved.getId());
 	}
 }
