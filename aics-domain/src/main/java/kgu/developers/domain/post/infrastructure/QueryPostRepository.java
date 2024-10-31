@@ -43,7 +43,6 @@ public class QueryPostRepository {
 
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
-		//댓글 먼저 삭제
 		queryFactory.delete(comment)
 			.where(comment.post.deletedAt.isNotNull()
 				.and(comment.post.deletedAt.before(thresholdDate)))
