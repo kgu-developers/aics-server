@@ -34,7 +34,7 @@ public class CommentService {
 		return CommentPersistResponse.of(id);
 	}
 
-	public CommentListResponse readComments(CommentListRequest request) {
+	public CommentListResponse getComments(CommentListRequest request) {
 		List<Comment> comments = commentRepository.findByPostId(request.postId());
 
 		return CommentListResponse.from(comments);

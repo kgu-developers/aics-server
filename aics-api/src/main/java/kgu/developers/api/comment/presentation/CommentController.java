@@ -66,10 +66,10 @@ public class CommentController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = CommentListResponse.class)))
 	@GetMapping
-	public ResponseEntity<CommentListResponse> readComments(
+	public ResponseEntity<CommentListResponse> getComments(
 		@RequestBody CommentListRequest commentListRequest
 	) {
-		CommentListResponse response = commentService.readComments(commentListRequest);
+		CommentListResponse response = commentService.getComments(commentListRequest);
 		return ResponseEntity.ok(response);
 	}
 
