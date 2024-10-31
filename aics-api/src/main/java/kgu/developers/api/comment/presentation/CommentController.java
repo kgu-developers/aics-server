@@ -73,4 +73,17 @@ public class CommentController {
 		return ResponseEntity.ok(response);
 	}
 
+	@Operation(summary = "댓글 삭제 API", description = """
+			- Description : 이 API는 해당 댓글을 삭제합니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{commentId}/delete")
+	public ResponseEntity<Void> deleteComment(
+		@Parameter(description = "삭제할 댓글의 ID", example = "19", required = true) @PathVariable @Positive Long commentId
+	) {
+		commentService.deleteComment(commentId);
+		return ResponseEntity.noContent().build();
+	}
+
 }
