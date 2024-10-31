@@ -1,8 +1,5 @@
 package kgu.developers.domain.comment.domain;
 
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
@@ -45,6 +46,10 @@ public class Comment extends BaseTimeEntity {
 			.author(author)
 			.post(post)
 			.build();
+	}
+
+	public void updateContent(String content) {
+		this.content = content;
 	}
 
 }
