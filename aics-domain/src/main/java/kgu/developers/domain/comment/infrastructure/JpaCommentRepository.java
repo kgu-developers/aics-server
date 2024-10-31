@@ -1,7 +1,11 @@
 package kgu.developers.domain.comment.infrastructure;
 
-import kgu.developers.domain.comment.domain.Comment;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import kgu.developers.domain.comment.domain.Comment;
+
 public interface JpaCommentRepository extends JpaRepository<Comment, Long> {
+	List<Comment> findByPostId(Long postId);
 }

@@ -1,9 +1,12 @@
 package kgu.developers.domain.comment.infrastructure;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
@@ -13,5 +16,10 @@ public class CommentRepositoryImpl implements CommentRepository {
 	@Override
 	public Comment save(Comment comment) {
 		return jpaCommentRepository.save(comment);
+	}
+
+	@Override
+	public List<Comment> findByPostId(Long postId) {
+		return jpaCommentRepository.findByPostId(postId);
 	}
 }
