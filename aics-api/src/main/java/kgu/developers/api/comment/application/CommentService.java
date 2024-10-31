@@ -46,6 +46,12 @@ public class CommentService {
 		comment.updateContent(commentRequest.content());
 	}
 
+	@Transactional
+	public void deleteComment(Long commentId) {
+		Comment comment = getById(commentId);
+		comment.delete();
+	}
+
 	private Comment getById(Long commentId) {
 		return commentRepository.findById(commentId)
 			.filter(comment -> comment.getDeletedAt() == null)
