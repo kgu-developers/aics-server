@@ -35,7 +35,7 @@ public class CommentService {
 	}
 
 	public CommentListResponse getComments(CommentListRequest request) {
-		List<Comment> comments = commentRepository.findByPostId(request.postId());
+		List<Comment> comments = commentRepository.findAllByPostIdAndDeletedAtIsNull(request.postId());
 
 		return CommentListResponse.from(comments);
 	}

@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import kgu.developers.domain.comment.domain.Comment;
 
 public interface JpaCommentRepository extends JpaRepository<Comment, Long> {
-	List<Comment> findByPostIdAndDeletedAtIsNull(Long postId);
+	List<Comment> findAllByPostIdAndDeletedAtIsNull(Long postId);
 
 }
