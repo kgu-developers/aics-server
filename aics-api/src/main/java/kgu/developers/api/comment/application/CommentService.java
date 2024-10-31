@@ -1,6 +1,8 @@
 package kgu.developers.api.comment.application;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Positive;
+import kgu.developers.api.comment.presentation.exception.CommentNotFoundException;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
 import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
 import kgu.developers.api.post.application.PostService;
@@ -26,5 +28,17 @@ public class CommentService {
 		);
 		Long id = commentRepository.save(createComment).getId();
 		return CommentPersistResponse.of(id);
+	}
+
+	@Transactional
+	public void updateComment(@Positive Long commentId, CommentRequest commentRequest) {
+		Comment comment = getById(commentId);
+		comment.updateContent(commentRequest.content());
+	}
+
+	private Comment getById(Long commentId) {
+		return commentRepository.findById(commentId)
+			.filter(comment -> comment.getDeletedAt() == null)
+			.orElseThrow(CommentNotFoundException::new);
 	}
 }
