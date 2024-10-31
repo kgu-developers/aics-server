@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import kgu.developers.api.comment.presentation.exception.CommentNotFoundException;
-import kgu.developers.api.comment.presentation.request.CommentListRequest;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
 import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
@@ -41,9 +40,8 @@ public class CommentService {
 		return CommentPersistResponse.of(id);
 	}
 
-	public CommentListResponse getComments(CommentListRequest request) {
-		List<Comment> comments = commentRepository.findAllByPostIdAndDeletedAtIsNull(request.postId());
-
+	public CommentListResponse getComments(Long postId) {
+		List<Comment> comments = commentRepository.findAllByPostIdAndDeletedAtIsNull(postId);
 		return CommentListResponse.from(comments);
 	}
 
