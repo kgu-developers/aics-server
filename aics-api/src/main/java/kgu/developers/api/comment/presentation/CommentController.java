@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -86,4 +87,10 @@ public class CommentController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@Hidden
+	@GetMapping("/cleanup-last-run")
+	public ResponseEntity<String> getLastCleanupRunTime() {
+		String response = commentService.getFormattedLastCleanupRunTime();
+		return ResponseEntity.ok(response);
+	}
 }
