@@ -1,5 +1,6 @@
 package kgu.developers.domain.post.infrastructure;
 
+import static kgu.developers.domain.comment.domain.QComment.*;
 import static kgu.developers.domain.post.domain.QPost.*;
 
 import java.time.LocalDateTime;
@@ -42,6 +43,11 @@ public class QueryPostRepository {
 
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
+		//댓글 먼저 삭제
+		queryFactory.delete(comment)
+			.where(comment.post.deletedAt.isNotNull()
+				.and(comment.post.deletedAt.before(thresholdDate)))
+			.execute();
 
 		queryFactory.delete(post)
 			.where(post.deletedAt.isNotNull().and(post.deletedAt.before(thresholdDate)))
