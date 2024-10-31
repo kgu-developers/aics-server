@@ -1,15 +1,13 @@
 package kgu.developers.domain.comment.infrastructure;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

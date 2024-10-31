@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import kgu.developers.api.comment.presentation.exception.CommentNotFoundException;
 import kgu.developers.api.comment.presentation.request.CommentListRequest;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
@@ -37,5 +38,17 @@ public class CommentService {
 		List<Comment> comments = commentRepository.findByPostId(request.postId());
 
 		return CommentListResponse.from(comments);
+	}
+
+	@Transactional
+	public void updateComment(Long commentId, CommentRequest commentRequest) {
+		Comment comment = getById(commentId);
+		comment.updateContent(commentRequest.content());
+	}
+
+	private Comment getById(Long commentId) {
+		return commentRepository.findById(commentId)
+			.filter(comment -> comment.getDeletedAt() == null)
+			.orElseThrow(CommentNotFoundException::new);
 	}
 }
