@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepository {
 	public final JpaCommentRepository jpaCommentRepository;
+	private final QueryCommentRepository queryCommentRepository;
 
 	@Override
 	public Comment save(Comment comment) {
@@ -25,7 +26,13 @@ public class CommentRepositoryImpl implements CommentRepository {
 	}
 
 	@Override
+	public void deleteAllByDeletedAtBefore(int retentionDays) {
+		queryCommentRepository.deleteAllByDeletedAtBefore(retentionDays);
+	}
+
+	@Override
 	public List<Comment> findAllByPostIdAndDeletedAtIsNull(Long postId) {
 		return jpaCommentRepository.findAllByPostIdAndDeletedAtIsNull(postId);
 	}
+
 }

@@ -9,4 +9,6 @@ public interface CommentRepository {
 	List<Comment> findAllByPostIdAndDeletedAtIsNull(Long postId);
 
 	Optional<Comment> findById(Long commentId);
+
+	void deleteAllByDeletedAtBefore(int retentionDays);
 }
