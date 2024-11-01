@@ -27,7 +27,7 @@ public class QueryPostRepository {
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
 			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
-			.orderBy(post.isPinned.desc(), post.createdAt.desc())
+			.orderBy(post.pinned.desc(), post.createdAt.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
@@ -35,7 +35,7 @@ public class QueryPostRepository {
 		List<Long> postIds = queryFactory.select(post.id)
 			.from(post)
 			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
-			.orderBy(post.isPinned.desc(), post.createdAt.desc())
+			.orderBy(post.pinned.desc(), post.createdAt.desc())
 			.fetch();
 
 		return PaginatedListResponse.of(posts, PageableResponse.of(pageable, postIds));
