@@ -55,7 +55,7 @@ public class Post extends BaseTimeEntity {
 	private User author;
 
 	@Column(nullable = false)
-	private boolean pinned;
+	private boolean isPinned;
 
 	@OneToOne
 	@JoinColumn(name = "file_id")
@@ -70,7 +70,7 @@ public class Post extends BaseTimeEntity {
 			.title(title)
 			.content(content)
 			.views(0)
-			.pinned(false)
+			.isPinned(false)
 			.author(author) // NOTE: User Setter 주입 방지 위해 생성자 주입
 			.build();
 	}
@@ -84,7 +84,7 @@ public class Post extends BaseTimeEntity {
 	}
 
 	public void togglePinned() {
-		this.pinned = !this.pinned;
+		this.isPinned = !this.isPinned;
 	}
 
 	public void increaseViews() {

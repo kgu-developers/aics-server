@@ -1,7 +1,7 @@
 package kgu.developers.domain.post.infrastructure;
 
-import static kgu.developers.domain.comment.domain.QComment.*;
-import static kgu.developers.domain.post.domain.QPost.*;
+import static kgu.developers.domain.comment.domain.QComment.comment;
+import static kgu.developers.domain.post.domain.QPost.post;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +27,7 @@ public class QueryPostRepository {
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
 			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
-			.orderBy(post.pinned.desc(), post.createdAt.desc())
+			.orderBy(post.isPinned.desc(), post.createdAt.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
@@ -35,7 +35,7 @@ public class QueryPostRepository {
 		List<Long> postIds = queryFactory.select(post.id)
 			.from(post)
 			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
-			.orderBy(post.pinned.desc(), post.createdAt.desc())
+			.orderBy(post.isPinned.desc(), post.createdAt.desc())
 			.fetch();
 
 		return PaginatedListResponse.of(posts, PageableResponse.of(pageable, postIds));
