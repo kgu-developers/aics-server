@@ -23,6 +23,9 @@ public class Lab extends BaseTimeEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
+	@Column(nullable = false, length = 16)
+	private String name;
+
 	@Column(nullable = false, length = 10)
 	private String location;
 
