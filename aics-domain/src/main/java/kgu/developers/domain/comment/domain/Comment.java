@@ -1,5 +1,9 @@
 package kgu.developers.domain.comment.domain;
 
+import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,10 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.EAGER;
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
-
 @Entity
 @Getter
 @Builder
@@ -25,7 +25,6 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 public class Comment extends BaseTimeEntity {
 	@Id
-	@Column(name = "comment_id")
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 

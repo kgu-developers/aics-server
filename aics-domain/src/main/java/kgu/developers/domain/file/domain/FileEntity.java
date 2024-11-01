@@ -1,5 +1,8 @@
 package kgu.developers.domain.file.domain;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,9 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
 @Entity
 @Getter
 @Builder
@@ -21,7 +21,6 @@ import static lombok.AccessLevel.PROTECTED;
 public class FileEntity extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "file_id")
 	private Long id;
 
 	@Column(nullable = false)

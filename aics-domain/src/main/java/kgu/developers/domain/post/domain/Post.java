@@ -36,7 +36,6 @@ import lombok.NoArgsConstructor;
 public class Post extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "post_id")
 	private Long id;
 
 	@Column(nullable = false, length = 100)
