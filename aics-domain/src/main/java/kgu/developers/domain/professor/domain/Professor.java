@@ -25,9 +25,9 @@ public class Professor extends BaseTimeEntity {
 
 	@Column(nullable = false, length = 10)
 	private String name;
-	
+
 	@Column(nullable = false, length = 10)
-	private String officeLocation;
+	private String officeLoc;
 
 	@Column(nullable = false, length = 15)
 	private String contact;

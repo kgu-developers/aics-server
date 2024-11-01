@@ -27,7 +27,7 @@ public class Lab extends BaseTimeEntity {
 	private String name;
 
 	@Column(nullable = false, length = 10)
-	private String location;
+	private String loc;
 
 	@Column(nullable = false, length = 50)
 	private String site;
