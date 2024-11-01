@@ -1,9 +1,9 @@
 package kgu.developers.domain.user.domain;
 
-import static jakarta.persistence.CascadeType.*;
-import static jakarta.persistence.EnumType.*;
-import static jakarta.persistence.FetchType.*;
-import static lombok.AccessLevel.*;
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +37,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	@Id
 	@Column(length = 10)
-	private String userId;
+	private String id;
 
 	@Column(nullable = false)
 	private String password;
@@ -63,11 +63,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-	public static User create(String userId, String password,
+	public static User create(String id, String password,
 		String name, String email,
 		String phoneNumber, Major major) {
 		return User.builder()
-			.userId(userId)
+			.id(id)
 			.password(password)
 			.name(name)
 			.email(email)
@@ -92,7 +92,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return userId;
+		return id;
 	}
 
 	@Override

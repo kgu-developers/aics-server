@@ -1,11 +1,12 @@
 package kgu.developers.domain.user.infrastructure;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,8 +19,8 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public boolean existsByUserId(String userId) {
-		return jpaUserRepository.existsByUserId(userId);
+	public boolean existsById(String id) {
+		return jpaUserRepository.existsByid(id);
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public Optional<User> findByUserId(String userId) {
-		return jpaUserRepository.findByUserId(userId);
+	public Optional<User> findById(String id) {
+		return jpaUserRepository.findByid(id);
 	}
 }

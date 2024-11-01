@@ -1,12 +1,12 @@
 package kgu.developers.api.user.presentation.response;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.Role;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
-
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
 public record UserDetailResponse(
@@ -26,7 +26,7 @@ public record UserDetailResponse(
 	Major major,
 
 	@Schema(description = "학번(교번)", example = "201912345", requiredMode = REQUIRED)
-	String userId
+	String id
 ) {
 	public static UserDetailResponse from(
 		User user
@@ -37,7 +37,7 @@ public record UserDetailResponse(
 			.email(user.getEmail())
 			.role(user.getRole())
 			.major(user.getMajor())
-			.userId(user.getUserId())
+			.id(user.getId())
 			.build();
 	}
 }

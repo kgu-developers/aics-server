@@ -1,18 +1,18 @@
 package kgu.developers.domain.user.infrastructure;
 
-import kgu.developers.domain.user.domain.User;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import kgu.developers.domain.user.domain.User;
 
 public interface JpaUserRepository extends JpaRepository<User, String> {
 
-	boolean existsByUserId(String userId);
+	boolean existsByid(String id);
 
 	boolean existsByEmail(String email);
 
 	boolean existsByPhoneNumber(String phoneNumber);
 
-	Optional<User> findByUserId(String userId);
+	Optional<User> findByid(String id);
 }
