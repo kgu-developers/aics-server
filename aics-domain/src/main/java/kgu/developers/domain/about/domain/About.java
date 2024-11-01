@@ -1,10 +1,12 @@
 package kgu.developers.domain.about.domain;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import kgu.developers.common.domain.BaseTimeEntity;
@@ -23,15 +25,16 @@ public class About extends BaseTimeEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
-	//TODO: 각 enum에 데이터 추가 후 주석 제거
-	// @Enumerated(STRING)
-	// private MainCategory mainCategory;
-	//
-	// @Enumerated(STRING)
-	// private SubCategory subCategory;
-	//
-	// @Enumerated(STRING)
-	// private DetailCategory detailCategory;
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private MainCategory mainCategory;
+
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private SubCategory subCategory;
+
+	@Column(nullable = false)
+	private String detailCategory;
 
 	@Column(nullable = false, columnDefinition = "text")
 	private String content;
