@@ -51,7 +51,7 @@ public class Post extends BaseTimeEntity {
 	private Category category;
 
 	@ManyToOne(fetch = EAGER)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "author_id")
 	private User author;
 
 	@Column(nullable = false)
