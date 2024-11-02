@@ -16,6 +16,7 @@ import kgu.developers.api.post.application.PostService;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -41,7 +42,8 @@ public class CommentService {
 	}
 
 	public CommentListResponse getComments(Long postId) {
-		List<Comment> comments = commentRepository.findAllByPostIdAndDeletedAtIsNull(postId);
+		Post post = postService.getById(postId);
+		List<Comment> comments = commentRepository.findAllByPostIdAndDeletedAtIsNull(post.getId());
 		return CommentListResponse.from(comments);
 	}
 
