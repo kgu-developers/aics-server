@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Getter
 @AllArgsConstructor
 public enum CommentExceptionCode implements ExceptionCode {
-	COMMENT_NOT_FOUND_EXCEPTION(NOT_FOUND, "해당 ID의 댓글이 없습니다.");
+	COMMENT_NOT_FOUND(NOT_FOUND, "해당 ID의 댓글이 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;

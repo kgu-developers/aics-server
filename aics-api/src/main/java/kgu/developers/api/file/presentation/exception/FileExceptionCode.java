@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.*;
 @Getter
 @AllArgsConstructor
 public enum FileExceptionCode implements ExceptionCode {
-	FILE_SAVING_EXCEPTION(INTERNAL_SERVER_ERROR, "파일 저장이 되지 않았습니다.")
+	FILE_SAVING_ERROR(BAD_REQUEST, "파일 저장이 되지 않았습니다.")
 	;
 
 	private final HttpStatus status;

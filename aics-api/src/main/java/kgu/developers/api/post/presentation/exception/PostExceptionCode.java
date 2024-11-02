@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Getter
 @AllArgsConstructor
 public enum PostExceptionCode implements ExceptionCode {
-	POST_NOT_FOUND_EXCEPTION(NOT_FOUND, "해당 ID의 게시글이 없습니다.");
+	POST_NOT_FOUND(NOT_FOUND, "해당 ID의 게시글이 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;
