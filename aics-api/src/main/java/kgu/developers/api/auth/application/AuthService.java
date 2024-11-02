@@ -21,7 +21,7 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public TokenResponse login(LoginRequest request) {
 		String userId = request.userId();
 		String password = request.password();

@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import kgu.developers.api.user.presentation.exception.UserIdDuplicateException;
 import kgu.developers.api.user.presentation.exception.UserNotAuthenticatedException;
 import kgu.developers.api.user.presentation.request.UserCreateRequest;
@@ -16,6 +15,7 @@ import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +58,7 @@ public class UserService {
 			.orElseThrow(UserNotFoundException::new);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserDetailResponse getUserDetail() {
 		User user = me();
 		return UserDetailResponse.from(user);
