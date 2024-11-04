@@ -36,8 +36,9 @@ public class ProfessorService {
 		);
 	}
 
+	@Transactional
 	public void deleteProfessor(@Positive Long id) {
-		if(professorRepository.existsById(id)) {
+		if (professorRepository.existsById(id)) {
 			professorRepository.deleteById(id);
 		} else {
 			throw new ProfessorNotFoundException();
@@ -47,7 +48,7 @@ public class ProfessorService {
 	@Transactional(readOnly = true)
 	public List<ProfessorResponse> getProfessorList() {
 		List<Professor> all = professorRepository.findAll();
-//		일단 name으로 구현, Ordering으로 조회시, 순서를 변경하는 엔드포인트 구성 필요
+//		일단 name으로 구현, Order로 조회시, 순서를 변경하는 엔드포인트 구성 필요
 //		List<Professor> all = professorRepository.findAllByOrder();
 		List<ProfessorResponse> responses = new ArrayList<>();
 		for (Professor professor : all) {
