@@ -3,6 +3,7 @@ package kgu.developers.api.lab.presentation;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kgu.developers.api.lab.application.LabService;
 import kgu.developers.api.lab.presentation.request.LabRequest;
+import kgu.developers.api.lab.presentation.response.LabListResponse;
 import kgu.developers.api.lab.presentation.response.LabPersistResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -40,4 +42,14 @@ public class LabController {
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
+	@Operation(summary = "연구실 조회 API", description = """
+			- Description : 이 API는 연구실을 조회합니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = LabListResponse.class)))
+	@GetMapping
+	public ResponseEntity<LabListResponse> getLabs() {
+		LabListResponse response = labService.getLabs();
+		return ResponseEntity.ok(response);
+	}
 }
