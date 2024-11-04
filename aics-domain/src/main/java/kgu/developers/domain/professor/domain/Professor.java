@@ -38,6 +38,9 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false, length = 15)
 	private String course;
 
+//	@Column(name = "\"order\"", nullable = false)
+//	private Integer order;
+
 	public static Professor create(String name, String officeLoc, String contact, String email, String course) {
 		return Professor.builder()
 			.name(name)
@@ -45,6 +48,7 @@ public class Professor extends BaseTimeEntity {
 			.contact(contact)
 			.email(email)
 			.course(course)
+//			.order(0)
 			.build();
 	}
 

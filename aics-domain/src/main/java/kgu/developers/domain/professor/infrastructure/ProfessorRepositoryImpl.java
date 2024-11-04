@@ -37,4 +37,9 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 	public List<Professor> findAll() {
 		return jpaProfessorRepository.findAllByOrderByNameAsc();
 	}
+
+//	@Override
+//	public List<Professor> findAllByOrder() {
+//		return jpaProfessorRepository.findAllByOrderByOrder();
+//	}
 }

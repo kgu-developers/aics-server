@@ -8,4 +8,6 @@ import java.util.List;
 public interface JpaProfessorRepository extends JpaRepository<Professor, Long> {
 
 	List<Professor> findAllByOrderByNameAsc();
+
+//	List<Professor> findAllByOrderByOrder();
 }

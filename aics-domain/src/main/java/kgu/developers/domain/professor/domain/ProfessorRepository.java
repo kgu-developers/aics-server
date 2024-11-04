@@ -13,4 +13,6 @@ public interface ProfessorRepository {
 	boolean existsById(Long id);
 
 	List<Professor> findAll();
+
+//	List<Professor> findAllByOrder();
 }
