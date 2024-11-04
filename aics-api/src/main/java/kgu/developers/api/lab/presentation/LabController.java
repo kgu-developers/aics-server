@@ -70,4 +70,17 @@ public class LabController {
 		labService.updateLab(id, request);
 		return ResponseEntity.noContent().build();
 	}
+
+	@Operation(summary = "연구실 삭제 API", description = """
+			- Description : 이 API는 해당 연구실을 삭제합니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{id}/delete")
+	public ResponseEntity<Void> deleteComment(
+		@Parameter(description = "삭제할 연구실의 ID", example = "19", required = true) @PathVariable @Positive Long id
+	) {
+		labService.deleteLab(id);
+		return ResponseEntity.noContent().build();
+	}
 }
