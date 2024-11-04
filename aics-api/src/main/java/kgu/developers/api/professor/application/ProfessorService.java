@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,20 +30,34 @@ public class ProfessorService {
 
 	@Transactional
 	public void updateProfessor(@Positive Long id, ProfessorRequest request) {
-		Professor professor = professorRepository.findById(id)
-			.orElseThrow(ProfessorNotFoundException::new);
-
+		Professor professor = getProfessor(id);
 		professor.updateProfessor(
 			request.name(), request.officeLoc(), request.contact(), request.email(), request.course()
 		);
 	}
 
-	// TODO
 	public void deleteProfessor(@Positive Long id) {
-
+		if(professorRepository.existsById(id)) {
+			professorRepository.deleteById(id);
+		} else {
+			throw new ProfessorNotFoundException();
+		}
 	}
 
+	@Transactional(readOnly = true)
 	public List<ProfessorResponse> getProfessorList() {
-		return null;
+		List<Professor> all = professorRepository.findAll();
+		List<ProfessorResponse> responses = new ArrayList<>();
+		for (Professor professor : all) {
+			responses.add(
+				ProfessorResponse.from(professor)
+			);
+		}
+		return responses;
+	}
+
+	private Professor getProfessor(Long id) {
+		return professorRepository.findById(id)
+			.orElseThrow(ProfessorNotFoundException::new);
 	}
 }

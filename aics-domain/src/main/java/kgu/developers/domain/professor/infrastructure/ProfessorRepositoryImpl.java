@@ -5,6 +5,7 @@ import kgu.developers.domain.professor.domain.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,5 +21,20 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 	@Override
 	public Optional<Professor> findById(Long id) {
 		return jpaProfessorRepository.findById(id);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		jpaProfessorRepository.deleteById(id);
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		return jpaProfessorRepository.existsById(id);
+	}
+
+	@Override
+	public List<Professor> findAll() {
+		return jpaProfessorRepository.findAllByOrderByNameAsc();
 	}
 }
