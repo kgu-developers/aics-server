@@ -30,6 +30,12 @@ public class LabService {
 		lab.updateSite(request.site());
 	}
 
+	@Transactional
+	public void deleteLab(Long id) {
+		Lab lab = getById(id);
+		lab.delete();
+	}
+
 	private Lab getById(Long id) {
 		return labRepository.findById(id)
 			.filter(lab -> lab.getDeletedAt() == null)
