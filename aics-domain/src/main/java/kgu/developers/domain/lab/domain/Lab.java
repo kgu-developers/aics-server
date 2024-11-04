@@ -31,4 +31,12 @@ public class Lab extends BaseTimeEntity {
 
 	@Column(nullable = false, length = 50)
 	private String site;
+
+	public static Lab create(String name, String loc, String site) {
+		return Lab.builder()
+			.name(name)
+			.loc(loc)
+			.site(site)
+			.build();
+	}
 }
