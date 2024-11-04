@@ -26,7 +26,7 @@ public class LabService {
 	}
 
 	public LabListResponse getLabs() {
-		List<Lab> labs = labRepository.findAllByOrderByNameAsc();
+		List<Lab> labs = labRepository.findByDeletedAtIsNullOrderByNameAsc();
 		return LabListResponse.from(labs);
 	}
 

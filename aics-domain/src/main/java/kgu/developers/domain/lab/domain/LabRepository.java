@@ -8,5 +8,5 @@ public interface LabRepository {
 
 	Optional<Lab> findById(Long id);
 
-	List<Lab> findAllByOrderByNameAsc();
+	List<Lab> findByDeletedAtIsNullOrderByNameAsc();
 }
