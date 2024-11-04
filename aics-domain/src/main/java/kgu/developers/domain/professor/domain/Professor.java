@@ -29,10 +29,10 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false, length = 10)
 	private String officeLoc;
 
-	@Column(nullable = false, length = 15)
+	@Column(nullable = false, unique = true,length = 15)
 	private String contact;
 
-	@Column(nullable = false, length = 50)
+	@Column(nullable = false, unique = true, length = 50)
 	private String email;
 
 	@Column(nullable = false, length = 15)
