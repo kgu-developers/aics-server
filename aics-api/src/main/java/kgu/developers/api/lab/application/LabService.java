@@ -1,10 +1,13 @@
 package kgu.developers.api.lab.application;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kgu.developers.api.lab.presentation.exception.LabNotFoundException;
 import kgu.developers.api.lab.presentation.request.LabRequest;
+import kgu.developers.api.lab.presentation.response.LabListResponse;
 import kgu.developers.api.lab.presentation.response.LabPersistResponse;
 import kgu.developers.domain.lab.domain.Lab;
 import kgu.developers.domain.lab.domain.LabRepository;
@@ -20,6 +23,11 @@ public class LabService {
 		Lab lab = Lab.create(request.name(), request.loc(), request.site());
 		labRepository.save(lab);
 		return LabPersistResponse.from(lab.getId());
+	}
+
+	public LabListResponse getLabs() {
+		List<Lab> labs = labRepository.findAllByOrderByNameAsc();
+		return LabListResponse.from(labs);
 	}
 
 	@Transactional

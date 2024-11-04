@@ -1,5 +1,6 @@
 package kgu.developers.domain.lab.infrastructure;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -21,5 +22,10 @@ public class LabRepositoryImpl implements LabRepository {
 	@Override
 	public Optional<Lab> findById(Long id) {
 		return jpaLabRepository.findById(id);
+	}
+
+	@Override
+	public List<Lab> findAllByOrderByNameAsc() {
+		return jpaLabRepository.findAllByOrderByNameAsc();
 	}
 }
