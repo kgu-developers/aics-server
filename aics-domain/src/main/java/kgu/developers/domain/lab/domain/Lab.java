@@ -39,4 +39,16 @@ public class Lab extends BaseTimeEntity {
 			.site(site)
 			.build();
 	}
+
+	public void updateName(String name) {
+		this.name = name;
+	}
+
+	public void updateLoc(String loc) {
+		this.loc = loc;
+	}
+
+	public void updateSite(String site) {
+		this.site = site;
+	}
 }
