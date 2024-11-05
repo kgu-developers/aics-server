@@ -25,6 +25,7 @@ public class LabService {
 		return LabPersistResponse.of(lab.getId());
 	}
 
+	@Transactional(readOnly = true)
 	public LabListResponse getLabs() {
 		List<Lab> labs = labRepository.findByDeletedAtIsNullOrderByNameAsc();
 		return LabListResponse.from(labs);
