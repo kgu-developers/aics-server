@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum LabExceptionCode implements ExceptionCode {
-	LAB_NOT_FOUND(NOT_FOUND, "해당 ID의 게시글이 없습니다.");
+	LAB_NOT_FOUND(NOT_FOUND, "해당 ID의 연구실이 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;
