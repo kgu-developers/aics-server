@@ -46,8 +46,6 @@ public class LabService {
 	}
 
 	private Lab getById(Long id) {
-		return labRepository.findById(id)
-			.filter(lab -> lab.getDeletedAt() == null)
-			.orElseThrow(LabNotFoundException::new);
+		return labRepository.findById(id).orElseThrow(LabNotFoundException::new);
 	}
 }
