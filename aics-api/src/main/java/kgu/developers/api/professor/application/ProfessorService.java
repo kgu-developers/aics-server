@@ -1,6 +1,5 @@
 package kgu.developers.api.professor.application;
 
-import jakarta.validation.constraints.Positive;
 import kgu.developers.api.professor.presentation.exception.ProfessorNotFoundException;
 import kgu.developers.api.professor.presentation.request.ProfessorRequest;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
@@ -27,7 +26,7 @@ public class ProfessorService {
 	}
 
 	@Transactional
-	public void updateProfessor(@Positive Long id, ProfessorRequest request) {
+	public void updateProfessor(Long id, ProfessorRequest request) {
 		Professor professor = getProfessor(id);
 		professor.updateProfessor(
 			request.name(), request.officeLoc(), request.contact(), request.email(), request.course()
@@ -35,12 +34,9 @@ public class ProfessorService {
 	}
 
 	@Transactional
-	public void deleteProfessor(@Positive Long id) {
-		if (professorRepository.existsById(id)) {
-			professorRepository.deleteById(id);
-		} else {
-			throw new ProfessorNotFoundException();
-		}
+	public void deleteProfessor(Long id) {
+		Professor professor = getProfessor(id);
+		professorRepository.delete(professor);
 	}
 
 	@Transactional(readOnly = true)

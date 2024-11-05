@@ -24,18 +24,13 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		jpaProfessorRepository.deleteById(id);
-	}
-
-	@Override
-	public boolean existsById(Long id) {
-		return jpaProfessorRepository.existsById(id);
-	}
-
-	@Override
 	public List<Professor> findAll() {
 		return jpaProfessorRepository.findAllByOrderByNameAsc();
+	}
+
+	@Override
+	public void delete(Professor professor) {
+		jpaProfessorRepository.delete(professor);
 	}
 
 //	@Override

@@ -8,11 +8,11 @@ import lombok.Builder;
 @Builder
 public record ProfessorPersistResponse(
 	@Schema(description = "교수 id", example = "3", requiredMode = REQUIRED)
-	Long professorId
+	Long id
 ) {
-	public static ProfessorPersistResponse of(Long professorId) {
+	public static ProfessorPersistResponse of(Long id) {
 		return ProfessorPersistResponse.builder()
-			.professorId(professorId)
+			.id(id)
 			.build();
 	}
 }

@@ -81,7 +81,7 @@ public class ProfessorController {
 		    - Assignee : 이신행
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ProfessorResponse.class)))
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<ProfessorListResponse> getProfessorList() {
 		List<Professor> list = professorService.getProfessorList();
 		ProfessorListResponse response = ProfessorListResponse.from(list);
