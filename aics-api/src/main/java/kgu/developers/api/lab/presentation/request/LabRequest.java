@@ -1,0 +1,26 @@
+package kgu.developers.api.lab.presentation.request;
+
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+public record LabRequest(
+	@Schema(description = "연구실 이름", example = "민준연구실", requiredMode = REQUIRED)
+	@NotBlank
+	@Size(max = 15)
+	String name,
+
+	@Schema(description = "연구실 위치", example = "8509", requiredMode = REQUIRED)
+	@NotBlank
+	@Size(max = 10)
+	String loc,
+
+	@Schema(description = "연구실 홈페이지", example = "http://nninjoon.kyonggi.ac.kr", requiredMode = Schema.RequiredMode.REQUIRED)
+	@NotBlank
+	@Pattern(regexp = "^http://[a-zA-Z0-9.-]+\\.kyonggi\\.ac\\.kr$", message = "URL은 http://으로 시작하고 kyonggi.ac.kr 도메인으로 끝나야 합니다.")
+	String site
+) {
+}
