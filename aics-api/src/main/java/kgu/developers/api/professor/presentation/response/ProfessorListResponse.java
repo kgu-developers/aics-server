@@ -11,6 +11,13 @@ import java.util.List;
 @Builder
 public record ProfessorListResponse(
 	@Schema(description = "교수 리스트",
+		example = "[{"
+			+ "\"id\": 5, "
+			+ "\"name\": \"홍길동\", "
+			+ "\"officeLoc\": \"8000호\", "
+			+ "\"contact\": \"010-0000-0001\", "
+			+ "\"email\": \"prof@kyonggi.ac.kr\", "
+			+ "\"course\": \"컴퓨터공학개론\"}]",
 		requiredMode = REQUIRED)
 	List<ProfessorResponse> contents
 ) {
