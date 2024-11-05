@@ -12,8 +12,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.professor.application.ProfessorService;
 import kgu.developers.api.professor.presentation.request.ProfessorRequest;
-import kgu.developers.api.professor.presentation.response.ProfessorResponse;
+import kgu.developers.api.professor.presentation.response.ProfessorListResponse;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
+import kgu.developers.api.professor.presentation.response.ProfessorResponse;
+import kgu.developers.domain.professor.domain.Professor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,7 +70,7 @@ public class ProfessorController {
 	@ApiResponse(responseCode = "204")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteProfessor(
-		@Parameter(description = "수정할 교수 ID", example = "2", required = true) @PathVariable @Positive Long id
+		@Parameter(description = "삭제할 교수 ID", example = "2", required = true) @PathVariable @Positive Long id
 	) {
 		professorService.deleteProfessor(id);
 		return ResponseEntity.noContent().build();
@@ -80,9 +82,11 @@ public class ProfessorController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ProfessorResponse.class)))
 	@GetMapping()
-	public ResponseEntity<List<ProfessorResponse>> getProfessorList() {
-		List<ProfessorResponse> response = professorService.getProfessorList();
+	public ResponseEntity<ProfessorListResponse> getProfessorList() {
+		List<Professor> list = professorService.getProfessorList();
+		ProfessorListResponse response = ProfessorListResponse.from(list);
 		return ResponseEntity.ok().body(response);
 	}
 
 }
+

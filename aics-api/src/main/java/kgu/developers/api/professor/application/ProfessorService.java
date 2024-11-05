@@ -4,14 +4,12 @@ import jakarta.validation.constraints.Positive;
 import kgu.developers.api.professor.presentation.exception.ProfessorNotFoundException;
 import kgu.developers.api.professor.presentation.request.ProfessorRequest;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
-import kgu.developers.api.professor.presentation.response.ProfessorResponse;
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,17 +44,11 @@ public class ProfessorService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<ProfessorResponse> getProfessorList() {
-		List<Professor> all = professorRepository.findAll();
+	public List<Professor> getProfessorList() {
 //		일단 name으로 구현, Order로 조회시, 순서를 변경하는 엔드포인트 구성 필요
-//		List<Professor> all = professorRepository.findAllByOrder();
-		List<ProfessorResponse> responses = new ArrayList<>();
-		for (Professor professor : all) {
-			responses.add(
-				ProfessorResponse.from(professor)
-			);
-		}
-		return responses;
+//		return professorRepository.findAllByOrder();
+
+		return professorRepository.findAll();
 	}
 
 	private Professor getProfessor(Long id) {
