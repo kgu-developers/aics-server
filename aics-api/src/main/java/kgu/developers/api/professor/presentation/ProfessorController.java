@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.professor.application.ProfessorService;
 import kgu.developers.api.professor.presentation.request.ProfessorRequest;
@@ -28,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/professor")
+@RequestMapping("/api/v1/professors")
 @Tag(name = "Professor", description = "교수 API")
 public class ProfessorController {
 	private final ProfessorService professorService;
@@ -40,7 +41,7 @@ public class ProfessorController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = ProfessorPersistResponse.class)))
 	@PostMapping
 	public ResponseEntity<ProfessorPersistResponse> createProfessor(
-		@RequestBody ProfessorRequest request
+		@Valid @RequestBody ProfessorRequest request
 	) {
 		ProfessorPersistResponse response = professorService.createProfessor(request);
 		return ResponseEntity.status(CREATED).body(response);
