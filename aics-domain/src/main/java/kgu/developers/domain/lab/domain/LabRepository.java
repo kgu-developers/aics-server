@@ -10,5 +10,5 @@ public interface LabRepository {
 
 	List<Lab> findByDeletedAtIsNullOrderByNameAsc();
 
-	void deleteById(Long id);
+	void delete(Lab lab);
 }

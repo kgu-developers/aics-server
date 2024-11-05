@@ -41,7 +41,8 @@ public class LabService {
 
 	@Transactional
 	public void deleteLab(Long id) {
-		labRepository.deleteById(id);
+		Lab lab = getById(id);
+		labRepository.delete(lab);
 	}
 
 	private Lab getById(Long id) {

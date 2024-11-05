@@ -30,7 +30,8 @@ public class LabRepositoryImpl implements LabRepository {
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		jpaLabRepository.deleteById(id);
+	public void delete(Lab lab) {
+		jpaLabRepository.delete(lab);
 	}
+	
 }
