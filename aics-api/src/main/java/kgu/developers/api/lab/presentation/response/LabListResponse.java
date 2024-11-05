@@ -1,7 +1,5 @@
 package kgu.developers.api.lab.presentation.response;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
-
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,8 +9,18 @@ import lombok.Builder;
 @Builder
 public record LabListResponse(
 	@Schema(description = "등록된 연구실 리스트",
-		example = "",
-		requiredMode = REQUIRED)
+		example = """
+			{
+			  "contents": [
+			    {
+			      "name": "nninjo_on Systems Lab",
+			      "loc": "1022",
+			      "site": "http://nninjo_on.kyonggi.ac.kr"
+			    }
+			  ]
+			}
+			""",
+		requiredMode = Schema.RequiredMode.REQUIRED)
 	List<LabDetailResponse> contents
 ) {
 	public static LabListResponse from(List<Lab> labs) {
