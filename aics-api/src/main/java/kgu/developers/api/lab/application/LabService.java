@@ -22,7 +22,7 @@ public class LabService {
 	public LabPersistResponse createLab(LabRequest request) {
 		Lab lab = Lab.create(request.name(), request.loc(), request.site());
 		labRepository.save(lab);
-		return LabPersistResponse.from(lab.getId());
+		return LabPersistResponse.of(lab.getId());
 	}
 
 	public LabListResponse getLabs() {
