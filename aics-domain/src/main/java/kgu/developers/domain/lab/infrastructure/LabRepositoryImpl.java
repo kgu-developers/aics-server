@@ -28,4 +28,9 @@ public class LabRepositoryImpl implements LabRepository {
 	public List<Lab> findByDeletedAtIsNullOrderByNameAsc() {
 		return jpaLabRepository.findByDeletedAtIsNullOrderByNameAsc();
 	}
+
+	@Override
+	public void deleteById(Long id) {
+		jpaLabRepository.deleteById(id);
+	}
 }

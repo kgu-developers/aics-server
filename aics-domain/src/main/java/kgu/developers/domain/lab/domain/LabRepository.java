@@ -9,4 +9,6 @@ public interface LabRepository {
 	Optional<Lab> findById(Long id);
 
 	List<Lab> findByDeletedAtIsNullOrderByNameAsc();
+
+	void deleteById(Long id);
 }

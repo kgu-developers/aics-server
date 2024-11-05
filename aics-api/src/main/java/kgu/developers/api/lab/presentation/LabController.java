@@ -3,6 +3,7 @@ package kgu.developers.api.lab.presentation;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,7 +77,7 @@ public class LabController {
 			- Assignee : 박민준
 		""")
 	@ApiResponse(responseCode = "204")
-	@PatchMapping("/{id}/delete")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteComment(
 		@Parameter(description = "삭제할 연구실의 ID", example = "19", required = true) @PathVariable @Positive Long id
 	) {
