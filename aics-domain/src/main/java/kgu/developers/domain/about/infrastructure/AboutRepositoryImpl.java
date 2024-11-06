@@ -20,13 +20,13 @@ public class AboutRepositoryImpl implements AboutRepository {
 	}
 
 	@Override
-	public Optional<About> findByMainCategoryAndSubCategoryAndDetailCategory(MainCategory mainCategory, SubCategory subCategory, String detailCategory) {
-		return jpaAboutRepository.findByMainCategoryAndSubCategoryAndDetailCategory(mainCategory, subCategory, detailCategory);
+	public Optional<About> findByMainAndSubAndDetail(MainCategory main, SubCategory sub, String detail) {
+		return jpaAboutRepository.findByMainCategoryAndSubCategoryAndDetailCategory(main, sub, detail);
 	}
 
 	@Override
-	public Optional<About> findByMainCategoryAndSubCategory(MainCategory mainCategory, SubCategory subCategory) {
-		return jpaAboutRepository.findByMainCategoryAndSubCategory(mainCategory, subCategory);
+	public Optional<About> findByMainAndSub(MainCategory main, SubCategory sub) {
+		return jpaAboutRepository.findByMainCategoryAndSubCategory(main, sub);
 	}
 
 	@Override

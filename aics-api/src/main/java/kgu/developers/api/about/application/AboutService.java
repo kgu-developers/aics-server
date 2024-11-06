@@ -28,52 +28,31 @@ public class AboutService {
 
 	@Transactional
 	public AboutPersistResponse createAbout(AboutRequest request) {
-		MainCategory mainCategory = MainCategory.valueOf(
-			request.main().toUpperCase()
-		);
-
-		SubCategory subCategory = SubCategory.valueOf(
-			request.sub().toUpperCase()
-		);
+		MainCategory mainCategory = MainCategory.valueOf(request.main().toUpperCase());
+		SubCategory subCategory = SubCategory.valueOf(request.sub().toUpperCase());
 		isCategoryMatch(mainCategory, subCategory);
 
-		String detail = "";
-		if (subCategory.equals(CURRICULUM)) {
-			detail = request.detail();
-		}
+		String detail = subCategory.equals(CURRICULUM) ? request.detail() : "";
 
-		About about = About.create(
-			mainCategory, subCategory, detail, request.content()
-		);
-
-		Long id = aboutRepository.save(about).getId();
+		Long id = aboutRepository.save(
+			About.create(mainCategory, subCategory, detail, request.content())
+		).getId();
 
 		return AboutPersistResponse.of(id);
 	}
 
 	@Transactional(readOnly = true)
 	public AboutResponse getAbout(String main, String sub, String detail) {
-		MainCategory mainCategory = MainCategory.valueOf(
-			main.toUpperCase()
-		);
-
-		SubCategory subCategory = SubCategory.valueOf(
-			sub.toUpperCase()
-		);
+		MainCategory mainCategory = MainCategory.valueOf(main.toUpperCase());
+		SubCategory subCategory = SubCategory.valueOf(sub.toUpperCase());
 		isCategoryMatch(mainCategory, subCategory);
 
-		About about;
-		if (subCategory.equals(CURRICULUM)) {
-			about = aboutRepository
-				.findByMainCategoryAndSubCategoryAndDetailCategory(
-					mainCategory, subCategory, detail
-				).orElseThrow(AboutNotFoundException::new);
-		} else {
-			about = aboutRepository
-				.findByMainCategoryAndSubCategory(
-					mainCategory, subCategory
-				).orElseThrow(AboutNotFoundException::new);
-		}
+		About about = subCategory.equals(CURRICULUM)
+			? aboutRepository.findByMainAndSubAndDetail(mainCategory, subCategory, detail)
+			.orElseThrow(AboutNotFoundException::new)
+			: aboutRepository.findByMainAndSub(mainCategory, subCategory)
+			.orElseThrow(AboutNotFoundException::new);
+
 		return AboutResponse.from(about);
 	}
 
