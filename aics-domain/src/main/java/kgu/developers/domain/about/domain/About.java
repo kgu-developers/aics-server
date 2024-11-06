@@ -38,4 +38,13 @@ public class About extends BaseTimeEntity {
 
 	@Column(nullable = false, columnDefinition = "text")
 	private String content;
+
+	public static About create(MainCategory mainCategory, SubCategory subCategory, String detailCategory, String content) {
+		return About.builder()
+			.mainCategory(mainCategory)
+			.subCategory(subCategory)
+			.detailCategory(detailCategory)
+			.content(content)
+			.build();
+	}
 }
