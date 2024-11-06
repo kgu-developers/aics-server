@@ -24,9 +24,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.api.user.presentation.request.UserUpdateRequest;
+import kgu.developers.api.user.presentation.response.UserDetailPageResponse;
 import kgu.developers.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.api.user.presentation.response.UserSummaryPageResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -81,13 +81,13 @@ public class UserController {
 		    - Description : 이 API는 유저를 페이징 조회합니다.
 		    - Assignee : 박민준
 		""")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserSummaryPageResponse.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserDetailPageResponse.class)))
 	@GetMapping
-	public ResponseEntity<UserSummaryPageResponse> getUsers(
+	public ResponseEntity<UserDetailPageResponse> getUsers(
 		@Parameter(description = "페이지 인덱스", example = "0", required = true) @RequestParam(defaultValue = "0") @PositiveOrZero int page,
 		@Parameter(description = "응답 개수", example = "10", required = true) @RequestParam(defaultValue = "10") @Positive int size
 	) {
-		UserSummaryPageResponse response = userService.getUsers(PageRequest.of(page, size));
+		UserDetailPageResponse response = userService.getUsers(PageRequest.of(page, size));
 		return ResponseEntity.ok(response);
 	}
 }

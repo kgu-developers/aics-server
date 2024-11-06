@@ -11,9 +11,9 @@ import kgu.developers.api.user.presentation.exception.UserIdDuplicateException;
 import kgu.developers.api.user.presentation.exception.UserNotAuthenticatedException;
 import kgu.developers.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.api.user.presentation.request.UserUpdateRequest;
+import kgu.developers.api.user.presentation.response.UserDetailPageResponse;
 import kgu.developers.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.api.user.presentation.response.UserSummaryPageResponse;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
@@ -51,9 +51,9 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public UserSummaryPageResponse getUsers(Pageable pageable) {
+	public UserDetailPageResponse getUsers(Pageable pageable) {
 		PaginatedListResponse response = userRepository.findAllOrderByIdDesc(pageable);
-		return UserSummaryPageResponse.of(response.contents(), response.pageable());
+		return UserDetailPageResponse.of(response.contents(), response.pageable());
 	}
 
 	private void validateDuplicateId(String id) {

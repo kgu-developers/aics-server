@@ -10,22 +10,25 @@ import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 
 @Builder
-public record UserSummaryPageResponse<T>(
+public record UserDetailPageResponse<T>(
 	@Schema(description = "유저 정보 리스트",
 		example = "[{"
-			+ "\"id\": 201912065, "
 			+ "\"name\": \"nninjo_on\", "
-			+ "\"major\": \"컴퓨터공학부\"}]",
+			+ "\"phone\": \"010-7628-5030\", "
+			+ "\"email\": \"alswns11346@kgu.ac.kr\", "
+			+ "\"role\": \"학부생\", "
+			+ "\"major\": \"컴퓨터공학부\", "
+			+ "\"id\": \"201912065\"}]",
 		requiredMode = REQUIRED)
-	List<UserSummaryResponse> contents,
+	List<UserDetailResponse> contents,
 
 	@Schema(description = "페이징 정보", requiredMode = REQUIRED)
 	PageableResponse<T> pageable
 ) {
-	public static <T> UserSummaryPageResponse<T> of(List<User> users, PageableResponse<T> pageable) {
-		return UserSummaryPageResponse.<T>builder()
+	public static <T> UserDetailPageResponse<T> of(List<User> users, PageableResponse<T> pageable) {
+		return UserDetailPageResponse.<T>builder()
 			.contents(users.stream()
-				.map(UserSummaryResponse::from)
+				.map(UserDetailResponse::from)
 				.toList())
 			.pageable(pageable)
 			.build();
