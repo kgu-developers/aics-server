@@ -1,21 +1,24 @@
 package kgu.developers.api.user.application;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kgu.developers.api.user.presentation.exception.UserIdDuplicateException;
 import kgu.developers.api.user.presentation.exception.UserNotAuthenticatedException;
 import kgu.developers.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.api.user.presentation.request.UserUpdateRequest;
+import kgu.developers.api.user.presentation.response.UserDetailPageResponse;
 import kgu.developers.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.api.user.presentation.response.UserPersistResponse;
+import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class UserService {
 			bCryptPasswordEncoder.encode(request.password()),
 			request.name(),
 			request.email(),
-			request.phoneNumber(),
+			request.phone(),
 			request.major()
 		);
 
@@ -44,7 +47,13 @@ public class UserService {
 	public void updateUser(UserUpdateRequest request) {
 		User updateUser = me();
 		updateUser.updateEmail(request.email());
-		updateUser.updatePhoneNumber(request.phoneNumber());
+		updateUser.updatePhone(request.phone());
+	}
+
+	@Transactional(readOnly = true)
+	public UserDetailPageResponse getUsers(Pageable pageable) {
+		PaginatedListResponse response = userRepository.findAllOrderByIdDesc(pageable);
+		return UserDetailPageResponse.of(response.contents(), response.pageable());
 	}
 
 	private void validateDuplicateId(String id) {
