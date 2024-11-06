@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +31,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AboutService {
 	private final AboutRepository aboutRepository;
+
+	private static final Map<MainCategory, Set<SubCategory>> CATEGORY_MAP = new EnumMap<>(MainCategory.class);
+
+	static {
+		CATEGORY_MAP.put(DEPT_INTRO, Set.of(SubCategory.DEPT_INTRO, HISTORY, EDU_ENVIRONMENT, EDU_OBJECTIVES));
+		CATEGORY_MAP.put(EDU_ACTIVITIES, Set.of(CURRICULUM, LEARNING_ACTIVITIES, CLUB_INTRO));
+	}
 
 	@Transactional
 	public AboutPersistResponse createAbout(AboutRequest request) {
@@ -68,11 +76,6 @@ public class AboutService {
 
 		about.updateContent(request.content());
 	}
-
-	private static final Map<MainCategory, Set<SubCategory>> CATEGORY_MAP = Map.of(
-		DEPT_INTRO, Set.of(SubCategory.DEPT_INTRO, HISTORY, EDU_ENVIRONMENT, EDU_OBJECTIVES),
-		EDU_ACTIVITIES, Set.of(CURRICULUM, LEARNING_ACTIVITIES, CLUB_INTRO)
-	);
 
 	private void isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
 		Set<SubCategory> validSubCategories = CATEGORY_MAP.get(mainCategory);
