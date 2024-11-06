@@ -8,6 +8,7 @@ import static kgu.developers.domain.about.domain.SubCategory.EDU_OBJECTIVES;
 import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static kgu.developers.domain.about.domain.SubCategory.LEARNING_ACTIVITIES;
 
+import kgu.developers.api.about.presentation.Exception.AboutNotFoundException;
 import kgu.developers.api.about.presentation.Exception.CategoryNotMatchException;
 import kgu.developers.api.about.presentation.request.AboutRequest;
 import kgu.developers.api.about.presentation.response.AboutPersistResponse;
@@ -19,6 +20,8 @@ import kgu.developers.domain.about.domain.SubCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,7 +58,31 @@ public class AboutService {
 
 	@Transactional(readOnly = true)
 	public AboutResponse getAbout(String main, String sub, String detail) {
-		return null;
+		MainCategory mainCategory = MainCategory.valueOf(
+			main.toUpperCase()
+		);
+
+		SubCategory subCategory = SubCategory.valueOf(
+			sub.toUpperCase()
+		);
+
+		if (!isCategoryMatch(mainCategory, subCategory)) {
+			throw new CategoryNotMatchException();
+		}
+
+		About about;
+		if (subCategory.equals(CURRICULUM)) {
+			about = aboutRepository
+				.findByMainCategoryAndSubCategoryAndDetailCategory(
+					mainCategory, subCategory, detail
+				).orElseThrow(AboutNotFoundException::new);
+		} else {
+			about = aboutRepository
+				.findByMainCategoryAndSubCategory(
+					mainCategory, subCategory
+				).orElseThrow(AboutNotFoundException::new);
+		}
+		return AboutResponse.from(about);
 	}
 
 	@Transactional

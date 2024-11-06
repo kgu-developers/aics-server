@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -50,9 +51,9 @@ public class AboutController {
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AboutResponse.class)))
 	@GetMapping
 	public ResponseEntity<AboutResponse> getAbout(
-		@RequestParam(name = "main") String main,
-		@RequestParam(name = "sub") String sub,
-		@RequestParam(name = "detail", required = false) String detail
+		@Parameter(description = "메인 카테고리", example = "EDU_ACTIVITIES") @RequestParam(name = "main") String main,
+		@Parameter(description = "보조 카테고리", example = "CURRICULUM") @RequestParam(name = "sub") String sub,
+		@Parameter(description = "세부 카테고리", example = "2019") @RequestParam(name = "detail", required = false) String detail
 	) {
 		AboutResponse response = aboutService.getAbout(main, sub, detail);
 		return ResponseEntity.ok(response);
