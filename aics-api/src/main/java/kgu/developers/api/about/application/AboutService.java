@@ -35,10 +35,7 @@ public class AboutService {
 		SubCategory subCategory = SubCategory.valueOf(
 			request.sub().toUpperCase()
 		);
-
-		if (!isCategoryMatch(mainCategory, subCategory)) {
-			throw new CategoryNotMatchException();
-		}
+		isCategoryMatch(mainCategory, subCategory);
 
 		String detail = "";
 		if (subCategory.equals(CURRICULUM)) {
@@ -63,10 +60,7 @@ public class AboutService {
 		SubCategory subCategory = SubCategory.valueOf(
 			sub.toUpperCase()
 		);
-
-		if (!isCategoryMatch(mainCategory, subCategory)) {
-			throw new CategoryNotMatchException();
-		}
+		isCategoryMatch(mainCategory, subCategory);
 
 		About about;
 		if (subCategory.equals(CURRICULUM)) {
@@ -91,23 +85,23 @@ public class AboutService {
 		about.updateContent(request.content());
 	}
 
-	private boolean isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
+	private void isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
 		switch (mainCategory) {
 			case DEPT_INTRO:
 				if (subCategory.equals(DEPT_INTRO)
 					|| subCategory.equals(HISTORY)
 					|| subCategory.equals(EDU_ENVIRONMENT)
 					|| subCategory.equals(EDU_OBJECTIVES)) {
-					return true;
+					return;
 				}
 
 			case EDU_ACTIVITIES:
 				if (subCategory.equals(CURRICULUM)
 					|| subCategory.equals(LEARNING_ACTIVITIES)
 					|| subCategory.equals(CLUB_INTRO)) {
-					return true;
+					return;
 				}
 		}
-		return false;
+		throw new CategoryNotMatchException();
 	}
 }
