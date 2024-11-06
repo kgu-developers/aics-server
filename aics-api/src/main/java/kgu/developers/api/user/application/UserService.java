@@ -1,5 +1,6 @@
 package kgu.developers.api.user.application;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,8 @@ import kgu.developers.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.api.user.presentation.request.UserUpdateRequest;
 import kgu.developers.api.user.presentation.response.UserDetailResponse;
 import kgu.developers.api.user.presentation.response.UserPersistResponse;
+import kgu.developers.api.user.presentation.response.UserSummaryPageResponse;
+import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import kgu.developers.domain.user.exception.UserNotFoundException;
@@ -45,6 +48,12 @@ public class UserService {
 		User updateUser = me();
 		updateUser.updateEmail(request.email());
 		updateUser.updatePhone(request.phone());
+	}
+
+	@Transactional(readOnly = true)
+	public UserSummaryPageResponse getUsers(Pageable pageable) {
+		PaginatedListResponse response = userRepository.findAllOrderByIdDesc(pageable);
+		return UserSummaryPageResponse.of(response.contents(), response.pageable());
 	}
 
 	private void validateDuplicateId(String id) {
