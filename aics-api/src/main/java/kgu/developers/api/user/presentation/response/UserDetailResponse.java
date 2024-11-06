@@ -14,7 +14,7 @@ public record UserDetailResponse(
 	String name,
 
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
-	String phoneNumber,
+	String phone,
 
 	@Schema(description = "이메일", example = "example@gmail.com", requiredMode = REQUIRED)
 	String email,
@@ -33,7 +33,7 @@ public record UserDetailResponse(
 	) {
 		return UserDetailResponse.builder()
 			.name(user.getName())
-			.phoneNumber(user.getPhoneNumber())
+			.phone(user.getPhone())
 			.email(user.getEmail())
 			.role(user.getRole())
 			.major(user.getMajor())

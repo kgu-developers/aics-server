@@ -1,6 +1,6 @@
 package kgu.developers.api.user.presentation.request;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +32,7 @@ public record UserCreateRequest(
 
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
 	@Pattern(regexp = "^\\d{2,4}-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다.")
-	String phoneNumber,
+	String phone,
 
 	@Schema(description = "전공 이름", example = "CSE", requiredMode = REQUIRED)
 	@NotNull

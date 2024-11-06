@@ -49,7 +49,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 	private String email;
 
 	@Column(unique = true, nullable = false, length = 15)
-	private String phoneNumber;
+	private String phone;
 
 	@Column(nullable = false)
 	@Enumerated(STRING)
@@ -65,13 +65,13 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	public static User create(String id, String password,
 		String name, String email,
-		String phoneNumber, Major major) {
+		String phone, Major major) {
 		return User.builder()
 			.id(id)
 			.password(password)
 			.name(name)
 			.email(email)
-			.phoneNumber(phoneNumber)
+			.phone(phone)
 			.role(Role.USER)
 			.major(major)
 			.build();
@@ -81,8 +81,8 @@ public class User extends BaseTimeEntity implements UserDetails {
 		this.email = email;
 	}
 
-	public void updatePhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void updatePhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Override
