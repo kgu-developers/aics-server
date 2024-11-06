@@ -20,7 +20,6 @@ import kgu.developers.domain.about.domain.AboutRepository;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,11 +53,12 @@ public class AboutService {
 	public AboutResponse getAbout(MainCategory main, SubCategory sub, String detail) {
 		categoryMatchCheck(main, sub);
 
+		System.out.println(detail);
 		About about;
-		try {
+		if (detail == null || detail.isBlank()) {
 			about = aboutRepository.findByMainAndSub(main, sub)
 				.orElseThrow(AboutNotFoundException::new);
-		} catch (IncorrectResultSizeDataAccessException e) {
+		} else {
 			about = aboutRepository.findByMainAndSubAndDetail(main, sub, detail)
 				.orElseThrow(AboutNotFoundException::new);
 		}

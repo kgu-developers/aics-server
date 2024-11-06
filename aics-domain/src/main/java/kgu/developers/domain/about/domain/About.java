@@ -33,7 +33,6 @@ public class About extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private SubCategory subCategory;
 
-	@Column(nullable = false)
 	private String detailCategory;
 
 	@Column(nullable = false, columnDefinition = "text")
