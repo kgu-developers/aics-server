@@ -1,8 +1,10 @@
 package kgu.developers.api.about.application;
 
+
+import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
+import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
 import static kgu.developers.domain.about.domain.SubCategory.CLUB_INTRO;
 import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
-import static kgu.developers.domain.about.domain.SubCategory.DEPT_INTRO;
 import static kgu.developers.domain.about.domain.SubCategory.EDU_ENVIRONMENT;
 import static kgu.developers.domain.about.domain.SubCategory.EDU_OBJECTIVES;
 import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
@@ -20,6 +22,9 @@ import kgu.developers.domain.about.domain.SubCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -64,23 +69,18 @@ public class AboutService {
 		about.updateContent(request.content());
 	}
 
-	private void isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
-		switch (mainCategory) {
-			case DEPT_INTRO:
-				if (subCategory.equals(DEPT_INTRO)
-					|| subCategory.equals(HISTORY)
-					|| subCategory.equals(EDU_ENVIRONMENT)
-					|| subCategory.equals(EDU_OBJECTIVES)) {
-					return;
-				}
+	private static final Map<MainCategory, Set<SubCategory>> CATEGORY_MAP = Map.of(
+		DEPT_INTRO, Set.of(SubCategory.DEPT_INTRO, HISTORY, EDU_ENVIRONMENT, EDU_OBJECTIVES),
+		EDU_ACTIVITIES, Set.of(CURRICULUM, LEARNING_ACTIVITIES, CLUB_INTRO)
+	);
 
-			case EDU_ACTIVITIES:
-				if (subCategory.equals(CURRICULUM)
-					|| subCategory.equals(LEARNING_ACTIVITIES)
-					|| subCategory.equals(CLUB_INTRO)) {
-					return;
-				}
+	private void isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
+		Set<SubCategory> validSubCategories = CATEGORY_MAP.get(mainCategory);
+
+		if (validSubCategories != null && validSubCategories.contains(subCategory)) {
+			return;
 		}
+
 		throw new CategoryNotMatchException();
 	}
 }
