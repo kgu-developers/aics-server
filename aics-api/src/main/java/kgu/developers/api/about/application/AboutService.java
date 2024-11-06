@@ -43,7 +43,7 @@ public class AboutService {
 	public AboutPersistResponse createAbout(AboutRequest request) {
 		MainCategory mainCategory = MainCategory.valueOf(request.main().toUpperCase());
 		SubCategory subCategory = SubCategory.valueOf(request.sub().toUpperCase());
-		isCategoryMatch(mainCategory, subCategory);
+		categoryMatchCheck(mainCategory, subCategory);
 
 		String detail = subCategory.equals(CURRICULUM) ? request.detail() : "";
 
@@ -58,7 +58,7 @@ public class AboutService {
 	public AboutResponse getAbout(String main, String sub, String detail) {
 		MainCategory mainCategory = MainCategory.valueOf(main.toUpperCase());
 		SubCategory subCategory = SubCategory.valueOf(sub.toUpperCase());
-		isCategoryMatch(mainCategory, subCategory);
+		categoryMatchCheck(mainCategory, subCategory);
 
 		About about = subCategory.equals(CURRICULUM)
 			? aboutRepository.findByMainAndSubAndDetail(mainCategory, subCategory, detail)
@@ -77,12 +77,9 @@ public class AboutService {
 		about.updateContent(request.content());
 	}
 
-	private void isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
-		Set<SubCategory> validSubCategories = CATEGORY_MAP.get(mainCategory);
-
-		if (validSubCategories != null && validSubCategories.contains(subCategory)) {
+	private void categoryMatchCheck(MainCategory mainCategory, SubCategory subCategory) {
+		if (CATEGORY_MAP.getOrDefault(mainCategory, Set.of()).contains(subCategory))
 			return;
-		}
 
 		throw new CategoryNotMatchException();
 	}
