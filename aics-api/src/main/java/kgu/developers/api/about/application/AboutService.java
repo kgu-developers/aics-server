@@ -41,29 +41,27 @@ public class AboutService {
 
 	@Transactional
 	public AboutPersistResponse createAbout(AboutRequest request) {
-		MainCategory mainCategory = MainCategory.valueOf(request.main().toUpperCase());
-		SubCategory subCategory = SubCategory.valueOf(request.sub().toUpperCase());
-		categoryMatchCheck(mainCategory, subCategory);
+		MainCategory main = request.main();
+		SubCategory sub = request.sub();
+		categoryMatchCheck(main, sub);
 
-		String detail = subCategory.equals(CURRICULUM) ? request.detail() : "";
+		String detail = sub.equals(CURRICULUM) ? request.detail() : "";
 
 		Long id = aboutRepository.save(
-			About.create(mainCategory, subCategory, detail, request.content())
+			About.create(main, sub, detail, request.content())
 		).getId();
 
 		return AboutPersistResponse.of(id);
 	}
 
 	@Transactional(readOnly = true)
-	public AboutResponse getAbout(String main, String sub, String detail) {
-		MainCategory mainCategory = MainCategory.valueOf(main.toUpperCase());
-		SubCategory subCategory = SubCategory.valueOf(sub.toUpperCase());
-		categoryMatchCheck(mainCategory, subCategory);
+	public AboutResponse getAbout(MainCategory main, SubCategory sub, String detail) {
+		categoryMatchCheck(main, sub);
 
-		About about = subCategory.equals(CURRICULUM)
-			? aboutRepository.findByMainAndSubAndDetail(mainCategory, subCategory, detail)
+		About about = sub.equals(CURRICULUM)
+			? aboutRepository.findByMainAndSubAndDetail(main, sub, detail)
 			.orElseThrow(AboutNotFoundException::new)
-			: aboutRepository.findByMainAndSub(mainCategory, subCategory)
+			: aboutRepository.findByMainAndSub(main, sub)
 			.orElseThrow(AboutNotFoundException::new);
 
 		return AboutResponse.from(about);

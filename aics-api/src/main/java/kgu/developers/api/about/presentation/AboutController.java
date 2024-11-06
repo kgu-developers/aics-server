@@ -13,6 +13,8 @@ import kgu.developers.api.about.application.AboutService;
 import kgu.developers.api.about.presentation.request.AboutRequest;
 import kgu.developers.api.about.presentation.response.AboutPersistResponse;
 import kgu.developers.api.about.presentation.response.AboutResponse;
+import kgu.developers.domain.about.domain.MainCategory;
+import kgu.developers.domain.about.domain.SubCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +53,8 @@ public class AboutController {
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AboutResponse.class)))
 	@GetMapping
 	public ResponseEntity<AboutResponse> getAbout(
-		@Parameter(description = "메인 카테고리", example = "EDU_ACTIVITIES") @RequestParam(name = "main") String main,
-		@Parameter(description = "보조 카테고리", example = "CURRICULUM") @RequestParam(name = "sub") String sub,
+		@Parameter(description = "메인 카테고리", example = "EDU_ACTIVITIES") @RequestParam(name = "main") MainCategory main,
+		@Parameter(description = "보조 카테고리", example = "CURRICULUM") @RequestParam(name = "sub") SubCategory sub,
 		@Parameter(description = "세부 카테고리", example = "2019") @RequestParam(name = "detail", required = false, defaultValue = "2022") String detail
 	) {
 		AboutResponse response = aboutService.getAbout(main, sub, detail);

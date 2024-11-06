@@ -5,15 +5,17 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import kgu.developers.domain.about.domain.MainCategory;
+import kgu.developers.domain.about.domain.SubCategory;
 
 public record AboutRequest(
 	@Schema(description = "메인 카테고리", example = "EDU_ACTIVITIES", requiredMode = REQUIRED)
 	@NotNull
-	String main,
+	MainCategory main,
 
 	@Schema(description = "보조 카테고리", example = "CURRICULUM", requiredMode = REQUIRED)
 	@NotNull
-	String sub,
+	SubCategory sub,
 
 	@Schema(description = "세부 카테고리", example = "2019", requiredMode = NOT_REQUIRED)
 	String detail,
