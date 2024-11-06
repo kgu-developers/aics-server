@@ -18,7 +18,7 @@ public record AboutRequest(
 	@Schema(description = "세부 카테고리", example = "2019", requiredMode = NOT_REQUIRED)
 	String detail,
 
-	@Schema(description = "페이지 내용(JSON 형식)", example = "{\"key\":\"value\"}", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Schema(description = "페이지 내용(JSON 형식)", example = "{key:value}", requiredMode = REQUIRED)
 	@NotNull
 	String content
 ) {

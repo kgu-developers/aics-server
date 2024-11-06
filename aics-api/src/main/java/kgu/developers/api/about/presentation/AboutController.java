@@ -11,8 +11,6 @@ import kgu.developers.api.about.application.AboutService;
 import kgu.developers.api.about.presentation.request.AboutRequest;
 import kgu.developers.api.about.presentation.response.AboutPersistResponse;
 import kgu.developers.api.about.presentation.response.AboutResponse;
-import kgu.developers.api.post.presentation.response.PostDetailResponse;
-import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
