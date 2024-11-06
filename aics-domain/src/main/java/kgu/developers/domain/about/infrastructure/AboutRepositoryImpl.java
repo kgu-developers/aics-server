@@ -28,4 +28,9 @@ public class AboutRepositoryImpl implements AboutRepository {
 	public Optional<About> findByMainCategoryAndSubCategory(MainCategory mainCategory, SubCategory subCategory) {
 		return jpaAboutRepository.findByMainCategoryAndSubCategory(mainCategory, subCategory);
 	}
+
+	@Override
+	public Optional<About> findById(Long id) {
+		return jpaAboutRepository.findById(id);
+	}
 }

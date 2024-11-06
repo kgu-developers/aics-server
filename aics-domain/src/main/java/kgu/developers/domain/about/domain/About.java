@@ -47,4 +47,8 @@ public class About extends BaseTimeEntity {
 			.content(content)
 			.build();
 	}
+
+	public void updateContent(String content) {
+		this.content = content;
+	}
 }

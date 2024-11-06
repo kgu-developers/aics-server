@@ -12,4 +12,5 @@ public interface AboutRepository {
 	Optional<About> findByMainCategoryAndSubCategory(MainCategory mainCategory,
 													 SubCategory subCategory);
 
+	Optional<About> findById(Long id);
 }

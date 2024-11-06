@@ -21,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class AboutService {
@@ -87,7 +85,10 @@ public class AboutService {
 
 	@Transactional
 	public void updateAbout(Long id, AboutRequest request) {
+		About about = aboutRepository.findById(id)
+			.orElseThrow(AboutNotFoundException::new);
 
+		about.updateContent(request.content());
 	}
 
 	private boolean isCategoryMatch(MainCategory mainCategory, SubCategory subCategory) {
