@@ -2,8 +2,10 @@ package kgu.developers.domain.user.infrastructure;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 	private final JpaUserRepository jpaUserRepository;
+	private final QueryUserRepository queryUserRepository;
 
 	@Override
 	public User save(User user) {
@@ -26,5 +29,10 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public Optional<User> findById(String id) {
 		return jpaUserRepository.findById(id);
+	}
+
+	@Override
+	public PaginatedListResponse findAllOrderByIdDesc(Pageable pageable) {
+		return queryUserRepository.findAllOrderByIdDesc(pageable);
 	}
 }
