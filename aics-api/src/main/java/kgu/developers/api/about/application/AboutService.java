@@ -20,6 +20,7 @@ import kgu.developers.domain.about.domain.AboutRepository;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,13 +42,9 @@ public class AboutService {
 
 	@Transactional
 	public AboutPersistResponse createAbout(AboutRequest request) {
-		MainCategory main = request.main();
-		SubCategory sub = request.sub();
-		categoryMatchCheck(main, sub);
+		categoryMatchCheck(request.main(), request.sub());
 
-		String detail = sub.equals(CURRICULUM) ? request.detail() : "";
-
-		About about = About.create(main, sub, detail, request.content());
+		About about = About.create(request.main(), request.sub(), request.detail(), request.content());
 		Long id = aboutRepository.save(about).getId();
 
 		return AboutPersistResponse.of(id);
@@ -57,11 +54,14 @@ public class AboutService {
 	public AboutResponse getAbout(MainCategory main, SubCategory sub, String detail) {
 		categoryMatchCheck(main, sub);
 
-		About about = sub.equals(CURRICULUM)
-			? aboutRepository.findByMainAndSubAndDetail(main, sub, detail)
-			.orElseThrow(AboutNotFoundException::new)
-			: aboutRepository.findByMainAndSub(main, sub)
-			.orElseThrow(AboutNotFoundException::new);
+		About about;
+		try {
+			about = aboutRepository.findByMainAndSub(main, sub)
+				.orElseThrow(AboutNotFoundException::new);
+		} catch (IncorrectResultSizeDataAccessException e) {
+			about = aboutRepository.findByMainAndSubAndDetail(main, sub, detail)
+				.orElseThrow(AboutNotFoundException::new);
+		}
 
 		return AboutResponse.from(about);
 	}
