@@ -1,8 +1,27 @@
 package kgu.developers.api.about.presentation;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import kgu.developers.api.about.application.AboutService;
+import kgu.developers.api.about.presentation.request.AboutRequest;
+import kgu.developers.api.about.presentation.response.AboutPersistResponse;
+import kgu.developers.api.about.presentation.response.AboutResponse;
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
+import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -10,4 +29,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/abouts")
 public class AboutController {
 	private final AboutService aboutService;
+
+	@Operation(summary = "소개글 생성 API", description = """
+			- Description : 이 API는 소개글을 생성합니다.
+			- Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = AboutPersistResponse.class)))
+	@PostMapping
+	public ResponseEntity<AboutPersistResponse> createAbout(
+		@RequestBody AboutRequest request
+	) {
+		AboutPersistResponse response = aboutService.createAbout(request);
+		return ResponseEntity.status(CREATED).body(response);
+	}
+
+	@Operation(summary = "소개글 조회 API", description = """
+		    - Description : 이 API는 소개글을 조회합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AboutResponse.class)))
+	@GetMapping
+	public ResponseEntity<AboutResponse> getAbout(
+		@RequestParam(name = "main") String main,
+		@RequestParam(name = "sub") String sub,
+		@RequestParam(name = "detail", required = false) String detail
+	) {
+		AboutResponse response = aboutService.getAbout(main, sub, detail);
+		return ResponseEntity.ok(response);
+	}
+	@Operation(summary = "소개글 수정 API", description = """
+		    - Description : 이 API는 소개글을 수정합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "204")
+	@PatchMapping("/{id}")
+	public ResponseEntity<Void> updateAbout(
+		@PathVariable Long id,
+		@RequestBody AboutRequest request
+	) {
+		aboutService.updateAbout(id, request);
+		return ResponseEntity.status(NO_CONTENT).build();
+	}
 }
