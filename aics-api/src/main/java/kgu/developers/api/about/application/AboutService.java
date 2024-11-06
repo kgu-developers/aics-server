@@ -47,9 +47,8 @@ public class AboutService {
 
 		String detail = sub.equals(CURRICULUM) ? request.detail() : "";
 
-		Long id = aboutRepository.save(
-			About.create(main, sub, detail, request.content())
-		).getId();
+		About about = About.create(main, sub, detail, request.content());
+		Long id = aboutRepository.save(about).getId();
 
 		return AboutPersistResponse.of(id);
 	}
