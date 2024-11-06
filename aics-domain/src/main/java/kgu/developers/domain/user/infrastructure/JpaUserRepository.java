@@ -8,11 +8,7 @@ import kgu.developers.domain.user.domain.User;
 
 public interface JpaUserRepository extends JpaRepository<User, String> {
 
-	boolean existsByid(String id);
+	boolean existsById(String id);
 
-	boolean existsByEmail(String email);
-
-	boolean existsByPhoneNumber(String phoneNumber);
-
-	Optional<User> findByid(String id);
+	Optional<User> findById(String id);
 }

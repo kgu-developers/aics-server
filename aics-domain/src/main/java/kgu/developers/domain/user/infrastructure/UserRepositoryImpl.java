@@ -20,21 +20,11 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public boolean existsById(String id) {
-		return jpaUserRepository.existsByid(id);
-	}
-
-	@Override
-	public boolean existsByEmail(String email) {
-		return jpaUserRepository.existsByEmail(email);
-	}
-
-	@Override
-	public boolean existsByPhoneNumber(String phoneNumber) {
-		return jpaUserRepository.existsByPhoneNumber(phoneNumber);
+		return jpaUserRepository.existsById(id);
 	}
 
 	@Override
 	public Optional<User> findById(String id) {
-		return jpaUserRepository.findByid(id);
+		return jpaUserRepository.findById(id);
 	}
 }
