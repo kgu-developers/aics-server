@@ -11,7 +11,7 @@ public record AboutResponse(
 	@Schema(description = "소개글 id", example = "3", requiredMode = REQUIRED)
 	Long id,
 
-	@Schema(description = "페이지 내용(JSON 형식)", example = "{\"key\":\"value\"}", requiredMode = Schema.RequiredMode.REQUIRED)
+	@Schema(description = "페이지 내용(JSON 형식)", example = "{key:value}", requiredMode = Schema.RequiredMode.REQUIRED)
 	String content
 ) {
 	public static AboutResponse from(About about) {

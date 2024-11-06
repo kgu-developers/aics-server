@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kgu.developers.api.about.application.AboutService;
 import kgu.developers.api.about.presentation.request.AboutRequest;
 import kgu.developers.api.about.presentation.response.AboutPersistResponse;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/abouts")
+@Tag(name = "About", description = "소개글 API")
 public class AboutController {
 	private final AboutService aboutService;
 
@@ -55,6 +57,7 @@ public class AboutController {
 		AboutResponse response = aboutService.getAbout(main, sub, detail);
 		return ResponseEntity.ok(response);
 	}
+
 	@Operation(summary = "소개글 수정 API", description = """
 		    - Description : 이 API는 소개글을 수정합니다.
 		    - Assignee : 이신행
