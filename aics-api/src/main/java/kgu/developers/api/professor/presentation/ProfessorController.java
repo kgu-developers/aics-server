@@ -14,7 +14,6 @@ import kgu.developers.api.professor.application.ProfessorService;
 import kgu.developers.api.professor.presentation.request.ProfessorRequest;
 import kgu.developers.api.professor.presentation.response.ProfessorListResponse;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
-import kgu.developers.api.professor.presentation.response.ProfessorResponse;
 import kgu.developers.domain.professor.domain.Professor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +79,7 @@ public class ProfessorController {
 		    - Description : 이 API는 교수를 모두 조회합니다.
 		    - Assignee : 이신행
 		""")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ProfessorResponse.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ProfessorListResponse.class)))
 	@GetMapping
 	public ResponseEntity<ProfessorListResponse> getProfessorList() {
 		List<Professor> list = professorService.getProfessorList();
