@@ -7,7 +7,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
 public record CommentPersistResponse(
-	@Schema(description = "댓글 ID", example = "1122", requiredMode = REQUIRED)
+	@Schema(description = "댓글 ID", example = "4", requiredMode = REQUIRED)
 	Long commentId
 ) {
 	public static CommentPersistResponse of(Long commentId) {

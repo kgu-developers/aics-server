@@ -14,16 +14,24 @@ import lombok.Builder;
 
 @Builder
 public record PostDetailResponse(
-	@Schema(description = "게시글 ID", example = "1122", requiredMode = REQUIRED)
+	@Schema(description = "게시글 ID", example = "8", requiredMode = REQUIRED)
 	Long postId,
 
-	@Schema(description = "게시글 제목", example = "KGU DEVELOPERS 화이팅", requiredMode = REQUIRED)
+	@Schema(description = "게시글 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)
 	String title,
 
-	@Schema(description = "내용", example = "예시 내용 뭐로 할까? \n 모르겠다 ", requiredMode = REQUIRED)
+	@Schema(description = "내용",
+		example = """
+			SW 부트캠프 4기 교육생 모집
+			SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.
+			관심있는 학생들의 많은 신청 바랍니다.
+			- 모집기간 : 2024.10.07(월)~10.15(화)
+			- 신청방법 :https://kebkyonggi.quv.kr/68
+			""",
+		requiredMode = REQUIRED)
 	String content,
 
-	@Schema(description = "작성자 이름", example = "이신행", requiredMode = REQUIRED)
+	@Schema(description = "작성자 이름", example = "홈피관리자", requiredMode = REQUIRED)
 	String author,
 
 	@Schema(description = "조회수", example = "19", requiredMode = REQUIRED)
@@ -39,7 +47,7 @@ public record PostDetailResponse(
 		requiredMode = NOT_REQUIRED)
 	FileResponse file,
 
-	@Schema(description = "작성일", example = "1999-10-22", requiredMode = REQUIRED)
+	@Schema(description = "작성일", example = "2024-11-11 15:45", requiredMode = REQUIRED)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	String createdAt
 

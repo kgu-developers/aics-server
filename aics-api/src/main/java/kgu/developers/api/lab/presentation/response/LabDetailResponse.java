@@ -8,13 +8,13 @@ import lombok.Builder;
 
 @Builder
 public record LabDetailResponse(
-	@Schema(description = "연구실 ID", example = "99", requiredMode = REQUIRED)
+	@Schema(description = "연구실 ID", example = "2", requiredMode = REQUIRED)
 	String name,
 
-	@Schema(description = "연구실 위치", example = "1022", requiredMode = REQUIRED)
+	@Schema(description = "연구실 위치", example = "8502, 8503", requiredMode = REQUIRED)
 	String loc,
 
-	@Schema(description = "연구실 사이트", example = "http://nninjoon.kyonggi.ac.kr", requiredMode = REQUIRED)
+	@Schema(description = "연구실 사이트", example = "http://ailab.kyonggi.ac.kr", requiredMode = REQUIRED)
 	String site
 ) {
 	public static LabDetailResponse from(Lab lab) {

@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record ProfessorPersistResponse(
-	@Schema(description = "교수 id", example = "3", requiredMode = REQUIRED)
+	@Schema(description = "교수 id", example = "5", requiredMode = REQUIRED)
 	Long id
 ) {
 	public static ProfessorPersistResponse of(Long id) {

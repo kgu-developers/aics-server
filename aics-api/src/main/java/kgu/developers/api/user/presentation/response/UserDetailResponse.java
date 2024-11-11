@@ -10,13 +10,13 @@ import lombok.Builder;
 
 @Builder
 public record UserDetailResponse(
-	@Schema(description = "이름", example = "홍길동", requiredMode = REQUIRED)
+	@Schema(description = "이름", example = "박민준", requiredMode = REQUIRED)
 	String name,
 
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
 	String phone,
 
-	@Schema(description = "이메일", example = "example@gmail.com", requiredMode = REQUIRED)
+	@Schema(description = "이메일", example = "qkralswnsWkd@kyonggi.ac.kr", requiredMode = REQUIRED)
 	String email,
 
 	@Schema(description = "구분", example = "학부생", requiredMode = REQUIRED)
@@ -25,7 +25,7 @@ public record UserDetailResponse(
 	@Schema(description = "학과", example = "컴퓨터공학과", requiredMode = REQUIRED)
 	Major major,
 
-	@Schema(description = "학번(교번)", example = "201912345", requiredMode = REQUIRED)
+	@Schema(description = "학번(교번)", example = "202412345", requiredMode = REQUIRED)
 	String id
 ) {
 	public static UserDetailResponse from(

@@ -12,13 +12,13 @@ import lombok.Builder;
 
 @Builder
 public record PostSummaryResponse(
-	@Schema(description = "게시글 ID", example = "1022", requiredMode = REQUIRED)
+	@Schema(description = "게시글 ID", example = "8", requiredMode = REQUIRED)
 	Long postId,
 
-	@Schema(description = "게시글 제목", example = "KGU DEVELOPERS 화이팅", requiredMode = REQUIRED)
+	@Schema(description = "게시글 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)
 	String title,
 
-	@Schema(description = "작성자 이름", example = "zi존민준짱짱123", requiredMode = REQUIRED)
+	@Schema(description = "작성자 이름", example = "홈피관리자", requiredMode = REQUIRED)
 	String author,
 
 	@Schema(description = "조회수", example = "19", requiredMode = REQUIRED)
@@ -30,7 +30,7 @@ public record PostSummaryResponse(
 	@Schema(description = "상단 고정 여부", example = "false", requiredMode = REQUIRED)
 	boolean isPinned,
 
-	@Schema(description = "작성일", example = "1999-10-22", requiredMode = REQUIRED)
+	@Schema(description = "작성일", example = "2024-11-11", requiredMode = REQUIRED)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	String createdAt
 ) {

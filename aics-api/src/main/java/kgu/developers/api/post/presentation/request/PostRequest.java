@@ -7,12 +7,19 @@ import jakarta.validation.constraints.Size;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 public record PostRequest(
-	@Schema(description = "게시물 제목", example = "박민준은 살아있다", requiredMode = REQUIRED)
+	@Schema(description = "게시물 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 100, message = "제목은 100자 이내여야 합니다.")
 	String title,
-
-	@Schema(description = "게시물 내용", example = "살아 숨셔", requiredMode = REQUIRED)
+	@Schema(description = "게시물 내용",
+		example = """
+			SW 부트캠프 4기 교육생 모집
+			SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.
+			관심있는 학생들의 많은 신청 바랍니다.
+			- 모집기간 : 2024.10.07(월)~10.15(화)
+			- 신청방법 :https://kebkyonggi.quv.kr/68
+			""",
+		requiredMode = Schema.RequiredMode.REQUIRED)
 	@NotBlank
 	String content
 ) {

@@ -8,22 +8,22 @@ import lombok.Builder;
 
 @Builder
 public record ProfessorResponse(
-	@Schema(description = "교수 ID", example = "3", requiredMode = REQUIRED)
+	@Schema(description = "교수 ID", example = "5", requiredMode = REQUIRED)
 	Long id,
 
-	@Schema(description = "교수 이름", example = "홍길동", requiredMode = REQUIRED)
+	@Schema(description = "교수 이름", example = "이은정", requiredMode = REQUIRED)
 	String name,
 
-	@Schema(description = "사무실 위치", example = "8000호", requiredMode = REQUIRED)
+	@Schema(description = "사무실 위치", example = "8213호", requiredMode = REQUIRED)
 	String officeLoc,
 
-	@Schema(description = "연락처", example = "010-0000-0001", requiredMode = REQUIRED)
+	@Schema(description = "연락처", example = "031-249-9671", requiredMode = REQUIRED)
 	String contact,
 
-	@Schema(description = "이메일", example = "prof@kyonggi.ac.kr", requiredMode = REQUIRED)
+	@Schema(description = "이메일", example = "ejlee@kyonggi.ac.kr", requiredMode = REQUIRED)
 	String email,
 
-	@Schema(description = "담당과목", example = "컴퓨터공학개론", requiredMode = REQUIRED)
+	@Schema(description = "담당과목", example = "프로그래밍언어론", requiredMode = REQUIRED)
 	String course
 ) {
 	public static ProfessorResponse from(Professor professor) {

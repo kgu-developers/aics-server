@@ -13,12 +13,12 @@ import lombok.Builder;
 public record UserDetailPageResponse<T>(
 	@Schema(description = "유저 정보 리스트",
 		example = "[{"
-			+ "\"name\": \"nninjo_on\", "
-			+ "\"phone\": \"010-7628-5030\", "
-			+ "\"email\": \"alswns11346@kgu.ac.kr\", "
+			+ "\"name\": \"박민준\", "
+			+ "\"phone\": \"010-1234-5678\", "
+			+ "\"email\": \"qkralswnsWkd@kyonggi.ac.kr\", "
 			+ "\"role\": \"학부생\", "
 			+ "\"major\": \"컴퓨터공학부\", "
-			+ "\"id\": \"201912065\"}]",
+			+ "\"id\": \"202412345\"}]",
 		requiredMode = REQUIRED)
 	List<UserDetailResponse> contents,
 

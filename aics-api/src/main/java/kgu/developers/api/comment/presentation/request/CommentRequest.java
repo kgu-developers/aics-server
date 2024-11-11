@@ -13,7 +13,7 @@ public record CommentRequest(
 	@Positive
 	Long postId,
 
-	@Schema(description = "댓글 내용", example = "예시 코멘트 입니다~~", requiredMode = REQUIRED)
+	@Schema(description = "댓글 내용", example = "예시 코멘트입니다, 좋은 소식이네요!", requiredMode = REQUIRED)
 	@NotBlank
 	String content
 ) {

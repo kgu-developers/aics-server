@@ -10,9 +10,9 @@ import lombok.Builder;
 public record LabListResponse(
 	@Schema(description = "등록된 연구실 리스트",
 		example = "[{"
-			+ "\"name\": nninjo_on Systems Lab, "
-			+ "\"loc\": \"1022\", "
-			+ "\"site\": \"http://nninjo_on.kyonggi.ac.kr\"}]",
+			+ "\"name\": 인공지능연구실, "
+			+ "\"loc\": \"8502, 8503\", "
+			+ "\"site\": \"http://ailab.kyonggi.ac.kr\"}]",
 		requiredMode = Schema.RequiredMode.REQUIRED)
 	List<LabDetailResponse> contents
 ) {

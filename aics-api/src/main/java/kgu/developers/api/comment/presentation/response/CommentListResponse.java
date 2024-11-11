@@ -12,10 +12,10 @@ import lombok.Builder;
 public record CommentListResponse(
 	@Schema(description = "게시글에 첨부된 파일",
 		example = "[{"
-			+ "\"commentId\": 1122, "
+			+ "\"commentId\": 4, "
 			+ "\"author\": \"이신행\", "
-			+ "\"createdAt\": \"1999-10-22\", "
-			+ "\"content\": \"예시 코멘트 입니다~~\"}]",
+			+ "\"createdAt\": \"2024-11-11\", "
+			+ "\"content\": \"예시 코멘트입니다, 좋은 소식이네요!\"}]",
 		requiredMode = REQUIRED)
 	List<CommentResponse> contents
 ) {
