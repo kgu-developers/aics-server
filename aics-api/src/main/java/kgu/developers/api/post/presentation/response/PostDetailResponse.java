@@ -1,16 +1,14 @@
 package kgu.developers.api.post.presentation.response;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
-
-import java.time.format.DateTimeFormatter;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.api.file.presentation.response.FileResponse;
 import kgu.developers.domain.post.domain.Post;
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.format.DateTimeFormatter;
 
 @Builder
 public record PostDetailResponse(
@@ -41,10 +39,9 @@ public record PostDetailResponse(
 	boolean isPinned,
 
 	@Schema(description = "게시글에 첨부된 파일",
-		example = "[{"
-			+ "\"logicalName\": \"사용자가 업로드 한 파일 이름.png\", "
-			+ "\"physicalPath\": \"upload/도메인명/yy/MM/dd/유니크이름.png\"]",
-		requiredMode = NOT_REQUIRED)
+		example = "{\"logicalName\": \"사용자가 업로드 한 파일 이름.png\", "
+			+ "\"physicalPath\": \"upload/도메인명/yy/MM/dd/유니크이름.png\"}",
+		requiredMode = Schema.RequiredMode.REQUIRED)
 	FileResponse file,
 
 	@Schema(description = "작성일", example = "2024-11-11 15:45", requiredMode = REQUIRED)
