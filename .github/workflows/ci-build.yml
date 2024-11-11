@@ -25,11 +25,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.gradle/caches
+          path: ~/.gradle/caches/modules-2/files-2.1/
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             gradle-${{ runner.os }}-
