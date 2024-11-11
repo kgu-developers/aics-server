@@ -64,7 +64,7 @@ public class LabController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateComment(
-		@Parameter(description = "수정할 연구실 ID", example = "19", required = true) @PathVariable @Positive Long id,
+		@Parameter(description = "수정할 연구실 id", example = "1", required = true) @PathVariable @Positive Long id,
 		@Valid @RequestBody LabRequest request
 	) {
 		labService.updateLab(id, request);
@@ -78,7 +78,7 @@ public class LabController {
 	@ApiResponse(responseCode = "204")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteComment(
-		@Parameter(description = "삭제할 연구실의 ID", example = "19", required = true) @PathVariable @Positive Long id
+		@Parameter(description = "삭제할 연구실의 id", example = "1", required = true) @PathVariable @Positive Long id
 	) {
 		labService.deleteLab(id);
 		return ResponseEntity.noContent().build();

@@ -70,7 +70,7 @@ public class PostController {
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostDetailResponse.class)))
 	@GetMapping("/{postId}")
 	public ResponseEntity<PostDetailResponse> getPostById(
-		@Parameter(description = "조회할 게시글의 ID", example = "3", required = true) @PathVariable @Positive Long postId
+		@Parameter(description = "조회할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long postId
 	) {
 		PostDetailResponse response = postService.getPostById(postId);
 		return ResponseEntity.ok(response);
@@ -83,7 +83,7 @@ public class PostController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}")
 	public ResponseEntity<Void> updatePost(
-		@Parameter(description = "수정할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long postId,
+		@Parameter(description = "수정할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long postId,
 		@RequestBody PostRequest request
 	) {
 		postService.updatePost(postId, request);
@@ -97,7 +97,7 @@ public class PostController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}/pin")
 	public ResponseEntity<Void> togglePostPinStatus(
-		@Parameter(description = "고정 상태를 변경할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long postId
+		@Parameter(description = "고정 상태를 변경할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long postId
 	) {
 		postService.togglePostPinStatus(postId);
 		return ResponseEntity.noContent().build();
@@ -110,7 +110,7 @@ public class PostController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{postId}/delete")
 	public ResponseEntity<Void> deletePostById(
-		@Parameter(description = "조회할 게시글의 ID", example = "3", required = true) @PathVariable @Positive Long postId
+		@Parameter(description = "조회할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long postId
 	) {
 		postService.deletePost(postId);
 		return ResponseEntity.noContent().build();

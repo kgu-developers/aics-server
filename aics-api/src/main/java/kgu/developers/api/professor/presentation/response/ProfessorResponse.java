@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @Builder
 public record ProfessorResponse(
-	@Schema(description = "교수 ID", example = "5", requiredMode = REQUIRED)
+	@Schema(description = "교수 id", example = "1", requiredMode = REQUIRED)
 	Long id,
 
 	@Schema(description = "교수 이름", example = "이은정", requiredMode = REQUIRED)

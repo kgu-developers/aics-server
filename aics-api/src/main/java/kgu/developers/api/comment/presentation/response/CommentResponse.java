@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 @Builder
 public record CommentResponse(
-	@Schema(description = "댓글 ID", example = "4", requiredMode = REQUIRED)
+	@Schema(description = "댓글 id", example = "1", requiredMode = REQUIRED)
 	Long commentId,
 
 	@Schema(description = "작성자 이름", example = "이신행", requiredMode = REQUIRED)

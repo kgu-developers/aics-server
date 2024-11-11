@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record PostPersistResponse(
-	@Schema(description = "게시글 id", example = "8", requiredMode = REQUIRED)
+	@Schema(description = "게시글 id", example = "1", requiredMode = REQUIRED)
 	Long postId
 ) {
 	public static PostPersistResponse from(Long postId) {

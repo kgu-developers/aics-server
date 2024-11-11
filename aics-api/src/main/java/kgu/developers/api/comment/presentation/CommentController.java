@@ -52,7 +52,7 @@ public class CommentController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{commentId}")
 	public ResponseEntity<Void> updateComment(
-		@Parameter(description = "수정할 게시글의 ID", example = "19", required = true) @PathVariable @Positive Long commentId,
+		@Parameter(description = "수정할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long commentId,
 		@RequestBody CommentRequest commentRequest
 	) {
 		commentService.updateComment(commentId, commentRequest);
@@ -66,7 +66,7 @@ public class CommentController {
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = CommentListResponse.class)))
 	@GetMapping
 	public ResponseEntity<CommentListResponse> getComments(
-		@Parameter(description = "게시글의 ID", example = "19", required = true) @RequestParam @Positive Long postId
+		@Parameter(description = "게시글의 id", example = "1", required = true) @RequestParam @Positive Long postId
 	) {
 		CommentListResponse response = commentService.getComments(postId);
 		return ResponseEntity.ok(response);
@@ -79,7 +79,7 @@ public class CommentController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{commentId}/delete")
 	public ResponseEntity<Void> deleteComment(
-		@Parameter(description = "삭제할 댓글의 ID", example = "19", required = true) @PathVariable @Positive Long commentId
+		@Parameter(description = "삭제할 댓글의 id", example = "1", required = true) @PathVariable @Positive Long commentId
 	) {
 		commentService.deleteComment(commentId);
 		return ResponseEntity.noContent().build();

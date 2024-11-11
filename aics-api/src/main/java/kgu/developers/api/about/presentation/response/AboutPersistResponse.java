@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record AboutPersistResponse(
-	@Schema(description = "소개글 id", example = "3", requiredMode = REQUIRED)
+	@Schema(description = "소개글 id", example = "1", requiredMode = REQUIRED)
 	Long id
 ) {
 	public static AboutPersistResponse of(Long id) {

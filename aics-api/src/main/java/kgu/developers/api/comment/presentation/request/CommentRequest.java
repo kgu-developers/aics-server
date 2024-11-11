@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record CommentRequest(
-	@Schema(description = "게시물 아이디", example = "10", requiredMode = REQUIRED)
+	@Schema(description = "게시물 아이디", example = "1", requiredMode = REQUIRED)
 	@NotNull
 	@Positive
 	Long postId,

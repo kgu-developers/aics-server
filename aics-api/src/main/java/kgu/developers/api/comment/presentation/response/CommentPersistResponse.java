@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record CommentPersistResponse(
-	@Schema(description = "댓글 ID", example = "4", requiredMode = REQUIRED)
+	@Schema(description = "댓글 id", example = "1", requiredMode = REQUIRED)
 	Long commentId
 ) {
 	public static CommentPersistResponse of(Long commentId) {

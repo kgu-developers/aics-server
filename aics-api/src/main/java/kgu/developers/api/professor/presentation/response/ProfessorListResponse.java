@@ -12,7 +12,7 @@ import java.util.List;
 public record ProfessorListResponse(
 	@Schema(description = "교수 리스트",
 		example = "[{"
-			+ "\"id\": 5, "
+			+ "\"id\": 1, "
 			+ "\"name\": \"이은정\", "
 			+ "\"officeLoc\": \"8213호\", "
 			+ "\"contact\": \"031-249-9671\", "

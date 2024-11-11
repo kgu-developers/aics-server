@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 @Builder
 public record PostDetailResponse(
-	@Schema(description = "게시글 ID", example = "8", requiredMode = REQUIRED)
+	@Schema(description = "게시글 id", example = "1", requiredMode = REQUIRED)
 	Long postId,
 
 	@Schema(description = "게시글 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)

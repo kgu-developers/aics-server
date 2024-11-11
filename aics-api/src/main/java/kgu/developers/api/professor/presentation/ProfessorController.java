@@ -55,7 +55,7 @@ public class ProfessorController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateProfessor(
-		@Parameter(description = "수정할 교수 ID", example = "2", required = true) @PathVariable @Positive Long id,
+		@Parameter(description = "수정할 교수 id", example = "1", required = true) @PathVariable @Positive Long id,
 		@RequestBody ProfessorRequest request
 	) {
 		professorService.updateProfessor(id, request);
@@ -69,7 +69,7 @@ public class ProfessorController {
 	@ApiResponse(responseCode = "204")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteProfessor(
-		@Parameter(description = "삭제할 교수 ID", example = "2", required = true) @PathVariable @Positive Long id
+		@Parameter(description = "삭제할 교수 id", example = "1", required = true) @PathVariable @Positive Long id
 	) {
 		professorService.deleteProfessor(id);
 		return ResponseEntity.noContent().build();

@@ -7,7 +7,7 @@ import lombok.Builder;
 
 @Builder
 public record FilePersistResponse(
-	@Schema(description = "파일 ID", example = "1", requiredMode = REQUIRED)
+	@Schema(description = "파일 id", example = "1", requiredMode = REQUIRED)
 	String id
 ) {
 	public static FilePersistResponse of(String id) {

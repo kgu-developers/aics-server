@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @Builder
 public record AboutResponse(
-	@Schema(description = "소개글 id", example = "3", requiredMode = REQUIRED)
+	@Schema(description = "소개글 id", example = "1", requiredMode = REQUIRED)
 	Long id,
 
 	@Schema(description = "페이지 내용(JSON 형식)", example = "{key:value}", requiredMode = Schema.RequiredMode.REQUIRED)
