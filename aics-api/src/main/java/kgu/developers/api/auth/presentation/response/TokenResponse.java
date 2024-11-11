@@ -15,8 +15,8 @@ public record TokenResponse(
 ) {
 	public static TokenResponse of(String accessToken, String refreshToken) {
 		return TokenResponse.builder()
-				.accessToken(accessToken)
-				.refreshToken(refreshToken)
-				.build();
+			.accessToken(accessToken)
+			.refreshToken(refreshToken)
+			.build();
 	}
 }

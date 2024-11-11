@@ -1,6 +1,6 @@
 package kgu.developers.api.comment.presentation.request;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

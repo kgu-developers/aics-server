@@ -2,11 +2,11 @@ package kgu.developers.api.comment.presentation.response;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
-import java.util.List;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.comment.domain.Comment;
 import lombok.Builder;
+
+import java.util.List;
 
 @Builder
 public record CommentListResponse(

@@ -1,10 +1,10 @@
 package kgu.developers.api.lab.presentation.response;
 
-import java.util.List;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.lab.domain.Lab;
 import lombok.Builder;
+
+import java.util.List;
 
 @Builder
 public record LabListResponse(

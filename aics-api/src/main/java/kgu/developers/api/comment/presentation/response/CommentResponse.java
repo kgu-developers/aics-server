@@ -1,12 +1,13 @@
 package kgu.developers.api.comment.presentation.response;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.comment.domain.Comment;
 import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
-import java.time.format.DateTimeFormatter;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 public record CommentResponse(
