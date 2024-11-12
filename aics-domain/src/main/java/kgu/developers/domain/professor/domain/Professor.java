@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import kgu.developers.common.domain.BaseTimeEntity;
+import kgu.developers.common.domain.PriorityEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class Professor extends BaseTimeEntity {
+public class Professor extends BaseTimeEntity implements PriorityEntity {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
@@ -60,7 +61,8 @@ public class Professor extends BaseTimeEntity {
 		this.course = course;
 	}
 
-	public void updatePriority(Integer priority) {
+	@Override
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 }
