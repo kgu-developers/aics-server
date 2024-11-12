@@ -6,7 +6,7 @@ public enum DeptCodeCondition {
 	CONDITION_18("18", List.of("10", "11", "12")),
 	CONDITION_19("19", List.of("12")),
 	CONDITION_20("20", List.of("14")),
-	CONDITION_21_22("21", List.of("11")),
+	CONDITION_21("21", List.of("11")),
 	CONDITION_22("22", List.of("11")),
 	CONDITION_23("23", List.of("10", "11")),
 	CONDITION_24("24", List.of("11", "12"))
