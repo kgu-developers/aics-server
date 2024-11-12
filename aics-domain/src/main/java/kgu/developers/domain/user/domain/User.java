@@ -5,15 +5,6 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -22,10 +13,20 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.user.exception.DepartmentCodeNotValidException;
+import kgu.developers.domain.user.exception.EmailDomainNotValidException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -64,8 +65,9 @@ public class User extends BaseTimeEntity implements UserDetails {
 	List<Post> posts = new ArrayList<>();
 
 	public static User create(String id, String password,
-		String name, String email,
-		String phone, Major major) {
+							  String name, String email,
+							  String phone, Major major) {
+		validateDepartment(id, email);
 		return User.builder()
 			.id(id)
 			.password(password)
@@ -78,6 +80,9 @@ public class User extends BaseTimeEntity implements UserDetails {
 	}
 
 	public void updateEmail(String email) {
+		if (!isValidEmailDomain(email)) {
+			throw new EmailDomainNotValidException();
+		}
 		this.email = email;
 	}
 
@@ -100,4 +105,27 @@ public class User extends BaseTimeEntity implements UserDetails {
 		return password;
 	}
 
+	private static void validateDepartment(String id, String email) {
+		if (!isValidEmailDomain(email)) {
+			throw new EmailDomainNotValidException();
+		}
+		if (!isValidDepartmentCode(id)) {
+			throw new DepartmentCodeNotValidException();
+		}
+	}
+
+	private static boolean isValidEmailDomain(String email) {
+		return email != null && email.endsWith("@kyonggi.ac.kr");
+	}
+
+	private static boolean isValidDepartmentCode(String id) {
+		if (id == null || !id.matches("\\d{9}")) {
+			return false;
+		}
+
+		String year = id.substring(2, 4);
+		String code = id.substring(4, 6);
+		DeptCodeCondition condition = DeptCodeCondition.from(year);
+		return condition != null && condition.isValidCode(code);
+	}
 }
