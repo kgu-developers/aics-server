@@ -21,8 +21,7 @@ public class ProfessorService {
 
 	@Transactional
 	public ProfessorPersistResponse createProfessor(ProfessorRequest request) {
-		int adjustedPriority = priorityService.adjustToMaxPlusOne(Professor.class, request.priority());
-		priorityService.updatePriority(Professor.class, adjustedPriority);
+		int adjustedPriority = priorityService.createAdjustPriority(Professor.class, request.priority());
 
 		Professor professor = Professor.create(
 			request.name(), request.officeLoc(), request.contact(), request.email(), request.course(), adjustedPriority
@@ -35,6 +34,13 @@ public class ProfessorService {
 	@Transactional
 	public void updateProfessor(Long id, ProfessorRequest request) {
 		Professor professor = getProfessor(id);
+
+		if (!professor.isPriorityEqual(request.priority())) {
+			int adjustedPriority = priorityService.updateAdjustPriority(Professor.class, professor.getPriority(),
+				request.priority());
+			professor.updatePriority(adjustedPriority);
+		}
+
 		professor.updateProfessor(
 			request.name(), request.officeLoc(), request.contact(), request.email(), request.course()
 		);
