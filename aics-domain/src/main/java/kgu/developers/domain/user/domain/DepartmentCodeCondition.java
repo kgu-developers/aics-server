@@ -1,8 +1,13 @@
 package kgu.developers.domain.user.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.List;
 
-public enum DeptCodeCondition {
+@Getter
+@AllArgsConstructor
+public enum DepartmentCodeCondition {
 	CONDITION_18("18", List.of("10", "11", "12")),
 	CONDITION_19("19", List.of("12")),
 	CONDITION_20("20", List.of("14")),
@@ -15,18 +20,25 @@ public enum DeptCodeCondition {
 	private final String year;
 	private final List<String> validCode;
 
-	DeptCodeCondition(String year, List<String> validCode) {
-		this.year = year;
-		this.validCode = validCode;
-	}
-
-	public static DeptCodeCondition from(String code) {
-		for (DeptCodeCondition condition : values()) {
+	public static DepartmentCodeCondition from(String code) {
+		for (DepartmentCodeCondition condition : values()) {
 			if (condition.year.equals(code)) {
 				return condition;
 			}
 		}
 		return null;
+	}
+
+	public static boolean isValidDepartmentCode(String id) {
+		if (id == null || !id.matches("\\d{9}")) {
+			return false;
+		}
+
+		String year = id.substring(2, 4);
+		String code = id.substring(4, 6);
+
+		DepartmentCodeCondition condition = DepartmentCodeCondition.from(year);
+		return condition != null && condition.isValidCode(code);
 	}
 
 	public boolean isValidCode(String value) {

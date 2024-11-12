@@ -3,6 +3,7 @@ package kgu.developers.domain.user.domain;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
+import static kgu.developers.domain.user.domain.DepartmentCodeCondition.isValidDepartmentCode;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Column;
@@ -116,16 +117,5 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	private static boolean isValidEmailDomain(String email) {
 		return email != null && email.endsWith("@kyonggi.ac.kr");
-	}
-
-	private static boolean isValidDepartmentCode(String id) {
-		if (id == null || !id.matches("\\d{9}")) {
-			return false;
-		}
-
-		String year = id.substring(2, 4);
-		String code = id.substring(4, 6);
-		DeptCodeCondition condition = DeptCodeCondition.from(year);
-		return condition != null && condition.isValidCode(code);
 	}
 }
