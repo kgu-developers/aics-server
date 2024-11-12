@@ -48,10 +48,7 @@ public class ProfessorService {
 
 	@Transactional(readOnly = true)
 	public List<Professor> getProfessorList() {
-		//		일단 name으로 구현, Order로 조회시, 순서를 변경하는 엔드포인트 구성 필요
-		//		return professorRepository.findAllByOrder();
-
-		return professorRepository.findAll();
+		return professorRepository.findAllByOrderByPriority();
 	}
 
 	private Professor getProfessor(Long id) {
