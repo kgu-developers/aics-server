@@ -38,13 +38,17 @@ public class LabService {
 
 	@Transactional
 	public void updateLab(Long id, LabRequest request) {
-		int adjustedPriority = priorityService.updateAdjustPriority(Lab.class, request.priority());
-
 		Lab lab = getById(id);
+
+		if (!lab.isPriorityEqual(request.priority())) {
+			int adjustedPriority = priorityService.updateAdjustPriority(Lab.class, lab.getPriority(),
+				request.priority());
+			lab.updatePriority(adjustedPriority);
+		}
+
 		lab.updateName(request.name());
 		lab.updateLoc(request.loc());
 		lab.updateSite(request.site());
-		lab.updatePriority(adjustedPriority);
 	}
 
 	@Transactional
