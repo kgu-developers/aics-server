@@ -42,14 +42,15 @@ public class Professor extends BaseTimeEntity implements PriorityEntity {
 	@Column(nullable = false)
 	private Integer priority;
 
-	public static Professor create(String name, String officeLoc, String contact, String email, String course) {
+	public static Professor create(String name, String officeLoc, String contact, String email, String course,
+		Integer priority) {
 		return Professor.builder()
 			.name(name)
 			.officeLoc(officeLoc)
 			.contact(contact)
 			.email(email)
 			.course(course)
-			.priority(0)
+			.priority(priority)
 			.build();
 	}
 
