@@ -23,7 +23,6 @@ public class LabService {
 	@Transactional
 	public LabPersistResponse createLab(LabRequest request) {
 		int adjustedPriority = priorityService.adjustToMaxPlusOne(Lab.class, request.priority());
-
 		priorityService.updatePriority(Lab.class, adjustedPriority);
 
 		Lab lab = Lab.create(adjustedPriority, request.name(), request.loc(), request.site());
