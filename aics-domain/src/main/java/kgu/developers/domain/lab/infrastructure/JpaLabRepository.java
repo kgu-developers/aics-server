@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import kgu.developers.domain.lab.domain.Lab;
 
 public interface JpaLabRepository extends JpaRepository<Lab, Long> {
-	List<Lab> findByDeletedAtIsNullOrderByPriority();
+	List<Lab> findByDeletedAtIsNullOrderByName();
 }

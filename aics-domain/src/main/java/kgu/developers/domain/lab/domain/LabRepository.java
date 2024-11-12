@@ -8,7 +8,7 @@ public interface LabRepository {
 
 	Optional<Lab> findById(Long id);
 
-	List<Lab> findByDeletedAtIsNullOrderByPriority();
+	List<Lab> findByDeletedAtIsNullOrderByName();
 
 	void delete(Lab lab);
 }

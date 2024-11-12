@@ -25,8 +25,8 @@ public class LabRepositoryImpl implements LabRepository {
 	}
 
 	@Override
-	public List<Lab> findByDeletedAtIsNullOrderByPriority() {
-		return jpaLabRepository.findByDeletedAtIsNullOrderByPriority();
+	public List<Lab> findByDeletedAtIsNullOrderByName() {
+		return jpaLabRepository.findByDeletedAtIsNullOrderByName();
 	}
 
 	@Override

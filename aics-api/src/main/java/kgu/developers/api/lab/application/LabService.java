@@ -22,8 +22,7 @@ public class LabService {
 
 	@Transactional
 	public LabPersistResponse createLab(LabRequest request) {
-		int adjustedPriority = priorityService.adjustToMaxPlusOne(Lab.class, request.priority());
-		priorityService.updatePriority(Lab.class, adjustedPriority);
+		int adjustedPriority = priorityService.createAdjustPriority(Lab.class, request.priority());
 
 		Lab lab = Lab.create(adjustedPriority, request.name(), request.loc(), request.site());
 		labRepository.save(lab);
@@ -33,16 +32,19 @@ public class LabService {
 
 	@Transactional(readOnly = true)
 	public LabListResponse getLabs() {
-		List<Lab> labs = labRepository.findByDeletedAtIsNullOrderByPriority();
+		List<Lab> labs = labRepository.findByDeletedAtIsNullOrderByName();
 		return LabListResponse.from(labs);
 	}
 
 	@Transactional
 	public void updateLab(Long id, LabRequest request) {
+		int adjustedPriority = priorityService.updateAdjustPriority(Lab.class, request.priority());
+
 		Lab lab = getById(id);
 		lab.updateName(request.name());
 		lab.updateLoc(request.loc());
 		lab.updateSite(request.site());
+		lab.updatePriority(adjustedPriority);
 	}
 
 	@Transactional
