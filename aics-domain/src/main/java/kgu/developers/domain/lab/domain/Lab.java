@@ -23,6 +23,9 @@ public class Lab extends BaseTimeEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
+	private Integer priority;
+
 	@Column(nullable = false, length = 16)
 	private String name;
 
@@ -34,10 +37,15 @@ public class Lab extends BaseTimeEntity {
 
 	public static Lab create(String name, String loc, String site) {
 		return Lab.builder()
+			.priority(0)
 			.name(name)
 			.loc(loc)
 			.site(site)
 			.build();
+	}
+
+	public void updatePriority(Integer priority) {
+		this.priority = priority;
 	}
 
 	public void updateName(String name) {
