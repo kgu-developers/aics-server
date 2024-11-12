@@ -29,6 +29,12 @@ public class Carousel extends BaseTimeEntity {
 	@Column(nullable = false)
 	private Long priority;
 
+	@Column(nullable = false, columnDefinition = "text")
+	private String text;
+
+	@Column(nullable = false)
+	private String link;
+
 	@OneToOne
 	@JoinColumn(name = "file_id", nullable = false)
 	private FileEntity file;
