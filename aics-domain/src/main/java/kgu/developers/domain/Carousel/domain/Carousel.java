@@ -26,8 +26,8 @@ public class Carousel extends BaseTimeEntity {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
-	@Column(name = "\"order\"", nullable = false)
-	private Long order;
+	@Column(nullable = false)
+	private Long priority;
 
 	@OneToOne
 	@JoinColumn(name = "file_id", nullable = false)
