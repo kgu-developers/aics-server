@@ -4,10 +4,17 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public record LabRequest(
+	@Schema(description = "우선순위", example = "1", requiredMode = REQUIRED)
+	@NotNull
+	@Positive
+	Integer priority,
+
 	@Schema(description = "연구실 이름", example = "인공지능연구실", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 15)
