@@ -3,5 +3,7 @@ package kgu.developers.common.domain;
 public interface PriorityEntity {
 	Integer getPriority();
 
-	void setPriority(Integer priority);
+	void updatePriority(Integer priority);
+
+	boolean isPriorityEqual(Integer priority);
 }

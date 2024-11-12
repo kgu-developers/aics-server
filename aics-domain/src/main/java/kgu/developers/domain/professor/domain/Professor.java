@@ -63,7 +63,12 @@ public class Professor extends BaseTimeEntity implements PriorityEntity {
 	}
 
 	@Override
-	public void setPriority(Integer priority) {
+	public void updatePriority(Integer priority) {
 		this.priority = priority;
+	}
+
+	@Override
+	public boolean isPriorityEqual(Integer priority) {
+		return this.priority.equals(priority);
 	}
 }
