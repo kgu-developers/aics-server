@@ -9,6 +9,7 @@ import kgu.developers.api.lab.presentation.exception.LabNotFoundException;
 import kgu.developers.api.lab.presentation.request.LabRequest;
 import kgu.developers.api.lab.presentation.response.LabListResponse;
 import kgu.developers.api.lab.presentation.response.LabPersistResponse;
+import kgu.developers.api.priority.application.PriorityService;
 import kgu.developers.domain.lab.domain.Lab;
 import kgu.developers.domain.lab.domain.LabRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LabService {
 	private final LabRepository labRepository;
+	private final PriorityService<Lab> priorityService;
 
 	@Transactional
 	public LabPersistResponse createLab(LabRequest request) {
-		Lab lab = Lab.create(request.name(), request.loc(), request.site());
+		int adjustedPriority = priorityService.adjustToMaxPlusOne(Lab.class, request.priority());
+
+		priorityService.updatePriority(Lab.class, adjustedPriority);
+
+		Lab lab = Lab.create(adjustedPriority, request.name(), request.loc(), request.site());
 		labRepository.save(lab);
+
 		return LabPersistResponse.of(lab.getId());
 	}
 
