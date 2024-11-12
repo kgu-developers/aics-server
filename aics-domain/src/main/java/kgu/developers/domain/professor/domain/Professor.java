@@ -29,7 +29,7 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false, length = 10)
 	private String officeLoc;
 
-	@Column(nullable = false, unique = true,length = 15)
+	@Column(nullable = false, unique = true, length = 15)
 	private String contact;
 
 	@Column(nullable = false, unique = true, length = 50)
@@ -38,8 +38,8 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false, length = 15)
 	private String course;
 
-//	@Column(name = "\"order\"", nullable = false)
-//	private Integer order;
+	@Column(nullable = false)
+	private Integer priority;
 
 	public static Professor create(String name, String officeLoc, String contact, String email, String course) {
 		return Professor.builder()
@@ -48,7 +48,7 @@ public class Professor extends BaseTimeEntity {
 			.contact(contact)
 			.email(email)
 			.course(course)
-//			.order(0)
+			.priority(0)
 			.build();
 	}
 
@@ -58,5 +58,9 @@ public class Professor extends BaseTimeEntity {
 		this.contact = contact;
 		this.email = email;
 		this.course = course;
+	}
+
+	public void updatePriority(Integer priority) {
+		this.priority = priority;
 	}
 }
