@@ -25,10 +25,10 @@ public class ProfessorService {
 		priorityService.updatePriority(Professor.class, adjustedPriority);
 
 		Professor professor = Professor.create(
-			request.name(), request.officeLoc(), request.contact(), request.email(), request.course(), re
+			request.name(), request.officeLoc(), request.contact(), request.email(), request.course(), adjustedPriority
 		);
 		professorRepository.save(professor);
-		
+
 		return ProfessorPersistResponse.of(professor.getId());
 	}
 
