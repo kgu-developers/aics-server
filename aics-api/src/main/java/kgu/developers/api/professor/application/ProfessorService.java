@@ -19,9 +19,7 @@ public class ProfessorService {
 
 	@Transactional
 	public ProfessorPersistResponse createProfessor(ProfessorRequest request) {
-		Professor professor = Professor.create(
-			request.name(), request.role(), request.officeLoc(), request.contact(), request.email(), request.course()
-		);
+		Professor professor = Professor.create(request.name(), request.role(), request.contact(), request.email());
 		professorRepository.save(professor);
 
 		return ProfessorPersistResponse.of(professor.getId());
@@ -30,9 +28,10 @@ public class ProfessorService {
 	@Transactional
 	public void updateProfessor(Long id, ProfessorRequest request) {
 		Professor professor = getProfessor(id);
-		professor.updateProfessor(
-			request.name(), request.role(), request.officeLoc(), request.contact(), request.email(), request.course()
-		);
+		professor.updateName(request.name());
+		professor.updateEmail(request.email());
+		professor.updateContact(request.contact());
+		professor.updateRole(request.role());
 	}
 
 	@Transactional
