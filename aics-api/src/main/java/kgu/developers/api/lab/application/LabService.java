@@ -28,7 +28,7 @@ public class LabService {
 
 	@Transactional(readOnly = true)
 	public LabListResponse getLabs() {
-		List<Lab> labs = labRepository.findByDeletedAtIsNullOrderByName();
+		List<Lab> labs = labRepository.findAllByOrderByName();
 		return LabListResponse.from(labs);
 	}
 
