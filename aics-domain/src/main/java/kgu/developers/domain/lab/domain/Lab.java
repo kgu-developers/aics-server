@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import kgu.developers.common.domain.BaseTimeEntity;
-import kgu.developers.common.domain.PriorityEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,13 +18,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class Lab extends BaseTimeEntity implements PriorityEntity {
+public class Lab extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
-
-	@Column(nullable = false)
-	private Integer priority;
 
 	@Column(nullable = false, length = 16)
 	private String name;
@@ -36,9 +32,8 @@ public class Lab extends BaseTimeEntity implements PriorityEntity {
 	@Column(nullable = false, length = 50)
 	private String site;
 
-	public static Lab create(Integer priority, String name, String loc, String site) {
+	public static Lab create(String name, String loc, String site) {
 		return Lab.builder()
-			.priority(priority)
 			.name(name)
 			.loc(loc)
 			.site(site)
@@ -55,15 +50,5 @@ public class Lab extends BaseTimeEntity implements PriorityEntity {
 
 	public void updateSite(String site) {
 		this.site = site;
-	}
-
-	@Override
-	public void updatePriority(Integer priority) {
-		this.priority = priority;
-	}
-
-	@Override
-	public boolean isPriorityEqual(Integer priority) {
-		return this.priority.equals(priority);
 	}
 }

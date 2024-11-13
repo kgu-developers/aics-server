@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import kgu.developers.common.domain.BaseTimeEntity;
-import kgu.developers.common.domain.PriorityEntity;
 import kgu.developers.domain.file.domain.FileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class Carousel extends BaseTimeEntity implements PriorityEntity {
+public class Carousel extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
@@ -39,14 +38,4 @@ public class Carousel extends BaseTimeEntity implements PriorityEntity {
 	@OneToOne
 	@JoinColumn(name = "file_id", nullable = false)
 	private FileEntity file;
-
-	@Override
-	public void updatePriority(Integer priority) {
-		this.priority = priority;
-	}
-
-	@Override
-	public boolean isPriorityEqual(Integer priority) {
-		return this.priority.equals(priority);
-	}
 }

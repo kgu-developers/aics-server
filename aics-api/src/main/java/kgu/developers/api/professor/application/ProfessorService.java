@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kgu.developers.api.priority.application.PriorityService;
 import kgu.developers.api.professor.presentation.exception.ProfessorNotFoundException;
 import kgu.developers.api.professor.presentation.request.ProfessorRequest;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
@@ -17,14 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProfessorService {
 	private final ProfessorRepository professorRepository;
-	private final PriorityService<Professor> priorityService;
 
 	@Transactional
 	public ProfessorPersistResponse createProfessor(ProfessorRequest request) {
-		int adjustedPriority = priorityService.createAdjustPriority(Professor.class, request.priority());
-
 		Professor professor = Professor.create(
-			request.name(), request.officeLoc(), request.contact(), request.email(), request.course(), adjustedPriority
+			request.name(), request.officeLoc(), request.contact(), request.email(), request.course()
 		);
 		professorRepository.save(professor);
 
@@ -34,13 +30,6 @@ public class ProfessorService {
 	@Transactional
 	public void updateProfessor(Long id, ProfessorRequest request) {
 		Professor professor = getProfessor(id);
-
-		if (!professor.isPriorityEqual(request.priority())) {
-			int adjustedPriority = priorityService.updateAdjustPriority(Professor.class, professor.getPriority(),
-				request.priority());
-			professor.updatePriority(adjustedPriority);
-		}
-
 		professor.updateProfessor(
 			request.name(), request.officeLoc(), request.contact(), request.email(), request.course()
 		);
