@@ -1,5 +1,6 @@
 package kgu.developers.api.professor.application;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -42,8 +43,11 @@ public class ProfessorService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Professor> getProfessorList() {
-		return professorRepository.findAllByOrderByPriority();
+	public List<Professor> getSortedProfessorList() {
+		List<Professor> professorList = professorRepository.findAll();
+		professorList.sort(Comparator.comparing(Professor::getRole).thenComparing(Professor::getName));
+
+		return professorList;
 	}
 
 	private Professor getProfessor(Long id) {

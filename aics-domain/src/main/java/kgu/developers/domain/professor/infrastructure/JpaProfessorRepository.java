@@ -8,5 +8,5 @@ import kgu.developers.domain.professor.domain.Professor;
 
 public interface JpaProfessorRepository extends JpaRepository<Professor, Long> {
 
-	List<Professor> findAllByOrderByName();
+	List<Professor> findAll();
 }

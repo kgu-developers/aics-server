@@ -8,7 +8,7 @@ public interface ProfessorRepository {
 
 	Optional<Professor> findById(Long id);
 
-	List<Professor> findAllByOrderByPriority();
+	List<Professor> findAll();
 
 	void delete(Professor professor);
 }

@@ -2,6 +2,18 @@ package kgu.developers.api.professor.presentation;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,17 +28,6 @@ import kgu.developers.api.professor.presentation.response.ProfessorListResponse;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
 import kgu.developers.domain.professor.domain.Professor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -81,8 +82,8 @@ public class ProfessorController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ProfessorListResponse.class)))
 	@GetMapping
-	public ResponseEntity<ProfessorListResponse> getProfessorList() {
-		List<Professor> list = professorService.getProfessorList();
+	public ResponseEntity<ProfessorListResponse> getSortedProfessorList() {
+		List<Professor> list = professorService.getSortedProfessorList();
 		ProfessorListResponse response = ProfessorListResponse.from(list);
 		return ResponseEntity.ok().body(response);
 	}
