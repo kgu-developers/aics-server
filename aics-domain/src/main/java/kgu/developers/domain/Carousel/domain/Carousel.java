@@ -27,9 +27,6 @@ public class Carousel extends BaseTimeEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	private Integer priority;
-
-	@Column(nullable = false)
 	private String text;
 
 	@Column(nullable = false)

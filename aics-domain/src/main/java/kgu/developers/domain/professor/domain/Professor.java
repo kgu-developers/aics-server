@@ -1,10 +1,12 @@
 package kgu.developers.domain.professor.domain;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import kgu.developers.common.domain.BaseTimeEntity;
@@ -26,6 +28,10 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false, length = 10)
 	private String name;
 
+	@Column(nullable = false)
+	@Enumerated(STRING)
+	private Role role;
+
 	@Column(nullable = false, length = 10)
 	private String officeLoc;
 
@@ -38,9 +44,11 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false, length = 15)
 	private String course;
 
-	public static Professor create(String name, String officeLoc, String contact, String email, String course) {
+	public static Professor create(String name, Role role, String officeLoc, String contact, String email,
+		String course) {
 		return Professor.builder()
 			.name(name)
+			.role(role)
 			.officeLoc(officeLoc)
 			.contact(contact)
 			.email(email)
@@ -48,8 +56,9 @@ public class Professor extends BaseTimeEntity {
 			.build();
 	}
 
-	public void updateProfessor(String name, String officeLoc, String contact, String email, String course) {
+	public void updateProfessor(String name, Role role, String officeLoc, String contact, String email, String course) {
 		this.name = name;
+		this.role = role;
 		this.officeLoc = officeLoc;
 		this.contact = contact;
 		this.email = email;

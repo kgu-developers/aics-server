@@ -5,11 +5,16 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import kgu.developers.domain.professor.domain.Role;
 
 public record ProfessorRequest(
 	@Schema(description = "교수 이름", example = "이은정", requiredMode = REQUIRED)
 	@NotNull
 	String name,
+
+	@Schema(description = "직위", example = "ASSISTANT", requiredMode = REQUIRED)
+	@NotNull
+	Role role,
 
 	@Schema(description = "사무실 위치", example = "8213호", requiredMode = REQUIRED)
 	@NotNull
