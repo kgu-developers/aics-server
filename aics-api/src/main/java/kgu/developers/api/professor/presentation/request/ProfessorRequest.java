@@ -5,14 +5,8 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
 
 public record ProfessorRequest(
-	@Schema(description = "우선순위", example = "1", requiredMode = REQUIRED)
-	@NotNull
-	@Positive
-	Integer priority,
-	
 	@Schema(description = "교수 이름", example = "이은정", requiredMode = REQUIRED)
 	@NotNull
 	String name,
