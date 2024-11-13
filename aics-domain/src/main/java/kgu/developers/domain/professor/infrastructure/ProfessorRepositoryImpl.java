@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProfessorRepositoryImpl implements ProfessorRepository {
 	private final JpaProfessorRepository jpaProfessorRepository;
+	private final QueryProfessorRepository queryProfessorRepository;
 
 	@Override
 	public Professor save(Professor professor) {
@@ -25,8 +26,8 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 	}
 
 	@Override
-	public List<Professor> findAll() {
-		return jpaProfessorRepository.findAll();
+	public List<Professor> findAllOrderByRoleAndName() {
+		return queryProfessorRepository.findAllOrderByRoleAndName();
 	}
 
 	@Override
