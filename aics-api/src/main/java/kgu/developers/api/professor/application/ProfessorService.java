@@ -43,8 +43,7 @@ public class ProfessorService {
 
 	@Transactional(readOnly = true)
 	public List<Professor> getSortedProfessorList() {
-		List<Professor> professors = professorRepository.findAllOrderByRoleAndName();
-		return professors;
+		return professorRepository.findAllOrderByRoleAndName();
 	}
 
 	private Professor getProfessor(Long id) {
