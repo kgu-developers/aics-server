@@ -10,4 +10,8 @@ dependencies {
     implementation project(':aics-common')
     implementation project(':aics-infra')
     implementation project(':aics-global-utils')
+
+    testFixturesImplementation project(':aics-common')
+    testFixturesImplementation project(':aics-infra')
+    testFixturesImplementation project(':aics-global-utils')
 }
