@@ -4,7 +4,9 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 
+@Builder
 public record UserUpdateRequest(
 	@Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
 	@Pattern(regexp = "^\\d{2,4}-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다.")

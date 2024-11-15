@@ -4,7 +4,9 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record LoginRequest(
 	@Schema(description = "학번", example = "202412345", requiredMode = REQUIRED)
 	@NotNull

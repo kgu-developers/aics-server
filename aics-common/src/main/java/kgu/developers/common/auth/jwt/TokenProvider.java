@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 public class TokenProvider {
     private final JwtProperties jwtProperties;
