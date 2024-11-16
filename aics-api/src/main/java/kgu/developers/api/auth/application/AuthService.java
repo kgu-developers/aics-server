@@ -12,9 +12,11 @@ import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.user.domain.User;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 public class AuthService {
 	private final UserService userService;

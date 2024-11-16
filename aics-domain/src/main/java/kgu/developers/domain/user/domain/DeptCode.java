@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public enum DepartmentCodeCondition {
+public enum DeptCode {
 	CONDITION_18("18", List.of("10", "11", "12")),
 	CONDITION_19("19", List.of("12")),
 	CONDITION_20("20", List.of("14")),
@@ -20,8 +20,8 @@ public enum DepartmentCodeCondition {
 	private final String year;
 	private final List<String> validCode;
 
-	public static DepartmentCodeCondition from(String code) {
-		for (DepartmentCodeCondition condition : values()) {
+	public static DeptCode from(String code) {
+		for (DeptCode condition : values()) {
 			if (condition.year.equals(code)) {
 				return condition;
 			}
@@ -29,7 +29,7 @@ public enum DepartmentCodeCondition {
 		return null;
 	}
 
-	public static boolean isValidDepartmentCode(String id) {
+	public static boolean isValidDeptCode(String id) {
 		if (id == null || !id.matches("\\d{9}")) {
 			return false;
 		}
@@ -37,7 +37,7 @@ public enum DepartmentCodeCondition {
 		String year = id.substring(2, 4);
 		String code = id.substring(4, 6);
 
-		DepartmentCodeCondition condition = DepartmentCodeCondition.from(year);
+		DeptCode condition = DeptCode.from(year);
 		return condition != null && condition.isValidCode(code);
 	}
 

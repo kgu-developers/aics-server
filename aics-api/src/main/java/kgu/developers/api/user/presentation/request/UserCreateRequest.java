@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import kgu.developers.domain.user.domain.Major;
+import lombok.Builder;
 
+@Builder
 public record UserCreateRequest(
 
 	@Schema(description = "학번", example = "202412345", requiredMode = REQUIRED)

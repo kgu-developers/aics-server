@@ -18,9 +18,11 @@ import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import kgu.developers.domain.user.exception.UserNotFoundException;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 public class UserService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
