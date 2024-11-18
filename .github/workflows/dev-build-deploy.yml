@@ -1,4 +1,4 @@
-name: CD using github actions & docker
+name: Build and Deploy to Dev Server
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew build -p aics-api -x test
+        run: ./gradlew clean build -p aics-api -x test
 
       # DockerHub 로그인
       - name: Docker login
@@ -51,13 +51,11 @@ jobs:
     steps:
       - name: Deploy to dev
         uses: appleboy/ssh-action@v1.1.0
-        id: deploy-dev
-        if: contains(github.ref, 'develop')
         with:
-          host: ${{ secrets.HOST_DEV }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             sudo docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
             sudo docker-compose up -d
