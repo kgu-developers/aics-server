@@ -1,11 +1,7 @@
 name: CD using github actions & docker
 
 on:
-  pull_request:
-    branches: [ "main", "develop" ]
-
-permissions:
-  contents: read
+  workflow_dispatch:
 
 jobs:
   build-docker-image:
