@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kgu.developers.common.response.PageableResponse;
@@ -25,7 +26,7 @@ public class QueryPostRepository {
 	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
 		Category category, Pageable pageable) {
 
-		var whereClause = post.deletedAt.isNull()
+		BooleanExpression whereClause = post.deletedAt.isNull()
 			.and(keyword != null ? post.title.contains(keyword) : null)
 			.and(category != null ? post.category.eq(category) : null);
 
