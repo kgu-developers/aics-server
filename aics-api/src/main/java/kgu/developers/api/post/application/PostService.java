@@ -1,5 +1,13 @@
 package kgu.developers.api.post.application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostDetailResponse;
@@ -7,17 +15,11 @@ import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.response.PaginatedListResponse;
+import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +32,9 @@ public class PostService {
 	private LocalDateTime lastScheduledRun;
 
 	@Transactional
-	public PostPersistResponse createPost(PostRequest request) {
+	public PostPersistResponse createPost(PostRequest request, Category category) {
 		User author = userService.me();
-		Post createPost = Post.create(request.title(), request.content(), author);
+		Post createPost = Post.create(request.title(), request.content(), category, author);
 		postRepository.save(createPost);
 		return PostPersistResponse.from(createPost.getId());
 	}
