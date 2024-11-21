@@ -2,18 +2,22 @@ package kgu.developers.api.post.presentation.response;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.api.file.presentation.response.FileResponse;
 import kgu.developers.domain.post.domain.Post;
 import lombok.Builder;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.format.DateTimeFormatter;
 
 @Builder
 public record PostDetailResponse(
 	@Schema(description = "게시글 id", example = "1", requiredMode = REQUIRED)
 	Long postId,
+
+	@Schema(description = "게시글 카테고리", example = "학과공지", requiredMode = REQUIRED)
+	String category,
 
 	@Schema(description = "게시글 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)
 	String title,
@@ -53,6 +57,7 @@ public record PostDetailResponse(
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		return PostDetailResponse.builder()
 			.postId(post.getId())
+			.category(post.getCategory().getDescription())
 			.title(post.getTitle())
 			.content(post.getContent())
 			.author(post.getAuthor().getName())
