@@ -39,9 +39,10 @@ public class PostService {
 		return PostPersistResponse.from(createPost.getId());
 	}
 
-	public PostSummaryPageResponse getPostsByKeyword(PageRequest request, String keyword) {
-		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingOrderByCreatedAtDesc(
-			keyword, request);
+	public PostSummaryPageResponse getPostsByKeywordAndCategory(PageRequest request, String keyword,
+		Category category) {
+		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
+			keyword, category, request);
 		return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
 	}
 

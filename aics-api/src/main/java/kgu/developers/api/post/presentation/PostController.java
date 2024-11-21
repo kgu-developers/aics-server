@@ -2,8 +2,6 @@ package kgu.developers.api.post.presentation;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +35,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/posts")
 @Tag(name = "Post", description = "게시글 API")
 public class PostController {
-	private static final Logger log = LoggerFactory.getLogger(PostController.class);
 	private final PostService postService;
 
 	@Operation(summary = "게시글 생성 API", description = """
@@ -47,7 +44,7 @@ public class PostController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = PostPersistResponse.class)))
 	@PostMapping
 	public ResponseEntity<PostPersistResponse> createPost(
-		@Parameter(description = "게시글 카테고리", example = "DEPT_INFO") @RequestParam(required = false) Category category,
+		@Parameter(description = "게시글 카테고리", example = "DEPT_INFO", required = true) @RequestParam Category category,
 		@RequestBody PostRequest request
 	) {
 		PostPersistResponse response = postService.createPost(request, category);
@@ -60,12 +57,14 @@ public class PostController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PostSummaryPageResponse.class)))
 	@GetMapping
-	public ResponseEntity<PostSummaryPageResponse> getPostsByKeyword(
+	public ResponseEntity<PostSummaryPageResponse> getPostsByKeywordAndCategory(
+		@Parameter(description = "게시글 카테고리", example = "DEPT_INFO") @RequestParam(required = false) Category category,
 		@Parameter(description = "페이지 인덱스", example = "0", required = true) @RequestParam(defaultValue = "0") @PositiveOrZero int page,
 		@Parameter(description = "응답 개수", example = "10", required = true) @RequestParam(defaultValue = "10") @Positive int size,
 		@Parameter(description = "검색 키워드", example = "컴퓨터공학과") @RequestParam(required = false) String keyword
 	) {
-		PostSummaryPageResponse response = postService.getPostsByKeyword(PageRequest.of(page, size), keyword);
+		PostSummaryPageResponse response = postService.getPostsByKeywordAndCategory(PageRequest.of(page, size), keyword,
+			category);
 		return ResponseEntity.ok(response);
 	}
 

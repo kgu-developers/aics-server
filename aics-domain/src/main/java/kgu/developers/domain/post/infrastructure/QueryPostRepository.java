@@ -13,6 +13,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kgu.developers.common.response.PageableResponse;
 import kgu.developers.common.response.PaginatedListResponse;
+import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 
@@ -21,12 +22,16 @@ import lombok.RequiredArgsConstructor;
 public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllByTitleContainingOrderByCreatedAtDesc(String keyword, Pageable pageable) {
-		if (keyword == null)
-			keyword = "";
+	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
+		Category category, Pageable pageable) {
+
+		var whereClause = post.deletedAt.isNull()
+			.and(keyword != null ? post.title.contains(keyword) : null)
+			.and(category != null ? post.category.eq(category) : null);
+
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
-			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
+			.where(whereClause)
 			.orderBy(post.isPinned.desc(), post.createdAt.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
@@ -34,7 +39,7 @@ public class QueryPostRepository {
 
 		List<Long> postIds = queryFactory.select(post.id)
 			.from(post)
-			.where(post.title.contains(keyword).and(post.deletedAt.isNull()))
+			.where(whereClause)
 			.orderBy(post.isPinned.desc(), post.createdAt.desc())
 			.fetch();
 
