@@ -1,12 +1,12 @@
 package kgu.developers.common.exception;
 
-
 import static kgu.developers.common.exception.GlobalExceptionCode.INVALID_INPUT;
 import static kgu.developers.common.exception.GlobalExceptionCode.SERVER_ERROR;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -64,6 +64,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		String message = exception.getFieldErrors().stream()
 			.map(error -> error.getField() + ": " + error.getDefaultMessage())
 			.collect(Collectors.joining(", "));
+		ExceptionResponse response = ExceptionResponse.of(INVALID_INPUT.getStatus(), INVALID_INPUT.getCode(), message);
+
+		return ResponseEntity.status(response.status()).body(response);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException exception,
+		HttpHeaders headers,
+		HttpStatusCode status,
+		WebRequest request) {
+		String message = String.format("Failed to convert '%s' with value: '%s'.",
+			exception.getPropertyName(),
+			exception.getValue());
 		ExceptionResponse response = ExceptionResponse.of(INVALID_INPUT.getStatus(), INVALID_INPUT.getCode(), message);
 
 		return ResponseEntity.status(response.status()).body(response);
