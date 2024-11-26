@@ -1,7 +1,9 @@
 package post.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
@@ -28,11 +30,10 @@ public class PostDomainTest {
 		assertEquals(title, post.getTitle());
 		assertEquals(content, post.getContent());
 		assertEquals(0, post.getViews());
-		assertEquals(false, post.isPinned());
+		assertFalse(post.isPinned());
 		assertEquals(category, post.getCategory());
 		assertEquals(user, post.getAuthor());
 	}
-
 
 	@Test
 	@DisplayName("POST 제목을 업데이트할 수 있다")
@@ -53,7 +54,6 @@ public class PostDomainTest {
 		assertEquals(newTitle, post.getTitle());
 	}
 
-
 	@Test
 	@DisplayName("POST 내용을 업데이트할 수 있다")
 	public void updatePostContent_Success() {
@@ -73,7 +73,6 @@ public class PostDomainTest {
 		assertEquals(newContent, post.getContent());
 	}
 
-
 	@Test
 	@DisplayName("POST 조회수를 증가시킬 수 있다")
 	public void increasePostViews_Success() {
@@ -92,7 +91,6 @@ public class PostDomainTest {
 		assertEquals(1, post.getViews());
 	}
 
-
 	@Test
 	@DisplayName("POST 고정 여부를 토글할 수 있다")
 	public void togglePostPinned_Success() {
@@ -106,15 +104,13 @@ public class PostDomainTest {
 
 		// when
 		post.togglePinned();
-
 		// then
-		assertEquals(true, post.isPinned());
+		assertTrue(post.isPinned());
 
 		// when
 		post.togglePinned();
-
 		// then
-		assertEquals(false, post.isPinned());
+		assertFalse(post.isPinned());
 	}
 
 	public User getUser() {
