@@ -3,6 +3,7 @@ package kgu.developers.api.post.application;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import lombok.Builder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 public class PostService {
 	private final PostRepository postRepository;
