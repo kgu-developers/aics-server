@@ -1,6 +1,9 @@
 name: Build and Deploy to Dev Server
 
 on:
+  push:
+    branches:
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -57,5 +60,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            sudo docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
-            sudo docker-compose up -d
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d
