@@ -10,8 +10,10 @@ import kgu.developers.api.professor.presentation.request.ProfessorRequest;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.ProfessorRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+@Builder
 @Service
 @RequiredArgsConstructor
 public class ProfessorService {

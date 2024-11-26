@@ -27,8 +27,10 @@ import kgu.developers.api.professor.presentation.request.ProfessorRequest;
 import kgu.developers.api.professor.presentation.response.ProfessorListResponse;
 import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
 import kgu.developers.domain.professor.domain.Professor;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+@Builder
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/professors")
