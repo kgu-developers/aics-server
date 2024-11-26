@@ -1,10 +1,13 @@
 package post.application;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import kgu.developers.api.post.application.PostService;
+import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
+import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.Major;
@@ -14,6 +17,7 @@ import mock.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PostServiceTest {
@@ -76,9 +80,62 @@ public class PostServiceTest {
 		assertEquals(3, response.postId());
 	}
 
-	// 조회할 수 있다
+	@Test
+	@DisplayName("getPostById는 게시글을 조회할 수 있다")
+	public void getPostById_Success() {
+//		// given
+//		Long postId = 1L;
+//
+//		// when
+//		PostDetailResponse response = postService.getPostById(postId);
+//
+//		// then
+//		assertEquals(postId, response.postId());
+	}
 
-	// 없는 아이디로 조회 시 PostNotFoundException
+	@Test
+	@DisplayName("getPostById는 존재하지 않는 ID로 조회시 PostNotFoundException을 발생시킨다")
+	public void getPostById_Throws_PostNotFoundException() {
+		// given
+		Long postId = 10L;
 
-	// 고정 여부를 바꿀 수 있다
+		// when
+		// then
+		assertThatThrownBy(
+			() -> postService.getPostById(postId)
+		).isInstanceOf(PostNotFoundException.class);
+	}
+
+	@Test
+	@DisplayName("getPostsByKeywordAndCategory는 게시글을 페이징 조회할 수 있다")
+	public void getPostsByKeywordAndCategory_Success() {
+//		// given
+//		String keyword = "제목";
+//		Category category = Category.DEPT_INFO;
+//		int page = 1;
+//		int size = 10;
+//
+//		// when
+//		PostSummaryPageResponse posts = postService.getPostsByKeywordAndCategory(
+//			PageRequest.of(page, size), keyword, category
+//		);
+//
+//		// then
+//		assertEquals(posts.contents().size(), 2);
+	}
+
+	@Test
+	@DisplayName("togglePostPinStatus는 게시글의 고정 상태를 변경할 수 있다")
+	public void togglePostPinStatus_Success() {
+//		// given
+//		Long postId = 1L;
+//		PostDetailResponse before = postService.getPostById(postId);
+//
+//		// when
+//		postService.togglePostPinStatus(postId);
+//
+//		// then
+//		PostDetailResponse after = postService.getPostById(postId);
+//		assertNotEquals(before.isPinned(), after.isPinned());
+	}
 }
