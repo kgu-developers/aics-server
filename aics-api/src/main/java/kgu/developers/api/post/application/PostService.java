@@ -1,14 +1,5 @@
 package kgu.developers.api.post.application;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import lombok.Builder;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostDetailResponse;
@@ -21,9 +12,15 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
-@Builder
 @RequiredArgsConstructor
 public class PostService {
 	private final PostRepository postRepository;
@@ -37,12 +34,12 @@ public class PostService {
 	public PostPersistResponse createPost(PostRequest request, Category category) {
 		User author = userService.me();
 		Post createPost = Post.create(request.title(), request.content(), category, author);
-		postRepository.save(createPost);
-		return PostPersistResponse.from(createPost.getId());
+		Long id = postRepository.save(createPost).getId();
+		return PostPersistResponse.from(id);
 	}
 
 	public PostSummaryPageResponse getPostsByKeywordAndCategory(PageRequest request, String keyword,
-		Category category) {
+																Category category) {
 		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
 			keyword, category, request);
 		return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
