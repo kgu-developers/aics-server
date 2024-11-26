@@ -1,7 +1,10 @@
 package post.application;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import kgu.developers.api.post.application.PostService;
-import kgu.developers.api.user.application.UserService;
+import kgu.developers.api.post.presentation.request.PostRequest;
+import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.Major;
@@ -9,6 +12,8 @@ import kgu.developers.domain.user.domain.User;
 import mock.FakePostRepository;
 import mock.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PostServiceTest {
@@ -20,15 +25,9 @@ public class PostServiceTest {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		FakePostRepository fakePostRepository = new FakePostRepository();
 
-		UserService userService = UserService.builder()
-			.userRepository(fakeUserRepository)
-			.bCryptPasswordEncoder(bCryptPasswordEncoder)
-			.build();
+		FakeUserService userService = new FakeUserService(fakeUserRepository, bCryptPasswordEncoder);
 
-		this.postService = PostService.builder()
-			.userService(userService)
-			.postRepository(fakePostRepository)
-			.build();
+		this.postService = new PostService(fakePostRepository, userService);
 
 		User user1 = User.create(
 			"202411345",
@@ -59,4 +58,27 @@ public class PostServiceTest {
 			Category.DEPT_INFO, user1
 		));
 	}
+
+	@Test
+	@DisplayName("createPost는 게시글을 생성할 수 있다")
+	public void createPost_Success() {
+		// given
+		PostRequest request = PostRequest.builder()
+			.title("테스트용 제목3")
+			.content("테스트용 내용3")
+			.build();
+		Category category = Category.DEPT_INFO;
+
+		// when
+		PostPersistResponse response = postService.createPost(request, category);
+
+		// then
+		assertEquals(3, response.postId());
+	}
+
+	// 조회할 수 있다
+
+	// 없는 아이디로 조회 시 PostNotFoundException
+
+	// 고정 여부를 바꿀 수 있다
 }
