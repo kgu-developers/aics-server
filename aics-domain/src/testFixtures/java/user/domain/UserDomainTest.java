@@ -22,7 +22,7 @@ public class UserDomainTest {
 		String id = "202411345";
 		String password = "password";
 		String name = "홍길동";
-		String email = "valid@kyonggi.ac.kr";
+		String email = "valid@kgu.ac.kr";
 		String phone = "010-1234-5678";
 		Major major = Major.CSE;
 

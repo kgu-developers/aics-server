@@ -6,6 +6,12 @@ import static jakarta.persistence.FetchType.LAZY;
 import static kgu.developers.domain.user.domain.DeptCode.isValidDeptCode;
 import static lombok.AccessLevel.PROTECTED;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -20,15 +26,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @Entity
 @Getter
@@ -113,9 +113,17 @@ public class User extends BaseTimeEntity implements UserDetails {
 			throw new DeptCodeNotValidException();
 	}
 
-	private static final String ACCESSIBLE_EMAIL_DOMAIN = "@kyonggi.ac.kr";
+	private static final List<String> ACCESSIBLE_EMAIL_DOMAINS = List.of(
+		"@kyonggi.ac.kr",
+		"@kgu.ac.kr"
+	);
 
 	private static boolean isValidEmailDomain(String email) {
-		return email != null && email.endsWith(ACCESSIBLE_EMAIL_DOMAIN);
+		if (email == null) {
+			return false;
+		}
+
+		return ACCESSIBLE_EMAIL_DOMAINS.stream()
+			.anyMatch(email::endsWith);
 	}
 }
