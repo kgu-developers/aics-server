@@ -39,14 +39,14 @@ jobs:
       # Docker 이미지 빌드
       - name: Docker image build
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }} .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-server:${{ github.sha }} .
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-server:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-server:latest
 
       # Docker Hub 이미지 푸시
       - name: docker Hub push
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-server:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-server:latest
 
   deploy-to-dev:
     runs-on: ubuntu-latest
