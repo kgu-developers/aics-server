@@ -1,6 +1,6 @@
 spring:
   application:
-    name: aics-api
+    name: aics-server
 
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:aics}
