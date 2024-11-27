@@ -31,7 +31,7 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 	}
 
 	@Override
-	public void delete(Professor professor) {
-		jpaProfessorRepository.delete(professor);
+	public void deleteById(Long id) {
+		jpaProfessorRepository.deleteById(id);
 	}
 }

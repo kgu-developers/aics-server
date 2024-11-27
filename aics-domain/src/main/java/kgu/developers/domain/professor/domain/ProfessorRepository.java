@@ -10,5 +10,5 @@ public interface ProfessorRepository {
 
 	List<Professor> findAllOrderByRoleAndName();
 
-	void delete(Professor professor);
+	void deleteById(Long id);
 }

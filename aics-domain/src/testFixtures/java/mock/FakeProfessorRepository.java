@@ -49,11 +49,6 @@ public class FakeProfessorRepository implements ProfessorRepository {
 	}
 
 	@Override
-	public void delete(Professor professor) {
-		data.removeIf(p -> p.getId().equals(professor.getId()));
-	}
-
-	// 추가: ID로 삭제하는 메서드
 	public void deleteById(Long id) {
 		data.removeIf(professor -> professor.getId().equals(id));
 	}
