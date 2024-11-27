@@ -10,6 +10,7 @@ import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
+import kgu.developers.api.user.application.UserService;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.Major;
@@ -20,6 +21,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PostServiceTest {
@@ -31,7 +36,7 @@ public class PostServiceTest {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		FakePostRepository fakePostRepository = new FakePostRepository();
 
-		FakeUserService userService = new FakeUserService(fakeUserRepository, bCryptPasswordEncoder);
+		UserService userService = new UserService(bCryptPasswordEncoder, fakeUserRepository);
 
 		this.postService = new PostService(fakePostRepository, userService);
 
@@ -53,6 +58,12 @@ public class PostServiceTest {
 
 		fakeUserRepository.save(user1);
 		fakeUserRepository.save(user2);
+
+		UserDetails user = fakeUserRepository.findById(user1.getId()).orElseThrow();
+		SecurityContext context = SecurityContextHolder.getContext();
+		context.setAuthentication(
+			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
+		);
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1",
