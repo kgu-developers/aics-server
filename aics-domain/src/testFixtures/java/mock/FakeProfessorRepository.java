@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.ProfessorRepository;
@@ -12,25 +13,19 @@ import kgu.developers.domain.professor.domain.ProfessorRepository;
 public class FakeProfessorRepository implements ProfessorRepository {
 
 	private final List<Professor> data = Collections.synchronizedList(new ArrayList<>());
-	private Long sequence = 1L;
+	private final AtomicLong sequence = new AtomicLong(1);
 
 	@Override
 	public Professor save(Professor professor) {
-		if (professor.getId() == null) {
-			Professor newProfessor = Professor.builder()
-				.id(sequence++)
-				.name(professor.getName())
-				.role(professor.getRole())
-				.contact(professor.getContact())
-				.email(professor.getEmail())
-				.build();
-			data.add(newProfessor);
-			return newProfessor;
-		} else {
-			deleteById(professor.getId());
-			data.add(professor);
-			return professor;
-		}
+		Professor newProfessor = Professor.builder()
+			.id(sequence.getAndIncrement())
+			.name(professor.getName())
+			.role(professor.getRole())
+			.contact(professor.getContact())
+			.email(professor.getEmail())
+			.build();
+		data.add(newProfessor);
+		return newProfessor;
 	}
 
 	@Override
