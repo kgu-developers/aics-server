@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import kgu.developers.domain.professor.domain.Role;
+import lombok.Builder;
 
+@Builder
 public record ProfessorRequest(
 	@Schema(description = "교수 이름", example = "이은정", requiredMode = REQUIRED)
 	@NotNull

@@ -22,14 +22,14 @@ public class ProfessorService {
 	@Transactional
 	public ProfessorPersistResponse createProfessor(ProfessorRequest request) {
 		Professor professor = Professor.create(request.name(), request.role(), request.contact(), request.email());
-		professorRepository.save(professor);
+		Long id = professorRepository.save(professor).getId();
 
-		return ProfessorPersistResponse.of(professor.getId());
+		return ProfessorPersistResponse.of(id);
 	}
 
 	@Transactional
 	public void updateProfessor(Long id, ProfessorRequest request) {
-		Professor professor = getProfessor(id);
+		Professor professor = getProfessorById(id);
 		professor.updateName(request.name());
 		professor.updateEmail(request.email());
 		professor.updateContact(request.contact());
@@ -38,8 +38,7 @@ public class ProfessorService {
 
 	@Transactional
 	public void deleteProfessor(Long id) {
-		Professor professor = getProfessor(id);
-		professorRepository.delete(professor);
+		professorRepository.deleteById(id);
 	}
 
 	@Transactional(readOnly = true)
@@ -47,7 +46,8 @@ public class ProfessorService {
 		return professorRepository.findAllOrderByRoleAndName();
 	}
 
-	private Professor getProfessor(Long id) {
+	@Transactional(readOnly = true)
+	public Professor getProfessorById(Long id) {
 		return professorRepository.findById(id)
 			.orElseThrow(ProfessorNotFoundException::new);
 	}
