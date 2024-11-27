@@ -33,6 +33,9 @@ public class FakePostRepository implements PostRepository {
 			.comments(new ArrayList<>(post.getComments()))
 			.file(post.getFile())
 			.build();
+
+		TestEntityUtils.setCreatedAt(newPost, LocalDateTime.now());
+
 		data.add(newPost);
 		return newPost;
 	}

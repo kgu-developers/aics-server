@@ -2,10 +2,12 @@ package post.application;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import kgu.developers.api.post.application.PostService;
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
+import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.domain.post.domain.Category;
@@ -83,14 +85,14 @@ public class PostServiceTest {
 	@Test
 	@DisplayName("getPostById는 게시글을 조회할 수 있다")
 	public void getPostById_Success() {
-//		// given
-//		Long postId = 1L;
-//
-//		// when
-//		PostDetailResponse response = postService.getPostById(postId);
-//
-//		// then
-//		assertEquals(postId, response.postId());
+		// given
+		Long postId = 1L;
+
+		// when
+		PostDetailResponse response = postService.getPostById(postId);
+
+		// then
+		assertEquals(postId, response.postId());
 	}
 
 	@Test
@@ -109,33 +111,48 @@ public class PostServiceTest {
 	@Test
 	@DisplayName("getPostsByKeywordAndCategory는 게시글을 페이징 조회할 수 있다")
 	public void getPostsByKeywordAndCategory_Success() {
-//		// given
-//		String keyword = "제목";
-//		Category category = Category.DEPT_INFO;
-//		int page = 1;
-//		int size = 10;
-//
-//		// when
-//		PostSummaryPageResponse posts = postService.getPostsByKeywordAndCategory(
-//			PageRequest.of(page, size), keyword, category
-//		);
-//
-//		// then
-//		assertEquals(posts.contents().size(), 2);
+		// given
+		String keyword = "제목";
+		Category category = Category.DEPT_INFO;
+		int page = 0;
+		int size = 10;
+
+		// when
+		PostSummaryPageResponse posts = postService.getPostsByKeywordAndCategory(
+			PageRequest.of(page, size), keyword, category
+		);
+
+		// then
+		assertEquals(2, posts.contents().size());
 	}
 
 	@Test
 	@DisplayName("togglePostPinStatus는 게시글의 고정 상태를 변경할 수 있다")
 	public void togglePostPinStatus_Success() {
-//		// given
-//		Long postId = 1L;
-//		PostDetailResponse before = postService.getPostById(postId);
-//
-//		// when
-//		postService.togglePostPinStatus(postId);
-//
-//		// then
-//		PostDetailResponse after = postService.getPostById(postId);
-//		assertNotEquals(before.isPinned(), after.isPinned());
+		// given
+		Long postId = 1L;
+		PostDetailResponse before = postService.getPostById(postId);
+
+		// when
+		postService.togglePostPinStatus(postId);
+
+		// then
+		PostDetailResponse after = postService.getPostById(postId);
+		assertNotEquals(before.isPinned(), after.isPinned());
+	}
+
+	@Test
+	@DisplayName("deletePost 이후 게시글을 조회할 수 없다")
+	public void deletePost_Throws_PostNotFoundException() {
+		// given
+		Long postId = 1L;
+
+		// when
+		postService.deletePost(postId);
+
+		// then
+		assertThatThrownBy(
+			() -> postService.getPostById(postId)
+		).isInstanceOf(PostNotFoundException.class);
 	}
 }
