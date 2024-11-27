@@ -12,6 +12,8 @@ import kgu.developers.domain.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 public class PostDomainTest {
 	@Test
 	@DisplayName("POST 객체를 생성할 수 있다")
@@ -83,12 +85,14 @@ public class PostDomainTest {
 		User user = getUser();
 
 		Post post = Post.create(title, content, category, user);
+		int incrementCount = 5;
 
 		// when
-		post.increaseViews();
+		IntStream.range(0, incrementCount)
+			.forEach(i -> post.increaseViews());
 
 		// then
-		assertEquals(1, post.getViews());
+		assertEquals(incrementCount, post.getViews());
 	}
 
 	@Test

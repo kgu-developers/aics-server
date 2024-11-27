@@ -16,14 +16,21 @@ public class FakeUserService extends UserService {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
+	private static final String TEST_STUDENT_ID = "202411345";
+	private static final String TEST_PASSWORD = "password1234";
+	private static final String TEST_NAME = "홍길동";
+	private static final String TEST_EMAIL = "test@kyonggi.ac.kr";
+	private static final String TEST_PHONE = "010-1234-5678";
+
 	@Override
 	public User me() {
 		return User.create(
-			"202411345",
-			bCryptPasswordEncoder.encode("password1234"),
-			"홍길동",
-			"test@kyonggi.ac.kr",
-			"010-1234-5678",
-			Major.CSE);
+			TEST_STUDENT_ID,
+			bCryptPasswordEncoder.encode(TEST_PASSWORD),
+			TEST_NAME,
+			TEST_EMAIL,
+			TEST_PHONE,
+			Major.CSE
+		);
 	}
 }

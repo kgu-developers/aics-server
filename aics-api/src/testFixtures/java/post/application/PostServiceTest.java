@@ -80,6 +80,14 @@ public class PostServiceTest {
 
 		// then
 		assertEquals(3, response.postId());
+
+		// when
+		PostDetailResponse created = postService.getPostById(response.postId());
+
+		// then
+		assertEquals(request.title(), created.title());
+		assertEquals(request.content(), created.content());
+		assertEquals(category.getDescription(), created.category());
 	}
 
 	@Test

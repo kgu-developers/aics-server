@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 
 public class TestEntityUtils {
 	public static void setCreatedAt(BaseTimeEntity entity, LocalDateTime createdAt) {
+		if (entity == null || createdAt == null) {
+			throw new IllegalArgumentException("entity와 createdAt은 null이 될 수 없습니다.");
+		}
+
 		try {
 			Field field = BaseTimeEntity.class.getDeclaredField("createdAt");
 			field.setAccessible(true);
