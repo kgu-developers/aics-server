@@ -64,9 +64,14 @@ public class ProfessorServiceTest {
 
 		// when
 		ProfessorPersistResponse response = professorService.createProfessor(request);
+		Professor result = Professor.create(request.name(), request.role(), request.contact(), request.email());
 
 		// then
 		assertEquals(4, response.id());
+		assertEquals("권기현", result.getName());
+		assertEquals("kkh1111@kgu.ac.kr", result.getEmail());
+		assertEquals("010-1234-5678", result.getContact());
+		assertEquals(PROFESSOR, result.getRole());
 	}
 
 	@Test
@@ -79,10 +84,13 @@ public class ProfessorServiceTest {
 
 		// when
 		professorService.updateProfessor(professorId, request);
-		Professor result = professorService.getProfessorById(professorId);
+		Professor response = professorService.getProfessorById(professorId);
 
 		// then
-		assertEquals("alswnszzang1@kyonggi.ac.kr", result.getEmail());
+		assertEquals("박민준", response.getName());
+		assertEquals(PROFESSOR, response.getRole());
+		assertEquals("010-9999-8888", response.getContact());
+		assertEquals("alswnszzang1@kyonggi.ac.kr", response.getEmail());
 	}
 
 	@Test
