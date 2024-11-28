@@ -32,34 +32,23 @@ public class PostServiceTest {
 
 	@BeforeEach
 	public void init() {
+		FakePostRepository fakePostRepository = new FakePostRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		FakePostRepository fakePostRepository = new FakePostRepository();
-
 		UserService userService = new UserService(bCryptPasswordEncoder, fakeUserRepository);
 
 		this.postService = new PostService(fakePostRepository, userService);
 
-		User user1 = User.create(
-			"202411345",
-			bCryptPasswordEncoder.encode("password1234"),
-			"홍길동",
-			"test@kyonggi.ac.kr",
-			"010-1234-5678",
-			Major.CSE);
+		fakeUserRepository.save(User.builder()
+			.id("202411345")
+			.password(bCryptPasswordEncoder.encode("password1234"))
+			.name("홍길동")
+			.email("test@kyonggi.ac.kr")
+			.phone("010-1234-5678")
+			.major(Major.CSE)
+			.build());
 
-		User user2 = User.create(
-			"202411346",
-			bCryptPasswordEncoder.encode("password5678"),
-			"신짱구",
-			"shin@kyonggi.ac.kr",
-			"010-5678-1234",
-			Major.AIT);
-
-		fakeUserRepository.save(user1);
-		fakeUserRepository.save(user2);
-
-		UserDetails user = fakeUserRepository.findById(user1.getId()).orElseThrow();
+		UserDetails user = userService.getUserById("202411345");
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
 			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
@@ -67,12 +56,12 @@ public class PostServiceTest {
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1",
-			Category.DEPT_INFO, user1
+			Category.DEPT_INFO, userService.getUserById("202411345")
 		));
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목2", "테스트용 내용2",
-			Category.DEPT_INFO, user1
+			Category.DEPT_INFO, userService.getUserById("202411345")
 		));
 	}
 
