@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.Role;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;
 import kgu.developers.domain.user.exception.EmailDomainNotValidException;
+import kgu.developers.domain.user.exception.InvalidPasswordException;
 
 public class UserDomainTest {
 
@@ -74,5 +77,28 @@ public class UserDomainTest {
 		assertThatThrownBy(() -> {
 			User.create(id, password, name, email, phone, major);
 		}).isInstanceOf(DeptCodeNotValidException.class);
+	}
+
+	@Test
+	@DisplayName("비밀번호가 일치하지 않을 시 InvalidPasswordException이 발생 한다")
+	public void isPasswordMatching_InvalidPassword_ThrowsException() {
+		// given
+		String rawPassword = "invalidPassword";
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+		User user = User.create(
+			"202411345",
+			passwordEncoder.encode("correctPassword"),
+			"홍길동",
+			"valid@kgu.ac.kr",
+			"010-1234-5678",
+			Major.CSE
+		);
+
+		// when
+		// then
+		assertThatThrownBy(() -> {
+			user.isPasswordMatching(rawPassword, passwordEncoder);
+		}).isInstanceOf(InvalidPasswordException.class);
 	}
 }

@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kgu.developers.api.auth.presentation.exception.InvalidPasswordException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
@@ -29,9 +28,7 @@ public class AuthService {
 		String password = request.password();
 
 		User user = userService.getUserById(userId);
-		if (!passwordEncoder.matches(password, user.getPassword())) {
-			throw new InvalidPasswordException();
-		}
+		user.isPasswordMatching(password, passwordEncoder);
 
 		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(7));
 		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(2));

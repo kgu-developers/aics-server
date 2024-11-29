@@ -11,6 +11,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,13 +26,11 @@ import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;
 import kgu.developers.domain.user.exception.EmailDomainNotValidException;
+import kgu.developers.domain.user.exception.InvalidPasswordException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -125,5 +127,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 		return ACCESSIBLE_EMAIL_DOMAINS.stream()
 			.anyMatch(email::endsWith);
+	}
+
+	public void isPasswordMatching(String rawPassword, PasswordEncoder passwordEncoder) {
+		if (!passwordEncoder.matches(rawPassword, this.password)) {
+			throw new InvalidPasswordException();
+		}
 	}
 }
