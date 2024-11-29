@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.auth.application.AuthService;
-import kgu.developers.api.auth.presentation.exception.InvalidPasswordException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
+import kgu.developers.domain.user.exception.InvalidPasswordException;
 import mock.FakeUserRepository;
 
 public class AuthServiceTest {
