@@ -1,17 +1,17 @@
 package kgu.developers.api.file.presentation.exception;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+import org.springframework.http.HttpStatus;
+
 import kgu.developers.common.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-
-import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
 public enum FileExceptionCode implements ExceptionCode {
-	FILE_SAVING_ERROR(BAD_REQUEST, "파일 저장이 되지 않았습니다.")
-	;
+	FILE_SAVING_ERROR(BAD_REQUEST, "파일 저장에 실패하였습니다.");
 
 	private final HttpStatus status;
 	private final String message;

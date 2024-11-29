@@ -2,15 +2,16 @@ package kgu.developers.api.professor.presentation.exception;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import org.springframework.http.HttpStatus;
+
 import kgu.developers.common.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
 public enum ProfessorExceptionCode implements ExceptionCode {
-	PROFESSOR_NOT_FOUND(NOT_FOUND, "해당 ID의 교수가 없습니다.");
+	PROFESSOR_NOT_FOUND(NOT_FOUND, "해당 교수를 찾을 수 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;
