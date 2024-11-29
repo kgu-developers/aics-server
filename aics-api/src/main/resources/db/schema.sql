@@ -1,19 +1,3 @@
--- Enum 타입 정의
--- about
-CREATE TYPE main_category_type AS ENUM ('DEPT_INTRO', 'EDU_ACTIVITIES');
-CREATE TYPE sub_category_type AS ENUM ('DEPT_INTRO', 'HISTORY', 'EDU_ENVIRONMENT', 'EDU_OBJECTIVES', 'CURRICULUM', 'LEARNING_ACTIVITIES', 'CLUB_INTRO');
-
---post
-CREATE TYPE post_category AS ENUM ('DEPT_INFO', 'LESSON_INFO', 'EMPLOY_INFO', 'DEPT_NEWS', 'GOOD_WORKS', 'AWARDED');
-
---professor
-CREATE TYPE professor_role AS ENUM ('PROFESSOR', 'ASSISTANT');
-
--- user
-CREATE TYPE user_role AS ENUM ('USER', 'ADMIN', 'SUPER');
-CREATE TYPE user_major AS ENUM ('CSE', 'AIT', 'SSS');
-
-
 -- 테이블 생성
 -- about
 CREATE TABLE about (
@@ -23,8 +7,12 @@ CREATE TABLE about (
                        deleted_at      TIMESTAMP(6) DEFAULT NULL,
                        content         TEXT NOT NULL,
                        detail_category VARCHAR(100),
-                       main_category   main_category_type NOT NULL,
-                       sub_category    sub_category_type NOT NULL
+                       main_category   VARCHAR(50) NOT NULL
+                           CONSTRAINT about_main_category_check
+                               CHECK ((main_category)::TEXT = ANY (ARRAY['DEPT_INTRO', 'EDU_ACTIVITIES'])),
+                       sub_category    VARCHAR(50) NOT NULL
+                           CONSTRAINT about_sub_category_check
+                               CHECK ((sub_category)::TEXT = ANY (ARRAY['DEPT_INTRO', 'HISTORY', 'EDU_ENVIRONMENT', 'EDU_OBJECTIVES', 'CURRICULUM', 'LEARNING_ACTIVITIES', 'CLUB_INTRO']))
 );
 
 -- lab
@@ -44,7 +32,9 @@ CREATE TABLE professor (
                            name        VARCHAR(10) NOT NULL,
                            contact     VARCHAR(15) NOT NULL UNIQUE,
                            email       VARCHAR(50) NOT NULL UNIQUE,
-                           role        professor_role NOT NULL,
+                           role        VARCHAR(20) NOT NULL
+                               CONSTRAINT professor_role_check
+                                   CHECK ((role)::TEXT = ANY (ARRAY['PROFESSOR', 'ASSISTANT'])),
                            created_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                            updated_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                            deleted_at  TIMESTAMP(6) DEFAULT NULL
@@ -78,9 +68,13 @@ CREATE TABLE "user" (
                         name        VARCHAR(10) NOT NULL,
                         phone       VARCHAR(15) NOT NULL UNIQUE,
                         email       VARCHAR(50) NOT NULL UNIQUE,
-                        major       user_major NOT NULL,
+                        major       VARCHAR(50) NOT NULL
+                            CONSTRAINT user_major_check
+                                CHECK ((major)::TEXT = ANY (ARRAY['CSE', 'AIT', 'SSS'])),
                         password    VARCHAR(255) NOT NULL,
-                        role        user_role NOT NULL,
+                        role        VARCHAR(20) NOT NULL
+                            CONSTRAINT user_role_check
+                                CHECK ((role)::TEXT = ANY (ARRAY['USER', 'ADMIN', 'SUPER'])),
                         created_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         updated_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         deleted_at  TIMESTAMP(6) DEFAULT NULL
@@ -93,7 +87,9 @@ CREATE TABLE post (
                       content     TEXT NOT NULL,
                       views       INTEGER NOT NULL DEFAULT 0,
                       is_pinned   BOOLEAN NOT NULL DEFAULT FALSE,
-                      category    post_category,
+                      category    VARCHAR(50)
+                          CONSTRAINT post_category_check
+                              CHECK ((category)::TEXT = ANY (ARRAY['DEPT_INFO', 'LESSON_INFO', 'EMPLOY_INFO', 'DEPT_NEWS', 'GOOD_WORKS', 'AWARDED'])),
                       created_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                       updated_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                       deleted_at  TIMESTAMP(6) DEFAULT NULL,
