@@ -10,11 +10,11 @@ VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr'),
 
 
 INSERT INTO "user" (id, password, name, email, phone, major, role, created_at, updated_at)
-VALUES ('202412345', 'pmj1234%^', '박민준', 'minjun@kyonggi.ac.kr', '010-1234-5678', 'CSE', 'USER', CURRENT_TIMESTAMP,
+VALUES ('202412346', 'lhe1234%^', '이한음', 'haneum@kgu.ac.kr', '010-2345-6789', 'AIT', 'SUPER', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       ('202412346', 'lhe1234%^', '이한음', 'haneum@kgu.ac.kr', '010-2345-6789', 'AIT', 'SUPER', CURRENT_TIMESTAMP,
+       ('202412347', 'pmj1234%^', '박민준', 'minjun@kyonggi.ac.kr', '010-1234-5678', 'CSE', 'USER', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       ('202412347', 'lsh1234%^', '이신행', 'shinhaeng@kyonggi.ac.kr', '010-3456-7890', 'SSS', 'ADMIN', CURRENT_TIMESTAMP,
+       ('202412348', 'lsh1234%^', '이신행', 'shinhaeng@kyonggi.ac.kr', '010-3456-7890', 'SSS', 'ADMIN', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP);
 
 INSERT INTO professor (name, contact, email, role)
