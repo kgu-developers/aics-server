@@ -60,6 +60,7 @@ CREATE TABLE carousel (
                           updated_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
                           deleted_at  TIMESTAMP(6) DEFAULT NULL,
                           CONSTRAINT fk_carousel_file FOREIGN KEY (file_id) REFERENCES file_entity (id)
+                              ON DELETE SET NULL
 );
 
 -- user
@@ -95,8 +96,10 @@ CREATE TABLE post (
                       deleted_at  TIMESTAMP(6) DEFAULT NULL,
                       file_id     BIGINT UNIQUE,
                       author_id   VARCHAR(10),
-                      CONSTRAINT fk_post_file FOREIGN KEY (file_id) REFERENCES file_entity (id),
+                      CONSTRAINT fk_post_file FOREIGN KEY (file_id) REFERENCES file_entity (id)
+                          ON DELETE SET NULL,
                       CONSTRAINT fk_post_author FOREIGN KEY (author_id) REFERENCES "user" (id)
+                          ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- comment
@@ -108,8 +111,10 @@ CREATE TABLE comment (
                          deleted_at  TIMESTAMP(6) DEFAULT NULL,
                          post_id     BIGINT NOT NULL,
                          author_id   VARCHAR(10) NOT NULL,
-                         CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE,
-                         CONSTRAINT fk_comment_author FOREIGN KEY (author_id) REFERENCES "user" (id) ON DELETE CASCADE
+                         CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES post (id)
+                             ON DELETE CASCADE,
+                         CONSTRAINT fk_comment_author FOREIGN KEY (author_id) REFERENCES "user" (id)
+                             ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

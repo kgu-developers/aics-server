@@ -8,13 +8,13 @@ VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr'),
        ('Lab B', '8520', 'https://lab2.kyonggi.ac.kr'),
        ('Lab C', '제2공학관 200', 'http://research.kyonggi.ac.kr');
 
-
+-- password: password1234!
 INSERT INTO "user" (id, password, name, email, phone, major, role, created_at, updated_at)
-VALUES ('202412346', 'lhe1234%^', '이한음', 'haneum@kgu.ac.kr', '010-2345-6789', 'AIT', 'SUPER', CURRENT_TIMESTAMP,
+VALUES ('202412346', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5OTG', '이한음', 'haneum@kgu.ac.kr', '010-2345-6789', 'AIT', 'SUPER', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       ('202412347', 'pmj1234%^', '박민준', 'minjun@kyonggi.ac.kr', '010-1234-5678', 'CSE', 'USER', CURRENT_TIMESTAMP,
+       ('202412347', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5OTG', '박민준', 'minjun@kyonggi.ac.kr', '010-1234-8765', 'CSE', 'USER', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP),
-       ('202412348', 'lsh1234%^', '이신행', 'shinhaeng@kyonggi.ac.kr', '010-3456-7890', 'SSS', 'ADMIN', CURRENT_TIMESTAMP,
+       ('202412348', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5OTG', '이신행', 'shinhaeng@kyonggi.ac.kr', '010-3456-7890', 'SSS', 'ADMIN', CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP);
 
 INSERT INTO professor (name, contact, email, role)
@@ -42,13 +42,13 @@ VALUES (4, '최신 연구 성과를 확인하세요.', 'https://kyonggi.ac.kr/re
 INSERT INTO post (title, content, category, file_id, author_id)
 VALUES ('2024학년도 학과 소개 일정 안내',
         '2024학년도 학과 소개가 아래와 같은 일정으로 진행됩니다. 참여를 원하시는 분들은 해당 일정을 참고하여 신청해 주시기 바랍니다.',
-        'DEPT_INFO', 3, '202412345'),
+        'DEPT_INFO', 3, '202412346'),
        ('동계 방학 중 실습실 사용 안내',
         '동계 방학 기간 동안 실습실 사용 신청을 받고 있습니다. 자세한 신청 방법과 이용 규정을 확인해 주세요.',
-        'LESSON_INFO', NULL, '202412345'),
+        'LESSON_INFO', NULL, '202412346'),
        ('취업 설명회 개최 안내',
         '졸업 예정자 및 재학생을 대상으로 취업 설명회를 개최합니다. 기업 소개, 취업 전략 및 질의응답 시간이 준비되어 있으니 많은 참여 바랍니다.',
-        'EMPLOY_INFO', NULL, '202412345'),
+        'EMPLOY_INFO', NULL, '202412346'),
        ('학과 뉴스 - 최신 연구 성과 발표',
         '우리 학과에서는 최근 AI 기반 의료 데이터 분석 연구 성과를 발표하였습니다. 자세한 내용은 연구 성과 페이지를 참고하세요.',
         'DEPT_NEWS', 5, '202412347'),
