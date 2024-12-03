@@ -34,6 +34,7 @@ public class CommentDomainTest {
 	@Test
 	@DisplayName("COMMENT 객체를 수정할 수 있다")
 	public void updateComment_Success() {
+		// given
 		String updateContent = "update";
 
 		String content = "create";
