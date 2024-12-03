@@ -21,9 +21,9 @@ public class LabService {
 	@Transactional
 	public LabPersistResponse createLab(LabRequest request) {
 		Lab lab = Lab.create(request.name(), request.loc(), request.site());
-		labRepository.save(lab);
+		Lab createLab = labRepository.save(lab);
 
-		return LabPersistResponse.of(lab.getId());
+		return LabPersistResponse.of(createLab.getId());
 	}
 
 	@Transactional(readOnly = true)
