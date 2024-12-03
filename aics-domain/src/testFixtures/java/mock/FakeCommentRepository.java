@@ -23,6 +23,8 @@ public class FakeCommentRepository implements CommentRepository {
 			.post(comment.getPost())
 			.build();
 
+		TestEntityUtils.setCreatedAt(newComment, LocalDateTime.now());
+
 		data.add(newComment);
 		return newComment;
 	}
