@@ -24,6 +24,7 @@ public class FakeProfessorRepository implements ProfessorRepository {
 			.contact(professor.getContact())
 			.email(professor.getEmail())
 			.build();
+
 		data.add(newProfessor);
 		return newProfessor;
 	}
