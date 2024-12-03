@@ -54,7 +54,7 @@ public class CommentController {
 	@ApiResponse(responseCode = "204")
 	@PatchMapping("/{commentId}")
 	public ResponseEntity<Void> updateComment(
-		@Parameter(description = "수정할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long commentId,
+		@Parameter(description = "수정할 댓글의 id", example = "1", required = true) @PathVariable @Positive Long commentId,
 		@RequestBody CommentUpdateRequest request
 	) {
 		commentService.updateComment(commentId, request);
