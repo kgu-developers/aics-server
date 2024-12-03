@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.comment.application.CommentService;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
@@ -41,7 +42,7 @@ public class CommentController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = CommentPersistResponse.class)))
 	@PostMapping
 	public ResponseEntity<CommentPersistResponse> createComment(
-		@RequestBody CommentRequest commentRequest
+		@RequestBody @Valid CommentRequest commentRequest
 	) {
 		CommentPersistResponse response = commentService.createComment(commentRequest);
 		return ResponseEntity.status(CREATED).body(response);
@@ -55,7 +56,7 @@ public class CommentController {
 	@PatchMapping("/{commentId}")
 	public ResponseEntity<Void> updateComment(
 		@Parameter(description = "수정할 댓글의 id", example = "1", required = true) @PathVariable @Positive Long commentId,
-		@RequestBody CommentUpdateRequest request
+		@RequestBody @Valid CommentUpdateRequest request
 	) {
 		commentService.updateComment(commentId, request);
 		return ResponseEntity.noContent().build();
