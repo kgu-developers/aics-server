@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
+@Builder
 public record LabRequest(
 	@Schema(description = "연구실 이름", example = "인공지능연구실", requiredMode = REQUIRED)
 	@NotBlank
