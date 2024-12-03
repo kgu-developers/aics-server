@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kgu.developers.api.comment.presentation.exception.CommentNotFoundException;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
+import kgu.developers.api.comment.presentation.request.CommentUpdateRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
 import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
 import kgu.developers.api.post.application.PostService;
@@ -17,7 +19,6 @@ import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
 import kgu.developers.domain.post.domain.Post;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,9 +49,9 @@ public class CommentService {
 	}
 
 	@Transactional
-	public void updateComment(Long commentId, CommentRequest commentRequest) {
+	public void updateComment(Long commentId, CommentUpdateRequest request) {
 		Comment comment = getById(commentId);
-		comment.updateContent(commentRequest.content());
+		comment.updateContent(request.content());
 	}
 
 	@Transactional
@@ -59,7 +60,7 @@ public class CommentService {
 		comment.delete();
 	}
 
-	private Comment getById(Long commentId) {
+	public Comment getById(Long commentId) {
 		return commentRepository.findById(commentId)
 			.filter(comment -> comment.getDeletedAt() == null)
 			.orElseThrow(CommentNotFoundException::new);

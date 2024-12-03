@@ -2,6 +2,16 @@ package kgu.developers.api.comment.presentation;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,18 +22,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.comment.application.CommentService;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
+import kgu.developers.api.comment.presentation.request.CommentUpdateRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
 import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,9 +55,9 @@ public class CommentController {
 	@PatchMapping("/{commentId}")
 	public ResponseEntity<Void> updateComment(
 		@Parameter(description = "수정할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long commentId,
-		@RequestBody CommentRequest commentRequest
+		@RequestBody CommentUpdateRequest request
 	) {
-		commentService.updateComment(commentId, commentRequest);
+		commentService.updateComment(commentId, request);
 		return ResponseEntity.noContent().build();
 	}
 
