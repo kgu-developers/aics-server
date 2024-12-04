@@ -5,7 +5,6 @@ import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,12 +13,12 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
 
 public class CommentDomainTest {
-	private User author;
-	private Post post;
-
-	@BeforeEach
-	public void init() {
-		author = User.create(
+	@Test
+	@DisplayName("COMMENT 객체를 생성할 수 있다")
+	public void createComment_Success() {
+		// given
+		String content = "success";
+		User author = User.create(
 			"202411345",
 			"password",
 			"홍길동",
@@ -28,19 +27,12 @@ public class CommentDomainTest {
 			CSE
 		);
 
-		post = Post.create(
+		Post post = Post.create(
 			"title",
 			"content.",
 			DEPT_INFO,
 			author
 		);
-	}
-
-	@Test
-	@DisplayName("COMMENT 객체를 생성할 수 있다")
-	public void createComment_Success() {
-		// given
-		String content = "success";
 
 		// when
 		Comment comment = Comment.create(content, author, post);
@@ -57,6 +49,21 @@ public class CommentDomainTest {
 	public void updateComment_Success() {
 		// given
 		String updateContent = "update";
+		User author = User.create(
+			"202411345",
+			"password",
+			"홍길동",
+			"valid@kyonggi.ac.kr",
+			"010-1234-5678",
+			CSE
+		);
+
+		Post post = Post.create(
+			"title",
+			"content.",
+			DEPT_INFO,
+			author
+		);
 
 		String content = "create";
 		Comment comment = Comment.create(content, author, post);
