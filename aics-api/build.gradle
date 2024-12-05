@@ -20,3 +20,11 @@ dependencies {
     testFixturesImplementation testFixtures(project(':aics-domain'))
     testFixturesImplementation testFixtures(project(':aics-global-utils'))
 }
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
