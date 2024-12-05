@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.api.about.application.AboutService;
+import kgu.developers.api.about.presentation.Exception.AboutNotFoundException;
 import kgu.developers.api.about.presentation.Exception.CategoryNotMatchException;
 import kgu.developers.api.about.presentation.request.AboutRequest;
 import kgu.developers.api.about.presentation.request.AboutUpdateRequest;
@@ -47,7 +48,7 @@ public class AboutServiceTest {
 		String detail = "detail";
 		String content = "content";
 
-		AboutRequest aboutRequest = AboutRequest.builder()
+		AboutRequest request = AboutRequest.builder()
 			.main(main)
 			.sub(sub)
 			.detail(detail)
@@ -55,7 +56,7 @@ public class AboutServiceTest {
 			.build();
 
 		// when
-		AboutPersistResponse response = aboutService.createAbout(aboutRequest);
+		AboutPersistResponse response = aboutService.createAbout(request);
 
 		// then
 		AboutResponse aboutResponse = aboutService.getAbout(main, sub, detail);
@@ -65,13 +66,13 @@ public class AboutServiceTest {
 	}
 
 	@Test
-	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않을 시 CategoryNotMatchException을 발생 한다.")
+	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생 한다.")
 	public void createAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = CURRICULUM;
-		String detail = "failDetail";
-		String content = "failContent";
+		String detail = "detail";
+		String content = "content";
 
 		AboutRequest request = AboutRequest.builder()
 			.main(main)
@@ -103,6 +104,40 @@ public class AboutServiceTest {
 	}
 
 	@Test
+	@DisplayName("getAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않을 시 CategoryNotMatchException을 발생 한다.")
+	public void getAbout_CategoryNotMatch_ThrowsException() {
+		// given
+		MainCategory main = DEPT_INTRO;
+		SubCategory sub = CURRICULUM;
+		String detail = "failDetail";
+
+		// when
+		// then
+		assertThatThrownBy(() -> {
+			aboutService.getAbout(main, sub, detail);
+		}).isInstanceOf(CategoryNotMatchException.class);
+	}
+
+	@Test
+	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotMatchException을 발생 한다.")
+	public void getAbout_AboutNotMatch_ThrowsException() {
+		// given
+		MainCategory main = DEPT_INTRO;
+		SubCategory sub = HISTORY;
+		String detail = "failDetail";
+
+		// when
+		// then
+		assertThatThrownBy(() -> {
+			aboutService.getAbout(main, sub, null);
+		}).isInstanceOf(AboutNotFoundException.class);
+
+		assertThatThrownBy(() -> {
+			aboutService.getAbout(main, sub, detail);
+		}).isInstanceOf(AboutNotFoundException.class);
+	}
+
+	@Test
 	@DisplayName("updateAbout은 About의 content를 수정할 수 있다.")
 	public void updateAbout_Success() {
 		// given
@@ -119,5 +154,22 @@ public class AboutServiceTest {
 		AboutResponse response = aboutService.getAbout(EDU_ACTIVITIES, CURRICULUM, "initDetail");
 
 		assertEquals(response.content(), "updateContent");
+	}
+
+	@Test
+	@DisplayName("updateAbout은 About의 content를 수정할 수 있다.")
+	public void updateAbout_AboutNotFound_ThrowsException() {
+		// given
+		Long id = 0L;
+
+		AboutUpdateRequest request = AboutUpdateRequest.builder()
+			.content("updateContent")
+			.build();
+
+		// when
+		// then
+		assertThatThrownBy(() -> {
+			aboutService.updateAbout(id, request);
+		}).isInstanceOf(AboutNotFoundException.class);
 	}
 }
