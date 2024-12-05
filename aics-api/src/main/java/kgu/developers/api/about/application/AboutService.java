@@ -1,6 +1,5 @@
 package kgu.developers.api.about.application;
 
-
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
 import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
 import static kgu.developers.domain.about.domain.SubCategory.CLUB_INTRO;
@@ -10,9 +9,17 @@ import static kgu.developers.domain.about.domain.SubCategory.EDU_OBJECTIVES;
 import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static kgu.developers.domain.about.domain.SubCategory.LEARNING_ACTIVITIES;
 
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import kgu.developers.api.about.presentation.Exception.AboutNotFoundException;
 import kgu.developers.api.about.presentation.Exception.CategoryNotMatchException;
 import kgu.developers.api.about.presentation.request.AboutRequest;
+import kgu.developers.api.about.presentation.request.AboutUpdateRequest;
 import kgu.developers.api.about.presentation.response.AboutPersistResponse;
 import kgu.developers.api.about.presentation.response.AboutResponse;
 import kgu.developers.domain.about.domain.About;
@@ -20,12 +27,6 @@ import kgu.developers.domain.about.domain.AboutRepository;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +68,7 @@ public class AboutService {
 	}
 
 	@Transactional
-	public void updateAbout(Long id, AboutRequest request) {
+	public void updateAbout(Long id, AboutUpdateRequest request) {
 		About about = aboutRepository.findById(id)
 			.orElseThrow(AboutNotFoundException::new);
 
@@ -75,9 +76,8 @@ public class AboutService {
 	}
 
 	private void categoryMatchCheck(MainCategory mainCategory, SubCategory subCategory) {
-		if (CATEGORY_MAP.getOrDefault(mainCategory, Set.of()).contains(subCategory))
-			return;
-
-		throw new CategoryNotMatchException();
+		if (!CATEGORY_MAP.getOrDefault(mainCategory, Set.of()).contains(subCategory)) {
+			throw new CategoryNotMatchException();
+		}
 	}
 }
