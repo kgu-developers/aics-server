@@ -119,8 +119,8 @@ public class AboutServiceTest {
 	}
 
 	@Test
-	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotMatchException을 발생 한다.")
-	public void getAbout_AboutNotMatch_ThrowsException() {
+	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotFoundException을 발생 한다.")
+	public void getAbout_AboutNotFound_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = HISTORY;
@@ -157,7 +157,7 @@ public class AboutServiceTest {
 	}
 
 	@Test
-	@DisplayName("updateAbout은 About의 content를 수정할 수 있다.")
+	@DisplayName("updateAbout은 존재하지 않는 id로 수정 요청 시 AboutNotFoundException을 발생 한다.")
 	public void updateAbout_AboutNotFound_ThrowsException() {
 		// given
 		Long id = 0L;
