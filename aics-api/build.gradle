@@ -21,6 +21,8 @@ dependencies {
     testFixturesImplementation testFixtures(project(':aics-global-utils'))
 }
 
+apply from: "../gradle/jacoco.gradle"
+
 jacocoTestReport {
     dependsOn test
     reports {

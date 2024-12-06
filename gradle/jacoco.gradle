@@ -1,0 +1,88 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.12"
+    reportsDirectory = layout.buildDirectory.dir('jacoco')
+}
+
+test {
+    useJUnitPlatform()
+    dependsOn testFixturesClasses
+
+    // TestFixtures 소스를 포함
+    testClassesDirs += sourceSets.testFixtures.output.classesDirs
+    classpath += sourceSets.testFixtures.runtimeClasspath
+
+    finalizedBy 'jacocoTestReport'
+}
+
+jacocoTestReport {
+    dependsOn test
+    executionData fileTree(dir: layout.buildDirectory, includes: ["jacoco/test.exec", "jacoco/testFixtures.exec"])
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/dto/**',
+                    '**/event/**',
+                    '**/*InitData*',
+                    '**/*Application*',
+                    '**/exception/**',
+                    '**/service/alarm/**',
+                    '**/aop/**',
+                    '**/config/**',
+                    '**/MemberRole*'
+            ] + (('A'..'Z').collect { "Q${it}*" } as Collection<String>))
+        }))
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.00
+            }
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.00
+            }
+
+            excludes = [
+                    '**.dto.**',
+                    '**.event.**',
+                    '**.*InitData*',
+                    '**.*Application*',
+                    '**.exception.**',
+                    '**.service.alarm.**',
+                    '**.aop.**',
+                    '**.config.**',
+                    '**.MemberRole*'
+            ] + (('A'..'Z').collect { "Q${it}*" } as Collection<String>)
+        }
+    }
+}
+
+task jacocoTestFixturesReport(type: JacocoReport) {
+    dependsOn testFixturesClasses
+    executionData fileTree(dir: layout.buildDirectory, includes: ["jacoco/testFixtures.exec"])
+    sourceDirectories.setFrom(files("src/testFixtures/java"))
+    classDirectories.setFrom(files("build/classes/java/testFixtures"))
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
