@@ -49,17 +49,18 @@ jacocoTestCoverageVerification {
         rule {
             element = 'CLASS'
 
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.00
-            }
-
-            limit {
-                counter = 'BRANCH'
-                value = 'COVEREDRATIO'
-                minimum = 0.00
-            }
+//            커버리지에 따라 빌드 자체를 제한
+//            limit {
+//                counter = 'LINE'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.80
+//            }
+//
+//            limit {
+//                counter = 'BRANCH'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.80
+//            }
 
             excludes = [
                     '**.dto.**',
