@@ -3,19 +3,6 @@ package kgu.developers.api.about.presentation;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import kgu.developers.api.about.application.AboutService;
-import kgu.developers.api.about.presentation.request.AboutRequest;
-import kgu.developers.api.about.presentation.response.AboutPersistResponse;
-import kgu.developers.api.about.presentation.response.AboutResponse;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,6 +12,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import kgu.developers.api.about.application.AboutService;
+import kgu.developers.api.about.presentation.request.AboutRequest;
+import kgu.developers.api.about.presentation.request.AboutUpdateRequest;
+import kgu.developers.api.about.presentation.response.AboutPersistResponse;
+import kgu.developers.api.about.presentation.response.AboutResponse;
+import kgu.developers.domain.about.domain.MainCategory;
+import kgu.developers.domain.about.domain.SubCategory;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -69,7 +71,7 @@ public class AboutController {
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateAbout(
 		@PathVariable Long id,
-		@RequestBody AboutRequest request
+		@RequestBody AboutUpdateRequest request
 	) {
 		aboutService.updateAbout(id, request);
 		return ResponseEntity.status(NO_CONTENT).build();

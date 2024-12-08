@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
+import lombok.Builder;
 
+@Builder
 public record AboutRequest(
 	@Schema(description = "메인 카테고리", example = "EDU_ACTIVITIES", requiredMode = REQUIRED)
 	@NotNull
