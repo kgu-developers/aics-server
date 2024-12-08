@@ -27,16 +27,18 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/dto/**',
-                    '**/event/**',
-                    '**/*InitData*',
-                    '**/*Application*',
+                    '**/request/**',
+                    '**/response/**',
                     '**/exception/**',
-                    '**/service/alarm/**',
-                    '**/aop/**',
                     '**/config/**',
-                    '**/MemberRole*'
-            ] + (('A'..'Z').collect { "Q${it}*" } as Collection<String>))
+                    '**/infrastructure/**',
+                    '**/aspect/**',
+                    '**/Q**',
+                    'kgu/developers/api/AicsApiApplication.class',
+                    // 현재는 미구현으로 인한 제외
+                    '**/api/**/presentation/**',
+                    '**/api/file/application/**'
+            ])
         }))
     }
 
@@ -58,20 +60,22 @@ jacocoTestCoverageVerification {
 //            limit {
 //                counter = 'BRANCH'
 //                value = 'COVEREDRATIO'
-//                minimum = 0.80
+//                minimum = 0.60
 //            }
 
             excludes = [
-                    '**.dto.**',
-                    '**.event.**',
-                    '**.*InitData*',
-                    '**.*Application*',
-                    '**.exception.**',
-                    '**.service.alarm.**',
-                    '**.aop.**',
-                    '**.config.**',
-                    '**.MemberRole*'
-            ] + (('A'..'Z').collect { "Q${it}*" } as Collection<String>)
+                    '**/request/**',
+                    '**/response/**',
+                    '**/exception/**',
+                    '**/config/**',
+                    '**/infrastructure/**',
+                    '**/aspect/**',
+                    '**/Q**',
+                    'kgu/developers/api/AicsApiApplication.class',
+                    // 현재는 미구현으로 인한 제외
+                    '**/api/**/presentation/**',
+                    '**/api/file/application/**'
+            ]
         }
     }
 }
