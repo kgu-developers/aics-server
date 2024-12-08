@@ -1,7 +1,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.12"
+    toolVersion = "0.8.11"
     reportsDirectory = layout.buildDirectory.dir('jacoco')
 }
 
@@ -49,18 +49,17 @@ jacocoTestCoverageVerification {
         rule {
             element = 'CLASS'
 
-//            커버리지에 따라 빌드 자체를 제한
-//            limit {
-//                counter = 'LINE'
-//                value = 'COVEREDRATIO'
-//                minimum = 0.80
-//            }
-//
-//            limit {
-//                counter = 'BRANCH'
-//                value = 'COVEREDRATIO'
-//                minimum = 0.80
-//            }
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
 
             excludes = [
                     '**.dto.**',

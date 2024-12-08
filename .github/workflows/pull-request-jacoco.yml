@@ -5,7 +5,9 @@ on:
     branches:
       - develop
 
-permissions: write-all
+permissions:
+  checks: write
+  pull-requests: write
 
 jobs:
   build:
