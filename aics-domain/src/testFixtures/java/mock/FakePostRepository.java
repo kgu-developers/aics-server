@@ -1,12 +1,5 @@
 package mock;
 
-import kgu.developers.common.response.PageableResponse;
-import kgu.developers.common.response.PaginatedListResponse;
-import kgu.developers.domain.post.domain.Category;
-import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.post.domain.PostRepository;
-import org.springframework.data.domain.Pageable;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +8,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Pageable;
+
+import kgu.developers.common.response.PageableResponse;
+import kgu.developers.common.response.PaginatedListResponse;
+import kgu.developers.domain.post.domain.Category;
+import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.post.domain.PostRepository;
 
 public class FakePostRepository implements PostRepository {
 	private final List<Post> data = Collections.synchronizedList(new ArrayList<>());
@@ -58,7 +59,7 @@ public class FakePostRepository implements PostRepository {
 			.sorted(Comparator.comparing(Post::getCreatedAt).reversed())
 			.collect(Collectors.toList());
 
-		int start = (int) pageable.getOffset();
+		int start = (int)pageable.getOffset();
 		int end = Math.min(start + pageable.getPageSize(), filteredPosts.size());
 
 		List<Post> paginatedPosts = start > filteredPosts.size() ?
@@ -83,5 +84,21 @@ public class FakePostRepository implements PostRepository {
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 		LocalDateTime threshold = LocalDateTime.now().minusDays(retentionDays);
 		data.removeIf(post -> post.getDeletedAt() != null && post.getDeletedAt().isBefore(threshold));
+	}
+
+	@Override
+	public Optional<Post> findByPrevPost(LocalDateTime createdAt, Category category) {
+		return data.stream()
+			.filter(post -> post.getCreatedAt().isBefore(createdAt) && post.getCategory().equals(category)
+				&& post.getDeletedAt() == null)
+			.max(Comparator.comparing(Post::getCreatedAt));
+	}
+
+	@Override
+	public Optional<Post> findByNextPost(LocalDateTime createdAt, Category category) {
+		return data.stream()
+			.filter(post -> post.getCreatedAt().isAfter(createdAt) && post.getCategory().equals(category)
+				&& post.getDeletedAt() == null)
+			.min(Comparator.comparing(Post::getCreatedAt));
 	}
 }
