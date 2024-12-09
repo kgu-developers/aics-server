@@ -1,5 +1,6 @@
 package kgu.developers.domain.post.infrastructure;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,18 @@ public class PostRepositoryImpl implements PostRepository {
 	@Override
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 		queryPostRepository.deleteAllByDeletedAtBefore(retentionDays);
+	}
+
+	@Override
+	public Optional<Post> findByPrevPost(LocalDateTime createdAt, Category category) {
+		return jpaPostRepository.findFirstByCreatedAtLessThanAndDeletedAtIsNullAndCategoryOrderByCreatedAtDesc(
+			createdAt, category);
+	}
+
+	@Override
+	public Optional<Post> findByNextPost(LocalDateTime createdAt, Category category) {
+		return jpaPostRepository.findFirstByCreatedAtGreaterThanAndDeletedAtIsNullAndCategoryOrderByCreatedAtAsc(
+			createdAt, category);
 	}
 
 }
