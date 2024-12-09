@@ -105,6 +105,23 @@ public class PostServiceTest {
 		assertEquals(postId, response.postId());
 		assertNull(response.prevPost());
 		assertEquals(response.nextPost().postId(), 2L);
+		assertEquals(response.nextPost().postTitle(), "테스트용 제목2");
+	}
+
+	@Test
+	@DisplayName("getPostById는 마지막 게시글 조회 시 다음 게시글은 null이어야 한다")
+	public void getPostById_LastPost_Success() {
+		// given
+		Long lastPostId = 2L;
+
+		// when
+		PostDetailResponse response = postService.getPostByIdWithPrevAndNext(lastPostId);
+
+		// then
+		assertEquals(lastPostId, response.postId());
+		assertNull(response.nextPost());
+		assertEquals(response.prevPost().postId(), 1L);
+		assertEquals(response.prevPost().postTitle(), "테스트용 제목1");
 	}
 
 	@Test
