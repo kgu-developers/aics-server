@@ -1,10 +1,19 @@
 package kgu.developers.api.post.application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
 import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
+import kgu.developers.api.post.presentation.response.PostTitleResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Category;
@@ -12,13 +21,6 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -39,17 +41,26 @@ public class PostService {
 	}
 
 	public PostSummaryPageResponse getPostsByKeywordAndCategory(PageRequest request, String keyword,
-																Category category) {
+		Category category) {
 		PaginatedListResponse<Post> paginatedListResponse = postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
 			keyword, category, request);
 		return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
 	}
 
-	@Transactional(readOnly = true)
-	public PostDetailResponse getPostById(Long postId) {
+	@Transactional
+	public PostDetailResponse getPostByIdWithPrevAndNext(Long postId) {
 		Post post = getById(postId);
 		post.increaseViews();
-		return PostDetailResponse.from(post);
+
+		LocalDateTime timestamp = post.getCreatedAt();
+		Category category = post.getCategory();
+
+		Post prevPost = postRepository.findByPrevPost(timestamp, category).orElse(null);
+		Post nextPost = postRepository.findByNextPost(timestamp, category).orElse(null);
+
+		PostTitleResponse prevPostResponse = PostTitleResponse.from(prevPost);
+		PostTitleResponse nextPostResponse = PostTitleResponse.from(nextPost);
+		return PostDetailResponse.from(post, prevPostResponse, nextPostResponse);
 	}
 
 	@Transactional
