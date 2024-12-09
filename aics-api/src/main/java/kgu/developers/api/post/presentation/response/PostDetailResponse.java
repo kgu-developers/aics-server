@@ -59,7 +59,7 @@ public record PostDetailResponse(
 	PostTitleResponse prevPost,
 
 	@Schema(description = "다음 게시글 정보",
-		example = "{\"id\": 1, "
+		example = "{\"id\": 3, "
 			+ "\"title\": \"이전 게시글 제목\"}",
 		requiredMode = REQUIRED, nullable = true)
 	PostTitleResponse nextPost
