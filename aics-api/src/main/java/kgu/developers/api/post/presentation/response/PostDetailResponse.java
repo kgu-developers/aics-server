@@ -50,10 +50,16 @@ public record PostDetailResponse(
 
 	@Schema(description = "작성일", example = "2024-11-11 15:45", requiredMode = REQUIRED)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	String createdAt
+	String createdAt,
+
+	@Schema(description = "이전 게시글 정보", example = "2024-11-11 15:45", requiredMode = REQUIRED, nullable = true)
+	PostTitleResponse prevPost,
+
+	@Schema(description = "다음 게시글 정보", example = "2024-11-11 15:45", requiredMode = REQUIRED, nullable = true)
+	PostTitleResponse nextPost
 
 ) {
-	public static PostDetailResponse from(Post post) {
+	public static PostDetailResponse from(Post post, PostTitleResponse prevPost, PostTitleResponse nextPost) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		return PostDetailResponse.builder()
 			.postId(post.getId())
@@ -65,6 +71,8 @@ public record PostDetailResponse(
 			.isPinned(post.isPinned())
 			.file(post.getFile() != null ? FileResponse.from(post.getFile()) : null)
 			.createdAt(post.getCreatedAt().format(formatter))
+			.prevPost(prevPost)
+			.nextPost(nextPost)
 			.build();
 	}
 }
