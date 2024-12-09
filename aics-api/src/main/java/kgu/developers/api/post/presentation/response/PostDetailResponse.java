@@ -52,10 +52,16 @@ public record PostDetailResponse(
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	String createdAt,
 
-	@Schema(description = "이전 게시글 정보", example = "2024-11-11 15:45", requiredMode = REQUIRED, nullable = true)
+	@Schema(description = "이전 게시글 정보",
+		example = "{\"id\": 1,"
+			+ " \"title\": \"이전 게시글 제목\"}",
+		requiredMode = REQUIRED, nullable = true)
 	PostTitleResponse prevPost,
 
-	@Schema(description = "다음 게시글 정보", example = "2024-11-11 15:45", requiredMode = REQUIRED, nullable = true)
+	@Schema(description = "다음 게시글 정보",
+		example = "{\"id\": 1, "
+			+ "\"title\": \"이전 게시글 제목\"}",
+		requiredMode = REQUIRED, nullable = true)
 	PostTitleResponse nextPost
 
 ) {
