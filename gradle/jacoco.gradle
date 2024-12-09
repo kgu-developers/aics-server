@@ -9,7 +9,6 @@ test {
     useJUnitPlatform()
     dependsOn testFixturesClasses
 
-    // TestFixtures 소스를 포함
     testClassesDirs += sourceSets.testFixtures.output.classesDirs
     classpath += sourceSets.testFixtures.runtimeClasspath
 
@@ -18,28 +17,12 @@ test {
 
 jacocoTestReport {
     dependsOn test
+    excludedClassFilesForReport(classDirectories)
     executionData fileTree(dir: layout.buildDirectory, includes: ["jacoco/test.exec", "jacoco/testFixtures.exec"])
     reports {
         xml.required = true
         csv.required = false
         html.required = true
-    }
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    '**/request/**',
-                    '**/response/**',
-                    '**/exception/**',
-                    '**/config/**',
-                    '**/infrastructure/**',
-                    '**/aspect/**',
-                    '**/Q**',
-                    'kgu/developers/api/AicsApiApplication.class',
-                    // 현재는 미구현으로 인한 제외
-                    '**/api/**/presentation/**',
-                    '**/api/file/application/**'
-            ])
-        }))
     }
 
     finalizedBy 'jacocoTestCoverageVerification'
@@ -47,46 +30,36 @@ jacocoTestReport {
 
 jacocoTestCoverageVerification {
     dependsOn jacocoTestReport
+    excludedClassFilesForReport(classDirectories)
     violationRules {
         rule {
             element = 'CLASS'
 
-//            limit {
-//                counter = 'LINE'
-//                value = 'COVEREDRATIO'
-//                minimum = 0.80
-//            }
-//
-//            limit {
-//                counter = 'BRANCH'
-//                value = 'COVEREDRATIO'
-//                minimum = 0.60
-//            }
-
-            excludes = [
-                    '**/request/**',
-                    '**/response/**',
-                    '**/exception/**',
-                    '**/config/**',
-                    '**/infrastructure/**',
-                    '**/aspect/**',
-                    '**/Q**',
-                    'kgu/developers/api/AicsApiApplication.class',
-                    // 현재는 미구현으로 인한 제외
-                    '**/api/**/presentation/**',
-                    '**/api/file/application/**'
-            ]
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.50
+            }
         }
     }
 }
 
-//task jacocoTestFixturesReport(type: JacocoReport) {
-//    dependsOn testFixturesClasses
-//    executionData fileTree(dir: layout.buildDirectory, includes: ["jacoco/testFixtures.exec"])
-//    sourceDirectories.setFrom(files("src/testFixtures/java"))
-//    classDirectories.setFrom(files("build/classes/java/testFixtures"))
-//    reports {
-//        xml.required = true
-//        html.required = true
-//    }
-//}
+private excludedClassFilesForReport(classDirectories) {
+    classDirectories.setFrom(
+            files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: [
+                        "**/request/**",
+                        "**/response/**",
+                        "**/exception/**",
+                        "**/config/**",
+                        "**/infrastructure/**",
+                        "**/aspect/**",
+                        "**/Q**",
+                        "kgu/developers/api/AicsApiApplication.class",
+                        // TODO 현재는 미구현으로 인한 제외
+                        "**/api/**/presentation/**",
+                        "**/file/**"
+                ])
+            })
+    )
+}
