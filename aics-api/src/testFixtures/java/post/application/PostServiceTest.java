@@ -3,6 +3,17 @@ package post.application;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.post.application.PostService;
 import kgu.developers.api.post.presentation.exception.PostNotFoundException;
@@ -17,15 +28,6 @@ import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
 import mock.FakePostRepository;
 import mock.FakeUserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PostServiceTest {
 	private PostService postService;
@@ -82,25 +84,44 @@ public class PostServiceTest {
 		assertEquals(3, response.postId());
 
 		// when
-		PostDetailResponse created = postService.getPostById(response.postId());
+		Post created = postService.getById(response.postId());
 
 		// then
-		assertEquals(request.title(), created.title());
-		assertEquals(request.content(), created.content());
-		assertEquals(category.getDescription(), created.category());
+		assertEquals(request.title(), created.getTitle());
+		assertEquals(request.content(), created.getContent());
+		assertEquals(category.getDescription(), created.getCategory().getDescription());
 	}
 
 	@Test
-	@DisplayName("getPostById는 게시글을 조회할 수 있다")
+	@DisplayName("getPostById는 해당 게시글과 이전, 다음 게시글을 조회할 수 있다")
 	public void getPostById_Success() {
 		// given
 		Long postId = 1L;
 
 		// when
-		PostDetailResponse response = postService.getPostById(postId);
+		PostDetailResponse response = postService.getPostByIdWithPrevAndNext(postId);
 
 		// then
 		assertEquals(postId, response.postId());
+		assertNull(response.prevPost());
+		assertEquals(response.nextPost().postId(), 2L);
+		assertEquals(response.nextPost().title(), "테스트용 제목2");
+	}
+
+	@Test
+	@DisplayName("getPostById는 마지막 게시글 조회 시 다음 게시글은 null이어야 한다")
+	public void getPostById_LastPost_Success() {
+		// given
+		Long lastPostId = 2L;
+
+		// when
+		PostDetailResponse response = postService.getPostByIdWithPrevAndNext(lastPostId);
+
+		// then
+		assertEquals(lastPostId, response.postId());
+		assertNull(response.nextPost());
+		assertEquals(response.prevPost().postId(), 1L);
+		assertEquals(response.prevPost().title(), "테스트용 제목1");
 	}
 
 	@Test
@@ -112,7 +133,7 @@ public class PostServiceTest {
 		// when
 		// then
 		assertThatThrownBy(
-			() -> postService.getPostById(postId)
+			() -> postService.getPostByIdWithPrevAndNext(postId)
 		).isInstanceOf(PostNotFoundException.class);
 	}
 
@@ -139,13 +160,13 @@ public class PostServiceTest {
 	public void togglePostPinStatus_Success() {
 		// given
 		Long postId = 1L;
-		PostDetailResponse before = postService.getPostById(postId);
+		PostDetailResponse before = postService.getPostByIdWithPrevAndNext(postId);
 
 		// when
 		postService.togglePostPinStatus(postId);
 
 		// then
-		PostDetailResponse after = postService.getPostById(postId);
+		PostDetailResponse after = postService.getPostByIdWithPrevAndNext(postId);
 		assertNotEquals(before.isPinned(), after.isPinned());
 	}
 
@@ -160,7 +181,7 @@ public class PostServiceTest {
 
 		// then
 		assertThatThrownBy(
-			() -> postService.getPostById(postId)
+			() -> postService.getPostByIdWithPrevAndNext(postId)
 		).isInstanceOf(PostNotFoundException.class);
 	}
 }

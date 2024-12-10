@@ -1,5 +1,6 @@
 package kgu.developers.api.post.presentation.response;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import java.time.format.DateTimeFormatter;
@@ -13,7 +14,7 @@ import lombok.Builder;
 
 @Builder
 public record PostDetailResponse(
-	@Schema(description = "게시글 id", example = "1", requiredMode = REQUIRED)
+	@Schema(description = "게시글 id", example = "2", requiredMode = REQUIRED)
 	Long postId,
 
 	@Schema(description = "게시글 카테고리", example = "학과공지", requiredMode = REQUIRED)
@@ -50,10 +51,22 @@ public record PostDetailResponse(
 
 	@Schema(description = "작성일", example = "2024-11-11 15:45", requiredMode = REQUIRED)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-	String createdAt
+	String createdAt,
+
+	@Schema(description = "이전 게시글 정보",
+		example = "{\"id\": 1,"
+			+ " \"title\": \"이전 게시글 제목\"}",
+		requiredMode = NOT_REQUIRED)
+	PostTitleResponse prevPost,
+
+	@Schema(description = "다음 게시글 정보",
+		example = "{\"id\": 3, "
+			+ "\"title\": \"다음 게시글 제목\"}",
+		requiredMode = NOT_REQUIRED)
+	PostTitleResponse nextPost
 
 ) {
-	public static PostDetailResponse from(Post post) {
+	public static PostDetailResponse from(Post post, PostTitleResponse prevPost, PostTitleResponse nextPost) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		return PostDetailResponse.builder()
 			.postId(post.getId())
@@ -65,6 +78,8 @@ public record PostDetailResponse(
 			.isPinned(post.isPinned())
 			.file(post.getFile() != null ? FileResponse.from(post.getFile()) : null)
 			.createdAt(post.getCreatedAt().format(formatter))
+			.prevPost(prevPost)
+			.nextPost(nextPost)
 			.build();
 	}
 }

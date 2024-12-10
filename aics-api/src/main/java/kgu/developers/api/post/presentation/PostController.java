@@ -77,7 +77,7 @@ public class PostController {
 	public ResponseEntity<PostDetailResponse> getPostById(
 		@Parameter(description = "조회할 게시글의 id", example = "1", required = true) @PathVariable @Positive Long postId
 	) {
-		PostDetailResponse response = postService.getPostById(postId);
+		PostDetailResponse response = postService.getPostByIdWithPrevAndNext(postId);
 		return ResponseEntity.ok(response);
 	}
 
