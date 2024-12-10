@@ -1,4 +1,4 @@
-name: Jacoco Validation Pull Request On Dev
+name: Jacoco Validation On Pull Request
 
 on:
   pull_request:
