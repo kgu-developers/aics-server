@@ -47,7 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException exception,
 		HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
-		String message = exception.getAllValidationResults().stream()
+		String message = exception.getParameterValidationResults().stream()
 			.map(ParameterValidationResult::getResolvableErrors)
 			.flatMap(List::stream)
 			.map(MessageSourceResolvable::getDefaultMessage)
