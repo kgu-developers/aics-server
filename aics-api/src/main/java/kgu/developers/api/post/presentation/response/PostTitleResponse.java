@@ -1,16 +1,18 @@
 package kgu.developers.api.post.presentation.response;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.post.domain.Post;
 import lombok.Builder;
 
 @Builder
 public record PostTitleResponse(
-	@Schema(description = "게시글 id", example = "1", nullable = true)
+	@Schema(description = "게시글 id", example = "1", requiredMode = REQUIRED)
 	Long postId,
 
-	@Schema(description = "게시글 제목", example = "SW 부트캠프 4기 교육생 모집", nullable = true)
-	String postTitle
+	@Schema(description = "게시글 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)
+	String title
 ) {
 	public static PostTitleResponse from(Post post) {
 		if (post == null) {
@@ -19,7 +21,7 @@ public record PostTitleResponse(
 
 		return PostTitleResponse.builder()
 			.postId(post.getId())
-			.postTitle(post.getTitle())
+			.title(post.getTitle())
 			.build();
 	}
 }

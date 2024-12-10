@@ -13,7 +13,7 @@ import lombok.Builder;
 
 @Builder
 public record PostDetailResponse(
-	@Schema(description = "게시글 id", example = "1", requiredMode = REQUIRED)
+	@Schema(description = "게시글 id", example = "2", requiredMode = REQUIRED)
 	Long postId,
 
 	@Schema(description = "게시글 카테고리", example = "학과공지", requiredMode = REQUIRED)
