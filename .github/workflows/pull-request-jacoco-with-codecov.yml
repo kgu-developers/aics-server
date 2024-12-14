@@ -1,4 +1,4 @@
-name: Jacoco Validation On Pull Request
+name: Jacoco Validation On Pull Request with Codecov
 
 on:
   pull_request:
@@ -48,3 +48,11 @@ jobs:
         with:
           script: |
             core.setFailed('Overall coverage is less than 80%!')
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: '**/build/jacoco/test/jacocoTestReport.xml'
+          flags: unittests
+          name: jacoco-coverage
+          fail_ci_if_error: true
