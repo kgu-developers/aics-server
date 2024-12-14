@@ -53,7 +53,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: 'aics-api/build/jacoco/test/jacocoTestReport.xml'
+          files: '**/build/jacoco/test/jacocoTestReport.xml'
           flags: unittests
           name: jacoco-coverage
           fail_ci_if_error: true
