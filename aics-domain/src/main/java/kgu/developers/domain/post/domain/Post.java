@@ -91,4 +91,8 @@ public class Post extends BaseTimeEntity {
 	public void increaseViews() {
 		this.views++;
 	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 }
