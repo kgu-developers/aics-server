@@ -1,4 +1,5 @@
 codecov:
+  token: ${{ secrets.CODECOV_TOKEN }}
   require_ci_to_pass: true
 
 comment:
