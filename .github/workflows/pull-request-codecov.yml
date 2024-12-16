@@ -8,7 +8,7 @@ on:
 jobs:
   upload-coverage:
     runs-on: ubuntu-latest
-    environment: test
+    environment: coverage
     steps:
       - uses: actions/checkout@v4
 
