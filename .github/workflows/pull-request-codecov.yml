@@ -32,3 +32,4 @@ jobs:
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
           files: '**/build/jacoco/test/jacocoTestReport.xml'
+          verbose: true
