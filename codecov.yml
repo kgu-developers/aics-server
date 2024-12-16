@@ -1,6 +1,23 @@
 codecov:
   require_ci_to_pass: true
 
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 5%
+        paths:
+          - "aics-api/src"
+          - "aics-domain/src"
+          - "aics-api/src/testFixtures"
+          - "aics-domain/src/testFixtures"
+        only_pulls: true
+    patch:
+      default:
+        target: 80%
+        threshold: 5%
+
 comment:
   layout: "reach,diff,flags,files,footer"
   behavior: default
