@@ -27,15 +27,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build jacocoTestReport
 
-      - name: Debug GitHub Secrets
-        run: |
-          echo "Token length: ${#CODECOV_TOKEN}"
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
-          token: ${{ secrets.CODE_COV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: '**/build/jacoco/test/jacocoTestReport.xml'
           verbose: true
