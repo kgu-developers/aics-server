@@ -3,15 +3,12 @@ name: Upload Coverage Reports to Codecov On Pull Request
 on:
   pull_request:
     branches:
-      - main
       - develop
-  push:
-    branches:
-      - main
-      - develop
+
 jobs:
-  testing:
+  upload-coverage:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - uses: actions/checkout@v4
 
