@@ -1,4 +1,4 @@
-package kgu.developers.globalutils.decryption;
+package kgu.developers.globalutils.jasypt;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Value;
