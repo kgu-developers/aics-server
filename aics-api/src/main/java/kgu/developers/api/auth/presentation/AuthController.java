@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kgu.developers.api.auth.application.AuthService;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
+import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
+import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -37,4 +39,18 @@ public class AuthController {
 		TokenResponse response = authService.login(request);
 		return ResponseEntity.ok(response);
 	}
+
+	@Operation(summary = "AT 재발행 API", description = """
+			- Description : 이 API는 RereshToken을 입력 받아 AccessToken을 재발급 처리합니다.
+			- Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccessTokenResponse.class)))
+	@PostMapping("/reissue")
+	public ResponseEntity<AccessTokenResponse> reissue(
+		@Valid @RequestBody RefreshTokenRequest request
+	) {
+		AccessTokenResponse response = authService.reissue(request);
+		return ResponseEntity.ok(response);
+	}
+
 }

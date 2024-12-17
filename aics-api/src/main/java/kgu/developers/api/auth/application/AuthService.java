@@ -2,6 +2,9 @@ package kgu.developers.api.auth.application;
 
 import java.time.Duration;
 
+import jakarta.validation.Valid;
+import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
+import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,5 +38,10 @@ public class AuthService {
 		// TODO: refresh token 저장
 
 		return TokenResponse.of(accessToken, refreshToken);
+	}
+
+	// TODO: refresh token 기반 access token 재발급
+	public AccessTokenResponse reissue(@Valid RefreshTokenRequest request) {
+		return null;
 	}
 }
