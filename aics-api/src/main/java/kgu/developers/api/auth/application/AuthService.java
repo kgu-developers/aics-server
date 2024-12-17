@@ -48,7 +48,7 @@ public class AuthService {
 	public AccessTokenResponse reissue(RefreshTokenRequest request) {
 		String requestToken = request.refreshToken();
 		String userId = redisTemplate.opsForValue().get(REFRESH_TOKEN_KEY_PREFIX + requestToken);
-		System.out.println(userId);
+
 		if (userId == null) {
 			throw new TokenNotFoundException();
 		}
