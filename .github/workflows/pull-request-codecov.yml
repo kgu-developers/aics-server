@@ -6,7 +6,7 @@ on:
       - develop
 
   workflow_run:
-    workflows: [ Jacoco Validation On Pull Request, Pull Request Build Check ]
+    workflows: [ Jacoco Validation On Pull Request ]
     types:
       - completed
 
@@ -16,7 +16,7 @@ jobs:
     environment: coverage
     steps:
       - uses: actions/checkout@v4
-        
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         with:
