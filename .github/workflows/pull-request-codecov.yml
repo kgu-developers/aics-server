@@ -5,13 +5,18 @@ on:
     branches:
       - develop
 
+  workflow_run:
+    workflows: [ Jacoco Validation On Pull Request, Pull Request Build Check ]
+    types:
+      - completed
+
 jobs:
   upload-coverage:
     runs-on: ubuntu-latest
     environment: coverage
     steps:
       - uses: actions/checkout@v4
-
+        
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         with:
