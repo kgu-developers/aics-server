@@ -6,7 +6,8 @@ on:
       - develop
 
   workflow_run:
-    workflows: [ "Jacoco Validation On Pull Request" ]
+    workflows:
+      - Jacoco Validation On Pull Request
     types:
       - completed
 
