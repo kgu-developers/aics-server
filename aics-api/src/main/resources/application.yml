@@ -31,7 +31,9 @@ spring:
       password: ${REDIS_PASSWORD}
 
 file:
+   url: /cloud
    upload-path: ${user.dir}/cloud
+   secret-key: ${FILE_SECRET_KEY}
    disallow-extension: .exe, .bat, .sh, .cmd, .js, .html, .jsp, .php, .asp, .aspx, .dll, .so
    allow-extension: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .csv, .zip, .rar
 
@@ -46,6 +48,3 @@ jwt:
   issuer: ${JWT_ISSUER}
   secret_key: ${JWT_SECRET_KEY}
 
-jasypt:
-  encryptor:
-    secret-key: ${JASYPT_SECRET_KEY}
