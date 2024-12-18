@@ -4,13 +4,7 @@ import static kgu.developers.domain.file.domain.FileDomain.*;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.*;
 
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,14 +18,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.file.application.FileService;
-import kgu.developers.api.file.presentation.request.FileSaveRequest;
 import kgu.developers.api.file.presentation.response.FilePathResponse;
-import kgu.developers.domain.file.domain.FileDomain;
-import kgu.developers.domain.file.domain.FileEntity;
 import lombok.RequiredArgsConstructor;
 
 @RestController
