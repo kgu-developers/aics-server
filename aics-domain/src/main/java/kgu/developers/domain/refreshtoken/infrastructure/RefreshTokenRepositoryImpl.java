@@ -1,5 +1,6 @@
 package kgu.developers.domain.refreshtoken.infrastructure;
 
+import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,9 +16,11 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
 	private final String REFRESH_TOKEN_KEY_PREFIX = "refresh_token:";
 
 	@Override
-	public void save(String refreshToken, String userId) {
-		redisTemplate.opsForValue().set(REFRESH_TOKEN_KEY_PREFIX + refreshToken, userId);
-		redisTemplate.expire(REFRESH_TOKEN_KEY_PREFIX + refreshToken, Duration.ofDays(7));
+	public void save(RefreshToken refreshToken) {
+		String token = refreshToken.getRefreshToken();
+		String userId = refreshToken.getUserId();
+		redisTemplate.opsForValue().set(REFRESH_TOKEN_KEY_PREFIX + token, userId);
+		redisTemplate.expire(REFRESH_TOKEN_KEY_PREFIX + token, Duration.ofDays(7));
 	}
 
 	@Override

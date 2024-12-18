@@ -7,6 +7,7 @@ import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.TokenProvider;
+import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
@@ -37,7 +38,7 @@ public class AuthService {
 		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(7));
 		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(2));
 
-		refreshTokenRepository.save(refreshToken, userId);
+		refreshTokenRepository.save(RefreshToken.of(refreshToken, userId));
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 

@@ -1,7 +1,7 @@
 package kgu.developers.domain.refreshtoken.domain;
 
 public interface RefreshTokenRepository {
-	void save(String refreshToken, String userId);
+	void save(RefreshToken refreshToken);
 
-	String findUserIdByRefreshToken(String refreshToken);
+	String findUserIdByRefreshToken(String token);
 }
