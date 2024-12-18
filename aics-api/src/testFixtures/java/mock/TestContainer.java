@@ -23,7 +23,8 @@ public class TestContainer {
 
 	public TestContainer() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		FakeRedisTemplateFactory redisTemplateFactory = new FakeRedisTemplateFactory("localhost", 6379);
+		FakeRedisTemplateFactory redisTemplateFactory =
+			new FakeRedisTemplateFactory("localhost", 6379, "");
 		RedisTemplate<String, String> fakeRedisTemplate = redisTemplateFactory.createRedisTemplate();
 
 		this.userRepository = new FakeUserRepository();

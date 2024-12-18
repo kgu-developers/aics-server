@@ -9,15 +9,21 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class FakeRedisTemplateFactory {
 	private final String host;
 	private final int port;
+	private final String password;
 
-	public FakeRedisTemplateFactory(String host, int port) {
+	public FakeRedisTemplateFactory(String host, int port, String password) {
 		this.host = host;
 		this.port = port;
+		this.password = password;
 	}
 
 	public RedisConnectionFactory createConnectionFactory() {
-		LettuceConnectionFactory connectionFactory =
-			new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
+		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+		configuration.setHostName(host);
+		configuration.setPort(port);
+		configuration.setPassword(password);
+
+		LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(configuration);
 		connectionFactory.afterPropertiesSet();
 		return connectionFactory;
 	}

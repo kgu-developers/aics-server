@@ -29,7 +29,8 @@ public class AuthServiceTest {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-		FakeRedisTemplateFactory redisTemplateFactory = new FakeRedisTemplateFactory("localhost", 6379);
+		FakeRedisTemplateFactory redisTemplateFactory =
+			new FakeRedisTemplateFactory("localhost", 6379, "");
 		RedisTemplate<String, String> fakeRedisTemplate = redisTemplateFactory.createRedisTemplate();
 
 		this.authService = AuthService.builder()
