@@ -4,7 +4,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 import kgu.developers.api.auth.application.AuthService;
+import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
+import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
+import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
@@ -91,5 +94,40 @@ public class AuthServiceTest {
 		}).isInstanceOf(InvalidPasswordException.class);
 	}
 
-	// TODO tc 추가
+	@Test
+	@DisplayName("reissue는 토큰을 재발급할 수 있다")
+	public void reissue_Success() {
+		// given
+		String userId = "202411345";
+		String password = "password1234";
+
+		// when
+		TokenResponse tokenResponse = authService.login(LoginRequest.builder()
+			.userId(userId)
+			.password(password)
+			.build()
+		);
+
+		// then
+		assertThatCode(() -> {
+			authService.reissue(RefreshTokenRequest.builder()
+				.refreshToken(tokenResponse.refreshToken())
+				.build());
+		}).doesNotThrowAnyException();
+	}
+
+	@Test
+	@DisplayName("reissue는 RefreshToken이 틀리면 TokenNotFoundException을 발생시킨다")
+	public void reissue_InvalidPassword_ThrowsException() {
+		// given
+		String refreshToken = "eyJNOTREALTOKEN.eyJzdWIiOiJhZG1pbiIsILJdhDYTYzNzQwNjQwMH0.7J";
+
+		// when
+		// then
+		assertThatThrownBy(() -> {
+			authService.reissue(RefreshTokenRequest.builder()
+				.refreshToken(refreshToken)
+				.build());
+		}).isInstanceOf(TokenNotFoundException.class);
+	}
 }
