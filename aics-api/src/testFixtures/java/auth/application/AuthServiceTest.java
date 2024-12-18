@@ -3,11 +3,6 @@ package auth.application;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import kgu.developers.api.auth.application.AuthService;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.user.application.UserService;
@@ -17,6 +12,11 @@ import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
 import mock.FakeUserRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class AuthServiceTest {
 	private AuthService authService;
@@ -25,6 +25,9 @@ public class AuthServiceTest {
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+		FakeRedisTemplateFactory redisTemplateFactory = new FakeRedisTemplateFactory("localhost", 6379);
+		RedisTemplate<String, String> fakeRedisTemplate = redisTemplateFactory.createRedisTemplate();
 
 		this.authService = AuthService.builder()
 			.userService(
@@ -39,6 +42,7 @@ public class AuthServiceTest {
 					.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
 					.build()
 			)
+			.redisTemplate(fakeRedisTemplate)
 			.build();
 
 		fakeUserRepository.save(User.builder()
@@ -86,4 +90,6 @@ public class AuthServiceTest {
 			);
 		}).isInstanceOf(InvalidPasswordException.class);
 	}
+
+	// TODO tc 추가
 }
