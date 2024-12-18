@@ -11,14 +11,15 @@ import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
+import mock.FakeRefreshTokenRepository;
 import mock.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class AuthServiceTest {
@@ -28,10 +29,7 @@ public class AuthServiceTest {
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-		FakeRedisTemplateFactory redisTemplateFactory =
-			new FakeRedisTemplateFactory("localhost", 6379, "");
-		RedisTemplate<String, String> fakeRedisTemplate = redisTemplateFactory.createRedisTemplate();
+		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 
 		this.authService = AuthService.builder()
 			.userService(
@@ -46,7 +44,7 @@ public class AuthServiceTest {
 					.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
 					.build()
 			)
-			.redisTemplate(fakeRedisTemplate)
+			.refreshTokenRepository(refreshTokenRepository)
 			.build();
 
 		fakeUserRepository.save(User.builder()

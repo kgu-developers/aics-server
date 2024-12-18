@@ -1,7 +1,6 @@
 package mock;
 
-import auth.application.FakeRedisTemplateFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.auth.application.AuthService;
@@ -20,13 +19,11 @@ public class TestContainer {
 	public final AuthController authController;
 	public final PostService postService;
 	public final PostRepository postRepository;
+	public final RefreshTokenRepository refreshTokenRepository;
 
 	public TestContainer() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		FakeRedisTemplateFactory redisTemplateFactory =
-			new FakeRedisTemplateFactory("localhost", 6379, "");
-		RedisTemplate<String, String> fakeRedisTemplate = redisTemplateFactory.createRedisTemplate();
-
+		this.refreshTokenRepository = new FakeRefreshTokenRepository();
 		this.userRepository = new FakeUserRepository();
 		this.userService = UserService.builder()
 			.userRepository(this.userRepository)
@@ -39,7 +36,7 @@ public class TestContainer {
 				.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
 				.build()
 			)
-			.redisTemplate(fakeRedisTemplate)
+			.refreshTokenRepository(this.refreshTokenRepository)
 			.build();
 		this.authController = AuthController.builder()
 			.authService(this.authService)

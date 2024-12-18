@@ -7,6 +7,7 @@ import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.TokenProvider;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
 	private final RedisTemplate<String, String> redisTemplate;
+	private final RefreshTokenRepository refreshTokenRepository;
 
-	private final String REFRESH_TOKEN_KEY_PREFIX = "token:";
 
 	@Transactional(readOnly = true)
 	public TokenResponse login(LoginRequest request) {
@@ -39,15 +40,13 @@ public class AuthService {
 		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(7));
 		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(2));
 
-		redisTemplate.opsForValue().set(REFRESH_TOKEN_KEY_PREFIX + refreshToken, userId);
-		redisTemplate.expire(REFRESH_TOKEN_KEY_PREFIX + refreshToken, Duration.ofDays(7));
-
+		refreshTokenRepository.save(refreshToken, userId);
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 
 	public AccessTokenResponse reissue(RefreshTokenRequest request) {
 		String requestToken = request.refreshToken();
-		String userId = redisTemplate.opsForValue().get(REFRESH_TOKEN_KEY_PREFIX + requestToken);
+		String userId = refreshTokenRepository.findUserIdByRefreshToken(requestToken);
 
 		if (userId == null) {
 			throw new TokenNotFoundException();
