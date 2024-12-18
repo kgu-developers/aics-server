@@ -7,11 +7,15 @@ import lombok.Builder;
 
 @Builder
 public record FilePathResponse(
+	@Schema(description = "파일 id", example = "1", requiredMode = REQUIRED)
+	Long id,
+
 	@Schema(description = "파일 경로", example = "/cloud/file/3/2025-curriculum", requiredMode = REQUIRED)
 	String physicalPath
 ) {
-	public static FilePathResponse of(String decryptedPath) {
+	public static FilePathResponse of(Long id, String decryptedPath) {
 		return FilePathResponse.builder()
+			.id(id)
 			.physicalPath(decryptedPath)
 			.build();
 	}

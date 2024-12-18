@@ -8,7 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.api.file.presentation.response.FilePathResponse;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.post.domain.Post;
+import kgu.developers.globalutils.encryption.AesUtil;
 import lombok.Builder;
 
 @Builder
@@ -74,7 +76,8 @@ public record PostDetailResponse(
 			.author(post.getAuthor().getName())
 			.views(post.getViews())
 			.isPinned(post.isPinned())
-			.file(post.getFile() != null ? FilePathResponse.of("") : null)
+			.file(post.getFile() != null ?
+				FilePathResponse.of(post.getFile().getId(), AesUtil.decrypt(post.getFile().getPhysicalPath())) : null)
 			.createdAt(post.getCreatedAt().format(formatter))
 			.prevPost(prevPost)
 			.nextPost(nextPost)

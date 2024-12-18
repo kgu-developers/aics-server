@@ -22,8 +22,8 @@ public class FileService {
 		String encryptedPath = AesUtil.encrypt(storedPath);
 		FileEntity fileEntity = FileEntity.create(file.getOriginalFilename(), encryptedPath, file.getSize(),
 			file.getContentType());
-		String savedPath = fileRepository.save(fileEntity).getPhysicalPath();
-		return FilePathResponse.of(AesUtil.decrypt(savedPath));
+		FileEntity savedFile = fileRepository.save(fileEntity);
+		return FilePathResponse.of(savedFile.getId(), AesUtil.decrypt(savedFile.getPhysicalPath()));
 	}
 
 }
