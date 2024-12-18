@@ -11,7 +11,6 @@ import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +24,7 @@ public class AuthService {
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
-	private final RedisTemplate<String, String> redisTemplate;
 	private final RefreshTokenRepository refreshTokenRepository;
-
 
 	@Transactional(readOnly = true)
 	public TokenResponse login(LoginRequest request) {
