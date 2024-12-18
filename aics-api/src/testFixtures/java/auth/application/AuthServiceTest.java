@@ -119,7 +119,7 @@ public class AuthServiceTest {
 
 	@Test
 	@DisplayName("reissue는 RefreshToken이 틀리면 TokenNotFoundException을 발생시킨다")
-	public void reissue_InvalidPassword_ThrowsException() {
+	public void reissue_TokenNotFoundException_ThrowsException() {
 		// given
 		String refreshToken = "eyJNOTREALTOKEN.eyJzdWIiOiJhZG1pbiIsILJdhDYTYzNzQwNjQwMH0.7J";
 
