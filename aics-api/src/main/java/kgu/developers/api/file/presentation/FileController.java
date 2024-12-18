@@ -3,6 +3,7 @@ package kgu.developers.api.file.presentation;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.*;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import jakarta.validation.Valid;
 import kgu.developers.api.file.application.FileService;
+import kgu.developers.api.file.presentation.request.FileSaveRequest;
 import kgu.developers.api.file.presentation.response.FilePathResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -41,9 +44,11 @@ public class FileController {
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilePathResponse> fileUploadTest(
 		@Parameter(description = "첨부 파일", content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE))
-		@RequestPart(value = "file", required = false) MultipartFile file
+		@RequestPart(value = "file", required = false) MultipartFile file,
+		@Parameter(description = "첨부 파일 정보", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE))
+		@Valid @RequestPart(value = "request") FileSaveRequest request
 	) {
-		FilePathResponse path = fileService.saveFile(file);
+		FilePathResponse path = fileService.saveFile(file, request.fileDomain(), request.directoryId());
 		return ResponseEntity.status(CREATED).body(path);
 	}
 
