@@ -29,10 +29,18 @@ public class FileEntity extends BaseTimeEntity {
 	@Column(nullable = false, unique = true)
 	private String physicalPath;
 
-	public static FileEntity create(String logicalName, String physicalPath) {
+	@Column(nullable = false)
+	private Long fileSize;
+
+	@Column(nullable = false)
+	private String extension;
+
+	public static FileEntity create(String logicalName, String physicalPath, Long fileSize, String extension) {
 		return FileEntity.builder()
 			.logicalName(logicalName)
 			.physicalPath(physicalPath)
+			.fileSize(fileSize)
+			.extension(extension)
 			.build();
 	}
 }

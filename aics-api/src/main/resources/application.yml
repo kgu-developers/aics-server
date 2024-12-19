@@ -30,12 +30,12 @@ spring:
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD}
 
-resource:
-  file:
-    url: /upload/files
-    path: ${user.dir}/files
-    disallow-extension: .exe, .bat, .sh, .cmd, .js, .html, .jsp, .php, .asp, .aspx, .dll, .so
-    allow-extension: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .csv, .zip, .rar
+file:
+   url: /cloud
+   upload-path: ${user.dir}/cloud
+   secret-key: ${FILE_SECRET_KEY}
+   disallow-extension: .exe, .bat, .sh, .cmd, .js, .html, .jsp, .php, .asp, .aspx, .dll, .so
+   allow-extension: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .csv, .zip, .rar
 
 springdoc:
   default-consumes-media-type: application/json
@@ -47,3 +47,4 @@ springdoc:
 jwt:
   issuer: ${JWT_ISSUER}
   secret_key: ${JWT_SECRET_KEY}
+
