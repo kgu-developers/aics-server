@@ -35,7 +35,7 @@ public class FileController {
 			- Assignee : 이한음
 		""")
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePathResponse.class)))
-	@PostMapping(value = "post", consumes = MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/post", consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilePathResponse> postFileUpload(
 		@Parameter(description = "게시글 첨부 파일", content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE))
 		@RequestPart(value = "file") MultipartFile file,
