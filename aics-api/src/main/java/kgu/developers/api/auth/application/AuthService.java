@@ -7,9 +7,9 @@ import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.TokenProvider;
-import kgu.developers.domain.refreshtoken.domain.RefreshToken;
-import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.User;
+import kgu.developers.redis.refreshtoken.domain.RefreshToken;
+import kgu.developers.redis.refreshtoken.domain.RefreshTokenRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,12 +44,10 @@ public class AuthService {
 
 	public AccessTokenResponse reissue(RefreshTokenRequest request) {
 		String requestToken = request.refreshToken();
-		String userId = refreshTokenRepository.findUserIdByRefreshToken(requestToken);
+		RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(requestToken)
+			.orElseThrow(TokenNotFoundException::new);
 
-		if (userId == null) {
-			throw new TokenNotFoundException();
-		}
-
+		String userId = refreshToken.getUserId();
 		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(2));
 		return AccessTokenResponse.of(accessToken);
 	}
