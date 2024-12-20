@@ -1,6 +1,6 @@
 package mock;
 
-import kgu.developers.redis.refreshtoken.domain.RefreshTokenRepository;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.auth.application.AuthService;

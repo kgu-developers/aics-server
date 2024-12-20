@@ -1,4 +1,4 @@
-package kgu.developers.redis.refreshtoken.domain;
+package kgu.developers.domain.refreshtoken.domain;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
 package mock;
 
-import kgu.developers.redis.refreshtoken.domain.RefreshToken;
-import kgu.developers.redis.refreshtoken.domain.RefreshTokenRepository;
+import kgu.developers.domain.refreshtoken.domain.RefreshToken;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 
 import java.util.HashMap;
 import java.util.Map;

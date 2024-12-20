@@ -11,7 +11,7 @@ import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
-import kgu.developers.redis.refreshtoken.domain.RefreshTokenRepository;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;

@@ -3,7 +3,7 @@ package refreshtoken.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import kgu.developers.redis.refreshtoken.domain.RefreshToken;
+import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import org.junit.jupiter.api.Test;
 
 public class RefreshTokenDomainTest {
