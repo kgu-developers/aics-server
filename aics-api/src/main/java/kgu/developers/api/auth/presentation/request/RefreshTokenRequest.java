@@ -8,7 +8,9 @@ import lombok.Builder;
 
 @Builder
 public record RefreshTokenRequest(
-	@Schema(description = "리프레시 토큰", example = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsILJdhDYTYzNzQwNjQwMH0.7J", requiredMode = REQUIRED)
+	@Schema(description = "리프레시 토큰",
+		example = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsILJdhDYTYzNzQwNjQwMH0.7J",
+		requiredMode = REQUIRED)
 	@NotNull
 	String refreshToken
 ) {
