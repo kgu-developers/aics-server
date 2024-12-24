@@ -35,7 +35,6 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		if (handler instanceof HandlerMethod) {
 			HandlerMethod handlerMethod = (HandlerMethod)handler;
 			Method method = handlerMethod.getMethod();
-
 			return method.isAnnotationPresent(NoLogging.class);
 		}
 		return false;
