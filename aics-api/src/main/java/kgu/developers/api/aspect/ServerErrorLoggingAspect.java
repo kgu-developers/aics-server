@@ -27,6 +27,7 @@ public class ServerErrorLoggingAspect {
 
 	@AfterThrowing(value = "logPointcut()", throwing = "exception")
 	public void logAfterThrowing(JoinPoint joinPoint, Exception exception) {
+		if (exception instanceof CustomException) return;
 		MethodSignature signature = (MethodSignature)joinPoint.getSignature();
 		String className = signature.getDeclaringType().getSimpleName();
 
