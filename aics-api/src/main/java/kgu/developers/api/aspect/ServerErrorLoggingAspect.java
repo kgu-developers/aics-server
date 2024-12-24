@@ -36,7 +36,14 @@ public class ServerErrorLoggingAspect {
 
 		log.error("[SERVER ERROR] POINT : {} || ARGUMENTS : {}", className, parameterMessage);
 		log.error("[SERVER ERROR] MESSAGE : {}", exception.getMessage());
-		log.error("[SERVER ERROR] CAUSE : {}", exception.getCause().toString());
-		log.error("[SERVER ERROR] FINAL POINT : {}", exception.getStackTrace()[0]);
+		Throwable cause = exception.getCause();
+		StackTraceElement[] stackTrace = exception.getStackTrace();
+
+		log.error("[SERVER ERROR] CAUSE : {}",
+		    cause != null ? cause.toString() : "No cause available"
+		);
+		log.error("[SERVER ERROR] FINAL POINT : {}",
+		    (stackTrace != null && stackTrace.length > 0) ? stackTrace[0] : "No stack trace available"
+		);
 	}
 }
