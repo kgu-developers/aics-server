@@ -19,11 +19,10 @@ public class FileService {
 
 	public FilePathResponse saveFile(MultipartFile file, FileDomain fileDomain, Long directoryId) {
 		String storedPath = fileStorageService.store(file, fileDomain, directoryId);
-		String encryptedPath = AesUtil.encrypt(storedPath);
-		FileEntity fileEntity = FileEntity.create(file.getOriginalFilename(), encryptedPath, file.getSize(),
+		FileEntity fileEntity = FileEntity.create(file.getOriginalFilename(), storedPath, file.getSize(),
 			file.getContentType());
 		FileEntity savedFile = fileRepository.save(fileEntity);
-		return FilePathResponse.of(savedFile.getId(), AesUtil.decrypt(savedFile.getPhysicalPath()));
+		return FilePathResponse.of(savedFile);
 	}
 
 }

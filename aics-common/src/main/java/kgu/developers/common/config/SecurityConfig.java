@@ -59,7 +59,8 @@ public class SecurityConfig {
 	private static final String[] STATIC_RESOURCES_PATTERNS = {
 		"/img/**",
 		"/css/**",
-		"/js/**"
+		"/js/**",
+		"/cloud/**",
 	};
 
 	private static final String[] PERMIT_ALL_PATTERNS = {
@@ -73,7 +74,7 @@ public class SecurityConfig {
 		"/api/v1/users/signup",
 		"/api/v1/auth/**",
 		"/api/v1/professors",
-		"/api/v1/abouts"
+		"/api/v1/abouts",
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {

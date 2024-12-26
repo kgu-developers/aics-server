@@ -47,8 +47,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     public String store(MultipartFile file, FileDomain fileDomain, Long directoryId) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String path = getFullPath(fileDomain, directoryId, fileName);
+        validateAttributes(path, fileName);
         try {
-            validateAttributes(path, fileName);
             Path targetLocation = this.rootLocation.resolve(path);
             Files.copy(file.getInputStream(), targetLocation, REPLACE_EXISTING);
             String relativePath = this.rootLocation.relativize(targetLocation).toString();
@@ -81,7 +81,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     private void validateExtension(String originalFileName, Set<String> disallowedExtensions) {
-        String extension = StringUtils.getFilenameExtension(originalFileName);
+        String extension = originalFileName.substring(originalFileName.lastIndexOf('.') + 1).toLowerCase();
         if (disallowedExtensions.contains(extension)) throw new NotSupportedFileExtensionException();
     }
 

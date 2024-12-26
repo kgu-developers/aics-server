@@ -3,6 +3,8 @@ package kgu.developers.api.file.presentation.response;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import kgu.developers.domain.file.domain.FileEntity;
+import kgu.developers.globalutils.encryption.AesUtil;
 import lombok.Builder;
 
 @Builder
@@ -13,9 +15,10 @@ public record FilePathResponse(
 	@Schema(description = "파일 경로", example = "/files/2025-curriculum", requiredMode = REQUIRED)
 	String physicalPath
 ) {
-	public static FilePathResponse of(Long id, String decryptedPath) {
+	public static FilePathResponse of(FileEntity fileEntity) {
+		String decryptedPath = AesUtil.decrypt(fileEntity.getPhysicalPath());
 		return FilePathResponse.builder()
-			.id(id)
+			.id(fileEntity.getId())
 			.physicalPath(decryptedPath)
 			.build();
 	}

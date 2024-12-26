@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import kgu.developers.common.domain.BaseTimeEntity;
+import kgu.developers.globalutils.encryption.AesUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,9 +37,11 @@ public class FileEntity extends BaseTimeEntity {
 	private String extension;
 
 	public static FileEntity create(String logicalName, String physicalPath, Long fileSize, String extension) {
+		String encryptedLogicalName = AesUtil.encrypt(logicalName);
+		String encryptedPhysicalPath = AesUtil.encrypt(physicalPath);
 		return FileEntity.builder()
-			.logicalName(logicalName)
-			.physicalPath(physicalPath)
+			.logicalName(encryptedLogicalName)
+			.physicalPath(encryptedPhysicalPath)
 			.fileSize(fileSize)
 			.extension(extension)
 			.build();
