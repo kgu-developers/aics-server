@@ -81,7 +81,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     private void validateExtension(String originalFileName, Set<String> disallowedExtensions) {
-        String extension = originalFileName.substring(originalFileName.lastIndexOf('.') + 1).toLowerCase();
+        if (originalFileName.lastIndexOf('.') <= 0 || disallowedExtensions.contains(extension)) throw new NotSupportedFileExtensionException();
         if (disallowedExtensions.contains(extension)) throw new NotSupportedFileExtensionException();
     }
 
