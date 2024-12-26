@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -21,17 +22,20 @@ import kgu.developers.domain.file.exception.FileDirectoryCreationFailedException
 import kgu.developers.domain.file.exception.FileNotFoundException;
 import kgu.developers.domain.file.exception.FilePathInvalidException;
 import kgu.developers.domain.file.exception.FileStoreFailedException;
+import kgu.developers.domain.file.exception.NotSupportedFileExtensionException;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private final Path rootLocation;
     private final String url;
+    private final Set<String> disallowedExtensions;
 
     @Autowired
     public FileStorageServiceImpl(FilePathProperties filePathProperties) {
         this.rootLocation = Paths.get(filePathProperties.getUploadPath())
                 .toAbsolutePath().normalize();
         this.url = filePathProperties.getUrl();
+        this.disallowedExtensions = filePathProperties.getDisallowedExtensions();
         try {
             Files.createDirectories(this.rootLocation);
         } catch (Exception e) {
@@ -44,7 +48,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String path = getFullPath(fileDomain, directoryId, fileName);
         try {
-            validateInvalidPath(path);
+            validateAttributes(path, fileName);
             Path targetLocation = this.rootLocation.resolve(path);
             Files.copy(file.getInputStream(), targetLocation, REPLACE_EXISTING);
             String relativePath = this.rootLocation.relativize(targetLocation).toString();
@@ -69,6 +73,16 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public void deleteAll() {
 
+    }
+
+    private void validateAttributes(String path, String fileName) {
+        validateInvalidPath(path);
+        validateExtension(fileName, disallowedExtensions);
+    }
+
+    private void validateExtension(String originalFileName, Set<String> disallowedExtensions) {
+        String extension = StringUtils.getFilenameExtension(originalFileName);
+        if (disallowedExtensions.contains(extension)) throw new NotSupportedFileExtensionException();
     }
 
     private String getFullPath(FileDomain fileDomain, Long directoryId, String fileName) {

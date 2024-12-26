@@ -34,8 +34,7 @@ file:
    url: /cloud
    upload-path: ${user.dir}/cloud
    secret-key: ${FILE_SECRET_KEY}
-   disallow-extension: .exe, .bat, .sh, .cmd, .js, .html, .jsp, .php, .asp, .aspx, .dll, .so
-   allow-extension: .jpg, .jpeg, .png, .gif, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .csv, .zip, .rar
+   disallowed-extensions: .exe, .bat, .sh, .cmd, .js, .html, .jsp, .php, .asp, .aspx, .dll, .so
 
 springdoc:
   default-consumes-media-type: application/json
