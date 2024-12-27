@@ -77,7 +77,7 @@ public record PostDetailResponse(
 			.views(post.getViews())
 			.isPinned(post.isPinned())
 			.file(post.getFile() != null ?
-				FilePathResponse.of(post.getFile()) : null)
+				FilePathResponse.from(post.getFile()) : null)
 			.createdAt(post.getCreatedAt().format(formatter))
 			.prevPost(prevPost)
 			.nextPost(nextPost)

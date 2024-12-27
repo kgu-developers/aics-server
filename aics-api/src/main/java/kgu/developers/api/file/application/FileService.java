@@ -22,7 +22,7 @@ public class FileService {
 		FileEntity fileEntity = FileEntity.create(file.getOriginalFilename(), storedPath, file.getSize(),
 			file.getContentType());
 		FileEntity savedFile = fileRepository.save(fileEntity);
-		return FilePathResponse.of(savedFile);
+		return FilePathResponse.from(savedFile);
 	}
 
 }
