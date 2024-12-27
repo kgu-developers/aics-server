@@ -1,0 +1,37 @@
+name: Upload Test Coverage to Codecov on Push
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  checks: write
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    environment: coverage
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Test with Gradle
+        run: ./gradlew test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        continue-on-error: true
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: '**/build/jacoco/test/jacocoTestReport.xml'
