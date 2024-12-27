@@ -54,6 +54,7 @@ jobs:
             core.setFailed('Overall coverage is less than 80%!')
 
       - name: Upload coverage reports to Codecov
+        if: steps.jacoco.outcome == 'success'
         uses: codecov/codecov-action@v4
         continue-on-error: true
         with:
