@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - develop
+  push:
+    branches:
+      - develop
 
 permissions:
   checks: write
@@ -12,6 +15,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: coverage
 
     steps:
       - name: Check out repository
@@ -48,4 +52,11 @@ jobs:
         with:
           script: |
             core.setFailed('Overall coverage is less than 80%!')
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        continue-on-error: true
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: '**/build/jacoco/test/jacocoTestReport.xml'
 
