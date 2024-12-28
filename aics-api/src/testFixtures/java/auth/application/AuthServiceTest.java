@@ -8,7 +8,7 @@ import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
-import kgu.developers.api.user.application.UserService;
+import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
@@ -32,8 +32,8 @@ public class AuthServiceTest {
 		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 
 		this.authService = AuthService.builder()
-			.userService(
-				UserService.builder()
+			.userFacade(
+				UserFacade.builder()
 					.userRepository(fakeUserRepository)
 					.bCryptPasswordEncoder(bCryptPasswordEncoder)
 					.build()

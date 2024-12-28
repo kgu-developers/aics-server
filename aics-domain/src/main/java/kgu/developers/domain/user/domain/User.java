@@ -14,6 +14,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Column;
@@ -68,13 +69,12 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-	public static User create(String id, String password,
-		String name, String email,
-		String phone, Major major) {
+	public static User create(String id, String password, String name, String email, String phone, Major major,
+		PasswordEncoder passwordEncoder) {
 		validateDept(id, email);
 		return User.builder()
 			.id(id)
-			.password(password)
+			.password(passwordEncoder.encode(password))
 			.name(name)
 			.email(email)
 			.phone(phone)

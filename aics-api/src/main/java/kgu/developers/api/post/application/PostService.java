@@ -14,7 +14,7 @@ import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.api.post.presentation.response.PostTitleResponse;
-import kgu.developers.api.user.application.UserService;
+import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostService {
 	private final PostRepository postRepository;
-	private final UserService userService;
+	private final UserFacade userFacade;
 
 	public static final int POST_RETENTION_DAYS = 60 * 60 * 24 * 30;
 
@@ -34,7 +34,7 @@ public class PostService {
 
 	@Transactional
 	public PostPersistResponse createPost(PostRequest request, Category category) {
-		User author = userService.me();
+		User author = userFacade.me();
 		Post createPost = Post.create(request.title(), request.content(), category, author);
 		Long id = postRepository.save(createPost).getId();
 		return PostPersistResponse.from(id);

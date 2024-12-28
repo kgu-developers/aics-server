@@ -1,39 +1,34 @@
 package kgu.developers.api.user.presentation;
 
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import kgu.developers.api.user.application.UserService;
-import kgu.developers.api.user.presentation.request.UserCreateRequest;
-import kgu.developers.api.user.presentation.request.UserUpdateRequest;
-import kgu.developers.api.user.presentation.response.UserDetailPageResponse;
-import kgu.developers.api.user.presentation.response.UserDetailResponse;
-import kgu.developers.api.user.presentation.response.UserPersistResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import kgu.developers.api.user.application.UserFacade;
+import kgu.developers.api.user.presentation.request.UserCreateRequest;
+import kgu.developers.api.user.presentation.request.UserUpdateRequest;
+import kgu.developers.domain.user.application.response.UserDetailResponse;
+import kgu.developers.api.user.presentation.response.UserPersistResponse;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 @Tag(name = "User", description = "회원 관리 API")
 public class UserController {
-	private final UserService userService;
+	private final UserFacade userFacade;
 
 	@Operation(summary = "회원 가입 API", description = """
 			- Description : 이 API는 유저를 생성하고 회원 가입 처리를 합니다.
@@ -44,7 +39,7 @@ public class UserController {
 	public ResponseEntity<UserPersistResponse> signup(
 		@Valid @RequestBody UserCreateRequest request
 	) {
-		UserPersistResponse response = userService.createUser(request);
+		UserPersistResponse response = userFacade.createUser(request);
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
@@ -59,7 +54,7 @@ public class UserController {
 	)
 	@GetMapping("/my")
 	public ResponseEntity<UserDetailResponse> myPage() {
-		UserDetailResponse response = userService.getUserDetail();
+		UserDetailResponse response = userFacade.getUserDetail();
 		return ResponseEntity.ok(response);
 	}
 
@@ -72,21 +67,7 @@ public class UserController {
 	public ResponseEntity<Void> updateUser(
 		@Valid @RequestBody UserUpdateRequest request
 	) {
-		userService.updateUser(request);
+		userFacade.updateUser(request);
 		return ResponseEntity.noContent().build();
-	}
-
-	@Operation(summary = "유저 페이징 조회 API", description = """
-		    - Description : 이 API는 유저를 페이징 조회합니다.
-		    - Assignee : 박민준
-		""")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserDetailPageResponse.class)))
-	@GetMapping
-	public ResponseEntity<UserDetailPageResponse> getUsers(
-		@Parameter(description = "페이지 인덱스", example = "0", required = true) @RequestParam(defaultValue = "0") @PositiveOrZero int page,
-		@Parameter(description = "응답 개수", example = "10", required = true) @RequestParam(defaultValue = "10") @Positive int size
-	) {
-		UserDetailPageResponse response = userService.getUsers(PageRequest.of(page, size));
-		return ResponseEntity.ok(response);
 	}
 }

@@ -1,6 +1,5 @@
 package kgu.developers.api.user.application;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,10 +10,8 @@ import kgu.developers.api.user.presentation.exception.UserIdDuplicateException;
 import kgu.developers.api.user.presentation.exception.UserNotAuthenticatedException;
 import kgu.developers.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.api.user.presentation.request.UserUpdateRequest;
-import kgu.developers.api.user.presentation.response.UserDetailPageResponse;
-import kgu.developers.api.user.presentation.response.UserDetailResponse;
+import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 import kgu.developers.domain.user.exception.UserNotFoundException;
@@ -24,23 +21,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Builder
 @RequiredArgsConstructor
-public class UserService {
+public class UserFacade {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserRepository userRepository;
 
 	@Transactional
 	public UserPersistResponse createUser(UserCreateRequest request) {
 		validateDuplicateId(request.userId());
-
 		User createUser = User.create(
 			request.userId(),
-			bCryptPasswordEncoder.encode(request.password()),
+			request.password(),
 			request.name(),
 			request.email(),
 			request.phone(),
-			request.major()
+			request.major(),
+			bCryptPasswordEncoder
 		);
-
 		String id = userRepository.save(createUser).getId();
 		return UserPersistResponse.of(id);
 	}
@@ -50,12 +46,6 @@ public class UserService {
 		User updateUser = me();
 		updateUser.updateEmail(request.email());
 		updateUser.updatePhone(request.phone());
-	}
-
-	@Transactional(readOnly = true)
-	public UserDetailPageResponse getUsers(Pageable pageable) {
-		PaginatedListResponse response = userRepository.findAllOrderByIdDesc(pageable);
-		return UserDetailPageResponse.of(response.contents(), response.pageable());
 	}
 
 	private void validateDuplicateId(String id) {

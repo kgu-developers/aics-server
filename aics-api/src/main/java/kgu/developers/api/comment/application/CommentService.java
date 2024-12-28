@@ -14,7 +14,7 @@ import kgu.developers.api.comment.presentation.request.CommentUpdateRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
 import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
 import kgu.developers.api.post.application.PostService;
-import kgu.developers.api.user.application.UserService;
+import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
 import kgu.developers.domain.post.domain.Post;
@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 	private final CommentRepository commentRepository;
 	private final PostService postService;
-	private final UserService userService;
+	private final UserFacade userFacade;
 
 	public static final int COMMENT_RETENTION_DAYS = 60 * 60 * 24 * 30;
 
@@ -35,7 +35,7 @@ public class CommentService {
 	public CommentPersistResponse createComment(CommentRequest request) {
 		Comment createComment = Comment.create(
 			request.content(),
-			userService.me(),
+			userFacade.me(),
 			postService.getById(request.postId())
 		);
 		Long id = commentRepository.save(createComment).getId();

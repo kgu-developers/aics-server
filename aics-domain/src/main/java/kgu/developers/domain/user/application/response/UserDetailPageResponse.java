@@ -1,6 +1,6 @@
-package kgu.developers.api.user.presentation.response;
+package kgu.developers.domain.user.application.response;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
 
 import java.util.List;
 

@@ -37,7 +37,7 @@ public class CommentServiceTest {
 		TestContainer testContainer = new TestContainer();
 
 		this.commentService = new CommentService(fakeCommentRepository, testContainer.postService,
-			testContainer.userService);
+			testContainer.userFacade);
 
 		testContainer.userRepository.save(User.builder()
 			.id("202411345")
@@ -48,14 +48,14 @@ public class CommentServiceTest {
 			.major(Major.CSE)
 			.build());
 
-		User author = testContainer.userService.getUserById("202411345");
+		User author = testContainer.userFacade.getUserById("202411345");
 
 		Post post = testContainer.postRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1", Category.DEPT_INFO, author
 		));
 
 		Comment delete = fakeCommentRepository.save(Comment.builder()
-			.author(testContainer.userService.getUserById("202411345"))
+			.author(testContainer.userFacade.getUserById("202411345"))
 			.content("deleted")
 			.post(post)
 			.build()
@@ -63,20 +63,20 @@ public class CommentServiceTest {
 		delete.delete();
 
 		fakeCommentRepository.save(Comment.builder()
-			.author(testContainer.userService.getUserById("202411345"))
+			.author(testContainer.userFacade.getUserById("202411345"))
 			.content("get")
 			.post(post)
 			.build()
 		);
 
 		fakeCommentRepository.save(Comment.builder()
-			.author(testContainer.userService.getUserById("202411345"))
+			.author(testContainer.userFacade.getUserById("202411345"))
 			.content("test!")
 			.post(post)
 			.build()
 		);
 
-		UserDetails user = testContainer.userService.getUserById("202411345");
+		UserDetails user = testContainer.userFacade.getUserById("202411345");
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
 			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())

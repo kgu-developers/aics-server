@@ -25,7 +25,7 @@ public class AuthControllerTest {
 	public void login_Success() {
 		// given
 		TestContainer testContainer = new TestContainer();
-		testContainer.userService.createUser(UserCreateRequest.builder()
+		testContainer.userFacade.createUser(UserCreateRequest.builder()
 			.userId("202411345")
 			.password("password0000")
 			.name("김철수")

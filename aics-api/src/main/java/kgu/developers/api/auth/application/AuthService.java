@@ -5,7 +5,7 @@ import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
 import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
-import kgu.developers.api.user.application.UserService;
+import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
@@ -22,7 +22,7 @@ import java.time.Duration;
 @Builder
 @RequiredArgsConstructor
 public class AuthService {
-	private final UserService userService;
+	private final UserFacade userFacade;
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
 	private final RefreshTokenRepository refreshTokenRepository;
@@ -32,7 +32,7 @@ public class AuthService {
 		String userId = request.userId();
 		String password = request.password();
 
-		User user = userService.getUserById(userId);
+		User user = userFacade.getUserById(userId);
 		user.isPasswordMatching(password, passwordEncoder);
 
 		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(7));
