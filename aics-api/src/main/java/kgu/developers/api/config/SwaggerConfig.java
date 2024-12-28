@@ -1,7 +1,7 @@
-package kgu.developers.infra.config;
+package kgu.developers.api.config;
 
-import static java.lang.String.format;
-import static org.springframework.security.config.Elements.JWT;
+import static java.lang.String.*;
+import static org.springframework.security.config.Elements.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class SwaggerConfig implements AicsConfig {
+public class SwaggerConfig {
 
 	private final Environment environment;
 
