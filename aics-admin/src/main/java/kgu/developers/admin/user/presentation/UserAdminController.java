@@ -16,13 +16,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.user.application.UserAdminFacade;
-import kgu.developers.domain.user.application.response.UserDetailPageResponse;
+import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
-@Tag(name = "User", description = "회원 관리 API")
+@Tag(name = "User", description = "회원 관리자 API")
 public class UserAdminController {
 	private final UserAdminFacade userAdminFacade;
 

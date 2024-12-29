@@ -3,8 +3,9 @@ package kgu.developers.admin.user.application;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import kgu.developers.domain.user.application.UserQueryService;
-import kgu.developers.domain.user.application.response.UserDetailPageResponse;
+import kgu.developers.common.response.PaginatedListResponse;
+import kgu.developers.domain.user.application.query.UserQueryService;
+import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -13,6 +14,7 @@ public class UserAdminFacade {
 	private final UserQueryService userQueryService;
 
 	public UserDetailPageResponse getUsers(Pageable pageable) {
-		return userQueryService.getUsers(pageable);
+		PaginatedListResponse response = userQueryService.getUsers(pageable);
+		return UserDetailPageResponse.of(response.contents(), response.pageable());
 	}
 }

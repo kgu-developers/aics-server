@@ -1,10 +1,12 @@
-package kgu.developers.api.user.presentation.exception;
+package kgu.developers.domain.user.exception;
+
+import static kgu.developers.domain.user.exception.UserDomainExceptionCode.*;
 
 import kgu.developers.common.exception.CustomException;
 
 public class UserNotAuthenticatedException extends CustomException {
 
 	public UserNotAuthenticatedException() {
-		super(UserExceptionCode.USER_NOT_AUTHENTICATED);
+		super(USER_NOT_AUTHENTICATED);
 	}
 }

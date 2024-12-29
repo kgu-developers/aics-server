@@ -1,6 +1,6 @@
-package kgu.developers.api.user.presentation.exception;
+package kgu.developers.domain.user.exception;
 
-import static kgu.developers.api.user.presentation.exception.UserExceptionCode.USER_ID_DUPLICATED;
+import static kgu.developers.domain.user.exception.UserDomainExceptionCode.*;
 
 import kgu.developers.common.exception.CustomException;
 

@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
-@Tag(name = "User", description = "회원 관리 API")
+@Tag(name = "User", description = "회원 API")
 public class UserController {
 	private final UserFacade userFacade;
 
@@ -43,15 +43,11 @@ public class UserController {
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
-	@Operation(summary = "마이페이지", description = """
+	@Operation(summary = "마이페이지 조회 API", description = """
 			- Description : 이 API는 회원의 정보를 출력합니다.
 			- Assignee : 이신행
 		""")
-	@ApiResponse(
-		responseCode = "200",
-		description = "마이페이지 로드 완료",
-		content = @Content(schema = @Schema(implementation = UserDetailResponse.class))
-	)
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserDetailResponse.class)))
 	@GetMapping("/my")
 	public ResponseEntity<UserDetailResponse> myPage() {
 		UserDetailResponse response = userFacade.getUserDetail();

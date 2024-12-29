@@ -1,4 +1,4 @@
-package kgu.developers.domain.user.application.response;
+package kgu.developers.admin.user.presentation.response;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
 
@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.common.response.PageableResponse;
+import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 
