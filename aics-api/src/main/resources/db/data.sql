@@ -1,7 +1,7 @@
-INSERT INTO about (content, detail_category, main_category, sub_category)
-VALUES ('학과 소개 내용입니다.', NULL, 'DEPT_INTRO', 'DEPT_INTRO'),
-       ('커리큘럼 설명입니다.', '2019', 'EDU_ACTIVITIES', 'CURRICULUM'),
-       ('연혁 더미데이터입니다.', NULL, 'DEPT_INTRO', 'HISTORY');
+INSERT INTO about (content, detail_category, main_category, sub_category, created_at, updated_at)
+VALUES ('학과 소개 내용입니다.', NULL, 'DEPT_INTRO', 'DEPT_INTRO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('커리큘럼 설명입니다.', '2019', 'EDU_ACTIVITIES', 'CURRICULUM', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('연혁 더미데이터입니다.', NULL, 'DEPT_INTRO', 'HISTORY', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO lab (name, loc, site)
 VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr'),
