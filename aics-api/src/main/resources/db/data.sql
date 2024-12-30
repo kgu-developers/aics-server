@@ -3,10 +3,11 @@ VALUES ('학과 소개 내용입니다.', NULL, 'DEPT_INTRO', 'DEPT_INTRO', CURR
        ('커리큘럼 설명입니다.', '2019', 'EDU_ACTIVITIES', 'CURRICULUM', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('연혁 더미데이터입니다.', NULL, 'DEPT_INTRO', 'HISTORY', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO lab (name, loc, site)
-VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr'),
-       ('Lab B', '8520', 'https://lab2.kyonggi.ac.kr'),
-       ('Lab C', '제2공학관 200', 'http://research.kyonggi.ac.kr');
+INSERT INTO lab (name, loc, site, created_at, updated_at)
+VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab B', '8520', 'https://lab2.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab C', '제2공학관 200', 'http://research.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 
 -- password: password1234!
 INSERT INTO "user" (id, password, name, email, phone, major, role, created_at, updated_at)
