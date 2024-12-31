@@ -37,7 +37,7 @@ public class AuthService {
 		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(7));
 		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(2));
 
-		refreshTokenRepository.save(RefreshToken.of(refreshToken, userId));
+		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 
@@ -51,7 +51,7 @@ public class AuthService {
 		String userId = refreshTokenEntity.getUserId();
 		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(7));
 		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(2));
-		refreshTokenRepository.save(RefreshToken.of(refreshToken, userId));
+		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 }
