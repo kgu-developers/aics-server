@@ -46,10 +46,10 @@ public class AuthController {
 		""")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccessTokenResponse.class)))
 	@PostMapping("/reissue")
-	public ResponseEntity<AccessTokenResponse> reissue(
+	public ResponseEntity<TokenResponse> reissue(
 		@Valid @RequestBody RefreshTokenRequest request
 	) {
-		AccessTokenResponse response = authService.reissue(request);
+		TokenResponse response = authService.reissue(request);
 		return ResponseEntity.ok(response);
 	}
 

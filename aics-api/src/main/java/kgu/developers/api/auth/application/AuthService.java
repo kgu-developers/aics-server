@@ -3,7 +3,6 @@ package kgu.developers.api.auth.application;
 import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
-import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import kgu.developers.api.user.application.UserService;
 import kgu.developers.common.auth.jwt.TokenProvider;
@@ -42,13 +41,17 @@ public class AuthService {
 		return TokenResponse.of(accessToken, refreshToken);
 	}
 
-	public AccessTokenResponse reissue(RefreshTokenRequest request) {
+	public TokenResponse reissue(RefreshTokenRequest request) {
 		String requestToken = request.refreshToken();
-		RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(requestToken)
+		RefreshToken refreshTokenEntity = refreshTokenRepository.findByRefreshToken(requestToken)
 			.orElseThrow(TokenNotFoundException::new);
 
-		String userId = refreshToken.getUserId();
+		refreshTokenRepository.delete(refreshTokenEntity);
+
+		String userId = refreshTokenEntity.getUserId();
+		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(7));
 		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(2));
-		return AccessTokenResponse.of(accessToken);
+		refreshTokenRepository.save(RefreshToken.of(refreshToken, userId));
+		return TokenResponse.of(accessToken, refreshToken);
 	}
 }
