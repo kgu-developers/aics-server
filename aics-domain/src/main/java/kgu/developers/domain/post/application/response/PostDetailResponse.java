@@ -1,4 +1,4 @@
-package kgu.developers.api.post.presentation.response;
+package kgu.developers.domain.post.application.response;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
 
@@ -8,9 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.api.file.presentation.response.FilePathResponse;
-import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.globalutils.encryption.AesUtil;
 import lombok.Builder;
 
 @Builder

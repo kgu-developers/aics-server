@@ -1,6 +1,6 @@
-package kgu.developers.api.post.presentation.exception;
+package kgu.developers.domain.post.exception;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 import org.springframework.http.HttpStatus;
 
@@ -10,8 +10,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum PostExceptionCode implements ExceptionCode {
-	POST_NOT_FOUND(NOT_FOUND, "해당 게시글을 찾을 수 없습니다.");
+public enum PostDomainExceptionCode implements ExceptionCode {
+	POST_NOT_FOUND(NOT_FOUND, "해당 게시글을 찾을 수 없습니다.")
+	;
 
 	private final HttpStatus status;
 	private final String message;

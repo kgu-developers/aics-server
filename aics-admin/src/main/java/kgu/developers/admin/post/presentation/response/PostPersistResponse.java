@@ -1,4 +1,4 @@
-package kgu.developers.api.post.presentation.response;
+package kgu.developers.admin.post.presentation.response;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 

@@ -13,10 +13,9 @@ import kgu.developers.api.comment.presentation.request.CommentRequest;
 import kgu.developers.api.comment.presentation.request.CommentUpdateRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
 import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
-import kgu.developers.api.post.application.PostService;
-import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentService {
 	private final CommentRepository commentRepository;
-	private final PostService postService;
+	private final PostQueryService postQueryService;
 	private final UserQueryService userQueryService;
 
 	public static final int COMMENT_RETENTION_DAYS = 60 * 60 * 24 * 30;
@@ -37,14 +36,14 @@ public class CommentService {
 		Comment createComment = Comment.create(
 			request.content(),
 			userQueryService.me(),
-			postService.getById(request.postId())
+			postQueryService.getById(request.postId())
 		);
 		Long id = commentRepository.save(createComment).getId();
 		return CommentPersistResponse.of(id);
 	}
 
 	public CommentListResponse getComments(Long postId) {
-		Post post = postService.getById(postId);
+		Post post = postQueryService.getById(postId);
 		List<Comment> comments = commentRepository.findAllByPostIdAndDeletedAtIsNull(post.getId());
 		return CommentListResponse.from(comments);
 	}

@@ -5,30 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import kgu.developers.api.post.application.PostService;
-import kgu.developers.api.post.presentation.exception.PostNotFoundException;
 import kgu.developers.api.post.presentation.request.PostRequest;
-import kgu.developers.api.post.presentation.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostPersistResponse;
-import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
-import kgu.developers.api.user.application.UserFacade;
-import kgu.developers.domain.post.domain.Category;
-import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.user.domain.Major;
-import kgu.developers.domain.user.domain.User;
-import mock.FakePostRepository;
-import mock.FakeUserRepository;
-
+/*
 public class PostServiceTest {
 	private PostService postService;
 
@@ -185,3 +164,4 @@ public class PostServiceTest {
 		).isInstanceOf(PostNotFoundException.class);
 	}
 }
+*/

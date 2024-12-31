@@ -84,6 +84,10 @@ public class Post extends BaseTimeEntity {
 		this.content = content;
 	}
 
+	public void updateCategory(Category category) {
+		this.category = category;
+	}
+
 	public void togglePinned() {
 		this.isPinned = !this.isPinned;
 	}
