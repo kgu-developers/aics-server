@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import kgu.developers.api.comment.application.CommentService;
+import kgu.developers.api.comment.application.CommentFacade;
 import kgu.developers.api.comment.presentation.request.CommentRequest;
 import kgu.developers.api.comment.presentation.request.CommentUpdateRequest;
 import kgu.developers.api.comment.presentation.response.CommentListResponse;
@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/comments")
 @Tag(name = "Comment", description = "댓글 API")
 public class CommentController {
-	private final CommentService commentService;
+	private final CommentFacade commentFacade;
 
 	@Operation(summary = "댓글 생성 API", description = """
 			- Description : 이 API는 댓글을 생성합니다.
@@ -44,7 +44,7 @@ public class CommentController {
 	public ResponseEntity<CommentPersistResponse> createComment(
 		@RequestBody @Valid CommentRequest commentRequest
 	) {
-		CommentPersistResponse response = commentService.createComment(commentRequest);
+		CommentPersistResponse response = commentFacade.createComment(commentRequest);
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
@@ -58,7 +58,7 @@ public class CommentController {
 		@Parameter(description = "수정할 댓글의 id", example = "1", required = true) @PathVariable @Positive Long commentId,
 		@RequestBody @Valid CommentUpdateRequest request
 	) {
-		commentService.updateComment(commentId, request);
+		commentFacade.updateComment(commentId, request);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -71,7 +71,7 @@ public class CommentController {
 	public ResponseEntity<CommentListResponse> getComments(
 		@Parameter(description = "게시글의 id", example = "1", required = true) @RequestParam @Positive Long postId
 	) {
-		CommentListResponse response = commentService.getComments(postId);
+		CommentListResponse response = commentFacade.getComments(postId);
 		return ResponseEntity.ok(response);
 	}
 
@@ -84,14 +84,14 @@ public class CommentController {
 	public ResponseEntity<Void> deleteComment(
 		@Parameter(description = "삭제할 댓글의 id", example = "1", required = true) @PathVariable @Positive Long commentId
 	) {
-		commentService.deleteComment(commentId);
+		commentFacade.deleteComment(commentId);
 		return ResponseEntity.noContent().build();
 	}
 
 	@Hidden
 	@GetMapping("/cleanup-last-run")
 	public ResponseEntity<String> getLastCleanupRunTime() {
-		String response = commentService.getFormattedLastCleanupRunTime();
+		String response = commentFacade.getLastCleanupRunTime();
 		return ResponseEntity.ok(response);
 	}
 }

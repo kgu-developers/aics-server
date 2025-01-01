@@ -3,31 +3,6 @@ package comment.application;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import kgu.developers.api.comment.application.CommentService;
-import kgu.developers.api.comment.presentation.exception.CommentNotFoundException;
-import kgu.developers.api.comment.presentation.request.CommentRequest;
-import kgu.developers.api.comment.presentation.request.CommentUpdateRequest;
-import kgu.developers.api.comment.presentation.response.CommentListResponse;
-import kgu.developers.api.comment.presentation.response.CommentPersistResponse;
-import kgu.developers.api.comment.presentation.response.CommentResponse;
-import kgu.developers.domain.comment.domain.Comment;
-import kgu.developers.domain.post.domain.Category;
-import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.user.domain.Major;
-import kgu.developers.domain.user.domain.User;
-import mock.FakeCommentRepository;
-import mock.TestContainer;
-
 /*
 public class CommentServiceTest {
 	private CommentService commentService;

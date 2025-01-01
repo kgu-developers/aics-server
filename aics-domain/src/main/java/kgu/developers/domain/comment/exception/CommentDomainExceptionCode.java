@@ -1,6 +1,6 @@
-package kgu.developers.api.file.presentation.exception;
+package kgu.developers.domain.comment.exception;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import org.springframework.http.HttpStatus;
 
@@ -10,8 +10,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum FileExceptionCode implements ExceptionCode {
-	FILE_SAVING_ERROR(BAD_REQUEST, "파일 저장에 실패하였습니다.");
+public enum CommentDomainExceptionCode implements ExceptionCode {
+	COMMENT_NOT_FOUND(NOT_FOUND, "해당 댓글을 찾을 수 없습니다.");
 
 	private final HttpStatus status;
 	private final String message;

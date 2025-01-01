@@ -1,20 +1,16 @@
 package kgu.developers.api.post.application;
 
-import java.time.LocalDateTime;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kgu.developers.domain.post.application.response.PostDetailResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
-import kgu.developers.domain.post.application.response.PostTitleResponse;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.query.PostQueryService;
+import kgu.developers.domain.post.application.response.PostDetailResponse;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class PostFacade {
 	private final PostCommandService postCommandService;
 	private final PostQueryService postQueryService;
-	private final PostRepository postRepository;
 
 	public PostSummaryPageResponse getPostsByKeywordAndCategory(PageRequest request, String keyword,
 		Category category) {
