@@ -10,5 +10,5 @@ public interface LabRepository {
 
 	List<Lab> findAllByOrderByName();
 
-	void delete(Lab lab);
+	void deleteById(Long id);
 }

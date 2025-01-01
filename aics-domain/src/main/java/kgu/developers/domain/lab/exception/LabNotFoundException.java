@@ -1,6 +1,6 @@
-package kgu.developers.api.lab.presentation.exception;
+package kgu.developers.domain.lab.exception;
 
-import static kgu.developers.api.lab.presentation.exception.LabExceptionCode.LAB_NOT_FOUND;
+import static kgu.developers.domain.lab.exception.LabDomainExceptionCode.*;
 
 import kgu.developers.common.exception.CustomException;
 
