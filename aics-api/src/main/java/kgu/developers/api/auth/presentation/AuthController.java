@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import kgu.developers.api.auth.application.AuthService;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
-import kgu.developers.api.auth.presentation.response.AccessTokenResponse;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -44,12 +43,12 @@ public class AuthController {
 			- Description : 이 API는 RereshToken을 입력 받아 AccessToken을 재발급 처리합니다.
 			- Assignee : 이신행
 		""")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AccessTokenResponse.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = TokenResponse.class)))
 	@PostMapping("/reissue")
-	public ResponseEntity<AccessTokenResponse> reissue(
+	public ResponseEntity<TokenResponse> reissue(
 		@Valid @RequestBody RefreshTokenRequest request
 	) {
-		AccessTokenResponse response = authService.reissue(request);
+		TokenResponse response = authService.reissue(request);
 		return ResponseEntity.ok(response);
 	}
 

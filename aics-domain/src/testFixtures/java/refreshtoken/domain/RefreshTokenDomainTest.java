@@ -14,7 +14,7 @@ public class RefreshTokenDomainTest {
 		String userId = "userId";
 
 		//when
-		RefreshToken refreshToken = RefreshToken.of(token, userId);
+		RefreshToken refreshToken = RefreshToken.of(userId, token);
 
 		//then
 		assertNotNull(refreshToken);
