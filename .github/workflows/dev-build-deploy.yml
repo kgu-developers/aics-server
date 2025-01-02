@@ -31,6 +31,13 @@ jobs:
           ./gradlew clean build -p aics-api -x test
           ./gradlew clean build -p aics-admin -x test
 
+      # DockerHub 로그인
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
       # Docker 이미지 빌드
       - name: Docker image build for aics-api
         run: |
