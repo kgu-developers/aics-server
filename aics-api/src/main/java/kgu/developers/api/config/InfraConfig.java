@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableAicsConfig({
 	AicsConfigGroup.JPA,
 	AicsConfigGroup.JPA_AUDITING,
-	AicsConfigGroup.PROPERTIES,
-	AicsConfigGroup.SWAGGER
+	AicsConfigGroup.PROPERTIES
 })
 class InfraConfig {
 
