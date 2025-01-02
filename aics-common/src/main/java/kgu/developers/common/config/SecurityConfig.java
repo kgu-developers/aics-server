@@ -83,7 +83,9 @@ public class SecurityConfig {
 			config.setAllowedHeaders(Collections.singletonList("*"));
 			config.setAllowedMethods(Collections.singletonList("*"));
 			config.setAllowedOriginPatterns(Arrays.asList(
-				"http://localhost:3000" // TODO: CORS 설정 변경 필요
+				"http://localhost:3000",
+				"http://localhost:8080",
+				"http://localhost:8081"
 			));
 			config.setAllowCredentials(true);
 			return config;
