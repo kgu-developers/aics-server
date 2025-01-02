@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
-import kgu.developers.admin.file.application.FileAdminFacade;
+import kgu.developers.admin.file.application.FileAdminService;
 import kgu.developers.admin.file.presentation.response.FilePathResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/files")
 @Tag(name = "File", description = "파일 업로드 관리 API")
 public class FileAdminController {
-	private final FileAdminFacade fileAdminFacade;
+	private final FileAdminService fileAdminService;
 
 	@Operation(summary = "게시글 파일 업로드 API", description = """
 			- Description : 이 API는 게시글 첨부 파일을 업로드합니다. 한 게시글에 한 개의 파일만 업로드 가능합니다.
@@ -41,7 +41,7 @@ public class FileAdminController {
 		@RequestPart(value = "file") MultipartFile file,
 		@Parameter(description = "게시글 ID", example = "2", required = true) @RequestParam @Positive Long postId
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, POST, postId);
+		FilePathResponse path = fileAdminService.saveFile(file, POST, postId);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 
@@ -56,7 +56,7 @@ public class FileAdminController {
 		@RequestPart(value = "file") MultipartFile file,
 		@Parameter(description = "소개글 ID", example = "3", required = true) @RequestParam @Positive Long aboutId
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, ABOUT, aboutId);
+		FilePathResponse path = fileAdminService.saveFile(file, ABOUT, aboutId);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 
@@ -71,7 +71,7 @@ public class FileAdminController {
 		@RequestPart(value = "file") MultipartFile file,
 		@Parameter(description = "캐러셀 ID", example = "1", required = true) @RequestParam @Positive Long carouselId
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, CAROUSEL, carouselId);
+		FilePathResponse path = fileAdminService.saveFile(file, CAROUSEL, carouselId);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 }

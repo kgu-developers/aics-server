@@ -1,6 +1,6 @@
-package kgu.developers.api.about.presentation.Exception;
+package kgu.developers.domain.about.exception;
 
-import static kgu.developers.api.about.presentation.Exception.AboutExceptionCode.ABOUT_NOT_FOUND;
+import static kgu.developers.domain.about.exception.AboutDomainExceptionCode.*;
 
 import kgu.developers.common.exception.CustomException;
 

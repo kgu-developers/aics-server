@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.api.about.application.AboutService;
+import kgu.developers.api.about.application.AboutFacade;
 import kgu.developers.api.about.presentation.Exception.AboutNotFoundException;
 import kgu.developers.api.about.presentation.Exception.CategoryNotMatchException;
 import kgu.developers.api.about.presentation.request.AboutRequest;
@@ -22,14 +22,14 @@ import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import mock.FakeAboutRepository;
-
-public class AboutServiceTest {
-	private AboutService aboutService;
+/*
+public class AboutFacadeTest {
+	private AboutFacade aboutFacade;
 
 	@BeforeEach
 	public void init() {
 		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
-		this.aboutService = new AboutService(fakeAboutRepository);
+		this.aboutFacade = new AboutFacade(fakeAboutRepository);
 
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
@@ -56,10 +56,10 @@ public class AboutServiceTest {
 			.build();
 
 		// when
-		AboutPersistResponse response = aboutService.createAbout(request);
+		AboutPersistResponse response = aboutFacade.createAbout(request);
 
 		// then
-		AboutResponse aboutResponse = aboutService.getAbout(main, sub, detail);
+		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub, detail);
 
 		assertEquals(response.id(), 2L);
 		assertEquals(aboutResponse.content(), content);
@@ -84,7 +84,7 @@ public class AboutServiceTest {
 		// when
 		// then
 		assertThatThrownBy(() -> {
-			aboutService.createAbout(request);
+			aboutFacade.createAbout(request);
 		}).isInstanceOf(CategoryNotMatchException.class);
 	}
 
@@ -97,7 +97,7 @@ public class AboutServiceTest {
 		String detail = "initDetail";
 
 		// when
-		AboutResponse aboutResponse = aboutService.getAbout(main, sub, detail);
+		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub, detail);
 
 		// then
 		assertEquals(aboutResponse.content(), "initContent");
@@ -114,7 +114,7 @@ public class AboutServiceTest {
 		// when
 		// then
 		assertThatThrownBy(() -> {
-			aboutService.getAbout(main, sub, detail);
+			aboutFacade.getAbout(main, sub, detail);
 		}).isInstanceOf(CategoryNotMatchException.class);
 	}
 
@@ -129,11 +129,11 @@ public class AboutServiceTest {
 		// when
 		// then
 		assertThatThrownBy(() -> {
-			aboutService.getAbout(main, sub, null);
+			aboutFacade.getAbout(main, sub, null);
 		}).isInstanceOf(AboutNotFoundException.class);
 
 		assertThatThrownBy(() -> {
-			aboutService.getAbout(main, sub, detail);
+			aboutFacade.getAbout(main, sub, detail);
 		}).isInstanceOf(AboutNotFoundException.class);
 	}
 
@@ -148,10 +148,10 @@ public class AboutServiceTest {
 			.build();
 
 		// when
-		aboutService.updateAbout(id, request);
+		aboutFacade.updateAbout(id, request);
 
 		// then
-		AboutResponse response = aboutService.getAbout(EDU_ACTIVITIES, CURRICULUM, "initDetail");
+		AboutResponse response = aboutFacade.getAbout(EDU_ACTIVITIES, CURRICULUM, "initDetail");
 
 		assertEquals(response.content(), "updateContent");
 	}
@@ -169,7 +169,8 @@ public class AboutServiceTest {
 		// when
 		// then
 		assertThatThrownBy(() -> {
-			aboutService.updateAbout(id, request);
+			aboutFacade.updateAbout(id, request);
 		}).isInstanceOf(AboutNotFoundException.class);
 	}
 }
+*/

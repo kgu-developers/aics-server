@@ -38,6 +38,7 @@ public class CommentFacade {
 		commentCommandService.updateComment(comment, request.content());
 	}
 
+	// TODO: 본인 댓글만 삭제 가능하도록 수정
 	public void deleteComment(Long commentId) {
 		Comment comment = commentQueryService.getById(commentId);
 		commentCommandService.deleteComment(comment);
