@@ -1,4 +1,4 @@
-package kgu.developers.api.professor.presentation.request;
+package kgu.developers.admin.professor.presentation.request;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 

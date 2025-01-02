@@ -1,6 +1,6 @@
-package kgu.developers.api.professor.presentation.exception;
+package kgu.developers.domain.professor.exception;
 
-import static kgu.developers.api.professor.presentation.exception.ProfessorExceptionCode.PROFESSOR_NOT_FOUND;
+import static kgu.developers.domain.professor.exception.ProfessorDomainExceptionCode.PROFESSOR_NOT_FOUND;
 
 import kgu.developers.common.exception.CustomException;
 

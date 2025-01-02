@@ -3,6 +3,7 @@ package kgu.developers.api.professor.presentation.response;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import kgu.developers.domain.professor.application.response.ProfessorResponse;
 import kgu.developers.domain.professor.domain.Professor;
 import lombok.Builder;
 
