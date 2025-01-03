@@ -35,7 +35,7 @@ public class ClubAdminController {
 		""")
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = ClubPersistResponse.class)))
 	@PostMapping
-	public ResponseEntity<ClubPersistResponse> createComment(
+	public ResponseEntity<ClubPersistResponse> createClub(
 		@Valid @RequestBody ClubRequest request
 	) {
 		ClubPersistResponse response = clubAdminFacade.createClub(request);
