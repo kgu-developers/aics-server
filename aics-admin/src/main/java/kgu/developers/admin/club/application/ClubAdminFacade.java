@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import kgu.developers.admin.club.presentation.request.ClubRequest;
 import kgu.developers.admin.club.presentation.response.ClubPersistResponse;
 import kgu.developers.domain.club.application.command.ClubCommandService;
+import kgu.developers.domain.club.application.query.ClubQueryService;
+import kgu.developers.domain.club.domain.Club;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -13,9 +15,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubAdminFacade {
 	private final ClubCommandService clubCommandService;
+	private final ClubQueryService clubQueryService;
 
 	public ClubPersistResponse createClub(ClubRequest request) {
 		Long id = clubCommandService.createClub(request.name(), request.description(), request.site());
 		return ClubPersistResponse.of(id);
+	}
+
+	public void updateClub(Long id, ClubRequest request) {
+		Club club = clubQueryService.getById(id);
+		clubCommandService.updateClub(club, request.name(), request.description(), request.site());
+
 	}
 }

@@ -38,4 +38,16 @@ public class Club {
 			.site(site)
 			.build();
 	}
+
+	public void updateName(String name) {
+		this.name = name;
+	}
+
+	public void updateDescription(String description) {
+		this.description = description;
+	}
+
+	public void updateSite(String site) {
+		this.site = site;
+	}
 }

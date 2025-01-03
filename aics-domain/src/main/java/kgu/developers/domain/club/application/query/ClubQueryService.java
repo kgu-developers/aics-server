@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.domain.ClubRepository;
+import kgu.developers.domain.club.exception.ClubNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,5 +16,9 @@ public class ClubQueryService {
 
 	public List<Club> getClubs() {
 		return clubRepository.findAll();
+	}
+
+	public Club getById(Long id) {
+		return clubRepository.findById(id).orElseThrow(ClubNotFoundException::new);
 	}
 }

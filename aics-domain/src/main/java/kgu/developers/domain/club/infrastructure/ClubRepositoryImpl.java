@@ -1,6 +1,7 @@
 package kgu.developers.domain.club.infrastructure;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +22,10 @@ public class ClubRepositoryImpl implements ClubRepository {
 	@Override
 	public List<Club> findAll() {
 		return jpaClubRepository.findAll();
+	}
+
+	@Override
+	public Optional<Club> findById(Long id) {
+		return jpaClubRepository.findById(id);
 	}
 }

@@ -15,4 +15,10 @@ public class ClubCommandService {
 		Club club = Club.create(name, description, site);
 		return clubRepository.save(club).getId();
 	}
+
+	public void updateClub(Club club, String name, String description, String site) {
+		club.updateName(name);
+		club.updateDescription(description);
+		club.updateSite(site);
+	}
 }
