@@ -1,5 +1,7 @@
 package kgu.developers.domain.club.infrastructure;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import kgu.developers.domain.club.domain.Club;
@@ -14,5 +16,10 @@ public class ClubRepositoryImpl implements ClubRepository {
 	@Override
 	public Club save(Club club) {
 		return jpaClubRepository.save(club);
+	}
+
+	@Override
+	public List<Club> findAll() {
+		return jpaClubRepository.findAll();
 	}
 }
