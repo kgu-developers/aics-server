@@ -29,5 +29,13 @@ public class Club {
 	private String description;
 
 	@Column
-	private String link;
+	private String site;
+
+	public static Club create(String name, String description, String site) {
+		return Club.builder()
+			.name(name)
+			.description(description)
+			.site(site)
+			.build();
+	}
 }

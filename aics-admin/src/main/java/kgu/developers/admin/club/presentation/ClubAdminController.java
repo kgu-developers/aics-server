@@ -1,0 +1,39 @@
+package kgu.developers.admin.club.presentation;
+
+import static org.springframework.http.HttpStatus.CREATED;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
+import kgu.developers.admin.club.application.ClubAdminFacade;
+import kgu.developers.admin.club.presentation.request.ClubRequest;
+import kgu.developers.admin.club.presentation.response.ClubPersistResponse;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/clubs")
+public class ClubAdminController {
+	private final ClubAdminFacade clubAdminFacade;
+
+	@Operation(summary = "동아리 생성 API", description = """
+			- Description : 이 API는 동아리를 생성합니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = ClubPersistResponse.class)))
+	@PostMapping
+	public ResponseEntity<ClubPersistResponse> createComment(
+		@Valid @RequestBody ClubRequest request
+	) {
+		ClubPersistResponse response = clubAdminFacade.createClub(request);
+		return ResponseEntity.status(CREATED).body(response);
+	}
+}
