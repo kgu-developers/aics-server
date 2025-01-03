@@ -3,6 +3,7 @@ package kgu.developers.admin.post.presentation;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/posts")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Tag(name = "Post", description = "게시글 관리자 API")
 public class PostAdminController {
 	private final PostAdminFacade postAdminFacade;

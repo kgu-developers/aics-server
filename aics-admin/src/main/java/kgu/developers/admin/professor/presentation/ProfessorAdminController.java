@@ -3,6 +3,7 @@ package kgu.developers.admin.professor.presentation;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/professors")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Tag(name = "Professor", description = "교수 관리자 API")
 public class ProfessorAdminController {
 	private final ProfessorAdminFacade professorAdminFacade;

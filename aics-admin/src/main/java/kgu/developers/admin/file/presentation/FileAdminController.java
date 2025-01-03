@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/files")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Tag(name = "File", description = "파일 업로드 관리 API")
 public class FileAdminController {
 	private final FileAdminFacade fileAdminFacade;

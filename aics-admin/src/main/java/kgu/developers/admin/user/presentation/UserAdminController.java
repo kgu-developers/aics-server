@@ -2,6 +2,7 @@ package kgu.developers.admin.user.presentation;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Tag(name = "User", description = "회원 관리자 API")
 public class UserAdminController {
 	private final UserAdminFacade userAdminFacade;
