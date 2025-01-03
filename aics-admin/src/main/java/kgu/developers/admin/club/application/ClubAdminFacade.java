@@ -25,7 +25,6 @@ public class ClubAdminFacade {
 	public void updateClub(Long id, ClubRequest request) {
 		Club club = clubQueryService.getById(id);
 		clubCommandService.updateClub(club, request.name(), request.description(), request.site());
-
 	}
 
 	public void deleteClub(Long id) {

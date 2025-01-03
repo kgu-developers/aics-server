@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/clubs")
 @Tag(name = "Club", description = "동아리 API")
 public class ClubController {
-
 	private final ClubFacade clubFacade;
 
 	@Operation(summary = "동아리 조회 API", description = """
