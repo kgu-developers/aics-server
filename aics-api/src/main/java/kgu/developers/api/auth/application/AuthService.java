@@ -35,8 +35,8 @@ public class AuthService {
 		User user = userQueryService.getUserById(userId);
 		user.isPasswordMatching(password, passwordEncoder);
 
-		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(7));
-		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(2));
+		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(1));
+		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(1));
 
 		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
 		return TokenResponse.of(accessToken, refreshToken);
@@ -50,8 +50,8 @@ public class AuthService {
 		refreshTokenRepository.delete(refreshTokenEntity);
 
 		String userId = refreshTokenEntity.getUserId();
-		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(7));
-		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(2));
+		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(1));
+		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(1));
 		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
 		return TokenResponse.of(accessToken, refreshToken);
 	}
