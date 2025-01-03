@@ -21,6 +21,13 @@ VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT
        ('Lab I', '9100', 'https://lab9.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('Lab J', '9200', 'http://lab10.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+-- club
+INSERT INTO club (name, description, site, created_at, updated_at)
+VALUES ('SSF', '웹 개발 동아리 SSF입니다.', 'https://www.ssf.or.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('K.Knock', '경기대학교 정보보안 동아리 K.Knock입니다.', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('C-Lab', '경기대학교 AI컴퓨터공학부 개발동아리입니다.', 'https://clab.page', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('InQ', '개발자 플랫폼 동아리 InQ입니다.', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
 -- password: password1234!
 INSERT INTO "user" (id, password, name, email, phone, major, role, created_at, updated_at)
 VALUES ('202412346', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5OTG',
