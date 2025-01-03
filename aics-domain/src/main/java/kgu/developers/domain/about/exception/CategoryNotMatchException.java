@@ -1,6 +1,6 @@
 package kgu.developers.domain.about.exception;
 
-import static kgu.developers.domain.about.exception.AboutDomainExceptionCode.*;
+import static kgu.developers.domain.about.exception.AboutDomainExceptionCode.CATEGORY_NOT_MATCH;
 
 import kgu.developers.common.exception.CustomException;
 

@@ -1,7 +1,7 @@
 package kgu.developers.api.config;
 
-import static java.lang.String.*;
-import static org.springframework.security.config.Elements.*;
+import static java.lang.String.format;
+import static org.springframework.security.config.Elements.JWT;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,6 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
-import kgu.developers.infra.AicsConfig;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

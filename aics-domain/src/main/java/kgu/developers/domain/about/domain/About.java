@@ -2,9 +2,14 @@ package kgu.developers.domain.about.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static kgu.developers.domain.about.domain.MainCategory.*;
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.SubCategory.*;
+import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
+import static kgu.developers.domain.about.domain.SubCategory.CLUB_INTRO;
+import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
+import static kgu.developers.domain.about.domain.SubCategory.EDU_ENVIRONMENT;
+import static kgu.developers.domain.about.domain.SubCategory.EDU_OBJECTIVES;
+import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
+import static kgu.developers.domain.about.domain.SubCategory.LEARNING_ACTIVITIES;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.EnumMap;

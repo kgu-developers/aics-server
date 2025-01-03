@@ -1,6 +1,6 @@
 package kgu.developers.domain.about.exception;
 
-import static kgu.developers.domain.about.exception.AboutDomainExceptionCode.*;
+import static kgu.developers.domain.about.exception.AboutDomainExceptionCode.ABOUT_NOT_FOUND;
 
 import kgu.developers.common.exception.CustomException;
 

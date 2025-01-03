@@ -1,6 +1,6 @@
 package kgu.developers.api.user.presentation;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +19,8 @@ import jakarta.validation.Valid;
 import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.api.user.presentation.request.UserCreateRequest;
 import kgu.developers.api.user.presentation.request.UserUpdateRequest;
-import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.api.user.presentation.response.UserPersistResponse;
+import kgu.developers.domain.user.application.response.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController

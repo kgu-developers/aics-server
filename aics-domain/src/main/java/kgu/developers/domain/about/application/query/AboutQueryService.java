@@ -1,6 +1,6 @@
 package kgu.developers.domain.about.application.query;
 
-import static kgu.developers.domain.about.domain.About.*;
+import static kgu.developers.domain.about.domain.About.categoryMatchCheck;
 
 import org.springframework.stereotype.Service;
 
