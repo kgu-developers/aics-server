@@ -1,8 +1,10 @@
 package kgu.developers.admin.file.presentation;
 
-import static kgu.developers.domain.file.domain.FileDomain.*;
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.*;
+import static kgu.developers.domain.file.domain.FileDomain.ABOUT;
+import static kgu.developers.domain.file.domain.FileDomain.CAROUSEL;
+import static kgu.developers.domain.file.domain.FileDomain.POST;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

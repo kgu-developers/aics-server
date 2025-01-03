@@ -1,6 +1,7 @@
 package kgu.developers.admin.post.presentation.request;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -23,7 +24,7 @@ public record PostRequest(
 			- 모집기간 : 2024.10.07(월)~10.15(화)
 			- 신청방법 :https://kebkyonggi.quv.kr/68
 			""",
-		requiredMode = Schema.RequiredMode.REQUIRED)
+		requiredMode = REQUIRED)
 	@NotBlank
 	String content,
 
