@@ -3,6 +3,7 @@ package kgu.developers.admin.club.presentation;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,19 @@ public class ClubAdminController {
 		@Valid @RequestBody ClubRequest request
 	) {
 		clubAdminFacade.updateClub(id, request);
+		return ResponseEntity.noContent().build();
+	}
+
+	@Operation(summary = "동아리 삭제 API", description = """
+			- Description : 이 API는 해당 동아리를 삭제합니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "204")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteClub(
+		@Parameter(description = "삭제할 동아리의 id", example = "1", required = true) @PathVariable @Positive Long id
+	) {
+		clubAdminFacade.deleteClub(id);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -28,4 +28,9 @@ public class ClubRepositoryImpl implements ClubRepository {
 	public Optional<Club> findById(Long id) {
 		return jpaClubRepository.findById(id);
 	}
+
+	@Override
+	public void deleteById(Long id) {
+		jpaClubRepository.deleteById(id);
+	}
 }

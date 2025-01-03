@@ -9,4 +9,6 @@ public interface ClubRepository {
 	List<Club> findAll();
 
 	Optional<Club> findById(Long id);
+
+	void deleteById(Long id);
 }

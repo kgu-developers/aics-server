@@ -21,4 +21,8 @@ public class ClubCommandService {
 		club.updateDescription(description);
 		club.updateSite(site);
 	}
+
+	public void deleteClubById(Long id) {
+		clubRepository.deleteById(id);
+	}
 }
