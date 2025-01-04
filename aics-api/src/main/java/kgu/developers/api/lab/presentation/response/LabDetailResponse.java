@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @Builder
 public record LabDetailResponse(
-	@Schema(description = "연구실 id", example = "1", requiredMode = REQUIRED)
+	@Schema(description = "연구실 이름", example = "보안 연구실", requiredMode = REQUIRED)
 	String name,
 
 	@Schema(description = "연구실 위치", example = "8502, 8503", requiredMode = REQUIRED)

@@ -1,0 +1,54 @@
+package kgu.developers.domain.club.domain;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import kgu.developers.common.domain.BaseTimeEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
+public class Club extends BaseTimeEntity {
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	private Long id;
+
+	@Column(nullable = false, unique = true, length = 16)
+	private String name;
+
+	@Column(nullable = false, length = 100)
+	private String description;
+
+	@Column(length = 50)
+	private String site;
+
+	public static Club create(String name, String description, String site) {
+		return Club.builder()
+			.name(name)
+			.description(description)
+			.site(site)
+			.build();
+	}
+
+	public void updateName(String name) {
+		this.name = name;
+	}
+
+	public void updateDescription(String description) {
+		this.description = description;
+	}
+
+	public void updateSite(String site) {
+		this.site = site;
+	}
+}
