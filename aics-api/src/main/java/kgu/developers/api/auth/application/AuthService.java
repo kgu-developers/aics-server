@@ -1,11 +1,5 @@
 package kgu.developers.api.auth.application;
 
-import java.time.Duration;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
@@ -17,6 +11,11 @@ import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
 
 @Service
 @Builder
@@ -35,8 +34,9 @@ public class AuthService {
 		User user = userQueryService.getUserById(userId);
 		user.isPasswordMatching(password, passwordEncoder);
 
-		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(1));
-		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(1));
+		String role = user.getRole().name();
+		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(1), role);
+		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(1), role);
 
 		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
 		return TokenResponse.of(accessToken, refreshToken);
@@ -50,8 +50,10 @@ public class AuthService {
 		refreshTokenRepository.delete(refreshTokenEntity);
 
 		String userId = refreshTokenEntity.getUserId();
-		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(1));
-		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(1));
+		User user = userQueryService.getUserById(userId);
+		String role = user.getRole().name();
+		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(1), role);
+		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(1), role);
 		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
 		return TokenResponse.of(accessToken, refreshToken);
 	}
