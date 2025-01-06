@@ -4,7 +4,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.user.domain.Major;
-import kgu.developers.domain.user.domain.Role;
+import kgu.developers.common.domain.BaseRole;
 import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 
@@ -20,7 +20,7 @@ public record UserDetailResponse(
 	String email,
 
 	@Schema(description = "구분", example = "학부생", requiredMode = REQUIRED)
-	Role role,
+	BaseRole role,
 
 	@Schema(description = "학과", example = "컴퓨터공학과", requiredMode = REQUIRED)
 	Major major,

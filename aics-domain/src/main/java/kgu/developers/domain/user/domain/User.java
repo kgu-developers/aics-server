@@ -11,10 +11,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import kgu.developers.common.domain.BaseRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Column;
@@ -59,7 +59,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	@Column(nullable = false)
 	@Enumerated(STRING)
-	private Role role;
+	private BaseRole role;
 
 	@Column(nullable = false)
 	@Enumerated(STRING)
@@ -78,7 +78,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.name(name)
 			.email(email)
 			.phone(phone)
-			.role(Role.USER)
+			.role(BaseRole.USER)
 			.major(major)
 			.build();
 	}
@@ -95,7 +95,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singletonList(new SimpleGrantedAuthority(Role.USER.name()));
+		return Collections.singletonList(new SimpleGrantedAuthority(BaseRole.USER.name()));
 	}
 
 	@Override

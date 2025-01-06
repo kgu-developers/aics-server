@@ -1,11 +1,11 @@
-package kgu.developers.domain.user.domain;
+package kgu.developers.common.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Role {
+public enum BaseRole {
 
 	USER("일반사용자"),
 	ADMIN("관리자"),
