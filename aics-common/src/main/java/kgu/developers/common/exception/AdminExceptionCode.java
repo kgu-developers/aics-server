@@ -1,8 +1,7 @@
-package kgu.developers.admin.exception;
+package kgu.developers.common.exception;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
-import kgu.developers.common.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

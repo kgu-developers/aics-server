@@ -1,17 +1,19 @@
 package kgu.developers.common.exception;
 
+import static kgu.developers.common.exception.AdminExceptionCode.NOT_ADMIN;
 import static kgu.developers.common.exception.GlobalExceptionCode.INVALID_INPUT;
 import static kgu.developers.common.exception.GlobalExceptionCode.SERVER_ERROR;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.method.ParameterValidationResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,14 +22,20 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	private final ApplicationEventPublisher eventPublisher;
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ExceptionResponse> handleAccessDeniedException() {
+		ExceptionResponse response = ExceptionResponse.from(NOT_ADMIN);
+		return ResponseEntity.status(FORBIDDEN).body(response);
+	}
 
 	@ExceptionHandler(CustomException.class)
 	protected ResponseEntity<ExceptionResponse> handleCustomException(CustomException exception) {
@@ -45,7 +53,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException exception,
-		HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+																			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 		String message = exception.getParameterValidationResults().stream()
 			.map(ParameterValidationResult::getResolvableErrors)
@@ -59,7 +67,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
-		HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+																  HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
 		String message = exception.getFieldErrors().stream()
 			.map(error -> error.getField() + ": " + error.getDefaultMessage())
@@ -71,9 +79,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException exception,
-		HttpHeaders headers,
-		HttpStatusCode status,
-		WebRequest request) {
+														HttpHeaders headers,
+														HttpStatusCode status,
+														WebRequest request) {
 		String message = String.format("Failed to convert '%s' with value: '%s'.",
 			exception.getPropertyName(),
 			exception.getValue());
