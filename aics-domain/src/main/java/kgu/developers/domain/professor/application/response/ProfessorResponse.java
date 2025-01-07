@@ -14,18 +14,29 @@ public record ProfessorResponse(
 	@Schema(description = "교수 이름", example = "이은정", requiredMode = REQUIRED)
 	String name,
 
+	@Schema(description = "직위", example = "조교수", requiredMode = REQUIRED)
+	String type,
+
 	@Schema(description = "연락처", example = "031-249-9671", requiredMode = REQUIRED)
 	String contact,
 
+	@Schema(description = "연락처", example = "031-249-9671", requiredMode = REQUIRED)
+	String officeLoc,
+
 	@Schema(description = "이메일", example = "ejlee@kyonggi.ac.kr", requiredMode = REQUIRED)
-	String email
+	String email,
+
+	@Schema(description = "이미지 URL", example = "https://image.com/professor/profile/image", requiredMode = REQUIRED)
+	String image
 ) {
 	public static ProfessorResponse from(Professor professor) {
 		return ProfessorResponse.builder()
 			.id(professor.getId())
 			.name(professor.getName())
+			.type(professor.getRole().getDescription())
 			.contact(professor.getContact())
 			.email(professor.getEmail())
+			.image(professor.getImage())
 			.build();
 	}
 }
