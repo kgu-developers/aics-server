@@ -30,7 +30,7 @@ public class Lab extends BaseTimeEntity {
 	private String name;
 
 	@Column(nullable = false, length = 10)
-	private String location;
+	private String loc;
 
 	@Column(nullable = false, length = 50)
 	private String site;
@@ -42,10 +42,10 @@ public class Lab extends BaseTimeEntity {
 	@JoinColumn(name = "file_id")
 	private FileEntity file;
 
-	public static Lab create(String name, String location, String site, String advisor) {
+	public static Lab create(String name, String loc, String site, String advisor) {
 		return Lab.builder()
 			.name(name)
-			.location(location)
+			.loc(loc)
 			.site(site)
 			.advisor(advisor)
 			.build();
@@ -55,8 +55,8 @@ public class Lab extends BaseTimeEntity {
 		this.name = name;
 	}
 
-	public void updateLocation(String location) {
-		this.location = location;
+	public void updateLoc(String loc) {
+		this.loc = loc;
 	}
 
 	public void updateSite(String site) {

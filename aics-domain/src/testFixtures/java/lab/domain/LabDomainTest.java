@@ -14,17 +14,17 @@ public class LabDomainTest {
 	public void createLab_Success() {
 		//given
 		String name = "Lab A";
-		String location = "8500";
+		String loc = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
 		String advisor = "박교수";
 
 		//when
-		Lab lab = Lab.create(name, location, site, advisor);
+		Lab lab = Lab.create(name, loc, site, advisor);
 
 		//then
 		assertNotNull(lab);
 		assertEquals(name, lab.getName());
-		assertEquals(location, lab.getLocation());
+		assertEquals(loc, lab.getLoc());
 		assertEquals(site, lab.getSite());
 	}
 
@@ -33,10 +33,10 @@ public class LabDomainTest {
 	public void updateName_Success() {
 		//given
 		String name = "Lab A";
-		String location = "8500";
+		String loc = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
 		String advisor = "박교수";
-		Lab lab = Lab.create(name, location, site, advisor);
+		Lab lab = Lab.create(name, loca, site, advisor);
 
 		String newName = "Updated Lab A";
 
@@ -52,18 +52,18 @@ public class LabDomainTest {
 	public void updateLoc_Success() {
 		//given
 		String name = "Lab A";
-		String location = "8500";
+		String loc = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
 		String advisor = "박교수";
-		Lab lab = Lab.create(name, location, site, advisor);
+		Lab lab = Lab.create(name, loc, site, advisor);
 
 		String newLoc = "8601";
 
 		//when
-		lab.updateLocation(newLoc);
+		lab.updateLoc(newLoc);
 
 		//then
-		assertEquals(newLoc, lab.getLocation());
+		assertEquals(newLoc, lab.getLoc());
 	}
 
 	@Test
@@ -71,10 +71,10 @@ public class LabDomainTest {
 	public void updateSite_Success() {
 		//given
 		String name = "Lab A";
-		String location = "8500";
+		String loc = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
 		String advisor = "박교수";
-		Lab lab = Lab.create(name, location, site, advisor);
+		Lab lab = Lab.create(name, loc, site, advisor);
 
 		String newSite = "http://new.kyonggi.ac.kr";
 
@@ -90,10 +90,10 @@ public class LabDomainTest {
 	public void updateAdvisor_Success() {
 		//given
 		String name = "Lab A";
-		String location = "8500";
+		String loc = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
 		String advisor = "박교수";
-		Lab lab = Lab.create(name, location, site, advisor);
+		Lab lab = Lab.create(name, loc, site, advisor);
 
 		String newAdvisor = "이교수";
 

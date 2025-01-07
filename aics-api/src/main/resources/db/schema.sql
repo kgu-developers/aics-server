@@ -24,7 +24,7 @@ CREATE TABLE lab
     name       VARCHAR(16)  NOT NULL,
     loc        VARCHAR(10)  NOT NULL,
     site       VARCHAR(50)  NOT NULL,
-    professor  VARCHAR(16)  NOT NULL,
+    advisor    VARCHAR(16)  NOT NULL,
     file_id    BIGINT UNIQUE,
     created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,

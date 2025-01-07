@@ -14,7 +14,7 @@ public record LabDetailResponse(
 	String name,
 
 	@Schema(description = "연구실 위치", example = "8502, 8503", requiredMode = REQUIRED)
-	String location,
+	String loc,
 
 	@Schema(description = "연구실 사이트", example = "http://ailab.kyonggi.ac.kr", requiredMode = REQUIRED)
 	String site,
@@ -31,7 +31,7 @@ public record LabDetailResponse(
 		FilePathResponse filePathResponse = FilePathResponse.from(lab.getFile());
 		return LabDetailResponse.builder()
 			.name(lab.getName())
-			.location(lab.getLocation())
+			.loc(lab.getLoc())
 			.site(lab.getSite())
 			.advisor(lab.getAdvisor())
 			.file(filePathResponse)

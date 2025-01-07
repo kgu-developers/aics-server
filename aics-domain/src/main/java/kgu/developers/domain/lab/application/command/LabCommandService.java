@@ -16,9 +16,9 @@ public class LabCommandService {
 		return labRepository.save(lab).getId();
 	}
 
-	public void updateLab(Lab lab, String name, String location, String site, String advisor) {
+	public void updateLab(Lab lab, String name, String loc, String site, String advisor) {
 		lab.updateName(name);
-		lab.updateLocation(location);
+		lab.updateLoc(loc);
 		lab.updateSite(site);
 		lab.updateAdvisor(advisor);
 	}

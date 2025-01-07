@@ -60,7 +60,7 @@ VALUES ('학과소개파일', '/files/about/dept_intro.pdf', 'pdf', '12345', CUR
        ('LAB J 로고 이미지', '/files/lab/LAB-J.png', 'png', '12354', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- lab
-INSERT INTO lab (name, location, site, professor, file_id, created_at, updated_at)
+INSERT INTO lab (name, loc, site, advisor, file_id, created_at, updated_at)
 VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr', '김교수', 11, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('Lab B', '8520', 'https://lab2.kyonggi.ac.kr', '이교수', 12, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('Lab C', '제2공학관 200', 'http://research.kyonggi.ac.kr', '박교수', 13, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
