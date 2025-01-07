@@ -2,6 +2,7 @@ package kgu.developers.admin.file.presentation;
 
 import static kgu.developers.domain.file.domain.FileDomain.ABOUT;
 import static kgu.developers.domain.file.domain.FileDomain.CAROUSEL;
+import static kgu.developers.domain.file.domain.FileDomain.LAB;
 import static kgu.developers.domain.file.domain.FileDomain.POST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
@@ -76,6 +77,21 @@ public class FileAdminController {
 		@Parameter(description = "캐러셀 ID", example = "1", required = true) @RequestParam @Positive Long carouselId
 	) {
 		FilePathResponse path = fileAdminFacade.saveFile(file, CAROUSEL, carouselId);
+		return ResponseEntity.status(CREATED).body(path);
+	}
+
+	@Operation(summary = "연구실 로고 이미지 업로드 API", description = """
+			- Description : 이 API는 연구실 로고 이미지를 업로드합니다. 리스폰스의 physicalPath를 받아서 사용하면 됩니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePathResponse.class)))
+	@PostMapping(value = "/lab", consumes = MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<FilePathResponse> labFileUpload(
+		@Parameter(description = "연구실 로고 이미지", content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE))
+		@RequestPart(value = "file") MultipartFile file,
+		@Parameter(description = "연구실 ID", example = "1", required = true) @RequestParam @Positive Long labId
+	) {
+		FilePathResponse path = fileAdminFacade.saveFile(file, LAB, labId);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 }
