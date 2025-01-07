@@ -16,8 +16,8 @@ public record ProfessorListResponse(
 			+ "\"id\": 1, "
 			+ "\"name\": \"이은정\", "
 			+ "\"type\": \"조교수\", "
-			+ "\"officeLoc\": \"8213호\", "
 			+ "\"contact\": \"031-249-9671\", "
+			+ "\"officeLoc\": \"8213호\", "
 			+ "\"email\": \"ejlee@kyonggi.ac.kr\", "
 			+ "\"image\": \"https://image.com/professor/profile/image\"}]",
 		requiredMode = REQUIRED)
