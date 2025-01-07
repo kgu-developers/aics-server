@@ -16,11 +16,11 @@ public class LabCommandService {
 		return labRepository.save(lab).getId();
 	}
 
-	public void updateLab(Lab lab, String name, String location, String site, String professor) {
+	public void updateLab(Lab lab, String name, String location, String site, String advisor) {
 		lab.updateName(name);
 		lab.updateLocation(location);
 		lab.updateSite(site);
-		lab.updateProfessor(professor);
+		lab.updateAdvisor(advisor);
 	}
 
 	public void deleteLabById(Long id) {

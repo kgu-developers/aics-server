@@ -36,18 +36,18 @@ public class Lab extends BaseTimeEntity {
 	private String site;
 
 	@Column(nullable = false, length = 16)
-	private String professor;
+	private String advisor;
 
 	@OneToOne
 	@JoinColumn(name = "file_id")
 	private FileEntity file;
 
-	public static Lab create(String name, String location, String site, String professor) {
+	public static Lab create(String name, String location, String site, String advisor) {
 		return Lab.builder()
 			.name(name)
 			.location(location)
 			.site(site)
-			.professor(professor)
+			.advisor(advisor)
 			.build();
 	}
 
@@ -63,7 +63,7 @@ public class Lab extends BaseTimeEntity {
 		this.site = site;
 	}
 
-	public void updateProfessor(String professor) {
-		this.professor = professor;
+	public void updateAdvisor(String advisor) {
+		this.advisor = advisor;
 	}
 }

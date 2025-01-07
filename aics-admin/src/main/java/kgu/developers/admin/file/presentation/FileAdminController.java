@@ -81,7 +81,7 @@ public class FileAdminController {
 	}
 
 	@Operation(summary = "연구실 로고 이미지 업로드 API", description = """
-			- Description : 이 API는 연구실 로고 이미지를 업로드합니다. 리스폰스의 physicalPath를 받아서 사용하면 됩니다.
+			- Description : 이 API는 연구실 로고 이미지를 업로드합니다. 한 로고 이미지에 한 개의 이미지만 업로드 가능합니다.
 			- Assignee : 박민준
 		""")
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = FilePathResponse.class)))
