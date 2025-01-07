@@ -42,12 +42,12 @@ VALUES ('202412346', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5O
         '김철수', 'kim@kyonggi.ac.kr', '010-8765-4321', 'CSE', 'SUPER', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- professor
-INSERT INTO professor (name, contact, email, role, created_at, updated_at)
-VALUES ('김교수', '010-1111-2222', 'kim@kyonggi.ac.kr', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('이조교', '010-3333-4444', 'lee@kgu.ac.kr', 'ASSISTANT', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('박교수', '010-5555-6666', 'park@kyonggi.ac.kr', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('최교수', '010-7777-8888', 'choi@kyonggi.ac.kr', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('강교수', '010-9999-0000', 'kang@kyonggi.ac.kr', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO professor (name, contact, email, image, role, created_at, updated_at)
+VALUES ('김교수', '010-1111-2222', 'kim@kyonggi.ac.kr', 'https://image.com/professor/profile/image1', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('이조교', '010-3333-4444', 'lee@kgu.ac.kr', 'https://image.com/professor/profile/image2', 'ASSISTANT', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('박교수', '010-5555-6666', 'park@kyonggi.ac.kr', 'https://image.com/professor/profile/image3', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('최교수', '010-7777-8888', 'choi@kyonggi.ac.kr', 'https://image.com/professor/profile/none', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('강교수', '010-9999-0000', 'kang@kyonggi.ac.kr', 'https://image.com/professor/profile/none', 'PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- fileEntity
 INSERT INTO file_entity (logical_name, physical_path, extension, file_size, created_at, updated_at)
