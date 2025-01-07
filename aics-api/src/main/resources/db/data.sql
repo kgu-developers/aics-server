@@ -8,19 +8,6 @@ VALUES ('학과 소개 내용입니다.', NULL, 'DEPT_INTRO', 'DEPT_INTRO', CURR
        ('졸업 요건 설명입니다.', NULL, 'DEPT_INTRO', 'CURRICULUM', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('학과 소식지 발행 안내입니다.', NULL, 'DEPT_INTRO', 'DEPT_INTRO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
--- lab
-INSERT INTO lab (name, loc, site, created_at, updated_at)
-VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab B', '8520', 'https://lab2.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab C', '제2공학관 200', 'http://research.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab D', '8600', 'http://lab4.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab E', '8700', 'https://lab5.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab F', '8800', 'http://lab6.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab G', '8900', 'https://lab7.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab H', '9000', 'http://lab8.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab I', '9100', 'https://lab9.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('Lab J', '9200', 'http://lab10.kyonggi.ac.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
 -- club
 INSERT INTO club (name, description, site, created_at, updated_at)
 VALUES ('SSF', '웹 개발 동아리 SSF입니다.', 'https://www.ssf.or.kr', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -60,7 +47,30 @@ VALUES ('학과소개파일', '/files/about/dept_intro.pdf', 'pdf', '12345', CUR
        ('캠퍼스 전경 이미지', '/files/carousel/campus_view.jpg', 'jpg', '78901', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('졸업식 이미지', '/files/carousel/graduation_ceremony.jpg', 'jpg', '89012', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('취업 설명회 자료', '/files/employment/info.pdf', 'pdf', '54321', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('연구 프로젝트 소개', '/files/research/project_intro.pdf', 'pdf', '65432', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+       ('연구 프로젝트 소개', '/files/research/project_intro.pdf', 'pdf', '65432', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB A 로고 이미지', '/files/lab/LAB-A.png', 'png', '12345', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB B 로고 이미지', '/files/lab/LAB-B.jpg', 'jpg', '12346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB C 로고 이미지', '/files/lab/LAB-C.jpg', 'jpg', '12347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB D 로고 이미지', '/files/lab/LAB-D.png', 'png', '12348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB E 로고 이미지', '/files/lab/LAB-E.png', 'png', '12349', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB F 로고 이미지', '/files/lab/LAB-F.png', 'png', '12350', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB G 로고 이미지', '/files/lab/LAB-G.jpg', 'jpg', '12351', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB H 로고 이미지', '/files/lab/LAB-H.jpg', 'jpg', '12352', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB I 로고 이미지', '/files/lab/LAB-I.png', 'png', '12353', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('LAB J 로고 이미지', '/files/lab/LAB-J.png', 'png', '12354', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- lab
+INSERT INTO lab (name, location, site, professor, file_id, created_at, updated_at)
+VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr', '김교수', 11, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab B', '8520', 'https://lab2.kyonggi.ac.kr', '이교수', 12, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab C', '제2공학관 200', 'http://research.kyonggi.ac.kr', '박교수', 13, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab D', '8600', 'http://lab4.kyonggi.ac.kr', '최교수', 14, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab E', '8700', 'https://lab5.kyonggi.ac.kr', '조교수', 15, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab F', '8800', 'http://lab6.kyonggi.ac.kr', '정교수', 16, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab G', '8900', 'https://lab7.kyonggi.ac.kr', '윤교수', 17, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab H', '9000', 'http://lab8.kyonggi.ac.kr', '전교수', 18, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab I', '9100', 'https://lab9.kyonggi.ac.kr', '주교수', 19, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('Lab J', '9200', 'http://lab10.kyonggi.ac.kr', '성교수', 20, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- carousel
 INSERT INTO carousel (file_id, text, link, created_at, updated_at)

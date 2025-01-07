@@ -20,7 +20,7 @@ public record LabDetailResponse(
 	@Schema(description = "연구실 담당교수", example = "박민준", requiredMode = REQUIRED)
 	String professor,
 
-	@Schema(description = "연구실 로고", example = "http://cs.kyonggi.ac.kr:8080/img/laboratory/20180209100533-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5.png", requiredMode = REQUIRED)
+	@Schema(description = "연구실 로고", example = "http://cs.kyonggi.ac.kr:8080/img/lab/20180209100533-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5.png", requiredMode = REQUIRED)
 	String img
 ) {
 	public static LabDetailResponse from(Lab lab) {
@@ -29,7 +29,7 @@ public record LabDetailResponse(
 			.location(lab.getLocation())
 			.site(lab.getSite())
 			.professor(lab.getProfessor())
-			.img(lab.getImg().getPhysicalPath())
+			.img(lab.getFile().getPhysicalPath())
 			.build();
 	}
 }
