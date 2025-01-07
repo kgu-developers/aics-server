@@ -27,7 +27,7 @@ public record ProfessorResponse(
 	String email,
 
 	@Schema(description = "이미지 URL", example = "https://image.com/professor/profile/image", requiredMode = REQUIRED)
-	String image
+	String img
 ) {
 	public static ProfessorResponse from(Professor professor) {
 		return ProfessorResponse.builder()
@@ -37,7 +37,7 @@ public record ProfessorResponse(
 			.contact(professor.getContact())
 			.officeLoc(professor.getOfficeLoc())
 			.email(professor.getEmail())
-			.image(professor.getImage())
+			.img(professor.getImg())
 			.build();
 	}
 }

@@ -31,7 +31,7 @@ public record ProfessorRequest(
 	@Schema(description = "이미지 URL", example = "https://image.com/professor/profile/image", requiredMode = REQUIRED)
 	@NotNull
 	@Pattern(regexp = "^https?://.*$", message = "올바른 URL 형식이 아닙니다.")
-	String image,
+	String img,
 
 	@Schema(description = "연구실 위치", example = "8213호", requiredMode = REQUIRED)
 	@NotNull

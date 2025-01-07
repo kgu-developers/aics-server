@@ -42,7 +42,7 @@ VALUES ('202412346', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5O
         '김철수', 'kim@kyonggi.ac.kr', '010-8765-4321', 'CSE', 'SUPER', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- professor
-INSERT INTO professor (name, contact, email, image, office_loc ,role, created_at, updated_at)
+INSERT INTO professor (name, contact, email, img, office_loc ,role, created_at, updated_at)
 VALUES ('김교수', '010-1111-2222', 'kim@kyonggi.ac.kr', 'https://image.com/professor/profile/image1',
         '8501호','PROFESSOR', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('이조교', '010-3333-4444', 'lee@kgu.ac.kr', 'https://image.com/professor/profile/image2',

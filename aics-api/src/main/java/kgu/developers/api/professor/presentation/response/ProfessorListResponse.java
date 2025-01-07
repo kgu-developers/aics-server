@@ -19,7 +19,7 @@ public record ProfessorListResponse(
 			+ "\"contact\": \"031-249-9671\", "
 			+ "\"officeLoc\": \"8213호\", "
 			+ "\"email\": \"ejlee@kyonggi.ac.kr\", "
-			+ "\"image\": \"https://image.com/professor/profile/image\"}]",
+			+ "\"img\": \"https://image.com/professor/profile/image\"}]",
 		requiredMode = REQUIRED)
 	List<ProfessorResponse> contents
 ) {
