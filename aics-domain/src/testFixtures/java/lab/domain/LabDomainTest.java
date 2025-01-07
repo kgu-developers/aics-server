@@ -3,9 +3,10 @@ package lab.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import kgu.developers.domain.lab.domain.Lab;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import kgu.developers.domain.lab.domain.Lab;
 
 public class LabDomainTest {
 	@Test
@@ -13,28 +14,29 @@ public class LabDomainTest {
 	public void createLab_Success() {
 		//given
 		String name = "Lab A";
-		String loc = "8500";
+		String location = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
+		String professor = "박교수";
 
 		//when
-		Lab lab = Lab.create(name, loc, site);
+		Lab lab = Lab.create(name, location, site, professor);
 
 		//then
 		assertNotNull(lab);
 		assertEquals(name, lab.getName());
-		assertEquals(loc, lab.getLoc());
+		assertEquals(location, lab.getLocation());
 		assertEquals(site, lab.getSite());
 	}
-
 
 	@Test
 	@DisplayName("LAB 얀구실명 수정할 수 있다")
 	public void updateName_Success() {
 		//given
 		String name = "Lab A";
-		String loc = "8500";
+		String location = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
-		Lab lab = Lab.create(name, loc, site);
+		String professor = "박교수";
+		Lab lab = Lab.create(name, location, site, professor);
 
 		String newName = "Updated Lab A";
 
@@ -50,17 +52,18 @@ public class LabDomainTest {
 	public void updateLoc_Success() {
 		//given
 		String name = "Lab A";
-		String loc = "8500";
+		String location = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
-		Lab lab = Lab.create(name, loc, site);
+		String professor = "박교수";
+		Lab lab = Lab.create(name, location, site, professor);
 
 		String newLoc = "8601";
 
 		//when
-		lab.updateLoc(newLoc);
+		lab.updateLocation(newLoc);
 
 		//then
-		assertEquals(newLoc, lab.getLoc());
+		assertEquals(newLoc, lab.getLocation());
 	}
 
 	@Test
@@ -68,9 +71,10 @@ public class LabDomainTest {
 	public void updateSite_Success() {
 		//given
 		String name = "Lab A";
-		String loc = "8500";
+		String location = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
-		Lab lab = Lab.create(name, loc, site);
+		String professor = "박교수";
+		Lab lab = Lab.create(name, location, site, professor);
 
 		String newSite = "http://new.kyonggi.ac.kr";
 
@@ -79,6 +83,25 @@ public class LabDomainTest {
 
 		//then
 		assertEquals(newSite, lab.getSite());
+	}
+
+	@Test
+	@DisplayName("LAB 교수를 수정할 수 있다")
+	public void updateProfessor_Success() {
+		//given
+		String name = "Lab A";
+		String location = "8500";
+		String site = "http://lab1.kyonggi.ac.kr";
+		String professor = "박교수";
+		Lab lab = Lab.create(name, location, site, professor);
+
+		String newProfessor = "이교수";
+
+		//when
+		lab.updateProfessor(newProfessor);
+
+		//then
+		assertEquals(newProfessor, lab.getProfessor());
 	}
 
 }
