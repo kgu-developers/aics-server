@@ -15,7 +15,7 @@ public record LabListResponse(
 			+ "\"name\": \"인공지능연구실\", "
 			+ "\"loc\": \"8502, 8503\", "
 			+ "\"site\": \"http://ailab.kyonggi.ac.kr\", "
-			+ "\"professor\": \"박민준\", \", "
+			+ "\"professor\": \"박민준\", "
 			+ "\"img\": \"/files/lab/LAB-A.png\"}]",
 		requiredMode = REQUIRED)
 	List<LabDetailResponse> contents
