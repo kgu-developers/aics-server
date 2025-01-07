@@ -30,7 +30,11 @@ public record ProfessorRequest(
 
 	@Schema(description = "이미지 URL", example = "https://image.com/professor/profile/image", requiredMode = REQUIRED)
 	@NotNull
-	String image
+	String image,
+
+	@Schema(description = "연구실 위치", example = "8213호", requiredMode = REQUIRED)
+	@NotNull
+	String officeLoc
 ) {
 }
 

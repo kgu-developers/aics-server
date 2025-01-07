@@ -20,7 +20,7 @@ public record ProfessorResponse(
 	@Schema(description = "연락처", example = "031-249-9671", requiredMode = REQUIRED)
 	String contact,
 
-	@Schema(description = "연락처", example = "031-249-9671", requiredMode = REQUIRED)
+	@Schema(description = "연구실 위치", example = "8213호", requiredMode = REQUIRED)
 	String officeLoc,
 
 	@Schema(description = "이메일", example = "ejlee@kyonggi.ac.kr", requiredMode = REQUIRED)
@@ -35,6 +35,7 @@ public record ProfessorResponse(
 			.name(professor.getName())
 			.type(professor.getRole().getDescription())
 			.contact(professor.getContact())
+			.officeLoc(professor.getOfficeLoc())
 			.email(professor.getEmail())
 			.image(professor.getImage())
 			.build();

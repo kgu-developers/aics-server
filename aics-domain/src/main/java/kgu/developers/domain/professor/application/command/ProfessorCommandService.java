@@ -12,17 +12,19 @@ import lombok.RequiredArgsConstructor;
 public class ProfessorCommandService {
 	private final ProfessorRepository professorRepository;
 
-	public Long createProfessor(String name, Role role, String contact, String email, String image) {
-		Professor professor = Professor.create(name, role, contact, email, image);
+	public Long createProfessor(String name, Role role, String contact, String email, String image, String officeLoc) {
+		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
 		return professorRepository.save(professor).getId();
 	}
 
-	public void updateProfessor(Professor professor, String name, String contact, String email, Role role, String image) {
+	public void updateProfessor(Professor professor, String name, Role role, String contact,
+								String email, String image, String officeLoc) {
 		professor.updateName(name);
 		professor.updateContact(contact);
 		professor.updateEmail(email);
 		professor.updateRole(role);
 		professor.updateImage(image);
+		professor.updateOfficeLoc(officeLoc);
 	}
 
 	public void deleteProfessor(Professor professor) {
