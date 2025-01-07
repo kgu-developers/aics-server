@@ -18,11 +18,16 @@ public record LabRequest(
 	@Schema(description = "연구실 위치", example = "8502, 8503", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 10)
-	String loc,
+	String location,
 
 	@Schema(description = "연구실 홈페이지", example = "http://ailab.kyonggi.ac.kr", requiredMode = Schema.RequiredMode.REQUIRED)
 	@NotBlank
 	@Pattern(regexp = "^(http|https)://[a-zA-Z0-9.-]+\\.kyonggi\\.ac\\.kr$", message = "URL은 http:// 또는 https://으로 시작하고 kyonggi.ac.kr 도메인으로 끝나야 합니다.")
-	String site
+	String site,
+
+	@Schema(description = "연구실 담당교수", example = "박민준", requiredMode = REQUIRED)
+	@NotBlank
+	@Size(max = 15)
+	String professor
 ) {
 }

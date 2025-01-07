@@ -11,15 +11,16 @@ import lombok.RequiredArgsConstructor;
 public class LabCommandService {
 	private final LabRepository labRepository;
 
-	public Long createLab(String name, String loc, String site) {
-		Lab lab = Lab.create(name, loc, site);
+	public Long createLab(String name, String location, String site, String professor) {
+		Lab lab = Lab.create(name, location, site, professor);
 		return labRepository.save(lab).getId();
 	}
 
-	public void updateLab(Lab lab, String name, String loc, String site) {
+	public void updateLab(Lab lab, String name, String location, String site, String professor) {
 		lab.updateName(name);
-		lab.updateLoc(loc);
+		lab.updateLocation(location);
 		lab.updateSite(site);
+		lab.updateProfessor(professor);
 	}
 
 	public void deleteLabById(Long id) {

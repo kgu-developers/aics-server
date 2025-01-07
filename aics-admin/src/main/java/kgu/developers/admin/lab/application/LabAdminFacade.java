@@ -18,13 +18,13 @@ public class LabAdminFacade {
 	private final LabQueryService labQueryService;
 
 	public LabPersistResponse createLab(LabRequest request) {
-		Long id = labCommandService.createLab(request.name(), request.loc(), request.site());
+		Long id = labCommandService.createLab(request.name(), request.location(), request.site(), request.professor());
 		return LabPersistResponse.of(id);
 	}
 
 	public void updateLab(Long id, LabRequest request) {
 		Lab lab = labQueryService.getById(id);
-		labCommandService.updateLab(lab, request.name(), request.loc(), request.site());
+		labCommandService.updateLab(lab, request.name(), request.location(), request.site(), request.professor());
 	}
 
 	public void deleteLab(Long id) {
