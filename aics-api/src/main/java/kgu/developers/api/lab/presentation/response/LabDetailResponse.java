@@ -12,16 +12,24 @@ public record LabDetailResponse(
 	String name,
 
 	@Schema(description = "연구실 위치", example = "8502, 8503", requiredMode = REQUIRED)
-	String loc,
+	String location,
 
 	@Schema(description = "연구실 사이트", example = "http://ailab.kyonggi.ac.kr", requiredMode = REQUIRED)
-	String site
+	String site,
+
+	@Schema(description = "연구실 담당교수", example = "박민준", requiredMode = REQUIRED)
+	String professor,
+
+	@Schema(description = "연구실 로고", example = "http://cs.kyonggi.ac.kr:8080/img/laboratory/20180209100533-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5.png", requiredMode = REQUIRED)
+	String img
 ) {
 	public static LabDetailResponse from(Lab lab) {
 		return LabDetailResponse.builder()
 			.name(lab.getName())
-			.loc(lab.getLoc())
+			.location(lab.getLocation())
 			.site(lab.getSite())
+			.professor(lab.getProfessor())
+			.img(lab.getImg().getPhysicalPath())
 			.build();
 	}
 }
