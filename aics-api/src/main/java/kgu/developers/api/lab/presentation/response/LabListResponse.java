@@ -1,5 +1,7 @@
 package kgu.developers.api.lab.presentation.response;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +17,7 @@ public record LabListResponse(
 			+ "\"site\": \"http://ailab.kyonggi.ac.kr\", "
 			+ "\"professor\": \"박민준\", \", "
 			+ "\"img\": \"/files/lab/LAB-A.png\"}]",
-		requiredMode = Schema.RequiredMode.REQUIRED)
+		requiredMode = REQUIRED)
 	List<LabDetailResponse> contents
 ) {
 	public static LabListResponse from(List<Lab> labs) {
