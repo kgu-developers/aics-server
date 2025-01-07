@@ -19,14 +19,14 @@ public class ProfessorAdminFacade {
 
 	public ProfessorPersistResponse createProfessor(ProfessorRequest request) {
 		Long id = professorCommandService.createProfessor(request.name(), request.role(), request.contact(),
-			request.email());
+			request.email(), request.image());
 		return ProfessorPersistResponse.of(id);
 	}
 
 	public void updateProfessor(Long id, ProfessorRequest request) {
 		Professor professor = professorQueryService.getProfessorById(id);
 		professorCommandService.updateProfessor(professor, request.name(), request.contact(), request.email(),
-			request.role());
+			request.role(), request.image());
 	}
 
 	public void deleteProfessor(Long id) {

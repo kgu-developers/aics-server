@@ -21,9 +21,10 @@ public class ProfessorDomainTest {
 		Role role = PROFESSOR;
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
+		String image = "https://image.com/professor/profile/image";
 
 		// when
-		Professor professor = Professor.create(name, role, contact, email);
+		Professor professor = Professor.create(name, role, contact, email, image);
 
 		// then
 		assertNotNull(professor);
@@ -41,7 +42,8 @@ public class ProfessorDomainTest {
 		Role role = PROFESSOR;
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
-		Professor professor = Professor.create(name, role, contact, email);
+		String image = "https://image.com/professor/profile/image";
+		Professor professor = Professor.create(name, role, contact, email, image);
 
 		// when
 		String newName = "이신행";
@@ -59,7 +61,8 @@ public class ProfessorDomainTest {
 		Role role = PROFESSOR;
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
-		Professor professor = Professor.create(name, role, contact, email);
+		String image = "https://image.com/professor/profile/image";
+		Professor professor = Professor.create(name, role, contact, email, image);
 
 		// when
 		Role newRole = ASSISTANT;
@@ -77,7 +80,8 @@ public class ProfessorDomainTest {
 		Role role = PROFESSOR;
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
-		Professor professor = Professor.create(name, role, contact, email);
+		String image = "https://image.com/professor/profile/image";
+		Professor professor = Professor.create(name, role, contact, email, image);
 
 		// when
 		String newContact = "010-1234-8765";
@@ -95,7 +99,8 @@ public class ProfessorDomainTest {
 		Role role = PROFESSOR;
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
-		Professor professor = Professor.create(name, role, contact, email);
+		String image = "https://image.com/professor/profile/image";
+		Professor professor = Professor.create(name, role, contact, email, image);
 
 		// when
 		String newEmail = "new-email@kyonggi.ac.kr";
