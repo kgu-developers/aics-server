@@ -41,7 +41,7 @@ public class Professor extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String image;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String officeLoc;
 
 	public static Professor create(String name, Role role, String contact,

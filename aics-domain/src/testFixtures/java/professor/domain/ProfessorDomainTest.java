@@ -22,9 +22,10 @@ public class ProfessorDomainTest {
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
 		String image = "https://image.com/professor/profile/image";
+		String officeLoc = "8000호";
 
 		// when
-		Professor professor = Professor.create(name, role, contact, email, image);
+		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
 
 		// then
 		assertNotNull(professor);
@@ -43,7 +44,9 @@ public class ProfessorDomainTest {
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
 		String image = "https://image.com/professor/profile/image";
-		Professor professor = Professor.create(name, role, contact, email, image);
+		String officeLoc = "8000호";
+
+		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
 
 		// when
 		String newName = "이신행";
@@ -62,7 +65,8 @@ public class ProfessorDomainTest {
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
 		String image = "https://image.com/professor/profile/image";
-		Professor professor = Professor.create(name, role, contact, email, image);
+		String officeLoc = "8000호";
+		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
 
 		// when
 		Role newRole = ASSISTANT;
@@ -81,7 +85,8 @@ public class ProfessorDomainTest {
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
 		String image = "https://image.com/professor/profile/image";
-		Professor professor = Professor.create(name, role, contact, email, image);
+		String officeLoc = "8000호";
+		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
 
 		// when
 		String newContact = "010-1234-8765";
@@ -100,7 +105,8 @@ public class ProfessorDomainTest {
 		String contact = "010-1234-5678";
 		String email = "alswns11346@kgu.ac.kr";
 		String image = "https://image.com/professor/profile/image";
-		Professor professor = Professor.create(name, role, contact, email, image);
+		String officeLoc = "8000호";
+		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
 
 		// when
 		String newEmail = "new-email@kyonggi.ac.kr";
