@@ -28,13 +28,13 @@ public record LabDetailResponse(
 	FilePathResponse file
 ) {
 	public static LabDetailResponse from(Lab lab) {
-		FilePathResponse filePathResponse = FilePathResponse.from(lab.getFile());
 		return LabDetailResponse.builder()
 			.name(lab.getName())
 			.loc(lab.getLoc())
 			.site(lab.getSite())
 			.advisor(lab.getAdvisor())
-			.file(filePathResponse)
+			.file(lab.getFile() != null ?
+				FilePathResponse.from(lab.getFile()) : null)
 			.build();
 	}
 }
