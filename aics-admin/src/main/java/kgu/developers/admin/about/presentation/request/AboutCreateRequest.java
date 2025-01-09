@@ -10,7 +10,7 @@ import kgu.developers.domain.about.domain.SubCategory;
 import lombok.Builder;
 
 @Builder
-public record AboutRequest(
+public record AboutCreateRequest(
 	@Schema(description = "메인 카테고리", example = "EDU_ACTIVITIES", requiredMode = REQUIRED)
 	@NotNull
 	MainCategory main,
