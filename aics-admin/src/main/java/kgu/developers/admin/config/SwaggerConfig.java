@@ -1,4 +1,4 @@
-package kgu.developers.api.config;
+package kgu.developers.admin.config;
 
 import static java.lang.String.format;
 import static org.springframework.security.config.Elements.JWT;
