@@ -3,6 +3,7 @@ package kgu.developers.api.config;
 import static java.lang.String.format;
 import static org.springframework.security.config.Elements.JWT;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,7 @@ public class SwaggerConfig {
 	}
 
 	private String getDescription() {
+		String activeProfile = getActiveProfile();
 		return format("""
                 AI 컴퓨터공학부 커뮤니티, AICS-HOME API 입니다.\n\n
                 로그인 API를 통해 액세스 토큰을 발급 받고 헤더에 값을 넣어주세요 . \n\n
@@ -103,12 +105,18 @@ public class SwaggerConfig {
                     <li>AICS-HOME ADMIN API : <a href="%s" target="_blank">%s</a></li>
                 </ul>
                 """,
-			getAdminSwaggerByProfile("local"), getAdminSwaggerByProfile("local")
+			getAdminSwaggerByProfile(activeProfile), getAdminSwaggerByProfile(activeProfile)
 		);
 	}
 
 	private String getAdminSwaggerByProfile(String profile) {
 		String url = (String) profileServerConfig.get(profile).get("url");
 		return url + ":" + adminApiPort + "/swagger-ui/index.html";
+	}
+
+	private String getActiveProfile() {
+		return Arrays.stream(environment.getActiveProfiles())
+			.findFirst()
+			.orElse("local");
 	}
 }
