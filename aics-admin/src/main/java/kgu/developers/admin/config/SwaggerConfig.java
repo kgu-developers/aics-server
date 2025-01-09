@@ -29,6 +29,9 @@ public class SwaggerConfig {
 
 	private final Environment environment;
 
+	@Value("${profiles.current-ip}")
+	private String currentIp;
+
 	@Value("${profiles.api-port}")
 	private int apiPort;
 
@@ -40,6 +43,7 @@ public class SwaggerConfig {
 	@PostConstruct
 	public void initializeProfileServerConfig() {
 		profileServerConfig.put("local", Map.of("url", "http://localhost", "port", adminApiPort));
+		profileServerConfig.put("dev", Map.of("url", "http://" + currentIp, "port", adminApiPort));
 	}
 
 	@Bean
