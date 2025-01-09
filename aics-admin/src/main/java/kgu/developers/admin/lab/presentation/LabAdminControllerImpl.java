@@ -38,7 +38,7 @@ public class LabAdminControllerImpl implements LabAdminController{
 
 	@Override
 	@PatchMapping("/{id}")
-	public ResponseEntity<Void> updateComment(
+	public ResponseEntity<Void> updateLab(
 		@Parameter(description = "수정할 연구실 id", example = "1", required = true) @PathVariable @Positive Long id,
 		@Valid @RequestBody LabRequest request
 	) {
