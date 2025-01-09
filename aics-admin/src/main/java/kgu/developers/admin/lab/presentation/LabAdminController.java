@@ -54,7 +54,7 @@ public interface LabAdminController {
 			- Assignee : 박민준
 		""")
 	@ApiResponse(responseCode = "204")
-	ResponseEntity<Void> deleteComment(
+	ResponseEntity<Void> deleteLab(
 		@Parameter(
 			description = "연구실 ID는 URL 경로 변수 입니다.",
 			example = "1",
