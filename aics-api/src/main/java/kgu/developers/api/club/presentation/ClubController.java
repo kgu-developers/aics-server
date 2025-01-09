@@ -14,21 +14,15 @@ import kgu.developers.api.club.application.ClubFacade;
 import kgu.developers.api.club.presentation.response.ClubListResponse;
 import lombok.RequiredArgsConstructor;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/clubs")
 @Tag(name = "Club", description = "동아리 API")
-public class ClubController {
-	private final ClubFacade clubFacade;
+public interface ClubController {
 
 	@Operation(summary = "동아리 조회 API", description = """
 			- Description : 이 API는 동아리를 조회합니다.
 			- Assignee : 박민준
 		""")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ClubListResponse.class)))
-	@GetMapping
-	public ResponseEntity<ClubListResponse> getClubs() {
-		ClubListResponse response = clubFacade.getClubs();
-		return ResponseEntity.ok(response);
-	}
+	@ApiResponse(
+		responseCode = "200",
+		content = @Content(schema = @Schema(implementation = ClubListResponse.class)))
+	ResponseEntity<ClubListResponse> getClubs();
 }

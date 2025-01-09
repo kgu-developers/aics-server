@@ -91,28 +91,28 @@ VALUES (4, '최신 연구 성과를 확인하세요.', 'https://kyonggi.ac.kr/re
 INSERT INTO post (title, content, category, file_id, author_id, created_at, updated_at, views, is_pinned)
 VALUES ('2024학년도 학과 소개 일정 안내',
         '2024학년도 학과 소개가 아래와 같은 일정으로 진행됩니다. 참여를 원하시는 분들은 해당 일정을 참고하여 신청해 주시기 바랍니다.',
-        'DEPT_INFO', 1, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NOTIFICATION', 1, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('동계 방학 중 실습실 사용 안내',
         '동계 방학 기간 동안 실습실 사용 신청을 받고 있습니다. 자세한 신청 방법과 이용 규정을 확인해 주세요.',
-        'LESSON_INFO', NULL, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NOTIFICATION', NULL, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('취업 설명회 개최 안내',
         '졸업 예정자 및 재학생을 대상으로 취업 설명회를 개최합니다. 기업 소개, 취업 전략 및 질의응답 시간이 준비되어 있으니 많은 참여 바랍니다.',
-        'EMPLOY_INFO', 9, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NOTIFICATION', 9, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('학과 뉴스 - 최신 연구 성과 발표',
         '우리 학과에서는 최근 AI 기반 의료 데이터 분석 연구 성과를 발표하였습니다. 자세한 내용은 연구 성과 페이지를 참고하세요.',
-        'DEPT_NEWS', 4, '202412347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NEWS', 4, '202412347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('졸업생 수상 소식',
         '우리 학과 졸업생이 국내 최고 권위의 학회에서 우수 논문상을 수상하였습니다. 졸업생들의 뛰어난 활약을 소개합니다.',
-        'AWARDED', 8, '202412347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NEWS', 8, '202412347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('동아리 활동 현황',
         '동아리 활동 사진과 관련 자료를 확인하세요. 동아리 가입 및 활동 절차에 대해 설명합니다.',
-        'DEPT_NEWS', 6, '202412348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NOTIFICATION', 6, '202412348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('캠퍼스 전경과 주요 시설 안내',
         '캠퍼스 전경 및 주요 시설에 대한 소개입니다. 사진과 함께 확인해보세요.',
-        'DEPT_NEWS', 7, '202412348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
+        'NOTIFICATION', 7, '202412348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false),
        ('연구 프로젝트 발표',
         'AI 기반 연구 프로젝트에 대한 발표 자료입니다. 관심 있는 분들은 파일을 다운로드하세요.',
-        'GOOD_WORKS', 10, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false);
+        'NEWS', 10, '202412346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, false);
 
 -- comment
 INSERT INTO comment (content, created_at, updated_at, post_id, author_id)

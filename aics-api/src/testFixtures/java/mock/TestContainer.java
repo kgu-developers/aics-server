@@ -16,7 +16,7 @@ public class TestContainer {
 	public final UserRepository userRepository;
 	// public final UserFacade userFacade;
 	public final AuthService authService;
-	public final AuthController authController;
+	// public final AuthController authController;
 	// public final PostFacade postFacade;
 	public final PostRepository postRepository;
 	public final RefreshTokenRepository refreshTokenRepository;
@@ -38,9 +38,9 @@ public class TestContainer {
 			)
 			.refreshTokenRepository(this.refreshTokenRepository)
 			.build();
-		this.authController = AuthController.builder()
-			.authService(this.authService)
-			.build();
+		// this.authController = AuthController.builder()
+		// 	.authService(this.authService)
+		// 	.build();
 
 		this.postRepository = new FakePostRepository();
 		// this.postFacade = new PostFacade(postRepository, userFacade);
