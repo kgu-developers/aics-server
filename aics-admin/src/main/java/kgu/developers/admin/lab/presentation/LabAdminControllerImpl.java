@@ -29,7 +29,7 @@ public class LabAdminControllerImpl implements LabAdminController{
 
 	@Override
 	@PostMapping
-	public ResponseEntity<LabPersistResponse> createComment(
+	public ResponseEntity<LabPersistResponse> createLab(
 		@Valid @RequestBody LabRequest request
 	) {
 		LabPersistResponse response = labAdminFacade.createLab(request);
@@ -48,7 +48,7 @@ public class LabAdminControllerImpl implements LabAdminController{
 
 	@Override
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteComment(
+	public ResponseEntity<Void> deleteLab(
 		@Parameter(description = "삭제할 연구실의 id", example = "1", required = true) @PathVariable @Positive Long id
 	) {
 		labAdminFacade.deleteLab(id);

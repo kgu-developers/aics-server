@@ -25,7 +25,7 @@ public interface LabAdminController {
 	@ApiResponse(
 		responseCode = "201",
 		content = @Content(schema = @Schema(implementation = LabPersistResponse.class)))
-	ResponseEntity<LabPersistResponse> createComment(
+	ResponseEntity<LabPersistResponse> createLab(
 		@Parameter(
 			description = "연구실 생성 request 객체 입니다.",
 			required = true
@@ -37,7 +37,7 @@ public interface LabAdminController {
 			- Assignee : 박민준
 		""")
 	@ApiResponse(responseCode = "204")
-	ResponseEntity<Void> updateComment(
+	ResponseEntity<Void> updateLab(
 		@Parameter(
 			description = "연구실 ID는 URL 경로 변수 입니다.",
 			example = "1",
