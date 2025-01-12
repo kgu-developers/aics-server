@@ -11,4 +11,21 @@ dependencies {
     implementation project(':aics-common')
     implementation project(':aics-infra')
     implementation project(':aics-global-utils')
+
+    testFixturesImplementation project(':aics-domain')
+    testFixturesImplementation project(':aics-common')
+    testFixturesImplementation project(':aics-infra')
+    testFixturesImplementation project(':aics-global-utils')
+
+    testFixturesImplementation testFixtures(project(':aics-domain'))
+    testFixturesImplementation testFixtures(project(':aics-global-utils'))
+}
+apply from: "../gradle/jacoco.gradle"
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }
