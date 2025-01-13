@@ -1,0 +1,34 @@
+package kgu.developers.admin.carousel.presentation;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import kgu.developers.admin.carousel.application.CarouselAdminFacade;
+import kgu.developers.admin.carousel.presentation.request.CarouselRequest;
+import kgu.developers.admin.carousel.presentation.response.CarouselPersistResponse;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/carousels")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public class CarouselAdminControllerImpl implements CarouselAdminController {
+	private final CarouselAdminFacade carouselAdminFacade;
+
+	@Override
+	@PostMapping
+	public ResponseEntity<CarouselPersistResponse> createCarousel(
+		@Positive @RequestParam Long fileId,
+		@Valid @RequestBody(required = false) CarouselRequest request
+	) {
+		CarouselPersistResponse response = carouselAdminFacade.createCarousel(fileId, request);
+		return ResponseEntity.ok(response);
+	}
+}

@@ -1,4 +1,4 @@
-package kgu.developers.domain.Carousel.domain;
+package kgu.developers.domain.carousel.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -35,4 +35,12 @@ public class Carousel extends BaseTimeEntity {
 	@OneToOne
 	@JoinColumn(name = "file_id", nullable = false)
 	private FileEntity file;
+
+	public static Carousel create(String text, String link, FileEntity file) {
+		return Carousel.builder()
+			.text(text)
+			.link(link)
+			.file(file)
+			.build();
+	}
 }
