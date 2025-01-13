@@ -21,8 +21,9 @@ public class FakeLabRepository implements LabRepository {
 		}
 		if (lab.getName() == null
 			|| lab.getLoc() == null
-			|| lab.getSite() == null) {
-			throw new IllegalArgumentException("이름, 위치, 사이트는 필수 입력값입니다.");
+			|| lab.getSite() == null
+			|| lab.getAdvisor() == null) {
+			throw new IllegalArgumentException("이름, 위치, 사이트, 지도교수는 필수 입력값입니다.");
 		}
 
 		Lab newLab = Lab.builder()
@@ -30,6 +31,7 @@ public class FakeLabRepository implements LabRepository {
 			.name(lab.getName())
 			.loc(lab.getLoc())
 			.site(lab.getSite())
+			.advisor(lab.getAdvisor())
 			.build();
 
 		data.add(newLab);

@@ -25,12 +25,11 @@ import mock.TestContainer;
 
 public class CommentQueryServiceTest {
 	private CommentQueryService commentQueryService;
-	private FakeCommentRepository fakeCommentRepository;
 
 	@BeforeEach
 	public void init() {
 		TestContainer testContainer = new TestContainer();
-		fakeCommentRepository = new FakeCommentRepository();
+		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
 
 		this.commentQueryService = new CommentQueryService(fakeCommentRepository);
 
