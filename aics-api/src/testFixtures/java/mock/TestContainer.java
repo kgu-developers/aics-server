@@ -1,15 +1,14 @@
 package mock;
 
-import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.auth.application.AuthService;
-import kgu.developers.api.auth.presentation.AuthController;
-import kgu.developers.api.post.application.PostFacade;
-import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
+import kgu.developers.domain.club.application.query.ClubQueryService;
+import kgu.developers.domain.club.domain.ClubRepository;
 import kgu.developers.domain.post.domain.PostRepository;
+import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.domain.UserRepository;
 
 public class TestContainer {
@@ -21,14 +20,17 @@ public class TestContainer {
 	public final PostRepository postRepository;
 	public final RefreshTokenRepository refreshTokenRepository;
 
+	public final ClubRepository clubRepository;
+	public final ClubQueryService clubQueryService;
+
 	public TestContainer() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		this.refreshTokenRepository = new FakeRefreshTokenRepository();
 		this.userRepository = new FakeUserRepository();
 		// this.userFacade = UserFacade.builder()
-			// .userRepository(this.userRepository)
-			// .bCryptPasswordEncoder(bCryptPasswordEncoder)
-			// .build();
+		// .userRepository(this.userRepository)
+		// .bCryptPasswordEncoder(bCryptPasswordEncoder)
+		// .build();
 		this.authService = AuthService.builder()
 			// .userFacade(this.userFacade)
 			.passwordEncoder(bCryptPasswordEncoder)
@@ -44,5 +46,7 @@ public class TestContainer {
 
 		this.postRepository = new FakePostRepository();
 		// this.postFacade = new PostFacade(postRepository, userFacade);
+		this.clubRepository = new FakeClubRepository();
+		this.clubQueryService = new ClubQueryService(clubRepository);
 	}
 }
