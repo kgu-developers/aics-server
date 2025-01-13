@@ -12,24 +12,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.api.about.application.AboutFacade;
-import kgu.developers.api.about.presentation.Exception.AboutNotFoundException;
-import kgu.developers.api.about.presentation.Exception.CategoryNotMatchException;
-import kgu.developers.api.about.presentation.request.AboutRequest;
-import kgu.developers.api.about.presentation.request.AboutUpdateRequest;
-import kgu.developers.api.about.presentation.response.AboutPersistResponse;
 import kgu.developers.api.about.presentation.response.AboutResponse;
+import kgu.developers.domain.about.application.query.AboutQueryService;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.exception.AboutNotFoundException;
+import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.FakeAboutRepository;
-/*
+
 public class AboutFacadeTest {
 	private AboutFacade aboutFacade;
 
 	@BeforeEach
 	public void init() {
 		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
-		this.aboutFacade = new AboutFacade(fakeAboutRepository);
+		AboutQueryService aboutQueryService = new AboutQueryService(fakeAboutRepository);
+		this.aboutFacade = new AboutFacade(aboutQueryService);
 
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
@@ -37,55 +36,6 @@ public class AboutFacadeTest {
 			.detailCategory("initDetail")
 			.content("initContent")
 			.build());
-	}
-
-	@Test
-	@DisplayName("createAbout은 about을 생성할 수 있다.")
-	public void createAbout_Success() {
-		// given
-		MainCategory main = DEPT_INTRO;
-		SubCategory sub = HISTORY;
-		String detail = "detail";
-		String content = "content";
-
-		AboutRequest request = AboutRequest.builder()
-			.main(main)
-			.sub(sub)
-			.detail(detail)
-			.content(content)
-			.build();
-
-		// when
-		AboutPersistResponse response = aboutFacade.createAbout(request);
-
-		// then
-		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub, detail);
-
-		assertEquals(response.id(), 2L);
-		assertEquals(aboutResponse.content(), content);
-	}
-
-	@Test
-	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생 한다.")
-	public void createAbout_CategoryNotMatch_ThrowsException() {
-		// given
-		MainCategory main = DEPT_INTRO;
-		SubCategory sub = CURRICULUM;
-		String detail = "detail";
-		String content = "content";
-
-		AboutRequest request = AboutRequest.builder()
-			.main(main)
-			.sub(sub)
-			.detail(detail)
-			.content(content)
-			.build();
-
-		// when
-		// then
-		assertThatThrownBy(() -> {
-			aboutFacade.createAbout(request);
-		}).isInstanceOf(CategoryNotMatchException.class);
 	}
 
 	@Test
@@ -136,41 +86,4 @@ public class AboutFacadeTest {
 			aboutFacade.getAbout(main, sub, detail);
 		}).isInstanceOf(AboutNotFoundException.class);
 	}
-
-	@Test
-	@DisplayName("updateAbout은 About의 content를 수정할 수 있다.")
-	public void updateAbout_Success() {
-		// given
-		Long id = 1L;
-
-		AboutUpdateRequest request = AboutUpdateRequest.builder()
-			.content("updateContent")
-			.build();
-
-		// when
-		aboutFacade.updateAbout(id, request);
-
-		// then
-		AboutResponse response = aboutFacade.getAbout(EDU_ACTIVITIES, CURRICULUM, "initDetail");
-
-		assertEquals(response.content(), "updateContent");
-	}
-
-	@Test
-	@DisplayName("updateAbout은 존재하지 않는 id로 수정 요청 시 AboutNotFoundException을 발생 한다.")
-	public void updateAbout_AboutNotFound_ThrowsException() {
-		// given
-		Long id = 0L;
-
-		AboutUpdateRequest request = AboutUpdateRequest.builder()
-			.content("updateContent")
-			.build();
-
-		// when
-		// then
-		assertThatThrownBy(() -> {
-			aboutFacade.updateAbout(id, request);
-		}).isInstanceOf(AboutNotFoundException.class);
-	}
 }
-*/
