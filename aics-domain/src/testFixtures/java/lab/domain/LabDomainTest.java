@@ -36,7 +36,7 @@ public class LabDomainTest {
 		String loc = "8500";
 		String site = "http://lab1.kyonggi.ac.kr";
 		String advisor = "박교수";
-		Lab lab = Lab.create(name, loca, site, advisor);
+		Lab lab = Lab.create(name, loc, site, advisor);
 
 		String newName = "Updated Lab A";
 
