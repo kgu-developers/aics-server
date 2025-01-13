@@ -1,7 +1,6 @@
 package comment.application;
 
 import static kgu.developers.domain.post.domain.Category.NEWS;
-import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,16 +32,7 @@ public class CommentQueryServiceTest {
 
 		this.commentQueryService = new CommentQueryService(fakeCommentRepository);
 
-		testContainer.userRepository.save(User.builder()
-			.id("202411345")
-			.password("password1234")
-			.name("홍길동")
-			.email("test@kyonggi.ac.kr")
-			.phone("010-1234-5678")
-			.major(CSE)
-			.build());
-
-		User author = testContainer.userQueryService.getUserById("202411345");
+		User author = testContainer.userQueryService.me();
 
 		Post post = testContainer.postRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1", NEWS, author
