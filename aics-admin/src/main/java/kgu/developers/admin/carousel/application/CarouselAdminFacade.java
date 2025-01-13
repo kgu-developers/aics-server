@@ -18,4 +18,8 @@ public class CarouselAdminFacade {
 		Long id = carouselCommandService.createCarousel(fileId, request.text(), request.link());
 		return CarouselPersistResponse.of(id);
 	}
+
+	public void deleteCarousel(Long id) {
+		carouselCommandService.deleteCarouselById(id);
+	}
 }

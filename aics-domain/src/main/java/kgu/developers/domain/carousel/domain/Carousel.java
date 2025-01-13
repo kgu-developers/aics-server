@@ -1,5 +1,6 @@
 package kgu.developers.domain.carousel.domain;
 
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -32,7 +33,7 @@ public class Carousel extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String link;
 
-	@OneToOne
+	@OneToOne(cascade = REMOVE)
 	@JoinColumn(name = "file_id", nullable = false)
 	private FileEntity file;
 

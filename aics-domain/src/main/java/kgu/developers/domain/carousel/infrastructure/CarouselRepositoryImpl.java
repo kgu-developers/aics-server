@@ -15,4 +15,9 @@ public class CarouselRepositoryImpl implements CarouselRepository {
 	public Carousel save(Carousel carousel) {
 		return jpaCarouselRepository.save(carousel);
 	}
+
+	@Override
+	public void deleteById(Long id) {
+		jpaCarouselRepository.deleteById(id);
+	}
 }

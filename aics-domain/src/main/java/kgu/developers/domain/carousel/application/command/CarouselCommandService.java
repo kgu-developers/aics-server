@@ -19,4 +19,8 @@ public class CarouselCommandService {
 		Carousel carousel = Carousel.create(text, link, file);
 		return carouselRepository.save(carousel).getId();
 	}
+
+	public void deleteCarouselById(Long id) {
+		carouselRepository.deleteById(id);
+	}
 }
