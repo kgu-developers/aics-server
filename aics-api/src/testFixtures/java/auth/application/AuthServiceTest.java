@@ -1,26 +1,28 @@
 package auth.application;
 
+import static kgu.developers.common.domain.BaseRole.USER;
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.auth.application.AuthService;
 import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
 import kgu.developers.api.auth.presentation.response.TokenResponse;
-import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
-import kgu.developers.domain.user.domain.Major;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
 import mock.FakeRefreshTokenRepository;
 import mock.FakeUserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class AuthServiceTest {
 	private AuthService authService;
@@ -30,14 +32,10 @@ public class AuthServiceTest {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
+		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
 		this.authService = AuthService.builder()
-			.userFacade(
-				UserFacade.builder()
-					.userRepository(fakeUserRepository)
-					.bCryptPasswordEncoder(bCryptPasswordEncoder)
-					.build()
-			)
+			.userQueryService(userQueryService)
 			.passwordEncoder(bCryptPasswordEncoder)
 			.tokenProvider(
 				TokenProvider.builder()
@@ -53,7 +51,8 @@ public class AuthServiceTest {
 			.name("홍길동")
 			.email("test@kyonggi.ac.kr")
 			.phone("010-1234-5678")
-			.major(Major.CSE)
+			.major(CSE)
+			.role(USER)
 			.build());
 	}
 
