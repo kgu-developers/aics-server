@@ -17,7 +17,8 @@ public class UserCommandService {
 
 	public String createUser(String userId, String password, String name, String email, String phone, Major major) {
 		validateDuplicateId(userId);
-		User user = User.create(userId, password, name, email, phone, major, bCryptPasswordEncoder);
+		String encodedPassword = bCryptPasswordEncoder.encode(password);
+		User user = User.create(userId, encodedPassword, name, email, phone, major);
 		return userRepository.save(user).getId();
 	}
 
@@ -27,6 +28,7 @@ public class UserCommandService {
 	}
 
 	private void validateDuplicateId(String id) {
-		if (userRepository.existsById(id)) throw new UserIdDuplicateException();
+		if (userRepository.existsById(id))
+			throw new UserIdDuplicateException();
 	}
 }

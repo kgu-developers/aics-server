@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import kgu.developers.common.domain.BaseRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +22,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import kgu.developers.common.domain.BaseRole;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;
@@ -69,12 +69,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-	public static User create(String id, String password, String name, String email, String phone, Major major,
-		PasswordEncoder passwordEncoder) {
+	public static User create(String id, String password, String name, String email, String phone, Major major) {
 		validateDept(id, email);
 		return User.builder()
 			.id(id)
-			.password(passwordEncoder.encode(password))
+			.password(password)
 			.name(name)
 			.email(email)
 			.phone(phone)
