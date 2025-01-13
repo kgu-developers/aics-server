@@ -1,12 +1,5 @@
 package post.application;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import kgu.developers.api.post.presentation.request.PostRequest;
-import kgu.developers.api.post.presentation.response.PostPersistResponse;
 /*
 public class PostServiceTest {
 	private PostService postService;

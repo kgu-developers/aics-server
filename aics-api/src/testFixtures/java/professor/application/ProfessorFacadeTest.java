@@ -1,22 +1,5 @@
 package professor.application;
 
-import static kgu.developers.domain.professor.domain.Role.ASSISTANT;
-import static kgu.developers.domain.professor.domain.Role.PROFESSOR;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import kgu.developers.api.professor.application.ProfessorFacade;
-import kgu.developers.domain.professor.exception.ProfessorNotFoundException;
-import kgu.developers.api.professor.presentation.request.ProfessorRequest;
-import kgu.developers.api.professor.presentation.response.ProfessorPersistResponse;
-import kgu.developers.domain.professor.domain.Professor;
-import mock.FakeProfessorRepository;
 /*
 public class ProfessorFacadeTest {
 	private ProfessorFacade professorFacade;

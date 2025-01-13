@@ -1,22 +1,5 @@
 package lab.application;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import kgu.developers.api.lab.application.LabFacade;
-import kgu.developers.domain.lab.exception.LabNotFoundException;
-import kgu.developers.api.lab.presentation.request.LabRequest;
-import kgu.developers.api.lab.presentation.response.LabDetailResponse;
-import kgu.developers.api.lab.presentation.response.LabListResponse;
-import kgu.developers.api.lab.presentation.response.LabPersistResponse;
-import kgu.developers.domain.lab.domain.Lab;
-import mock.FakeLabRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
 /*
 public class LabServiceTest {
 	private LabFacade labFacade;
