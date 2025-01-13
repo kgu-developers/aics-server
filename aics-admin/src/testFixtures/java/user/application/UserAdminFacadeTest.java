@@ -1,13 +1,10 @@
 package user.application;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import kgu.developers.admin.user.application.UserAdminFacade;
 import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
-import kgu.developers.domain.user.domain.UserRepository;
 import mock.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,14 +15,14 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import static kgu.developers.domain.user.domain.Major.CSE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserAdminFacadeTest {
 	private UserAdminFacade userAdminFacade;
-	private UserRepository fakeUserRepository;
 
 	@BeforeEach
 	public void init() {
-		this.fakeUserRepository = new FakeUserRepository();
+		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 		this.userAdminFacade = new UserAdminFacade(userQueryService);
 
