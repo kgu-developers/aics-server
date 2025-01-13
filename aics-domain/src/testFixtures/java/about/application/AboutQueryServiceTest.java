@@ -21,11 +21,10 @@ import mock.FakeAboutRepository;
 
 public class AboutQueryServiceTest {
 	private AboutQueryService aboutQueryService;
-	private FakeAboutRepository fakeAboutRepository;
 
 	@BeforeEach
 	public void init() {
-		fakeAboutRepository = new FakeAboutRepository();
+		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
 		aboutQueryService = new AboutQueryService(fakeAboutRepository);
 
 		fakeAboutRepository.save(
