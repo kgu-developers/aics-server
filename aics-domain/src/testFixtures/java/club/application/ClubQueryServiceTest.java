@@ -48,4 +48,17 @@ public class ClubQueryServiceTest {
 		assertEquals("Club a", result.get(0).getName());
 		assertEquals("Club b", result.get(1).getName());
 	}
+
+	@Test
+	@DisplayName("getById는 해당 id의 동아리를 반환한다")
+	public void getById_Success() {
+		// when
+		Club result = clubQueryService.getById(1L);
+
+		// then
+		assertEquals("Club a", result.getName());
+		assertEquals("a 동아리입니다.", result.getDescription());
+		assertEquals("http://club-a.kyonggi.ac.kr", result.getSite());
+
+	}
 }
