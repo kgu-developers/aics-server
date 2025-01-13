@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.application.query.AboutQueryService;
@@ -26,6 +27,7 @@ import kgu.developers.domain.professor.application.command.ProfessorCommandServi
 import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.domain.ProfessorRepository;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
+import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
@@ -45,6 +47,7 @@ public class TestContainer {
 
 	public final UserRepository userRepository;
 	public final UserQueryService userQueryService;
+	public final UserCommandService userCommandService;
 
 	public final RefreshTokenRepository refreshTokenRepository;
 
@@ -77,6 +80,7 @@ public class TestContainer {
 
 		this.userRepository = new FakeUserRepository();
 		this.userQueryService = new UserQueryService(userRepository);
+		this.userCommandService = new UserCommandService(new BCryptPasswordEncoder(), userRepository);
 		userRepository.save(User.builder()
 			.id("202411345")
 			.password("password1234")
