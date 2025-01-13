@@ -16,10 +16,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.domain.comment.application.query.CommentQueryService;
 import kgu.developers.domain.comment.domain.Comment;
+import kgu.developers.domain.comment.domain.CommentRepository;
 import kgu.developers.domain.comment.exception.CommentNotFoundException;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
-import mock.FakeCommentRepository;
 import mock.TestContainer;
 
 public class CommentQueryServiceTest {
@@ -28,9 +28,9 @@ public class CommentQueryServiceTest {
 	@BeforeEach
 	public void init() {
 		TestContainer testContainer = new TestContainer();
-		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
+		CommentRepository commentRepository = testContainer.commentRepository;
 
-		this.commentQueryService = new CommentQueryService(fakeCommentRepository);
+		this.commentQueryService = testContainer.commentQueryService;
 
 		User author = testContainer.userQueryService.me();
 
@@ -38,7 +38,7 @@ public class CommentQueryServiceTest {
 			"테스트용 제목1", "테스트용 내용1", NEWS, author
 		));
 
-		Comment delete = fakeCommentRepository.save(Comment.builder()
+		Comment delete = commentRepository.save(Comment.builder()
 			.author(testContainer.userQueryService.getUserById("202411345"))
 			.content("deleted")
 			.post(post)
@@ -46,7 +46,7 @@ public class CommentQueryServiceTest {
 		);
 		delete.delete();
 
-		fakeCommentRepository.save(Comment.builder()
+		commentRepository.save(Comment.builder()
 			.author(testContainer.userQueryService.getUserById("202411345"))
 			.content("get")
 			.post(post)

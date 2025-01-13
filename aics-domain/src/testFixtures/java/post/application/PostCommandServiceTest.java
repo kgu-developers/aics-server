@@ -24,8 +24,8 @@ public class PostCommandServiceTest {
 	public void init() {
 		TestContainer testContainer = new TestContainer();
 		postRepository = testContainer.postRepository;
-		postCommandService = new PostCommandService(testContainer.userQueryService, postRepository);
-
+		postCommandService = testContainer.postCommandService;
+		
 		User author = testContainer.userQueryService.me();
 
 		postRepository.save(Post.create(

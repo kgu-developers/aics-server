@@ -7,8 +7,18 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import kgu.developers.domain.about.application.command.AboutCommandService;
+import kgu.developers.domain.about.application.query.AboutQueryService;
+import kgu.developers.domain.about.domain.AboutRepository;
+import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.ClubRepository;
+import kgu.developers.domain.comment.application.command.CommentCommandService;
+import kgu.developers.domain.comment.application.query.CommentQueryService;
+import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.lab.application.command.LabCommandService;
+import kgu.developers.domain.lab.application.query.LabQueryService;
+import kgu.developers.domain.lab.domain.LabRepository;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.domain.PostRepository;
@@ -21,13 +31,22 @@ import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
 
 public class TestContainer {
+	public final AboutRepository aboutRepository;
+	public final AboutCommandService aboutCommandService;
+	public final AboutQueryService aboutQueryService;
+
+	public final ClubRepository clubRepository;
+	public final ClubQueryService clubQueryService;
+	public final ClubCommandService clubCommandService;
+
+	public final CommentRepository commentRepository;
+	public final CommentQueryService commentQueryService;
+	public final CommentCommandService commentCommandService;
+
 	public final UserRepository userRepository;
 	public final UserQueryService userQueryService;
 
 	public final RefreshTokenRepository refreshTokenRepository;
-
-	public final ClubRepository clubRepository;
-	public final ClubQueryService clubQueryService;
 
 	public final PostQueryService postQueryService;
 	public final PostCommandService postCommandService;
@@ -37,7 +56,19 @@ public class TestContainer {
 	public final ProfessorQueryService professorQueryService;
 	public final ProfessorCommandService professorCommandService;
 
+	public final LabRepository labRepository;
+	public final LabQueryService labQueryService;
+	public final LabCommandService labCommandService;
+
 	public TestContainer() {
+		this.aboutRepository = new FakeAboutRepository();
+		this.aboutQueryService = new AboutQueryService(aboutRepository);
+		this.aboutCommandService = new AboutCommandService(aboutRepository);
+
+		this.clubRepository = new FakeClubRepository();
+		this.clubQueryService = new ClubQueryService(clubRepository);
+		this.clubCommandService = new ClubCommandService(clubRepository);
+
 		this.professorRepository = new FakeProfessorRepository();
 		this.professorQueryService = new ProfessorQueryService(professorRepository);
 		this.professorCommandService = new ProfessorCommandService(professorRepository);
@@ -65,7 +96,12 @@ public class TestContainer {
 		this.postQueryService = new PostQueryService(postRepository);
 		this.postCommandService = new PostCommandService(userQueryService, postRepository);
 
-		this.clubRepository = new FakeClubRepository();
-		this.clubQueryService = new ClubQueryService(clubRepository);
+		this.commentRepository = new FakeCommentRepository();
+		this.commentQueryService = new CommentQueryService(commentRepository);
+		this.commentCommandService = new CommentCommandService(postQueryService, userQueryService, commentRepository);
+
+		this.labRepository = new FakeLabRepository();
+		this.labQueryService = new LabQueryService(labRepository);
+		this.labCommandService = new LabCommandService(labRepository);
 	}
 }

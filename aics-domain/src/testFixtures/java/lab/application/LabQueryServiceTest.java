@@ -12,17 +12,17 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
 import kgu.developers.domain.lab.exception.LabNotFoundException;
-import mock.FakeLabRepository;
+import mock.TestContainer;
 
 public class LabQueryServiceTest {
 	private LabQueryService labQueryService;
 
 	@BeforeEach
 	public void init() {
-		FakeLabRepository fakeLabRepository = new FakeLabRepository();
-		this.labQueryService = new LabQueryService(fakeLabRepository);
+		TestContainer testContainer = new TestContainer();
+		this.labQueryService = testContainer.labQueryService;
 
-		fakeLabRepository.save(Lab.builder()
+		testContainer.labRepository.save(Lab.builder()
 			.name("Lab A")
 			.loc("8500")
 			.site("http://lab1.kyonggi.ac.kr")
@@ -30,7 +30,7 @@ public class LabQueryServiceTest {
 			.build()
 		);
 
-		fakeLabRepository.save(Lab.builder()
+		testContainer.labRepository.save(Lab.builder()
 			.name("Lab B")
 			.loc("8520")
 			.site("https://lab2.kyonggi.ac.kr")

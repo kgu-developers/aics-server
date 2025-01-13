@@ -17,17 +17,17 @@ import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
-import mock.FakeAboutRepository;
+import mock.TestContainer;
 
 public class AboutQueryServiceTest {
 	private AboutQueryService aboutQueryService;
 
 	@BeforeEach
 	public void init() {
-		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
-		aboutQueryService = new AboutQueryService(fakeAboutRepository);
+		TestContainer testContainer = new TestContainer();
+		aboutQueryService = testContainer.aboutQueryService;
 
-		fakeAboutRepository.save(
+		testContainer.aboutRepository.save(
 			About.builder()
 				.mainCategory(DEPT_INTRO)
 				.subCategory(HISTORY)
@@ -36,7 +36,7 @@ public class AboutQueryServiceTest {
 				.build()
 		);
 
-		fakeAboutRepository.save(About.builder()
+		testContainer.aboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
 			.subCategory(CURRICULUM)
 			.detailCategory("eduDetail")

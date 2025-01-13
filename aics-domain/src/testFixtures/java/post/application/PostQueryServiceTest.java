@@ -28,7 +28,7 @@ public class PostQueryServiceTest {
 	public void init() {
 		TestContainer testContainer = new TestContainer();
 		postRepository = testContainer.postRepository;
-		postQueryService = new PostQueryService(postRepository);
+		postQueryService = testContainer.postQueryService;
 
 		User author = testContainer.userQueryService.me();
 

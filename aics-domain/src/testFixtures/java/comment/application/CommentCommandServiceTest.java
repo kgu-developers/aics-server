@@ -15,22 +15,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.domain.comment.application.command.CommentCommandService;
 import kgu.developers.domain.comment.domain.Comment;
+import kgu.developers.domain.comment.domain.CommentRepository;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
-import mock.FakeCommentRepository;
 import mock.TestContainer;
 
 public class CommentCommandServiceTest {
 	private CommentCommandService commentCommandService;
-	private FakeCommentRepository fakeCommentRepository;
+	private CommentRepository commentRepository;
 
 	@BeforeEach
 	public void init() {
 		TestContainer testContainer = new TestContainer();
-		fakeCommentRepository = new FakeCommentRepository();
-
-		this.commentCommandService = new CommentCommandService(testContainer.postQueryService,
-			testContainer.userQueryService, fakeCommentRepository);
+		commentRepository = testContainer.commentRepository;
+		commentCommandService = testContainer.commentCommandService;
 
 		testContainer.userRepository.save(User.builder()
 			.id("202411345")
@@ -47,7 +45,7 @@ public class CommentCommandServiceTest {
 			"테스트용 제목1", "테스트용 내용1", NEWS, author
 		));
 
-		fakeCommentRepository.save(Comment.builder()
+		commentRepository.save(Comment.builder()
 			.author(testContainer.userQueryService.getUserById("202411345"))
 			.content("get")
 			.post(post)
@@ -72,7 +70,7 @@ public class CommentCommandServiceTest {
 		Long commentId = commentCommandService.createComment(content, postId);
 
 		// then
-		Comment comment = fakeCommentRepository.findById(commentId).orElse(null);
+		Comment comment = commentRepository.findById(commentId).orElse(null);
 		assertEquals(comment.getId(), 2L);
 		assertEquals(comment.getContent(), "content");
 	}
@@ -81,7 +79,7 @@ public class CommentCommandServiceTest {
 	@DisplayName("updateComment는 댓글을 수정할 수 있다.")
 	public void updateComment_Success() {
 		// given
-		Comment comment = fakeCommentRepository.findById(1L).orElse(null);
+		Comment comment = commentRepository.findById(1L).orElse(null);
 		String content = "content";
 
 		// when
@@ -95,7 +93,7 @@ public class CommentCommandServiceTest {
 	@DisplayName("deleteComment는 댓글을 삭제할 수 있다.")
 	public void deleteComment_Success() {
 		// given
-		Comment comment = fakeCommentRepository.findById(1L).orElse(null);
+		Comment comment = commentRepository.findById(1L).orElse(null);
 
 		// when
 		commentCommandService.deleteComment(comment);

@@ -8,18 +8,20 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.domain.Club;
-import mock.FakeClubRepository;
+import kgu.developers.domain.club.domain.ClubRepository;
+import mock.TestContainer;
 
 public class ClubCommandServiceTest {
 	private ClubCommandService clubCommandService;
-	private FakeClubRepository fakeClubRepository;
+	private ClubRepository clubRepository;
 
 	@BeforeEach
 	public void init() {
-		fakeClubRepository = new FakeClubRepository();
-		clubCommandService = new ClubCommandService(fakeClubRepository);
+		TestContainer testContainer = new TestContainer();
+		clubRepository = testContainer.clubRepository;
+		clubCommandService = testContainer.clubCommandService;
 
-		fakeClubRepository.save(
+		clubRepository.save(
 			Club.builder()
 				.name("Club a")
 				.description("a 동아리입니다.")
@@ -27,7 +29,7 @@ public class ClubCommandServiceTest {
 				.build()
 		);
 
-		fakeClubRepository.save(
+		clubRepository.save(
 			Club.builder()
 				.name("Club b")
 				.description("b 동아리입니다.")
@@ -48,7 +50,7 @@ public class ClubCommandServiceTest {
 		Long id = clubCommandService.createClub(name, description, site);
 
 		//then
-		Club club = fakeClubRepository.findById(id).orElseThrow();
+		Club club = clubRepository.findById(id).orElseThrow();
 		assertEquals(id, 3L);
 		assertEquals(name, club.getName());
 		assertEquals(description, club.getDescription());
@@ -59,7 +61,7 @@ public class ClubCommandServiceTest {
 	@DisplayName("updateClub은 Club 객체를 수정한다.")
 	public void updateClub_Success() {
 		//when
-		Club club = fakeClubRepository.findById(2L).orElseThrow();
+		Club club = clubRepository.findById(2L).orElseThrow();
 		String newName = "b";
 		String newDescription = "b 동아리";
 		String newSite = "http://club-b.kyonggi.ac.kr";

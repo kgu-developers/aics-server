@@ -13,7 +13,7 @@ import kgu.developers.domain.professor.application.command.ProfessorCommandServi
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.ProfessorRepository;
 import kgu.developers.domain.professor.domain.Role;
-import mock.FakeProfessorRepository;
+import mock.TestContainer;
 
 public class ProfessorCommandServiceTest {
 	private ProfessorCommandService professorCommandService;
@@ -21,8 +21,9 @@ public class ProfessorCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-		professorRepository = new FakeProfessorRepository();
-		professorCommandService = new ProfessorCommandService(professorRepository);
+		TestContainer testContainer = new TestContainer();
+		professorRepository = testContainer.professorRepository;
+		professorCommandService = testContainer.professorCommandService;
 
 		professorRepository.save(Professor.builder()
 			.email("alswns11346@kyonggi.ac.kr")
