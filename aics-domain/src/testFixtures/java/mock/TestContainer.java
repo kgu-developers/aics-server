@@ -12,6 +12,9 @@ import kgu.developers.domain.club.domain.ClubRepository;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.domain.PostRepository;
+import kgu.developers.domain.professor.application.command.ProfessorCommandService;
+import kgu.developers.domain.professor.application.query.ProfessorQueryService;
+import kgu.developers.domain.professor.domain.ProfessorRepository;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
@@ -30,7 +33,15 @@ public class TestContainer {
 	public final PostCommandService postCommandService;
 	public final PostRepository postRepository;
 
+	public final ProfessorRepository professorRepository;
+	public final ProfessorQueryService professorQueryService;
+	public final ProfessorCommandService professorCommandService;
+
 	public TestContainer() {
+		this.professorRepository = new FakeProfessorRepository();
+		this.professorQueryService = new ProfessorQueryService(professorRepository);
+		this.professorCommandService = new ProfessorCommandService(professorRepository);
+
 		this.refreshTokenRepository = new FakeRefreshTokenRepository();
 
 		this.userRepository = new FakeUserRepository();

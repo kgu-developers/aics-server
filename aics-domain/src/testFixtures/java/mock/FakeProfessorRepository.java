@@ -23,6 +23,8 @@ public class FakeProfessorRepository implements ProfessorRepository {
 			.role(professor.getRole())
 			.contact(professor.getContact())
 			.email(professor.getEmail())
+			.officeLoc(professor.getOfficeLoc())
+			.img(professor.getImg())
 			.build();
 
 		data.add(newProfessor);
