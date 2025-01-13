@@ -2,27 +2,25 @@ package club.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.api.club.application.ClubFacade;
-import kgu.developers.api.club.presentation.response.ClubListResponse;
+import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
-import mock.TestContainer;
+import mock.FakeClubRepository;
 
-public class ClubFacadeTest {
-	private ClubFacade clubFacade;
+public class ClubQueryServiceTest {
+	private ClubQueryService clubQueryService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
+		FakeClubRepository fakeClubRepository = new FakeClubRepository();
+		clubQueryService = new ClubQueryService(fakeClubRepository);
 
-		this.clubFacade = ClubFacade.builder()
-			.clubQueryService(testContainer.clubQueryService)
-			.build();
-
-		testContainer.clubRepository.save(
+		fakeClubRepository.save(
 			Club.builder()
 				.name("Club a")
 				.description("a 동아리입니다.")
@@ -30,7 +28,7 @@ public class ClubFacadeTest {
 				.build()
 		);
 
-		testContainer.clubRepository.save(
+		fakeClubRepository.save(
 			Club.builder()
 				.name("Club b")
 				.description("b 동아리입니다.")
@@ -43,11 +41,11 @@ public class ClubFacadeTest {
 	@DisplayName("getClubs는 동아리 리스트를 반환한다")
 	public void getClubs_Success() {
 		// when
-		ClubListResponse result = clubFacade.getClubs();
+		List<Club> result = clubQueryService.getClubs();
 
 		// then
-		assertEquals(2, result.contents().size());
-		assertEquals("Club a", result.contents().get(0).name());
-		assertEquals("Club b", result.contents().get(1).name());
+		assertEquals(2, result.size());
+		assertEquals("Club a", result.get(0).getName());
+		assertEquals("Club b", result.get(1).getName());
 	}
 }
