@@ -22,7 +22,7 @@ public record CarouselResponse(
 	@Schema(description = "첨부 파일 정보",
 		example = "{\"id\": 1, "
 			+ "\"physicalPath\": \"/files/2025-curriculum\"}",
-		requiredMode = REQUIRED)
+		requiredMode = NOT_REQUIRED)
 	FilePathResponse file
 ) {
 	public static CarouselResponse from(Carousel carousel) {
