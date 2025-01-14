@@ -56,9 +56,10 @@ private excludedClassFilesForReport(classDirectories) {
                         "**/aspect/**",
                         "**/Q**",
                         "kgu/developers/api/AicsApiApplication.class",
+                        "kgu/developers/admin/AicsAdminApplication.class",
                         // TODO 현재는 미구현으로 인한 제외
                         "**/api/**/presentation/**",
-                        "**/file/**"
+                        "**/admin/**/presentation/**",
                 ])
             })
     )
