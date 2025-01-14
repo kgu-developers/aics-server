@@ -28,7 +28,7 @@ public class CarouselAdminControllerImpl implements CarouselAdminController {
 	@PostMapping
 	public ResponseEntity<CarouselPersistResponse> createCarousel(
 		@Positive @RequestParam Long fileId,
-		@Valid @RequestBody(required = false) CarouselRequest request
+		@Valid @RequestBody CarouselRequest request
 	) {
 		CarouselPersistResponse response = carouselAdminFacade.createCarousel(fileId, request);
 		return ResponseEntity.ok(response);

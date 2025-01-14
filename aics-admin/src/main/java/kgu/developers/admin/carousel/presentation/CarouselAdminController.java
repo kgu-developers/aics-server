@@ -34,7 +34,7 @@ public interface CarouselAdminController {
 		) @Positive @RequestParam Long fileId,
 		@Parameter(
 			description = "캐러셀 생성 request 객체 입니다."
-		) @Valid @RequestBody(required = false) CarouselRequest request
+		) @Valid @RequestBody CarouselRequest request
 	);
 
 	@Operation(summary = "캐러셀 삭제 API", description = """

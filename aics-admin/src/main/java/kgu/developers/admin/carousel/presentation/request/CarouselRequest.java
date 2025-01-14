@@ -2,7 +2,10 @@ package kgu.developers.admin.carousel.presentation.request;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
 
+import org.hibernate.validator.constraints.URL;
+
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 
 public record CarouselRequest(
 	@Schema(description = "캐러셀 설명", example = "경기대학교 AI컴퓨터공학부 메인 이미지", requiredMode = NOT_REQUIRED)
