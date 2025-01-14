@@ -18,9 +18,7 @@ public class ClubFacadeTest {
 	public void init() {
 		TestContainer testContainer = new TestContainer();
 
-		this.clubFacade = ClubFacade.builder()
-			.clubQueryService(testContainer.clubQueryService)
-			.build();
+		this.clubFacade = new ClubFacade(testContainer.clubQueryService);
 
 		testContainer.clubRepository.save(
 			Club.builder()

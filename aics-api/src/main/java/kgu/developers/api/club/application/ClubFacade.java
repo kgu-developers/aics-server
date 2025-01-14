@@ -8,10 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import kgu.developers.api.club.presentation.response.ClubListResponse;
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
-@Builder
 @Component
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
