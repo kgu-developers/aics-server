@@ -1,24 +1,44 @@
 package user.application;
 
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.UserNotFoundException;
-import mock.TestContainer;
+import mock.FakeUserRepository;
 
 public class UserQueryServiceTest {
 	private UserQueryService userQueryService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		userQueryService = testContainer.userQueryService;
+		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		userQueryService = new UserQueryService(fakeUserRepository);
+
+		fakeUserRepository.save(User.builder()
+			.id("202411345")
+			.password("password1234")
+			.name("홍길동")
+			.email("test@kyonggi.ac.kr")
+			.phone("010-1234-5678")
+			.major(CSE)
+			.build());
+
+		UserDetails user = userQueryService.getUserById("202411345");
+		SecurityContext context = SecurityContextHolder.getContext();
+		context.setAuthentication(
+			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
+		);
 	}
 
 	@Test
@@ -31,7 +51,11 @@ public class UserQueryServiceTest {
 		User result = userQueryService.getUserById(id);
 
 		// then
+		assertEquals(id, result.getId());
 		assertEquals("홍길동", result.getName());
+		assertEquals("test@kyonggi.ac.kr", result.getEmail());
+		assertEquals("010-1234-5678", result.getPhone());
+		assertEquals(CSE, result.getMajor());
 	}
 
 	@Test
@@ -51,10 +75,13 @@ public class UserQueryServiceTest {
 	@DisplayName("me는 현재 로그인 되어있는 사용자의 정보를 가져온다.")
 	public void me_Success() {
 		// when
-		User user = userQueryService.me();
+		User result = userQueryService.me();
 
 		// then
-		assertEquals("202411345", user.getId());
-		assertEquals("홍길동", user.getName());
+		assertEquals("202411345", result.getId());
+		assertEquals("홍길동", result.getName());
+		assertEquals("test@kyonggi.ac.kr", result.getEmail());
+		assertEquals("010-1234-5678", result.getPhone());
+		assertEquals(CSE, result.getMajor());
 	}
 }

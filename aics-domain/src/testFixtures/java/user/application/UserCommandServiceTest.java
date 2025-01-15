@@ -7,19 +7,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.domain.Major;
+import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.UserIdDuplicateException;
-import mock.TestContainer;
+import mock.FakeUserRepository;
 
 public class UserCommandServiceTest {
 	private UserCommandService userCommandService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		userCommandService = testContainer.userCommandService;
+		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		userCommandService = new UserCommandService(bCryptPasswordEncoder, fakeUserRepository);
+
+		fakeUserRepository.save(User.builder()
+			.id("202411345")
+			.build()
+		);
 	}
 
 	@Test
