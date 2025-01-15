@@ -26,12 +26,14 @@ public class PostCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-		FakePostRepository fakePostRepository = new FakePostRepository();
 
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
-		postCommandService = new PostCommandService(userQueryService, fakePostRepository);
+		postCommandService = new PostCommandService(
+			userQueryService,
+			new FakePostRepository()
+		);
 
 		fakeUserRepository.save(User.builder()
 			.id("202411345")

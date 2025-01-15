@@ -18,8 +18,9 @@ public class ProfessorCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-		FakeProfessorRepository fakeProfessorRepository = new FakeProfessorRepository();
-		professorCommandService = new ProfessorCommandService(fakeProfessorRepository);
+		professorCommandService = new ProfessorCommandService(
+			new FakeProfessorRepository()
+		);
 	}
 
 	@Test

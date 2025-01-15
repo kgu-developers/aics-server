@@ -21,8 +21,10 @@ public class UserCommandServiceTest {
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		userCommandService = new UserCommandService(bCryptPasswordEncoder, fakeUserRepository);
+		userCommandService = new UserCommandService(
+			new BCryptPasswordEncoder(),
+			fakeUserRepository
+		);
 
 		fakeUserRepository.save(User.builder()
 			.id("202411345")

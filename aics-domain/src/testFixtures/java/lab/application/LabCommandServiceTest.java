@@ -15,8 +15,9 @@ public class LabCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-		FakeLabRepository fakeLabRepository = new FakeLabRepository();
-		labCommandService = new LabCommandService(fakeLabRepository);
+		labCommandService = new LabCommandService(
+			new FakeLabRepository()
+		);
 	}
 
 	@Test

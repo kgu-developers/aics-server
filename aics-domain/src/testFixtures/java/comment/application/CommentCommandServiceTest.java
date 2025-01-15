@@ -28,15 +28,15 @@ public class CommentCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
-
 		FakePostRepository fakePostRepository = new FakePostRepository();
-		PostQueryService postQueryService = new PostQueryService(fakePostRepository);
-
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
-		commentCommandService = new CommentCommandService(postQueryService, userQueryService, fakeCommentRepository);
+		commentCommandService = new CommentCommandService(
+			new PostQueryService(fakePostRepository),
+			userQueryService,
+			new FakeCommentRepository()
+		);
 
 		fakeUserRepository.save(User.builder()
 			.id("202411345")
