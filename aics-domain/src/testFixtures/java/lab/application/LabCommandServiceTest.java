@@ -1,6 +1,7 @@
 package lab.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,12 +13,12 @@ import mock.FakeLabRepository;
 
 public class LabCommandServiceTest {
 	private LabCommandService labCommandService;
+	private FakeLabRepository fakeLabRepository;
 
 	@BeforeEach
 	public void init() {
-		labCommandService = new LabCommandService(
-			new FakeLabRepository()
-		);
+		fakeLabRepository = new FakeLabRepository();
+		labCommandService = new LabCommandService(fakeLabRepository);
 	}
 
 	@Test
@@ -70,6 +71,8 @@ public class LabCommandServiceTest {
 		// when
 		labCommandService.deleteLabById(labId);
 
-		// then TODO: 추후 구현
+		// then
+		Lab result = fakeLabRepository.findById(labId).orElse(null);
+		assertNull(result);
 	}
 }
