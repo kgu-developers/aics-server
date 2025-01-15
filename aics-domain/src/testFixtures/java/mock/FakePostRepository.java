@@ -54,7 +54,9 @@ public class FakePostRepository implements PostRepository {
 	) {
 		List<Post> filteredPosts = data.stream()
 			.filter(
-				post -> post.getTitle().contains(keyword) && post.getCategory().equals(category)
+				post -> post.getTitle().contains(keyword)
+					&& post.getCategory().equals(category)
+					&& post.getDeletedAt() == null
 			)
 			.sorted(Comparator.comparing(Post::getCreatedAt).reversed())
 			.collect(Collectors.toList());
