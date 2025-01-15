@@ -42,12 +42,12 @@ jobs:
             ${{ github.workspace }}/aics-domain/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-api/build/jacoco/test/jacocoTestReport.xml
           token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 10
-          min-coverage-changed-files: 80
+          min-coverage-overall: 80
+          min-coverage-changed-files: 70
           update-comment: true
 
-      - name: Fail PR if overall coverage is less than 80% (temporarily 10%)
-        if: ${{ steps.jacoco.outputs.coverage-overall < 10.0 }}
+      - name: Fail PR if overall coverage is less than 80%
+        if: ${{ steps.jacoco.outputs.coverage-overall < 80.0 }}
         uses: actions/github-script@v6
         with:
           script: |
