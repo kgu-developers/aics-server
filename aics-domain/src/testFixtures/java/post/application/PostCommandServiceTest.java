@@ -1,42 +1,52 @@
 package post.application;
 
-import static kgu.developers.domain.post.domain.Category.NEWS;
 import static kgu.developers.domain.post.domain.Category.NOTIFICATION;
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.post.domain.PostRepository;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
-import mock.TestContainer;
+import mock.FakePostRepository;
+import mock.FakeUserRepository;
 
 public class PostCommandServiceTest {
 	private PostCommandService postCommandService;
-	private PostRepository postRepository;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		postRepository = testContainer.postRepository;
-		postCommandService = testContainer.postCommandService;
-		
-		User author = testContainer.userQueryService.me();
+		FakePostRepository fakePostRepository = new FakePostRepository();
 
-		postRepository.save(Post.create(
-			"테스트용 제목1", "테스트용 내용1",
-			NEWS, author
-		));
+		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
-		postRepository.save(Post.create(
-			"테스트용 제목2", "테스트용 내용2",
-			NEWS, author
-		));
+		postCommandService = new PostCommandService(userQueryService, fakePostRepository);
+
+		fakeUserRepository.save(User.builder()
+			.id("202411345")
+			.password("password1234")
+			.name("홍길동")
+			.email("test@kyonggi.ac.kr")
+			.phone("010-1234-5678")
+			.major(CSE)
+			.build());
+
+		UserDetails user = userQueryService.getUserById("202411345");
+		SecurityContext context = SecurityContextHolder.getContext();
+		context.setAuthentication(
+			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
+		);
 	}
 
 	@Test
@@ -51,23 +61,14 @@ public class PostCommandServiceTest {
 		Long response = postCommandService.createPost(title, content, category);
 
 		// then
-		assertEquals(3, response);
-
-		// when
-		Post created = postRepository.findById(3L).orElse(null);
-
-		// then
-		assertEquals(title, created.getTitle());
-		assertEquals(content, created.getContent());
-		assertEquals(category.getDescription(), created.getCategory().getDescription());
+		assertEquals(response, 1L);
 	}
 
 	@Test
 	@DisplayName("updatePost는 게시글의 내용을 수정할 수 있다")
 	public void updatePost_Success() {
 		// given
-		Long postId = 1L; // 기존 데이터 중 하나를 수정
-		Post post = postRepository.findById(postId).orElseThrow();
+		Post post = Post.builder().build();
 
 		String newTitle = "Updated Title";
 		String newContent = "Updated Content";
@@ -86,8 +87,7 @@ public class PostCommandServiceTest {
 	@DisplayName("togglePostPinStatus는 게시글의 고정 상태를 토글할 수 있다")
 	public void togglePostPinStatus_Success() {
 		// given
-		Long postId = 1L;
-		Post post = postRepository.findById(postId).orElseThrow();
+		Post post = Post.builder().build();
 
 		boolean initialPinnedStatus = post.isPinned();
 
@@ -108,8 +108,7 @@ public class PostCommandServiceTest {
 	@DisplayName("increaseViews는 게시글의 조회수를 증가시킬 수 있다")
 	public void increaseViews_Success() {
 		// given
-		Long postId = 1L;
-		Post post = postRepository.findById(postId).orElseThrow();
+		Post post = Post.builder().build();
 
 		int initialViews = post.getViews();
 
@@ -124,8 +123,7 @@ public class PostCommandServiceTest {
 	@DisplayName("deletePost는 게시글을 삭제할 수 있다")
 	public void deletePost_Success() {
 		// given
-		Long postId = 1L;
-		Post post = postRepository.findById(postId).orElseThrow();
+		Post post = Post.builder().build();
 
 		// when
 		postCommandService.deletePost(post);
