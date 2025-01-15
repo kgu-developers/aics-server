@@ -53,14 +53,14 @@ public class PostQueryServiceTest {
 		Post post = fakePostRepository.findById(2L).orElse(null);
 
 		// when
-		PostDetailResponse response = postQueryService.getPostByIdWithPrevAndNext(post);
+		PostDetailResponse result = postQueryService.getPostByIdWithPrevAndNext(post);
 
 		// then
-		assertEquals(post.getId(), response.postId());
-		assertEquals(response.prevPost().postId(), 1L);
-		assertEquals(response.prevPost().title(), "테스트용 제목1");
-		assertEquals(response.nextPost().postId(), 3L);
-		assertEquals(response.nextPost().title(), "테스트용 제목3");
+		assertEquals(post.getId(), result.postId());
+		assertEquals(result.prevPost().postId(), 1L);
+		assertEquals(result.prevPost().title(), "테스트용 제목1");
+		assertEquals(result.nextPost().postId(), 3L);
+		assertEquals(result.nextPost().title(), "테스트용 제목3");
 	}
 
 	@Test
@@ -71,13 +71,13 @@ public class PostQueryServiceTest {
 
 		// when
 		Post post = fakePostRepository.findById(lastPostId).orElse(null);
-		PostDetailResponse response = postQueryService.getPostByIdWithPrevAndNext(post);
+		PostDetailResponse result = postQueryService.getPostByIdWithPrevAndNext(post);
 
 		// then
-		assertEquals(lastPostId, response.postId());
-		assertNull(response.nextPost());
-		assertEquals(response.prevPost().postId(), 2L);
-		assertEquals(response.prevPost().title(), "테스트용 제목2");
+		assertEquals(lastPostId, result.postId());
+		assertNull(result.nextPost());
+		assertEquals(result.prevPost().postId(), 2L);
+		assertEquals(result.prevPost().title(), "테스트용 제목2");
 	}
 
 	@Test
@@ -103,11 +103,11 @@ public class PostQueryServiceTest {
 		int size = 10;
 
 		// when
-		PaginatedListResponse<Post> posts = postQueryService.getPostsByKeywordAndCategory(
+		PaginatedListResponse<Post> result = postQueryService.getPostsByKeywordAndCategory(
 			PageRequest.of(page, size), keyword, category
 		);
 
 		// then
-		assertEquals(3, posts.contents().size());
+		assertEquals(3, result.contents().size());
 	}
 }

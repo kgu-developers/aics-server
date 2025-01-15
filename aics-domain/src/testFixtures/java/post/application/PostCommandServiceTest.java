@@ -58,10 +58,10 @@ public class PostCommandServiceTest {
 		Category category = NOTIFICATION;
 
 		// when
-		Long response = postCommandService.createPost(title, content, category);
+		Long result = postCommandService.createPost(title, content, category);
 
 		// then
-		assertEquals(response, 1L);
+		assertEquals(1L, result);
 	}
 
 	@Test

@@ -76,13 +76,13 @@ public class AboutQueryServiceTest {
 		String detail = null;
 
 		// when
-		About about = aboutQueryService.getAbout(main, sub, detail);
+		About result = aboutQueryService.getAbout(main, sub, detail);
 
 		// then
-		assertEquals(main, about.getMainCategory());
-		assertEquals(sub, about.getSubCategory());
-		assertEquals("detail category", about.getDetailCategory());
-		assertEquals("about content", about.getContent());
+		assertEquals(main, result.getMainCategory());
+		assertEquals(sub, result.getSubCategory());
+		assertEquals("detail category", result.getDetailCategory());
+		assertEquals("about content", result.getContent());
 	}
 
 	@Test

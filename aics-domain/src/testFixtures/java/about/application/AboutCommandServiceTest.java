@@ -48,7 +48,7 @@ public class AboutCommandServiceTest {
 		Long result = aboutCommandService.createAbout(mainCategory, subCategory, detail, content);
 
 		// then
-		assertEquals(result, 2L);
+		assertEquals(2L, result);
 	}
 
 	@Test

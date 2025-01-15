@@ -34,10 +34,10 @@ public class ProfessorCommandServiceTest {
 		String officeLoc = "kkhOffice";
 
 		// when
-		Long response = professorCommandService.createProfessor(name, role, contact, email, img, officeLoc);
+		Long result = professorCommandService.createProfessor(name, role, contact, email, img, officeLoc);
 
 		// then
-		assertEquals(1L, response);
+		assertEquals(1L, result);
 	}
 
 	@Test

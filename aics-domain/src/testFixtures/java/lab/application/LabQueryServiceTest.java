@@ -44,12 +44,12 @@ public class LabQueryServiceTest {
 	public void getLabs_Success() {
 		// given
 		// when
-		List<Lab> labs = labQueryService.getLabsByName();
+		List<Lab> result = labQueryService.getLabsByName();
 
 		// then
-		assertEquals(2, labs.size());
-		assertEquals("Lab A", labs.get(0).getName());
-		assertEquals("Lab B", labs.get(1).getName());
+		assertEquals(2, result.size());
+		assertEquals("Lab A", result.get(0).getName());
+		assertEquals("Lab B", result.get(1).getName());
 	}
 
 	@Test

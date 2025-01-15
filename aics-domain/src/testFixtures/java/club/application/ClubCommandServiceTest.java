@@ -28,10 +28,10 @@ public class ClubCommandServiceTest {
 		String site = "http://club-c.kyonggi.ac.kr";
 
 		//when
-		Long response = clubCommandService.createClub(name, description, site);
+		Long result = clubCommandService.createClub(name, description, site);
 
 		//then
-		assertEquals(response, 1L);
+		assertEquals(1L, result);
 	}
 
 	@Test

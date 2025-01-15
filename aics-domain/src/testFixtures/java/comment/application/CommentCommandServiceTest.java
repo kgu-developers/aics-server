@@ -69,10 +69,10 @@ public class CommentCommandServiceTest {
 		Long postId = 1L;
 
 		// when
-		Long response = commentCommandService.createComment(content, postId);
+		Long result = commentCommandService.createComment(content, postId);
 
 		// then
-		assertEquals(response, 1L);
+		assertEquals(1L, result);
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class CommentCommandServiceTest {
 		commentCommandService.updateComment(comment, newContent);
 
 		// then
-		assertEquals(comment.getContent(), "content");
+		assertEquals("content", comment.getContent());
 	}
 
 	@Test

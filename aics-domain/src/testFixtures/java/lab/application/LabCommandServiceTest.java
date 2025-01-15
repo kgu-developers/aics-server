@@ -29,10 +29,10 @@ public class LabCommandServiceTest {
 		String advisor = "박교수";
 
 		// when
-		Long response = labCommandService.createLab(name, loc, site, advisor);
+		Long result = labCommandService.createLab(name, loc, site, advisor);
 
 		// then
-		assertEquals(response, 1);
+		assertEquals(1L, result);
 	}
 
 	@Test

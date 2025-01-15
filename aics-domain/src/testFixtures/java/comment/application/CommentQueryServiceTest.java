@@ -26,7 +26,7 @@ public class CommentQueryServiceTest {
 
 		User user = User.builder()
 			.build();
-		
+
 		Post post = Post.builder()
 			.id(1L)
 			.build();
@@ -57,8 +57,8 @@ public class CommentQueryServiceTest {
 		List<Comment> comments = commentQueryService.getComments(postId);
 
 		// then
-		assertEquals(comments.size(), 1);
-		assertEquals(comments.get(0).getContent(), "get");
+		assertEquals(1, comments.size());
+		assertEquals("get", comments.get(0).getContent());
 	}
 
 	@Test
@@ -68,11 +68,11 @@ public class CommentQueryServiceTest {
 		Long commentId = 2L;
 
 		// when
-		Comment response = commentQueryService.getById(commentId);
+		Comment result = commentQueryService.getById(commentId);
 
 		// then
-		assertEquals(response.getId(), commentId);
-		assertEquals(response.getContent(), "get");
+		assertEquals(commentId, result.getId());
+		assertEquals("get", result.getContent());
 	}
 
 	@Test
