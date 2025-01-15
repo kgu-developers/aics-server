@@ -15,9 +15,8 @@ public class ClubCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-		clubCommandService = new ClubCommandService(
-			new FakeClubRepository()
-		);
+		FakeClubRepository fakeClubRepository = new FakeClubRepository();
+		clubCommandService = new ClubCommandService(fakeClubRepository);
 	}
 
 	@Test

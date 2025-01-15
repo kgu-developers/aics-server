@@ -21,19 +21,11 @@ public class ClubQueryServiceTest {
 		clubQueryService = new ClubQueryService(fakeClubRepository);
 
 		fakeClubRepository.save(
-			Club.builder()
-				.name("Club a")
-				.description("a 동아리입니다.")
-				.site("http://club-a.kyonggi.ac.kr")
-				.build()
+			Club.create("Club a", "a 동아리입니다.", "http://club-a.kyonggi.ac.kr")
 		);
 
 		fakeClubRepository.save(
-			Club.builder()
-				.name("Club b")
-				.description("b 동아리입니다.")
-				.site("http://club-b.kyonggi.ac.kr")
-				.build()
+			Club.create("Club b", "b 동아리입니다.", "http://club-b.kyonggi.ac.kr")
 		);
 	}
 

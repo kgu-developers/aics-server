@@ -25,10 +25,10 @@ public class AboutDomainTest {
 		About about = About.create(mainCategory, subCategory, detailCategory, content);
 
 		// then
-		assertEquals(about.getMainCategory(), mainCategory);
-		assertEquals(about.getSubCategory(), subCategory);
-		assertEquals(about.getDetailCategory(), detailCategory);
-		assertEquals(about.getContent(), content);
+		assertEquals(mainCategory, about.getMainCategory());
+		assertEquals(subCategory, about.getSubCategory());
+		assertEquals(detailCategory, about.getDetailCategory());
+		assertEquals(content, about.getContent());
 	}
 
 	@Test
@@ -45,6 +45,6 @@ public class AboutDomainTest {
 		about.updateContent(updateContent);
 
 		// then
-		assertEquals(about.getContent(), updateContent);
+		assertEquals(updateContent, about.getContent());
 	}
 }

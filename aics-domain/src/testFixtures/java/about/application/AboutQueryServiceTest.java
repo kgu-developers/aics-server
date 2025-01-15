@@ -26,12 +26,7 @@ public class AboutQueryServiceTest {
 		aboutQueryService = new AboutQueryService(fakeAboutRepository);
 
 		fakeAboutRepository.save(
-			About.builder()
-				.mainCategory(DEPT_INTRO)
-				.subCategory(HISTORY)
-				.detailCategory("detail category")
-				.content("about content")
-				.build()
+			About.create(DEPT_INTRO, HISTORY, "detail category", "about content")
 		);
 	}
 
@@ -62,9 +57,8 @@ public class AboutQueryServiceTest {
 		String detail = "nonexistentDetail";
 
 		// when & then
-		assertThatThrownBy(() -> aboutQueryService.getAbout(main, sub, detail))
-			.isInstanceOf(AboutNotFoundException.class)
-			.hasMessageContaining("해당 소개글을 찾을 수 없습니다.");
+		assertThatThrownBy(() -> aboutQueryService.getAbout(main, sub, detail)).isInstanceOf(
+			AboutNotFoundException.class).hasMessageContaining("해당 소개글을 찾을 수 없습니다.");
 	}
 
 	@Test
@@ -94,8 +88,7 @@ public class AboutQueryServiceTest {
 		String detail = "someDetail";
 
 		// when & then
-		assertThatThrownBy(() -> aboutQueryService.getAbout(main, sub, detail))
-			.isInstanceOf(CategoryNotMatchException.class)
-			.hasMessageContaining("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
+		assertThatThrownBy(() -> aboutQueryService.getAbout(main, sub, detail)).isInstanceOf(
+			CategoryNotMatchException.class).hasMessageContaining("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
 	}
 }

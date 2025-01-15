@@ -26,35 +26,44 @@ import mock.repository.FakeUserRepository;
 public class CommentCommandServiceTest {
 	private CommentCommandService commentCommandService;
 
+	private static final Long TARGET_COMMENT_ID = 1L;
+	private static final Long TEST_POST_ID = 1L;
+	private static final String TEST_USER_ID = "202411345";
+
 	@BeforeEach
 	public void init() {
 		FakePostRepository fakePostRepository = new FakePostRepository();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
+		initializeCommentCommandService(fakePostRepository, userQueryService);
+		saveTestUserAndPost(fakeUserRepository, fakePostRepository);
+		setTestSecurityContext(userQueryService);
+	}
+
+	private static void saveTestUserAndPost(FakeUserRepository fakeUserRepository,
+		FakePostRepository fakePostRepository) {
+		fakeUserRepository.save(
+			User.create(TEST_USER_ID, "password1234", "홍길동", "honggildong@kyonggi.ac.kr",
+				"010-1234-5678", CSE)
+		);
+		fakePostRepository.save(Post.create(
+			"SW 부트캠프 4기 교육생 모집", "SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.", NEWS,
+			User.builder().build()
+		));
+	}
+
+	private void initializeCommentCommandService(FakePostRepository fakePostRepository,
+		UserQueryService userQueryService) {
 		commentCommandService = new CommentCommandService(
 			new PostQueryService(fakePostRepository),
 			userQueryService,
 			new FakeCommentRepository()
 		);
+	}
 
-		fakeUserRepository.save(User.builder()
-			.id("202411345")
-			.password("password1234")
-			.name("홍길동")
-			.email("test@kyonggi.ac.kr")
-			.phone("010-1234-5678")
-			.major(CSE)
-			.build());
-
-		User author = User.builder()
-			.build();
-
-		fakePostRepository.save(Post.create(
-			"테스트용 제목1", "테스트용 내용1", NEWS, author
-		));
-
-		UserDetails user = userQueryService.getUserById("202411345");
+	private static void setTestSecurityContext(UserQueryService userQueryService) {
+		UserDetails user = userQueryService.getUserById(TEST_USER_ID);
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
 			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
@@ -65,45 +74,41 @@ public class CommentCommandServiceTest {
 	@DisplayName("createComment는 댓글을 생성할 수 있다.")
 	public void createComment_Success() {
 		// given
-		String content = "content";
-		Long postId = 1L;
+		String testCommentContent = "SW 부트캠프 모집이 정말 기대됩니다.";
 
 		// when
-		Long result = commentCommandService.createComment(content, postId);
+		Long createdCommentId = commentCommandService.createComment(testCommentContent, TEST_POST_ID);
 
 		// then
-		assertEquals(1L, result);
+		assertEquals(TARGET_COMMENT_ID, createdCommentId);
 	}
 
 	@Test
 	@DisplayName("updateComment는 댓글을 수정할 수 있다.")
 	public void updateComment_Success() {
 		// given
-		User user = User.builder().build();
-		Post post = Post.builder().build();
-		Comment comment = Comment.create("test", user, post);
-
-		String newContent = "content";
+		Comment targetComment = Comment.create("SW 부트캠프 모집이 정말 기대됩니다.", User.builder().build(),
+			Post.builder().build());
+		String updatedCommentContent = "SW 부트캠프 모집이 정말 기대됩니다. 4기 교육생 확정이 언제일까요?";
 
 		// when
-		commentCommandService.updateComment(comment, newContent);
+		commentCommandService.updateComment(targetComment, updatedCommentContent);
 
 		// then
-		assertEquals("content", comment.getContent());
+		assertEquals(updatedCommentContent, targetComment.getContent());
 	}
 
 	@Test
 	@DisplayName("deleteComment는 댓글을 삭제할 수 있다.")
 	public void deleteComment_Success() {
 		// given
-		User user = User.builder().build();
-		Post post = Post.builder().build();
-		Comment comment = Comment.create("test", user, post);
+		Comment targetComment = Comment.create("SW 부트캠프 모집이 정말 기대됩니다.", User.builder().build(),
+			Post.builder().build());
 
 		// when
-		commentCommandService.deleteComment(comment);
+		commentCommandService.deleteComment(targetComment);
 
 		// then
-		assertNotNull(comment.getDeletedAt());
+		assertNotNull(targetComment.getDeletedAt());
 	}
 }
