@@ -1,4 +1,4 @@
-package mock;
+package mock.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +50,7 @@ public class FakeUserRepository implements UserRepository {
 			.sorted(Comparator.comparing(User::getId).reversed())
 			.collect(Collectors.toList());
 
-		int start = (int) pageable.getOffset();
+		int start = (int)pageable.getOffset();
 		int end = Math.min((start + pageable.getPageSize()), sortedUsers.size());
 
 		List<User> paginatedUsers = start > sortedUsers.size() ?

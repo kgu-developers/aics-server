@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.professor.application.command.ProfessorCommandService;
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.Role;
-import mock.FakeProfessorRepository;
+import mock.repository.FakeProfessorRepository;
 
 public class ProfessorCommandServiceTest {
 	private ProfessorCommandService professorCommandService;

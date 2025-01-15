@@ -1,4 +1,4 @@
-package mock;
+package mock.repository;
 
 import java.util.ArrayList;
 import java.util.Collections;

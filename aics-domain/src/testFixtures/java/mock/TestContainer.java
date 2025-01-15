@@ -31,6 +31,14 @@ import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
+import mock.repository.FakeAboutRepository;
+import mock.repository.FakeClubRepository;
+import mock.repository.FakeCommentRepository;
+import mock.repository.FakeLabRepository;
+import mock.repository.FakePostRepository;
+import mock.repository.FakeProfessorRepository;
+import mock.repository.FakeRefreshTokenRepository;
+import mock.repository.FakeUserRepository;
 
 public class TestContainer {
 	public final AboutRepository aboutRepository;

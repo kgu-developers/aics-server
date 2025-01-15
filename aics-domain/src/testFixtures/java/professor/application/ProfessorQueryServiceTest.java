@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.exception.ProfessorNotFoundException;
-import mock.FakeProfessorRepository;
+import mock.repository.FakeProfessorRepository;
 
 public class ProfessorQueryServiceTest {
 	private ProfessorQueryService professorQueryService;

@@ -14,7 +14,7 @@ import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.exception.CommentNotFoundException;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
-import mock.FakeCommentRepository;
+import mock.repository.FakeCommentRepository;
 
 public class CommentQueryServiceTest {
 	private CommentQueryService commentQueryService;

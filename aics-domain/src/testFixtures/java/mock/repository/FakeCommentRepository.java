@@ -1,4 +1,4 @@
-package mock;
+package mock.repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
+import mock.TestEntityUtils;
 
 public class FakeCommentRepository implements CommentRepository {
 	private final List<Comment> data = Collections.synchronizedList(new ArrayList<>());

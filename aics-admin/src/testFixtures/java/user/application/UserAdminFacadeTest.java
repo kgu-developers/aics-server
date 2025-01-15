@@ -16,7 +16,7 @@ import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
-import mock.FakeUserRepository;
+import mock.repository.FakeUserRepository;
 
 public class UserAdminFacadeTest {
 	private UserAdminFacade userAdminFacade;

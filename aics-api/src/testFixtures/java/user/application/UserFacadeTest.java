@@ -20,7 +20,7 @@ import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
-import mock.FakeUserRepository;
+import mock.repository.FakeUserRepository;
 
 public class UserFacadeTest {
 	private UserFacade userFacade;

@@ -1,4 +1,4 @@
-package mock;
+package mock.repository;
 
 import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
@@ -50,7 +50,6 @@ public class FakeRefreshTokenRepository implements RefreshTokenRepository {
 		return null;
 	}
 
-
 	@Override
 	public long count() {
 		return 0;
@@ -61,7 +60,6 @@ public class FakeRefreshTokenRepository implements RefreshTokenRepository {
 
 	}
 
-
 	@Override
 	public void delete(RefreshToken entity) {
 
@@ -71,7 +69,6 @@ public class FakeRefreshTokenRepository implements RefreshTokenRepository {
 	public void deleteAllById(Iterable<? extends String> strings) {
 
 	}
-
 
 	@Override
 	public void deleteAll(Iterable<? extends RefreshToken> entities) {

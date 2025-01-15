@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.UserNotFoundException;
-import mock.FakeUserRepository;
+import mock.repository.FakeUserRepository;
 
 public class UserQueryServiceTest {
 	private UserQueryService userQueryService;

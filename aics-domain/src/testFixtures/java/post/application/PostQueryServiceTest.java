@@ -17,7 +17,7 @@ import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.exception.PostNotFoundException;
 import kgu.developers.domain.user.domain.User;
-import mock.FakePostRepository;
+import mock.repository.FakePostRepository;
 
 public class PostQueryServiceTest {
 	private PostQueryService postQueryService;

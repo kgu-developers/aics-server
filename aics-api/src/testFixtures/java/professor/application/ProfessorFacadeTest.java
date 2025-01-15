@@ -15,7 +15,7 @@ import kgu.developers.api.professor.presentation.response.ProfessorListResponse;
 import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.application.response.ProfessorResponse;
 import kgu.developers.domain.professor.domain.Professor;
-import mock.FakeProfessorRepository;
+import mock.repository.FakeProfessorRepository;
 
 public class ProfessorFacadeTest {
 	private ProfessorFacade professorFacade;

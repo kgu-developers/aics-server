@@ -20,8 +20,8 @@ import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
-import mock.FakeRefreshTokenRepository;
-import mock.FakeUserRepository;
+import mock.repository.FakeRefreshTokenRepository;
+import mock.repository.FakeUserRepository;
 
 public class AuthServiceTest {
 	private AuthService authService;

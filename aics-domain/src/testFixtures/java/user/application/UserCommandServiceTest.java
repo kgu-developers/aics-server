@@ -13,7 +13,7 @@ import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.UserIdDuplicateException;
-import mock.FakeUserRepository;
+import mock.repository.FakeUserRepository;
 
 public class UserCommandServiceTest {
 	private UserCommandService userCommandService;

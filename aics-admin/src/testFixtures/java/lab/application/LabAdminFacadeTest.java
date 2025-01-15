@@ -16,7 +16,7 @@ import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
-import mock.FakeLabRepository;
+import mock.repository.FakeLabRepository;
 
 public class LabAdminFacadeTest {
 	private LabAdminFacade labAdminFacade;

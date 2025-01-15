@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
-import mock.FakeClubRepository;
+import mock.repository.FakeClubRepository;
 
 public class ClubQueryServiceTest {
 	private ClubQueryService clubQueryService;

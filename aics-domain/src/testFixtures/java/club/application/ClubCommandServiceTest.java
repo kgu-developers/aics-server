@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.domain.Club;
-import mock.FakeClubRepository;
+import mock.repository.FakeClubRepository;
 
 public class ClubCommandServiceTest {
 	private ClubCommandService clubCommandService;

@@ -15,7 +15,7 @@ import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
-import mock.FakeAboutRepository;
+import mock.repository.FakeAboutRepository;
 
 public class AboutCommandServiceTest {
 	private AboutCommandService aboutCommandService;

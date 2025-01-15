@@ -25,8 +25,8 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.exception.PostNotFoundException;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
-import mock.FakePostRepository;
-import mock.FakeUserRepository;
+import mock.repository.FakePostRepository;
+import mock.repository.FakeUserRepository;
 
 public class PostAdminFacadeTest {
 	private PostAdminFacade postAdminFacade;

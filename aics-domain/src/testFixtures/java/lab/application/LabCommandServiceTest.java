@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.domain.Lab;
-import mock.FakeLabRepository;
+import mock.repository.FakeLabRepository;
 
 public class LabCommandServiceTest {
 	private LabCommandService labCommandService;

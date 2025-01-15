@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
 import kgu.developers.domain.lab.exception.LabNotFoundException;
-import mock.FakeLabRepository;
+import mock.repository.FakeLabRepository;
 
 public class LabQueryServiceTest {
 	private LabQueryService labQueryService;

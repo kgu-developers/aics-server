@@ -1,4 +1,4 @@
-package mock;
+package mock.repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.AboutRepository;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
+import mock.TestEntityUtils;
 
 public class FakeAboutRepository implements AboutRepository {
 	private final List<About> data = Collections.synchronizedList(new ArrayList<>());

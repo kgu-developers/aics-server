@@ -16,7 +16,7 @@ import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.exception.ClubNotFoundException;
-import mock.FakeClubRepository;
+import mock.repository.FakeClubRepository;
 
 public class ClubAdminFacadeTest {
 	private ClubAdminFacade clubAdminFacade;

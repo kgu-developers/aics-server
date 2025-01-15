@@ -13,7 +13,7 @@ import kgu.developers.api.lab.presentation.response.LabDetailResponse;
 import kgu.developers.api.lab.presentation.response.LabListResponse;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
-import mock.FakeLabRepository;
+import mock.repository.FakeLabRepository;
 
 public class LabFacadeTest {
 	private LabFacade labFacade;

@@ -1,4 +1,4 @@
-package mock;
+package mock.repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
+import mock.TestEntityUtils;
 
 public class FakePostRepository implements PostRepository {
 	private final List<Post> data = Collections.synchronizedList(new ArrayList<>());
