@@ -59,6 +59,5 @@ public class ClubQueryServiceTest {
 		assertEquals("Club a", result.getName());
 		assertEquals("a 동아리입니다.", result.getDescription());
 		assertEquals("http://club-a.kyonggi.ac.kr", result.getSite());
-
 	}
 }

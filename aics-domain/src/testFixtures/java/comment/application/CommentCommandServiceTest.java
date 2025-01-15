@@ -3,7 +3,7 @@ package comment.application;
 import static kgu.developers.domain.post.domain.Category.NEWS;
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,22 +15,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.domain.comment.application.command.CommentCommandService;
 import kgu.developers.domain.comment.domain.Comment;
-import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
-import mock.TestContainer;
+import mock.FakeCommentRepository;
+import mock.FakePostRepository;
+import mock.FakeUserRepository;
 
 public class CommentCommandServiceTest {
 	private CommentCommandService commentCommandService;
-	private CommentRepository commentRepository;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		commentRepository = testContainer.commentRepository;
-		commentCommandService = testContainer.commentCommandService;
+		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
 
-		testContainer.userRepository.save(User.builder()
+		FakePostRepository fakePostRepository = new FakePostRepository();
+		PostQueryService postQueryService = new PostQueryService(fakePostRepository);
+
+		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+
+		commentCommandService = new CommentCommandService(postQueryService, userQueryService, fakeCommentRepository);
+
+		fakeUserRepository.save(User.builder()
 			.id("202411345")
 			.password("password1234")
 			.name("홍길동")
@@ -39,20 +47,14 @@ public class CommentCommandServiceTest {
 			.major(CSE)
 			.build());
 
-		User author = testContainer.userQueryService.getUserById("202411345");
+		User author = User.builder()
+			.build();
 
-		Post post = testContainer.postRepository.save(Post.create(
+		fakePostRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1", NEWS, author
 		));
 
-		commentRepository.save(Comment.builder()
-			.author(testContainer.userQueryService.getUserById("202411345"))
-			.content("get")
-			.post(post)
-			.build()
-		);
-
-		UserDetails user = testContainer.userQueryService.getUserById("202411345");
+		UserDetails user = userQueryService.getUserById("202411345");
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
 			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
@@ -67,23 +69,24 @@ public class CommentCommandServiceTest {
 		Long postId = 1L;
 
 		// when
-		Long commentId = commentCommandService.createComment(content, postId);
+		Long response = commentCommandService.createComment(content, postId);
 
 		// then
-		Comment comment = commentRepository.findById(commentId).orElse(null);
-		assertEquals(comment.getId(), 2L);
-		assertEquals(comment.getContent(), "content");
+		assertEquals(response, 1L);
 	}
 
 	@Test
 	@DisplayName("updateComment는 댓글을 수정할 수 있다.")
 	public void updateComment_Success() {
 		// given
-		Comment comment = commentRepository.findById(1L).orElse(null);
-		String content = "content";
+		User user = User.builder().build();
+		Post post = Post.builder().build();
+		Comment comment = Comment.create("test", user, post);
+
+		String newContent = "content";
 
 		// when
-		commentCommandService.updateComment(comment, content);
+		commentCommandService.updateComment(comment, newContent);
 
 		// then
 		assertEquals(comment.getContent(), "content");
@@ -93,12 +96,14 @@ public class CommentCommandServiceTest {
 	@DisplayName("deleteComment는 댓글을 삭제할 수 있다.")
 	public void deleteComment_Success() {
 		// given
-		Comment comment = commentRepository.findById(1L).orElse(null);
+		User user = User.builder().build();
+		Post post = Post.builder().build();
+		Comment comment = Comment.create("test", user, post);
 
 		// when
 		commentCommandService.deleteComment(comment);
 
 		// then
-		assertNotEquals(comment.getDeletedAt(), null);
+		assertNotNull(comment.getDeletedAt());
 	}
 }

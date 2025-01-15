@@ -1,6 +1,5 @@
 package comment.application;
 
-import static kgu.developers.domain.post.domain.Category.NEWS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,55 +8,43 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.domain.comment.application.query.CommentQueryService;
 import kgu.developers.domain.comment.domain.Comment;
-import kgu.developers.domain.comment.domain.CommentRepository;
 import kgu.developers.domain.comment.exception.CommentNotFoundException;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
-import mock.TestContainer;
+import mock.FakeCommentRepository;
 
 public class CommentQueryServiceTest {
 	private CommentQueryService commentQueryService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		CommentRepository commentRepository = testContainer.commentRepository;
+		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
+		commentQueryService = new CommentQueryService(fakeCommentRepository);
 
-		this.commentQueryService = testContainer.commentQueryService;
+		User user = User.builder()
+			.build();
+		
+		Post post = Post.builder()
+			.id(1L)
+			.build();
 
-		User author = testContainer.userQueryService.me();
-
-		Post post = testContainer.postRepository.save(Post.create(
-			"테스트용 제목1", "테스트용 내용1", NEWS, author
-		));
-
-		Comment delete = commentRepository.save(Comment.builder()
-			.author(testContainer.userQueryService.getUserById("202411345"))
+		Comment delete = fakeCommentRepository.save(Comment.builder()
+			.author(user)
 			.content("deleted")
 			.post(post)
 			.build()
 		);
-		delete.delete();
 
-		commentRepository.save(Comment.builder()
-			.author(testContainer.userQueryService.getUserById("202411345"))
+		fakeCommentRepository.save(Comment.builder()
+			.author(user)
 			.content("get")
 			.post(post)
 			.build()
 		);
-
-		UserDetails user = testContainer.userQueryService.getUserById("202411345");
-		SecurityContext context = SecurityContextHolder.getContext();
-		context.setAuthentication(
-			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
-		);
+		delete.delete();
 	}
 
 	@Test
