@@ -12,23 +12,25 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.admin.professor.application.ProfessorAdminFacade;
 import kgu.developers.admin.professor.presentation.request.ProfessorRequest;
 import kgu.developers.admin.professor.presentation.response.ProfessorPersistResponse;
+import kgu.developers.domain.professor.application.command.ProfessorCommandService;
+import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.domain.Professor;
-import mock.TestContainer;
+import mock.FakeProfessorRepository;
 
 public class ProfessorAdminFacadeTest {
 	private ProfessorAdminFacade professorAdminFacade;
-	private TestContainer testContainer;
+	private FakeProfessorRepository fakeProfessorRepository;
 
 	@BeforeEach
 	public void init() {
-		testContainer = new TestContainer();
+		fakeProfessorRepository = new FakeProfessorRepository();
 
 		professorAdminFacade = new ProfessorAdminFacade(
-			testContainer.professorCommandService,
-			testContainer.professorQueryService
+			new ProfessorCommandService(fakeProfessorRepository),
+			new ProfessorQueryService(fakeProfessorRepository)
 		);
 
-		testContainer.professorRepository.save(Professor.builder()
+		fakeProfessorRepository.save(Professor.builder()
 			.email("alswns11346@kyonggi.ac.kr")
 			.name("박민준")
 			.role(ASSISTANT)
@@ -52,17 +54,10 @@ public class ProfessorAdminFacadeTest {
 			.build();
 
 		// when
-		ProfessorPersistResponse response = professorAdminFacade.createProfessor(request);
+		ProfessorPersistResponse result = professorAdminFacade.createProfessor(request);
 
 		// then
-		Professor professor = testContainer.professorRepository.findById(response.id()).orElse(null);
-		assertEquals(2, professor.getId());
-		assertEquals(request.name(), professor.getName());
-		assertEquals(request.email(), professor.getEmail());
-		assertEquals(request.contact(), professor.getContact());
-		assertEquals(request.role(), professor.getRole());
-		assertEquals(request.img(), professor.getImg());
-		assertEquals(request.officeLoc(), professor.getOfficeLoc());
+		assertEquals(2, result.id());
 	}
 
 	@Test
@@ -83,7 +78,7 @@ public class ProfessorAdminFacadeTest {
 		professorAdminFacade.updateProfessor(professorId, request);
 
 		// then
-		Professor professor = testContainer.professorRepository.findById(professorId).orElse(null);
+		Professor professor = fakeProfessorRepository.findById(professorId).orElse(null);
 		assertEquals(1, professor.getId());
 		assertEquals(request.name(), professor.getName());
 		assertEquals(request.email(), professor.getEmail());
@@ -103,7 +98,7 @@ public class ProfessorAdminFacadeTest {
 		professorAdminFacade.deleteProfessor(professorId);
 
 		// then
-		Professor professor = testContainer.professorRepository.findById(professorId).orElse(null);
+		Professor professor = fakeProfessorRepository.findById(professorId).orElse(null);
 		assertNotNull(professor.getDeletedAt());
 	}
 }

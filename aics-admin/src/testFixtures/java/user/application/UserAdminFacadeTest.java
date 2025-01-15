@@ -1,21 +1,22 @@
 package user.application;
 
-import kgu.developers.admin.user.application.UserAdminFacade;
-import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
-import kgu.developers.domain.user.application.query.UserQueryService;
-import kgu.developers.domain.user.application.response.UserDetailResponse;
-import kgu.developers.domain.user.domain.User;
-import mock.FakeUserRepository;
+import static kgu.developers.domain.user.domain.Major.CSE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
-import static kgu.developers.domain.user.domain.Major.CSE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import kgu.developers.admin.user.application.UserAdminFacade;
+import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
+import kgu.developers.domain.user.application.query.UserQueryService;
+import kgu.developers.domain.user.application.response.UserDetailResponse;
+import kgu.developers.domain.user.domain.User;
+import mock.FakeUserRepository;
 
 public class UserAdminFacadeTest {
 	private UserAdminFacade userAdminFacade;
@@ -23,8 +24,9 @@ public class UserAdminFacadeTest {
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
-		this.userAdminFacade = new UserAdminFacade(userQueryService);
+		this.userAdminFacade = new UserAdminFacade(
+			new UserQueryService(fakeUserRepository)
+		);
 
 		fakeUserRepository.save(User.builder()
 			.id("202411001")
@@ -55,7 +57,7 @@ public class UserAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getUsers는 Club을 생성할 수 있다.")
+	@DisplayName("getUsers는 유저 목록을 페이징해서 조회할 수 있다")
 	void getUsers_Success() {
 		// given
 		Pageable pageable = PageRequest.of(0, 10);

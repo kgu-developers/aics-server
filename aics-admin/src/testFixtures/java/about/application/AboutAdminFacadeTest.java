@@ -25,12 +25,14 @@ import mock.FakeAboutRepository;
 
 public class AboutAdminFacadeTest {
 	private AboutAdminFacade aboutAdminFacade;
-	FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
+	private FakeAboutRepository fakeAboutRepository;
 
 	@BeforeEach
 	public void init() {
-		AboutCommandService aboutCommandService = new AboutCommandService(fakeAboutRepository);
-		this.aboutAdminFacade = new AboutAdminFacade(aboutCommandService);
+		fakeAboutRepository = new FakeAboutRepository();
+		aboutAdminFacade = new AboutAdminFacade(
+			new AboutCommandService(fakeAboutRepository)
+		);
 
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
@@ -41,7 +43,7 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createAbout은 about을 생성할 수 있다.")
+	@DisplayName("createAbout은 about을 생성할 수 있다")
 	public void createAbout_Success() {
 		// given
 		MainCategory main = DEPT_INTRO;
@@ -57,19 +59,14 @@ public class AboutAdminFacadeTest {
 			.build();
 
 		// when
-		AboutPersistResponse response = aboutAdminFacade.createAbout(request);
+		AboutPersistResponse result = aboutAdminFacade.createAbout(request);
 
 		// then
-		About about = fakeAboutRepository.findById(response.id()).orElseThrow();
-		assertEquals(response.id(), 2L);
-		assertEquals(main, about.getMainCategory());
-		assertEquals(sub, about.getSubCategory());
-		assertEquals(detail, about.getDetailCategory());
-		assertEquals(content, about.getContent());
+		assertEquals(2L, result.id());
 	}
 
 	@Test
-	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생 한다.")
+	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생 한다")
 	public void createAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;

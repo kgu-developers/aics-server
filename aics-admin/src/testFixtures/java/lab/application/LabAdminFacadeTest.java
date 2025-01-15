@@ -13,22 +13,24 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.admin.lab.application.LabAdminFacade;
 import kgu.developers.admin.lab.presentation.request.LabRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
+import kgu.developers.domain.lab.application.command.LabCommandService;
+import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
-import mock.TestContainer;
+import mock.FakeLabRepository;
 
 public class LabAdminFacadeTest {
 	private LabAdminFacade labAdminFacade;
-	private TestContainer testContainer;
+	private FakeLabRepository fakeLabRepository;
 
 	@BeforeEach
 	public void init() {
-		testContainer = new TestContainer();
+		fakeLabRepository = new FakeLabRepository();
 		labAdminFacade = new LabAdminFacade(
-			testContainer.labCommandService,
-			testContainer.labQueryService
+			new LabCommandService(fakeLabRepository),
+			new LabQueryService(fakeLabRepository)
 		);
 
-		testContainer.labRepository.save(Lab.builder()
+		fakeLabRepository.save(Lab.builder()
 			.name("Lab A")
 			.loc("8500")
 			.site("http://labA.kyonggi.ac.kr")
@@ -52,7 +54,7 @@ public class LabAdminFacadeTest {
 		LabPersistResponse response = labAdminFacade.createLab(request);
 
 		// then
-		Lab lab = testContainer.labRepository.findById(response.id()).orElse(null);
+		Lab lab = fakeLabRepository.findById(response.id()).orElse(null);
 		assertNotNull(lab);
 		assertEquals(2, lab.getId());
 		assertEquals(request.name(), lab.getName());
@@ -77,7 +79,7 @@ public class LabAdminFacadeTest {
 		labAdminFacade.updateLab(labId, request);
 
 		// then
-		Lab lab = testContainer.labRepository.findById(labId).orElse(null);
+		Lab lab = fakeLabRepository.findById(labId).orElse(null);
 		assertNotNull(lab);
 		assertEquals(1L, lab.getId());
 		assertEquals(request.name(), lab.getName());
@@ -96,7 +98,7 @@ public class LabAdminFacadeTest {
 		labAdminFacade.deleteLab(labId);
 
 		// then
-		Optional<Lab> deletedLab = testContainer.labRepository.findById(labId);
+		Optional<Lab> deletedLab = fakeLabRepository.findById(labId);
 		assertThat(deletedLab).isEmpty();
 	}
 }

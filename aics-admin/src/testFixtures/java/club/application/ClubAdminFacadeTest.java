@@ -1,5 +1,14 @@
 package club.application;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import kgu.developers.admin.club.application.ClubAdminFacade;
 import kgu.developers.admin.club.presentation.request.ClubRequest;
 import kgu.developers.admin.club.presentation.response.ClubPersistResponse;
@@ -8,14 +17,6 @@ import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.exception.ClubNotFoundException;
 import mock.FakeClubRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ClubAdminFacadeTest {
 	private ClubAdminFacade clubAdminFacade;
@@ -24,9 +25,10 @@ public class ClubAdminFacadeTest {
 	@BeforeEach
 	public void init() {
 		this.fakeClubRepository = new FakeClubRepository();
-		ClubCommandService clubCommandService = new ClubCommandService(fakeClubRepository);
-		ClubQueryService clubQueryService = new ClubQueryService(fakeClubRepository);
-		this.clubAdminFacade = new ClubAdminFacade(clubCommandService, clubQueryService);
+		this.clubAdminFacade = new ClubAdminFacade(
+			new ClubCommandService(fakeClubRepository),
+			new ClubQueryService(fakeClubRepository)
+		);
 
 		fakeClubRepository.save(
 			Club.create(
@@ -36,7 +38,7 @@ public class ClubAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createClub은 Club을 생성할 수 있다.")
+	@DisplayName("createClub은 Club을 생성할 수 있다")
 	void createClub_Success() {
 		// given
 		ClubRequest clubRequest = new ClubRequest(
@@ -46,12 +48,12 @@ public class ClubAdminFacadeTest {
 		);
 
 		// when
-		ClubPersistResponse response = clubAdminFacade.createClub(clubRequest);
-		List<Club> all = fakeClubRepository.findAll();
+		ClubPersistResponse result = clubAdminFacade.createClub(clubRequest);
+		List<Club> resultData = fakeClubRepository.findAll();
 
 		// then
-		assertEquals(2, all.size());
-		assertEquals(2L, response.id());
+		assertEquals(2, resultData.size());
+		assertEquals(2L, result.id());
 	}
 
 	@Test
@@ -73,7 +75,6 @@ public class ClubAdminFacadeTest {
 		assertEquals("New Club Description", saved.getDescription());
 		assertEquals("https://www.new-club.page", saved.getSite());
 	}
-
 
 	@Test
 	@DisplayName("updateClub은 존재하지 않은 id을 수정하면 ClubNotFoundException을 발생한다.")

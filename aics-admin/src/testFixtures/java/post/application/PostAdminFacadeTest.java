@@ -1,5 +1,20 @@
 package post.application;
 
+import static kgu.developers.domain.post.domain.Category.NOTIFICATION;
+import static kgu.developers.domain.user.domain.Major.CSE;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import kgu.developers.admin.post.application.PostAdminFacade;
 import kgu.developers.admin.post.presentation.request.PostRequest;
 import kgu.developers.admin.post.presentation.response.PostPersistResponse;
@@ -7,48 +22,51 @@ import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.command.PostSchedulingService;
 import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.post.domain.PostRepository;
 import kgu.developers.domain.post.exception.PostNotFoundException;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
-import kgu.developers.domain.user.domain.UserRepository;
-import mock.TestContainer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import static kgu.developers.domain.post.domain.Category.NOTIFICATION;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+import mock.FakePostRepository;
+import mock.FakeUserRepository;
 
 public class PostAdminFacadeTest {
 	private PostAdminFacade postAdminFacade;
-	private PostRepository fakePostRepository;
+	private FakePostRepository fakePostRepository;
 
 	@BeforeEach
 	public void init() {
-		TestContainer container = new TestContainer();
-		this.fakePostRepository = container.postRepository;
-		PostCommandService postCommandService = container.postCommandService;
-		PostQueryService postQueryService = container.postQueryService;
-		PostSchedulingService postSchedulingService = new PostSchedulingService(fakePostRepository);
+		fakePostRepository = new FakePostRepository();
+		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+		this.postAdminFacade = new PostAdminFacade(
+			new PostCommandService(userQueryService, fakePostRepository),
+			new PostQueryService(fakePostRepository),
+			new PostSchedulingService(fakePostRepository)
+		);
 
-		this.postAdminFacade = new PostAdminFacade(postCommandService, postQueryService, postSchedulingService);
+		User author = fakeUserRepository.save(User.builder()
+			.id("202411345")
+			.password("password1234")
+			.name("홍길동")
+			.email("test@kyonggi.ac.kr")
+			.phone("010-1234-5678")
+			.major(CSE)
+			.build());
 
-		UserRepository userRepository = container.userRepository;
-		User user = userRepository.findById("202411345").get();
+		UserDetails user = userQueryService.getUserById("202411345");
+		SecurityContext context = SecurityContextHolder.getContext();
+		context.setAuthentication(
+			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
+		);
 
 		fakePostRepository.save(
 			Post.create(
-				"post title", "post content", NOTIFICATION, user
+				"post title", "post content", NOTIFICATION, author
 			)
 		);
 	}
 
 	@Test
-	@DisplayName("createPost는 Post를 생성할 수 있다.")
+	@DisplayName("createPost는 Post를 생성할 수 있다")
 	void createPost_Success() {
 		// given
 		PostRequest postRequest = PostRequest.builder()
@@ -65,9 +83,8 @@ public class PostAdminFacadeTest {
 		assertEquals("new title", found.getTitle());
 	}
 
-
 	@Test
-	@DisplayName("updatePost는 Post를 수정할 수 있다.")
+	@DisplayName("updatePost는 Post를 수정할 수 있다")
 	void updatePost_Success() {
 		// given
 		PostRequest postRequest = PostRequest.builder()
@@ -85,9 +102,8 @@ public class PostAdminFacadeTest {
 		assertEquals("new content", found.getContent());
 	}
 
-
 	@Test
-	@DisplayName("updatePost는 존재하지 않는 Post를 수정하면 PostNotFoundException을 발생시킨다.")
+	@DisplayName("updatePost는 존재하지 않는 Post를 수정하면 PostNotFoundException을 발생시킨다")
 	void updatePost_throws_PostNotFoundException() {
 		// given
 		PostRequest postRequest = PostRequest.builder()
@@ -102,9 +118,8 @@ public class PostAdminFacadeTest {
 			.isInstanceOf(PostNotFoundException.class);
 	}
 
-
 	@Test
-	@DisplayName("togglePostPinStatus는 Post의 상태를 변경할 수 있다.")
+	@DisplayName("togglePostPinStatus는 Post의 상태를 변경할 수 있다")
 	void togglePostPinStatus_Success() {
 		// given
 		Post original = fakePostRepository.findById(1L).get();
@@ -119,7 +134,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deletePost는 Post를 삭제할 수 있다.")
+	@DisplayName("deletePost는 Post를 삭제할 수 있다")
 	void deletePost_Success() {
 		// when
 		postAdminFacade.deletePost(1L);
@@ -130,8 +145,8 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deletePost는 존재하지 않는 Post를 수정하면 PostNotFoundException을 발생시킨다.")
-	void deletePost_() {
+	@DisplayName("deletePost는 존재하지 않는 Post를 수정하면 PostNotFoundException을 발생시킨다")
+	void deletePost_Failed() {
 		// when
 		// then
 		assertThatThrownBy(() -> postAdminFacade.deletePost(2L))
@@ -139,7 +154,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getLastCleanupRunTime는 마지막 scheduling cleaning 시간을 조회할 수 있다.")
+	@DisplayName("getLastCleanupRunTime는 마지막 scheduling cleaning 시간을 조회할 수 있다")
 	void getLastCleanupRunTime_Success() {
 		// when
 		String lastCleanupRunTime = postAdminFacade.getLastCleanupRunTime();
