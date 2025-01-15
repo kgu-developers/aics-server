@@ -13,22 +13,25 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.api.about.application.AboutFacade;
 import kgu.developers.api.about.presentation.response.AboutResponse;
+import kgu.developers.domain.about.application.query.AboutQueryService;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
-import mock.TestContainer;
+import mock.FakeAboutRepository;
 
 public class AboutFacadeTest {
 	private AboutFacade aboutFacade;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		this.aboutFacade = new AboutFacade(testContainer.aboutQueryService);
+		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
+		this.aboutFacade = new AboutFacade(
+			new AboutQueryService(fakeAboutRepository)
+		);
 
-		testContainer.aboutRepository.save(About.builder()
+		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
 			.subCategory(CURRICULUM)
 			.detailCategory("initDetail")
