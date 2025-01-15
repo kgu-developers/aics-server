@@ -14,17 +14,17 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.exception.ProfessorNotFoundException;
-import mock.TestContainer;
+import mock.FakeProfessorRepository;
 
 public class ProfessorQueryServiceTest {
 	private ProfessorQueryService professorQueryService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		professorQueryService = testContainer.professorQueryService;
+		FakeProfessorRepository fakeProfessorRepository = new FakeProfessorRepository();
+		professorQueryService = new ProfessorQueryService(fakeProfessorRepository);
 
-		testContainer.professorRepository.save(Professor.builder()
+		fakeProfessorRepository.save(Professor.builder()
 			.email("alswns11346@kyonggi.ac.kr")
 			.name("박민준")
 			.role(ASSISTANT)
@@ -33,7 +33,7 @@ public class ProfessorQueryServiceTest {
 			.officeLoc("office1")
 			.build());
 
-		testContainer.professorRepository.save(Professor.builder()
+		fakeProfessorRepository.save(Professor.builder()
 			.email("alswns11346@kgu.ac.kr")
 			.name("박민준")
 			.role(PROFESSOR)
@@ -42,7 +42,7 @@ public class ProfessorQueryServiceTest {
 			.officeLoc("office2")
 			.build());
 
-		testContainer.professorRepository.save(Professor.builder()
+		fakeProfessorRepository.save(Professor.builder()
 			.email("kkh@kyonggi.ac.kr")
 			.name("권기현")
 			.role(PROFESSOR)
