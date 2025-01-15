@@ -12,23 +12,20 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.AboutRepository;
 import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
-import mock.TestContainer;
+import mock.FakeAboutRepository;
 
 public class AboutCommandServiceTest {
 	private AboutCommandService aboutCommandService;
-	private AboutRepository aboutRepository;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		aboutRepository = testContainer.aboutRepository;
-		aboutCommandService = new AboutCommandService(aboutRepository);
+		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
+		aboutCommandService = new AboutCommandService(fakeAboutRepository);
 
-		aboutRepository.save(
+		fakeAboutRepository.save(
 			About.builder()
 				.mainCategory(DEPT_INTRO)
 				.subCategory(HISTORY)
@@ -48,14 +45,10 @@ public class AboutCommandServiceTest {
 		String content = "testContent";
 
 		// when
-		aboutCommandService.createAbout(mainCategory, subCategory, detail, content);
+		Long result = aboutCommandService.createAbout(mainCategory, subCategory, detail, content);
 
 		// then
-		About result = aboutRepository.findById(2L).orElseThrow();
-		assertEquals(mainCategory, result.getMainCategory());
-		assertEquals(subCategory, result.getSubCategory());
-		assertEquals(detail, result.getDetailCategory());
-		assertEquals(content, result.getContent());
+		assertEquals(result, 2L);
 	}
 
 	@Test

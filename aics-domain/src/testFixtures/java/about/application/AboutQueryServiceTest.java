@@ -1,8 +1,6 @@
 package about.application;
 
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
-import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
 import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,31 +15,24 @@ import kgu.developers.domain.about.domain.MainCategory;
 import kgu.developers.domain.about.domain.SubCategory;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
-import mock.TestContainer;
+import mock.FakeAboutRepository;
 
 public class AboutQueryServiceTest {
 	private AboutQueryService aboutQueryService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		aboutQueryService = testContainer.aboutQueryService;
+		FakeAboutRepository fakeAboutRepository = new FakeAboutRepository();
+		aboutQueryService = new AboutQueryService(fakeAboutRepository);
 
-		testContainer.aboutRepository.save(
+		fakeAboutRepository.save(
 			About.builder()
 				.mainCategory(DEPT_INTRO)
 				.subCategory(HISTORY)
-				.detailCategory("detailCategory")
+				.detailCategory("detail category")
 				.content("about content")
 				.build()
 		);
-
-		testContainer.aboutRepository.save(About.builder()
-			.mainCategory(EDU_ACTIVITIES)
-			.subCategory(CURRICULUM)
-			.detailCategory("eduDetail")
-			.content("edu content")
-			.build());
 	}
 
 	@Test
@@ -50,7 +41,7 @@ public class AboutQueryServiceTest {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = HISTORY;
-		String detail = "detailCategory";
+		String detail = "detail category";
 
 		// when
 		About about = aboutQueryService.getAbout(main, sub, detail);
@@ -66,8 +57,8 @@ public class AboutQueryServiceTest {
 	@DisplayName("getAbout은 main, subCategory와 detail이 일치하지 않으면 AboutNotFoundException을 발생시킨다")
 	public void getAbout_NotFound_ThrowsException() {
 		// given
-		MainCategory main = MainCategory.DEPT_INTRO;
-		SubCategory sub = SubCategory.HISTORY;
+		MainCategory main = DEPT_INTRO;
+		SubCategory sub = HISTORY;
 		String detail = "nonexistentDetail";
 
 		// when & then
@@ -80,8 +71,8 @@ public class AboutQueryServiceTest {
 	@DisplayName("getAbout은 detail이 null 또는 blank일 때도 올바른 About을 반환한다")
 	public void getAbout_WithNullOrBlankDetail_Success() {
 		// given
-		MainCategory main = MainCategory.EDU_ACTIVITIES;
-		SubCategory sub = SubCategory.CURRICULUM;
+		MainCategory main = DEPT_INTRO;
+		SubCategory sub = HISTORY;
 		String detail = null;
 
 		// when
@@ -90,8 +81,8 @@ public class AboutQueryServiceTest {
 		// then
 		assertEquals(main, about.getMainCategory());
 		assertEquals(sub, about.getSubCategory());
-		assertEquals("eduDetail", about.getDetailCategory());
-		assertEquals("edu content", about.getContent());
+		assertEquals("detail category", about.getDetailCategory());
+		assertEquals("about content", about.getContent());
 	}
 
 	@Test
