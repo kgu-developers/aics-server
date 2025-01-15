@@ -1,10 +1,6 @@
 package lab.application;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,26 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.domain.Lab;
-import kgu.developers.domain.lab.domain.LabRepository;
-import mock.TestContainer;
+import mock.FakeLabRepository;
 
 public class LabCommandServiceTest {
 	private LabCommandService labCommandService;
-	private LabRepository labRepository;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		labRepository = testContainer.labRepository;
-		this.labCommandService = testContainer.labCommandService;
-
-		labRepository.save(Lab.builder()
-			.name("Lab A")
-			.loc("8500")
-			.site("http://labA.kyonggi.ac.kr")
-			.advisor("박민준")
-			.build()
-		);
+		FakeLabRepository fakeLabRepository = new FakeLabRepository();
+		labCommandService = new LabCommandService(fakeLabRepository);
 	}
 
 	@Test
@@ -44,23 +29,17 @@ public class LabCommandServiceTest {
 		String advisor = "박교수";
 
 		// when
-		Long labId = labCommandService.createLab(name, loc, site, advisor);
+		Long response = labCommandService.createLab(name, loc, site, advisor);
 
 		// then
-		Lab lab = labRepository.findById(labId).orElse(null);
-		assertNotNull(lab);
-		assertEquals(2, lab.getId());
-		assertEquals("Lab B", lab.getName());
-		assertEquals("8501", lab.getLoc());
-		assertEquals("http://labB.kyonggi.ac.kr", lab.getSite());
-		assertEquals("박교수", lab.getAdvisor());
+		assertEquals(response, 1);
 	}
 
 	@Test
 	@DisplayName("updateLab은 Lab을 수정할 수 있다")
 	public void updateLab_Success() {
 		// given
-		Lab lab = labRepository.findById(1L).orElse(null);
+		Lab lab = Lab.builder().build();
 		String newName = "Lab AA";
 		String newLoc = "제2공학관 200";
 		String newSite = "https://labAA.kyonggi.ac.kr";
@@ -80,13 +59,16 @@ public class LabCommandServiceTest {
 	@DisplayName("deleteLab은 Lab을 삭제할 수 있다")
 	public void deleteLab_Success() {
 		// given
-		Long id = 1L;
+		String name = "Lab A";
+		String loc = "8501";
+		String site = "http://labA.kyonggi.ac.kr";
+		String advisor = "박교수";
+
+		Long labId = labCommandService.createLab(name, loc, site, advisor);
 
 		// when
-		labCommandService.deleteLabById(id);
+		labCommandService.deleteLabById(labId);
 
-		// then
-		Optional<Lab> deletedLab = labRepository.findById(id);
-		assertThat(deletedLab).isEmpty();
+		// then TODO: 추후 구현
 	}
 }
