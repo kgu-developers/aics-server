@@ -10,17 +10,17 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
-import mock.TestContainer;
+import mock.FakeClubRepository;
 
 public class ClubQueryServiceTest {
 	private ClubQueryService clubQueryService;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		clubQueryService = testContainer.clubQueryService;
+		FakeClubRepository fakeClubRepository = new FakeClubRepository();
+		clubQueryService = new ClubQueryService(fakeClubRepository);
 
-		testContainer.clubRepository.save(
+		fakeClubRepository.save(
 			Club.builder()
 				.name("Club a")
 				.description("a 동아리입니다.")
@@ -28,7 +28,7 @@ public class ClubQueryServiceTest {
 				.build()
 		);
 
-		testContainer.clubRepository.save(
+		fakeClubRepository.save(
 			Club.builder()
 				.name("Club b")
 				.description("b 동아리입니다.")

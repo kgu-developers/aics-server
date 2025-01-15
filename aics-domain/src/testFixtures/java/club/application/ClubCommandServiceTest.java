@@ -8,34 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.domain.Club;
-import kgu.developers.domain.club.domain.ClubRepository;
-import mock.TestContainer;
+import mock.FakeClubRepository;
 
 public class ClubCommandServiceTest {
 	private ClubCommandService clubCommandService;
-	private ClubRepository clubRepository;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
-		clubRepository = testContainer.clubRepository;
-		clubCommandService = testContainer.clubCommandService;
-
-		clubRepository.save(
-			Club.builder()
-				.name("Club a")
-				.description("a 동아리입니다.")
-				.site("http://club-a.kyonggi.ac.kr")
-				.build()
-		);
-
-		clubRepository.save(
-			Club.builder()
-				.name("Club b")
-				.description("b 동아리입니다.")
-				.site("http://club-b.kyonggi.ac.kr")
-				.build()
-		);
+		FakeClubRepository fakeClubRepository = new FakeClubRepository();
+		clubCommandService = new ClubCommandService(fakeClubRepository);
 	}
 
 	@Test
@@ -47,21 +28,18 @@ public class ClubCommandServiceTest {
 		String site = "http://club-c.kyonggi.ac.kr";
 
 		//when
-		Long id = clubCommandService.createClub(name, description, site);
+		Long response = clubCommandService.createClub(name, description, site);
 
 		//then
-		Club club = clubRepository.findById(id).orElseThrow();
-		assertEquals(id, 3L);
-		assertEquals(name, club.getName());
-		assertEquals(description, club.getDescription());
-		assertEquals(site, club.getSite());
+		assertEquals(response, 1L);
 	}
 
 	@Test
 	@DisplayName("updateClub은 Club 객체를 수정한다.")
 	public void updateClub_Success() {
 		//when
-		Club club = clubRepository.findById(2L).orElseThrow();
+		Club club = Club.create("a", "a 동아리", "http://club-a.kyonggi.ac.kr");
+
 		String newName = "b";
 		String newDescription = "b 동아리";
 		String newSite = "http://club-b.kyonggi.ac.kr";
@@ -72,5 +50,6 @@ public class ClubCommandServiceTest {
 		//then
 		assertEquals(newName, club.getName());
 		assertEquals(newDescription, club.getDescription());
+		assertEquals(newSite, club.getSite());
 	}
 }
