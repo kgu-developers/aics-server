@@ -8,19 +8,21 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.api.club.application.ClubFacade;
 import kgu.developers.api.club.presentation.response.ClubListResponse;
+import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
-import mock.TestContainer;
+import mock.FakeClubRepository;
 
 public class ClubFacadeTest {
 	private ClubFacade clubFacade;
 
 	@BeforeEach
 	public void init() {
-		TestContainer testContainer = new TestContainer();
+		FakeClubRepository fakeClubRepository = new FakeClubRepository();
+		clubFacade = new ClubFacade(
+			new ClubQueryService(fakeClubRepository)
+		);
 
-		this.clubFacade = new ClubFacade(testContainer.clubQueryService);
-
-		testContainer.clubRepository.save(
+		fakeClubRepository.save(
 			Club.builder()
 				.name("Club a")
 				.description("a 동아리입니다.")
@@ -28,7 +30,7 @@ public class ClubFacadeTest {
 				.build()
 		);
 
-		testContainer.clubRepository.save(
+		fakeClubRepository.save(
 			Club.builder()
 				.name("Club b")
 				.description("b 동아리입니다.")
