@@ -59,7 +59,7 @@ public class UserAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getUsers는 유저 목록을 페이징해서 조회할 수 있다")
+	@DisplayName("getUsers는 유저 목록을 페이징해서 조회한다")
 	void getUsers_Success() {
 		// given
 		Pageable pageable = PageRequest.of(0, 10);

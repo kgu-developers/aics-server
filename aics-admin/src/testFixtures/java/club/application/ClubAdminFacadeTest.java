@@ -38,7 +38,7 @@ public class ClubAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createClub은 Club을 생성할 수 있다")
+	@DisplayName("createClub은 Club을 생성한다")
 	void createClub_Success() {
 		// given
 		ClubRequest clubRequest = new ClubRequest(
@@ -57,7 +57,7 @@ public class ClubAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateClub은 Club을 수정할 수 있다.")
+	@DisplayName("updateClub은 Club을 수정한다")
 	void updateClub_Success() {
 		// given
 		ClubRequest clubRequest = new ClubRequest(
@@ -77,7 +77,7 @@ public class ClubAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateClub은 존재하지 않은 id을 수정하면 ClubNotFoundException을 발생한다.")
+	@DisplayName("updateClub은 존재하지 않은 id을 수정하면 ClubNotFoundException을 발생시킨다")
 	void updateClub_throws_ClubNotFoundException() {
 		// given
 		ClubRequest clubRequest = new ClubRequest(
@@ -93,7 +93,7 @@ public class ClubAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deleteClub은 Club을 삭제할 수 있다.")
+	@DisplayName("deleteClub은 Club을 삭제한다")
 	void deleteClub_Success() {
 		// when
 		clubAdminFacade.deleteClub(1L);

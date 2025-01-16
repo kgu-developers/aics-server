@@ -40,7 +40,7 @@ public class LabAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createLab은 Lab을 생성할 수 있다")
+	@DisplayName("createLab은 Lab을 생성한다")
 	public void createLab_Success() {
 		// given
 		LabRequest request = LabRequest.builder()
@@ -64,7 +64,7 @@ public class LabAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateLab은 Lab을 수정할 수 있다")
+	@DisplayName("updateLab은 Lab을 수정한다")
 	public void updateLab_Success() {
 		// given
 		Long labId = 1L;
@@ -89,7 +89,7 @@ public class LabAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deleteLab은 Lab을 삭제할 수 있다")
+	@DisplayName("deleteLab은 Lab을 삭제한다")
 	public void deleteLab_Success() {
 		// given
 		Long labId = 1L;

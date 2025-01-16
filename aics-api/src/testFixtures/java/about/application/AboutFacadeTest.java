@@ -40,7 +40,7 @@ public class AboutFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getAbout은 About을 조회할 수 있다.")
+	@DisplayName("getAbout은 About을 조회한다")
 	public void getAbout_Success() {
 		// given
 		MainCategory main = EDU_ACTIVITIES;
@@ -55,7 +55,7 @@ public class AboutFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않을 시 CategoryNotMatchException을 발생 한다.")
+	@DisplayName("getAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않을 시 CategoryNotMatchException을 발생시킨다")
 	public void getAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
@@ -70,7 +70,7 @@ public class AboutFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotFoundException을 발생 한다.")
+	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotFoundException을 발생시킨다")
 	public void getAbout_AboutNotFound_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;

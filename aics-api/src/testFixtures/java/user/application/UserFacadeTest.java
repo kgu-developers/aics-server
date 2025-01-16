@@ -89,7 +89,7 @@ public class UserFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getUserDetail은 현재 로그인 유저의 정보를 가져온다")
+	@DisplayName("getUserDetail은 현재 로그인 유저의 정보를 반환한다")
 	public void getUserDetail_Success() {
 
 		//when

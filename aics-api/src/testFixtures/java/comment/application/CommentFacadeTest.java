@@ -82,7 +82,7 @@ public class CommentFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createComment는 댓글을 생성합니다")
+	@DisplayName("createComment는 댓글을 생성한다")
 	public void createComment_Success() {
 		// given
 		CommentRequest request = CommentRequest.builder()
@@ -97,7 +97,7 @@ public class CommentFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getComments는 해당 게시글의 댓글 리스트를 가져옵니다")
+	@DisplayName("getComments는 해당 게시글의 댓글 리스트를 가져온다")
 	public void getComments_Success() {
 		// given
 		Long postId = 1L;
@@ -113,7 +113,7 @@ public class CommentFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateComment는 댓글을 수정합니다.")
+	@DisplayName("updateComment는 댓글을 수정한다")
 	public void updateComment_Success() {
 		// given
 		Long commentId = 1L;
@@ -131,7 +131,7 @@ public class CommentFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deleteComment는 해당 댓글을 삭제합니다.")
+	@DisplayName("deleteComment는 해당 댓글을 삭제한다")
 	public void deleteComment_Success() {
 		// given
 		Long commentId = 1L;

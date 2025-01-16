@@ -41,7 +41,7 @@ public class ProfessorAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createProfessor는 교수를 생성할 수 있다")
+	@DisplayName("createProfessor는 교수를 생성한다")
 	public void createProfessor_Success() {
 		// given
 		ProfessorRequest request = ProfessorRequest.builder()
@@ -61,7 +61,7 @@ public class ProfessorAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateProfessor는 교수를 수정할 수 있다")
+	@DisplayName("updateProfessor는 교수를 수정한다")
 	public void updateProfessor_Success() {
 		// given
 		Long professorId = 1L;
@@ -89,7 +89,7 @@ public class ProfessorAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deleteProfessor는 교수를 삭제할 수 있다")
+	@DisplayName("deleteProfessor는 교수를 삭제한다")
 	public void deleteProfessor_Success() {
 		// given
 		Long professorId = 1L;

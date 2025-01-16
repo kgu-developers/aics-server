@@ -113,7 +113,7 @@ public class PostFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getPostByIdWithPrevAndNext는 현재 게시글과 이전. 다음 게시글 정보를 포함하여 조회한다")
+	@DisplayName("getPostByIdWithPrevAndNext는 현재 게시글과 이전, 다음 게시글 정보를 포함하여 조회한다")
 	public void getPostByIdWithPrevAndNext_Success() {
 		// given
 		Long postId = 1L;

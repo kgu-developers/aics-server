@@ -43,7 +43,7 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createAbout은 about을 생성할 수 있다")
+	@DisplayName("createAbout은 about을 생성한다")
 	public void createAbout_Success() {
 		// given
 		MainCategory main = DEPT_INTRO;
@@ -66,7 +66,7 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생 한다")
+	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생시킨다")
 	public void createAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
@@ -89,7 +89,7 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateAbout은 About의 content를 수정할 수 있다.")
+	@DisplayName("updateAbout은 About의 content를 수정한다")
 	public void updateAbout_Success() {
 		// given
 		Long id = 1L;
@@ -107,7 +107,7 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateAbout은 존재하지 않는 id로 수정 요청 시 AboutNotFoundException을 발생 한다.")
+	@DisplayName("updateAbout은 존재하지 않는 id로 수정 요청 시 AboutNotFoundException을 발생시킨다")
 	public void updateAbout_AboutNotFound_ThrowsException() {
 		// given
 		Long id = 0L;

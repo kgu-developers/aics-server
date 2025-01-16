@@ -66,7 +66,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createPost는 Post를 생성할 수 있다")
+	@DisplayName("createPost는 Post를 생성한다")
 	void createPost_Success() {
 		// given
 		PostRequest postRequest = PostRequest.builder()
@@ -84,7 +84,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updatePost는 Post를 수정할 수 있다")
+	@DisplayName("updatePost는 Post를 수정한다")
 	void updatePost_Success() {
 		// given
 		PostRequest postRequest = PostRequest.builder()
@@ -119,7 +119,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("togglePostPinStatus는 Post의 상태를 변경할 수 있다")
+	@DisplayName("togglePostPinStatus는 Post의 상태를 변경한다")
 	void togglePostPinStatus_Success() {
 		// given
 		Post original = fakePostRepository.findById(1L).get();
@@ -134,7 +134,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("deletePost는 Post를 삭제할 수 있다")
+	@DisplayName("deletePost는 Post를 삭제한다")
 	void deletePost_Success() {
 		// when
 		postAdminFacade.deletePost(1L);
@@ -154,7 +154,7 @@ public class PostAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getLastCleanupRunTime는 마지막 scheduling cleaning 시간을 조회할 수 있다")
+	@DisplayName("getLastCleanupRunTime는 마지막 scheduling cleaning 시간을 조회한다")
 	void getLastCleanupRunTime_Success() {
 		// when
 		String lastCleanupRunTime = postAdminFacade.getLastCleanupRunTime();
