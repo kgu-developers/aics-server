@@ -16,48 +16,45 @@ import kgu.developers.domain.user.exception.EmailDomainNotValidException;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
 
 public class UserDomainTest {
+	private static final String ID = "202411345";
+	private static final String PASSWORD = "password";
+	private static final String NAME = "홍길동";
+	private static final String VALID_EMAIL = "valid@kgu.ac.kr";
+	private static final String PHONE = "010-1234-5678";
+	private static final Major MAJOR = Major.CSE;
+
+	private User createTestUser(String id, String password, String email, Major major) {
+		return User.create(id, password, NAME, email, PHONE, major);
+	}
 
 	@Test
 	@DisplayName("USER 객체를 생성할 수 있다")
 	public void createUser_Success() {
-		// given
-		String id = "202411345";
-		String password = "password";
-		String name = "홍길동";
-		String email = "valid@kgu.ac.kr";
-		String phone = "010-1234-5678";
-		Major major = Major.CSE;
-
 		// when
-		User user = User.create(id, password, name, email, phone, major);
+		User user = createTestUser(ID, PASSWORD, VALID_EMAIL, MAJOR);
 
 		// then
 		assertNotNull(user);
-		assertEquals(id, user.getId());
-		assertEquals(password, user.getPassword());
-		assertEquals(name, user.getName());
-		assertEquals(email, user.getEmail());
-		assertEquals(phone, user.getPhone());
+		assertEquals(ID, user.getId());
+		assertEquals(PASSWORD, user.getPassword());
+		assertEquals(NAME, user.getName());
+		assertEquals(VALID_EMAIL, user.getEmail());
+		assertEquals(PHONE, user.getPhone());
 		assertEquals(BaseRole.USER, user.getRole());
-		assertEquals(major, user.getMajor());
+		assertEquals(MAJOR, user.getMajor());
+
 	}
 
 	@Test
 	@DisplayName("잘못된 이메일 도메인으로 USER 생성 시 EmailDomainNotValidException이 발생 한다")
 	public void createUser_InvalidEmailDomain_ThrowsException() {
 		// given
-		String id = "202411345";
-		String password = "password";
-		String name = "홍길동";
-		String email = "valid@gmail.com"; // 잘못된 이메일 도메인
-		String phone = "010-1234-5678";
-		Major major = Major.CSE;
+		String email = "valid@gmail.com";
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			User.create(id, password, name, email, phone, major);
-		}).isInstanceOf(EmailDomainNotValidException.class);
+		assertThatThrownBy(() -> createTestUser(ID, PASSWORD, email, MAJOR))
+			.isInstanceOf(EmailDomainNotValidException.class);
 	}
 
 	@Test
@@ -65,38 +62,24 @@ public class UserDomainTest {
 	public void createUser_InvalidDeptCode_ThrowsException() {
 		// given
 		String id = "202410345"; // 잘못된 학과 코드
-		String password = "password";
-		String name = "홍길동";
-		String email = "valid@kyonggi.ac.kr";
-		String phone = "010-1234-5678";
-		Major major = Major.CSE;
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			User.create(id, password, name, email, phone, major);
-		}).isInstanceOf(DeptCodeNotValidException.class);
+		assertThatThrownBy(() -> createTestUser(id, PASSWORD, VALID_EMAIL, MAJOR))
+			.isInstanceOf(DeptCodeNotValidException.class);
 	}
 
 	@Test
 	@DisplayName("비밀번호가 일치하지 않을 시 InvalidPasswordException이 발생 한다")
 	public void isPasswordMatching_InvalidPassword_ThrowsException() {
 		// given
-		String rawPassword = "invalidPassword";
-
-		User user = User.create(
-			"202411345",
-			"$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2",
-			"홍길동",
-			"valid@kgu.ac.kr",
-			"010-1234-5678",
-			Major.CSE
-		);
+		String password = "$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2";
+		User user = createTestUser(ID, password, VALID_EMAIL, MAJOR);
+		String invalidPassword = "invalidPassword";
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			user.isPasswordMatching(rawPassword, new BCryptPasswordEncoder());
-		}).isInstanceOf(InvalidPasswordException.class);
+		assertThatThrownBy(() -> user.isPasswordMatching(invalidPassword, new BCryptPasswordEncoder()))
+			.isInstanceOf(InvalidPasswordException.class);
 	}
 }

@@ -134,7 +134,7 @@ public class PostDomainTest {
 		assertFalse(post.isPinned());
 	}
 
-	public User getUser() {
+	private User getUser() {
 		String id = "202411345";
 		String password = "password";
 		String name = "홍길동";

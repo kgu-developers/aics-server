@@ -13,12 +13,9 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
 
 public class CommentDomainTest {
-	@Test
-	@DisplayName("COMMENT 객체를 생성할 수 있다")
-	public void createComment_Success() {
-		// given
-		String content = "success";
-		User author = User.create(
+
+	private User getUser() {
+		return User.create(
 			"202411345",
 			"password",
 			"홍길동",
@@ -26,13 +23,24 @@ public class CommentDomainTest {
 			"010-1234-5678",
 			CSE
 		);
+	}
 
-		Post post = Post.create(
+	private Post getPost(User author) {
+		return Post.create(
 			"title",
 			"content.",
 			NEWS,
 			author
 		);
+	}
+
+	@Test
+	@DisplayName("COMMENT 객체를 생성할 수 있다")
+	public void createComment_Success() {
+		// given
+		String content = "success";
+		User author = getUser();
+		Post post = getPost(author);
 
 		// when
 		Comment comment = Comment.create(content, author, post);
@@ -49,21 +57,8 @@ public class CommentDomainTest {
 	public void updateComment_Success() {
 		// given
 		String updateContent = "update";
-		User author = User.create(
-			"202411345",
-			"password",
-			"홍길동",
-			"valid@kyonggi.ac.kr",
-			"010-1234-5678",
-			CSE
-		);
-
-		Post post = Post.create(
-			"title",
-			"content.",
-			NEWS,
-			author
-		);
+		User author = getUser();
+		Post post = getPost(author);
 
 		String content = "create";
 		Comment comment = Comment.create(content, author, post);

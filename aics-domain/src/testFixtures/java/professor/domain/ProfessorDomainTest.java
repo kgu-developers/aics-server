@@ -12,41 +12,39 @@ import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.Role;
 
 public class ProfessorDomainTest {
+	private static final String NAME = "박민준";
+	private static final Role ROLE = PROFESSOR;
+	private static final String CONTACT = "010-1234-5678";
+	private static final String EMAIL = "alswns11346@kgu.ac.kr";
+	private static final String IMAGE = "https://image.com/professor/profile/image";
+	private static final String OFFICE_LOC = "8000호";
+
+	private Professor createTestProfessor() {
+		return Professor.create(NAME, ROLE, CONTACT, EMAIL, IMAGE, OFFICE_LOC);
+	}
 
 	@Test
 	@DisplayName("PROFESSOR 객체를 생성할 수 있다")
 	public void createProfessor_Success() {
-		// given
-		String name = "박민준";
-		Role role = PROFESSOR;
-		String contact = "010-1234-5678";
-		String email = "alswns11346@kgu.ac.kr";
-		String image = "https://image.com/professor/profile/image";
-		String officeLoc = "8000호";
 
 		// when
-		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
+		Professor professor = createTestProfessor();
 
 		// then
 		assertNotNull(professor);
-		assertEquals(name, professor.getName());
-		assertEquals(role, professor.getRole());
-		assertEquals(contact, professor.getContact());
-		assertEquals(email, professor.getEmail());
+		assertEquals(NAME, professor.getName());
+		assertEquals(ROLE, professor.getRole());
+		assertEquals(CONTACT, professor.getContact());
+		assertEquals(EMAIL, professor.getEmail());
+		assertEquals(IMAGE, professor.getImg());
+		assertEquals(OFFICE_LOC, professor.getOfficeLoc());
 	}
 
 	@Test
 	@DisplayName("PROFESSOR 객체의 이름을 수정할 수 있다")
 	public void updateName_Success() {
 		// given
-		String name = "박민준";
-		Role role = PROFESSOR;
-		String contact = "010-1234-5678";
-		String email = "alswns11346@kgu.ac.kr";
-		String image = "https://image.com/professor/profile/image";
-		String officeLoc = "8000호";
-
-		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
+		Professor professor = createTestProfessor();
 
 		// when
 		String newName = "이신행";
@@ -60,13 +58,7 @@ public class ProfessorDomainTest {
 	@DisplayName("PROFESSOR 객체의 역할을 수정할 수 있다")
 	public void updateRole_Success() {
 		// given
-		String name = "박민준";
-		Role role = PROFESSOR;
-		String contact = "010-1234-5678";
-		String email = "alswns11346@kgu.ac.kr";
-		String image = "https://image.com/professor/profile/image";
-		String officeLoc = "8000호";
-		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
+		Professor professor = createTestProfessor();
 
 		// when
 		Role newRole = ASSISTANT;
@@ -80,13 +72,7 @@ public class ProfessorDomainTest {
 	@DisplayName("PROFESSOR 객체의 연락처를 수정할 수 있다")
 	public void updateContact_Success() {
 		// given
-		String name = "박민준";
-		Role role = PROFESSOR;
-		String contact = "010-1234-5678";
-		String email = "alswns11346@kgu.ac.kr";
-		String image = "https://image.com/professor/profile/image";
-		String officeLoc = "8000호";
-		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
+		Professor professor = createTestProfessor();
 
 		// when
 		String newContact = "010-1234-8765";
@@ -100,13 +86,7 @@ public class ProfessorDomainTest {
 	@DisplayName("PROFESSOR 객체의 메일을 수정할 수 있다")
 	public void updateEmail_Success() {
 		// given
-		String name = "박민준";
-		Role role = PROFESSOR;
-		String contact = "010-1234-5678";
-		String email = "alswns11346@kgu.ac.kr";
-		String image = "https://image.com/professor/profile/image";
-		String officeLoc = "8000호";
-		Professor professor = Professor.create(name, role, contact, email, image, officeLoc);
+		Professor professor = createTestProfessor();
 
 		// when
 		String newEmail = "new-email@kyonggi.ac.kr";

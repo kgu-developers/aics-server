@@ -9,99 +9,83 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.lab.domain.Lab;
 
 public class LabDomainTest {
+	private static final String NAME = "Lab A";
+	private static final String LOC = "8500";
+	private static final String SITE = "http://lab1.kyonggi.ac.kr";
+	private static final String ADVISOR = "박교수";
+
+	private Lab createTestLab() {
+		return Lab.create(NAME, LOC, SITE, ADVISOR);
+	}
+
 	@Test
 	@DisplayName("LAB 객체를 생성할 수 있다")
 	public void createLab_Success() {
-		//given
-		String name = "Lab A";
-		String loc = "8500";
-		String site = "http://lab1.kyonggi.ac.kr";
-		String advisor = "박교수";
+		// when
+		Lab lab = createTestLab();
 
-		//when
-		Lab lab = Lab.create(name, loc, site, advisor);
-
-		//then
+		// then
 		assertNotNull(lab);
-		assertEquals(name, lab.getName());
-		assertEquals(loc, lab.getLoc());
-		assertEquals(site, lab.getSite());
+		assertEquals(NAME, lab.getName());
+		assertEquals(LOC, lab.getLoc());
+		assertEquals(SITE, lab.getSite());
+		assertEquals(ADVISOR, lab.getAdvisor());
+
 	}
 
 	@Test
 	@DisplayName("LAB 얀구실명 수정할 수 있다")
 	public void updateName_Success() {
-		//given
-		String name = "Lab A";
-		String loc = "8500";
-		String site = "http://lab1.kyonggi.ac.kr";
-		String advisor = "박교수";
-		Lab lab = Lab.create(name, loc, site, advisor);
-
+		// given
+		Lab lab = createTestLab();
 		String newName = "Updated Lab A";
 
-		//when
+		// when
 		lab.updateName(newName);
 
-		//then
+		// then
 		assertEquals(newName, lab.getName());
 	}
 
 	@Test
 	@DisplayName("LAB 위치를 수정할 수 있다")
 	public void updateLoc_Success() {
-		//given
-		String name = "Lab A";
-		String loc = "8500";
-		String site = "http://lab1.kyonggi.ac.kr";
-		String advisor = "박교수";
-		Lab lab = Lab.create(name, loc, site, advisor);
-
+		// given
+		Lab lab = createTestLab();
 		String newLoc = "8601";
 
-		//when
+		// when
 		lab.updateLoc(newLoc);
 
-		//then
+		// then
 		assertEquals(newLoc, lab.getLoc());
 	}
 
 	@Test
 	@DisplayName("LAB 사이트를 수정할 수 있다")
 	public void updateSite_Success() {
-		//given
-		String name = "Lab A";
-		String loc = "8500";
-		String site = "http://lab1.kyonggi.ac.kr";
-		String advisor = "박교수";
-		Lab lab = Lab.create(name, loc, site, advisor);
-
+		// given
+		Lab lab = createTestLab();
 		String newSite = "http://new.kyonggi.ac.kr";
 
-		//when
+		// when
 		lab.updateSite(newSite);
 
-		//then
+		// then
 		assertEquals(newSite, lab.getSite());
 	}
 
 	@Test
 	@DisplayName("LAB 담당교수를 수정할 수 있다")
 	public void updateAdvisor_Success() {
-		//given
-		String name = "Lab A";
-		String loc = "8500";
-		String site = "http://lab1.kyonggi.ac.kr";
-		String advisor = "박교수";
-		Lab lab = Lab.create(name, loc, site, advisor);
-
+		// given
+		Lab lab = createTestLab();
 		String newAdvisor = "이교수";
 
-		//when
+		// when
 		lab.updateAdvisor(newAdvisor);
 
-		//then
+		// then
 		assertEquals(newAdvisor, lab.getAdvisor());
 	}
-
 }
