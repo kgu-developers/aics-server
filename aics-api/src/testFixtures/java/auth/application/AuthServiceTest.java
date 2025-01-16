@@ -64,13 +64,12 @@ public class AuthServiceTest {
 
 		// when
 		// then
-		assertThatCode(() -> {
-			authService.login(LoginRequest.builder()
+		assertThatCode(() -> authService.login(
+			LoginRequest.builder()
 				.userId(userId)
 				.password(password)
-				.build()
-			);
-		}).doesNotThrowAnyException();
+				.build())
+		).doesNotThrowAnyException();
 	}
 
 	@Test

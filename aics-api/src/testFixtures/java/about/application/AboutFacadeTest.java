@@ -51,7 +51,7 @@ public class AboutFacadeTest {
 		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub, detail);
 
 		// then
-		assertEquals(aboutResponse.content(), "initContent");
+		assertEquals("initContent", aboutResponse.content());
 	}
 
 	@Test
