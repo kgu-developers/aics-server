@@ -67,7 +67,7 @@ public class LabQueryServiceTest {
 		assertEquals("http://lab1.kyonggi.ac.kr", result.getSite());
 		assertEquals("김교수", result.getAdvisor());
 	}
-	
+
 	@Test
 	@DisplayName("getById로 존재하지 않는 ID로 조회시 LabNotFoundException을 발생시킨다")
 	public void getById_Throws_LabNotFoundException() {
@@ -76,8 +76,7 @@ public class LabQueryServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(
-			() -> labQueryService.getById(id)
-		).isInstanceOf(LabNotFoundException.class);
+		assertThatThrownBy(() -> labQueryService.getById(id))
+			.isInstanceOf(LabNotFoundException.class);
 	}
 }

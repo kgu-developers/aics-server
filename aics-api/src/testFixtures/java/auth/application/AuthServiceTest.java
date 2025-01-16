@@ -82,13 +82,12 @@ public class AuthServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			authService.login(LoginRequest.builder()
+		assertThatThrownBy(() -> authService.login(
+			LoginRequest.builder()
 				.userId(userId)
 				.password(password)
 				.build()
-			);
-		}).isInstanceOf(InvalidPasswordException.class);
+		)).isInstanceOf(InvalidPasswordException.class);
 	}
 
 	@Test
@@ -96,11 +95,11 @@ public class AuthServiceTest {
 	public void reissue_Success() {
 		// when
 		// then
-		assertThatCode(() -> {
-			authService.reissue(RefreshTokenRequest.builder()
+		assertThatCode(() -> authService.reissue(
+			RefreshTokenRequest.builder()
 				.refreshToken("test")
-				.build());
-		}).doesNotThrowAnyException();
+				.build())
+		).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -111,10 +110,10 @@ public class AuthServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			authService.reissue(RefreshTokenRequest.builder()
+		assertThatThrownBy(() -> authService.reissue(
+			RefreshTokenRequest.builder()
 				.refreshToken(refreshToken)
-				.build());
-		}).isInstanceOf(TokenNotFoundException.class);
+				.build()
+		)).isInstanceOf(TokenNotFoundException.class);
 	}
 }

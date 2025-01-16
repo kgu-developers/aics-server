@@ -64,9 +64,8 @@ public class AboutFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			aboutFacade.getAbout(main, sub, detail);
-		}).isInstanceOf(CategoryNotMatchException.class);
+		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub, detail))
+			.isInstanceOf(CategoryNotMatchException.class);
 	}
 
 	@Test
@@ -79,12 +78,10 @@ public class AboutFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			aboutFacade.getAbout(main, sub, null);
-		}).isInstanceOf(AboutNotFoundException.class);
+		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub, null))
+			.isInstanceOf(AboutNotFoundException.class);
 
-		assertThatThrownBy(() -> {
-			aboutFacade.getAbout(main, sub, detail);
-		}).isInstanceOf(AboutNotFoundException.class);
+		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub, detail))
+			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

@@ -106,9 +106,8 @@ public class PostQueryServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(
-			() -> postQueryService.getById(postId)
-		).isInstanceOf(PostNotFoundException.class);
+		assertThatThrownBy(() -> postQueryService.getById(postId))
+			.isInstanceOf(PostNotFoundException.class);
 	}
 
 	@Test

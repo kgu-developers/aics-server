@@ -63,8 +63,7 @@ public class UserCommandServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			userCommandService.createUser(userId, password, name, email, phone, major);
-		}).isInstanceOf(UserIdDuplicateException.class);
+		assertThatThrownBy(() -> userCommandService.createUser(userId, password, name, email, phone, major))
+			.isInstanceOf(UserIdDuplicateException.class);
 	}
 }

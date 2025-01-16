@@ -83,9 +83,8 @@ public class AboutAdminFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			aboutAdminFacade.createAbout(request);
-		}).isInstanceOf(CategoryNotMatchException.class);
+		assertThatThrownBy(() -> aboutAdminFacade.createAbout(request))
+			.isInstanceOf(CategoryNotMatchException.class);
 	}
 
 	@Test
@@ -118,8 +117,7 @@ public class AboutAdminFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			aboutAdminFacade.updateAbout(id, request);
-		}).isInstanceOf(AboutNotFoundException.class);
+		assertThatThrownBy(() -> aboutAdminFacade.updateAbout(id, request))
+			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

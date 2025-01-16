@@ -66,9 +66,8 @@ public class UserQueryServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() ->
-			userQueryService.getUserById(id)
-		).isInstanceOf(UserNotFoundException.class);
+		assertThatThrownBy(() -> userQueryService.getUserById(id))
+			.isInstanceOf(UserNotFoundException.class);
 	}
 
 	@Test

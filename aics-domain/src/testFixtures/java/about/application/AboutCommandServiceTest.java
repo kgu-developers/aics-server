@@ -57,8 +57,7 @@ public class AboutCommandServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(
-			() -> aboutCommandService.createAbout(mainCategory, subCategory, detail, content)).isInstanceOf(
-			CategoryNotMatchException.class).hasMessage("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
+		assertThatThrownBy(() -> aboutCommandService.createAbout(mainCategory, subCategory, detail, content))
+			.isInstanceOf(CategoryNotMatchException.class).hasMessage("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
 	}
 }

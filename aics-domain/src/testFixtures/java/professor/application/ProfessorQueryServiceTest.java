@@ -60,9 +60,8 @@ public class ProfessorQueryServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			professorQueryService.getProfessorById(professorId);
-		}).isInstanceOf(ProfessorNotFoundException.class);
+		assertThatThrownBy(() -> professorQueryService.getProfessorById(professorId))
+			.isInstanceOf(ProfessorNotFoundException.class);
 	}
 
 	@Test
