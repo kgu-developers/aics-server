@@ -143,4 +143,14 @@ public class CommentFacadeTest {
 		CommentListResponse result = commentFacade.getComments(1L);
 		assertEquals(0, result.contents().size());
 	}
+
+	@Test
+	@DisplayName("getLastCleanupRunTime는 마지막 scheduling cleaning 시간을 조회할 수 있다")
+	void getLastCleanupRunTime_Success() {
+		// when
+		String lastCleanupRunTime = commentFacade.getLastCleanupRunTime();
+
+		// then
+		assertEquals("아직 클린업 작업이 실행되지 않았습니다.", lastCleanupRunTime);
+	}
 }
