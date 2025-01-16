@@ -3,6 +3,7 @@ package professor.application;
 import static kgu.developers.domain.professor.domain.Role.PROFESSOR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -70,7 +71,7 @@ public class ProfessorCommandServiceTest {
 	public void deleteProfessor_Success() {
 		// given
 		Professor professor = Professor.builder().build();
-
+		assertNull(professor.getDeletedAt(), "삭제 전에는 deletedAt이 null이어야 합니다");
 		// when
 		professorCommandService.deleteProfessor(professor);
 

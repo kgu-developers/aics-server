@@ -4,6 +4,7 @@ import static kgu.developers.domain.post.domain.Category.NEWS;
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -87,28 +88,29 @@ public class CommentCommandServiceTest {
 	@DisplayName("updateComment는 댓글을 수정할 수 있다.")
 	public void updateComment_Success() {
 		// given
-		Comment targetComment = Comment.create("SW 부트캠프 모집이 정말 기대됩니다.", User.builder().build(),
+		Comment comment = Comment.create("SW 부트캠프 모집이 정말 기대됩니다.", User.builder().build(),
 			Post.builder().build());
 		String updatedCommentContent = "SW 부트캠프 모집이 정말 기대됩니다. 4기 교육생 확정이 언제일까요?";
 
 		// when
-		commentCommandService.updateComment(targetComment, updatedCommentContent);
+		commentCommandService.updateComment(comment, updatedCommentContent);
 
 		// then
-		assertEquals(updatedCommentContent, targetComment.getContent());
+		assertEquals(updatedCommentContent, comment.getContent());
 	}
 
 	@Test
 	@DisplayName("deleteComment는 댓글을 삭제할 수 있다.")
 	public void deleteComment_Success() {
 		// given
-		Comment targetComment = Comment.create("SW 부트캠프 모집이 정말 기대됩니다.", User.builder().build(),
+		Comment comment = Comment.create("SW 부트캠프 모집이 정말 기대됩니다.", User.builder().build(),
 			Post.builder().build());
+		assertNull(comment.getDeletedAt(), "삭제 전에는 deletedAt이 null이어야 합니다");
 
 		// when
-		commentCommandService.deleteComment(targetComment);
+		commentCommandService.deleteComment(comment);
 
 		// then
-		assertNotNull(targetComment.getDeletedAt());
+		assertNotNull(comment.getDeletedAt());
 	}
 }

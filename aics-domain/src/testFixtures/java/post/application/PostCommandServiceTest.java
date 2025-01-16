@@ -4,6 +4,7 @@ import static kgu.developers.domain.post.domain.Category.NOTIFICATION;
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,6 @@ public class PostCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
-
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
@@ -126,7 +126,7 @@ public class PostCommandServiceTest {
 	public void deletePost_Success() {
 		// given
 		Post post = Post.builder().build();
-
+		assertNull(post.getDeletedAt(), "삭제 전에는 deletedAt이 null이어야 합니다");
 		// when
 		postCommandService.deletePost(post);
 
