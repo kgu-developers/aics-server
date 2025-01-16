@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.application.response.PostDetailResponse;
+import kgu.developers.domain.post.application.response.PostTitleResponse;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.exception.PostNotFoundException;
@@ -40,8 +41,14 @@ public class PostQueryServiceTest {
 			NEWS, author
 		));
 
-		fakePostRepository.save(Post.create(
+		Post delete = fakePostRepository.save(Post.create(
 			"테스트용 제목3", "테스트용 내용3",
+			NEWS, author
+		));
+		delete.delete();
+
+		fakePostRepository.save(Post.create(
+			"테스트용 제목4", "테스트용 내용4",
 			NEWS, author
 		));
 	}
@@ -56,28 +63,33 @@ public class PostQueryServiceTest {
 		PostDetailResponse result = postQueryService.getPostByIdWithPrevAndNext(post);
 
 		// then
-		assertEquals(post.getId(), result.postId());
-		assertEquals(result.prevPost().postId(), 1L);
-		assertEquals(result.prevPost().title(), "테스트용 제목1");
-		assertEquals(result.nextPost().postId(), 3L);
-		assertEquals(result.nextPost().title(), "테스트용 제목3");
+		PostTitleResponse prev = result.prevPost();
+		PostTitleResponse next = result.nextPost();
+
+		assertEquals(result.postId(), post.getId());
+		assertEquals(1L, prev.postId());
+		assertEquals("테스트용 제목1", prev.title());
+		assertEquals(4L, next.postId());
+		assertEquals("테스트용 제목4", next.title());
 	}
 
 	@Test
 	@DisplayName("getPostById는 마지막 게시글 조회 시 다음 게시글은 null이어야 한다")
 	public void getPostById_LastPost_Success() {
 		// given
-		Long lastPostId = 3L;
+		Long lastPostId = 4L;
 
 		// when
 		Post post = fakePostRepository.findById(lastPostId).orElse(null);
 		PostDetailResponse result = postQueryService.getPostByIdWithPrevAndNext(post);
 
 		// then
+		PostTitleResponse prev = result.prevPost();
+
 		assertEquals(lastPostId, result.postId());
 		assertNull(result.nextPost());
-		assertEquals(result.prevPost().postId(), 2L);
-		assertEquals(result.prevPost().title(), "테스트용 제목2");
+		assertEquals(2L, prev.postId());
+		assertEquals("테스트용 제목2", prev.title());
 	}
 
 	@Test
