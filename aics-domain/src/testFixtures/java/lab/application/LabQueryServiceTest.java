@@ -40,8 +40,8 @@ public class LabQueryServiceTest {
 	}
 
 	@Test
-	@DisplayName("getLabs은 Lab 리스트를 조회할 수 있다")
-	public void getLabs_Success() {
+	@DisplayName("getLabsByName은 Lab 리스트를 조회할 수 있다")
+	public void getLabsByName_Success() {
 		// given
 		// when
 		List<Lab> result = labQueryService.getLabsByName();
@@ -52,6 +52,22 @@ public class LabQueryServiceTest {
 		assertEquals("Lab B", result.get(1).getName());
 	}
 
+	@Test
+	@DisplayName("getById는 존재하는 ID로 조회시 해당 Lab을 반환한다")
+	public void getById_Success() {
+		// given
+		Long id = 1L;
+
+		// when
+		Lab result = labQueryService.getById(id);
+
+		// then
+		assertEquals("Lab A", result.getName());
+		assertEquals("8500", result.getLoc());
+		assertEquals("http://lab1.kyonggi.ac.kr", result.getSite());
+		assertEquals("김교수", result.getAdvisor());
+	}
+	
 	@Test
 	@DisplayName("getById로 존재하지 않는 ID로 조회시 LabNotFoundException을 발생시킨다")
 	public void getById_Throws_LabNotFoundException() {
