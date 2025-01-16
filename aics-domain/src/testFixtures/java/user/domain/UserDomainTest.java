@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kgu.developers.common.domain.BaseRole;
 import kgu.developers.domain.user.domain.Major;
@@ -84,11 +83,10 @@ public class UserDomainTest {
 	public void isPasswordMatching_InvalidPassword_ThrowsException() {
 		// given
 		String rawPassword = "invalidPassword";
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		User user = User.create(
 			"202411345",
-			passwordEncoder.encode("correctPassword"),
+			"$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2",
 			"홍길동",
 			"valid@kgu.ac.kr",
 			"010-1234-5678",
@@ -98,7 +96,7 @@ public class UserDomainTest {
 		// when
 		// then
 		assertThatThrownBy(() -> {
-			user.isPasswordMatching(rawPassword, passwordEncoder);
+			user.isPasswordMatching(rawPassword, new BCryptPasswordEncoder());
 		}).isInstanceOf(InvalidPasswordException.class);
 	}
 }
