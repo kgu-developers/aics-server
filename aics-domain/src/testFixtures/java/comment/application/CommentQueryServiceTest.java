@@ -32,22 +32,21 @@ public class CommentQueryServiceTest {
 	public void init() {
 		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
 		commentQueryService = new CommentQueryService(fakeCommentRepository);
-
-		deletedComment(fakeCommentRepository);
-		saveTestComment(fakeCommentRepository);
+		Post post = saveTestPost();
+		deletedComment(fakeCommentRepository, post);
+		saveTestComment(fakeCommentRepository, post);
 	}
 
-	private static void deletedComment(FakeCommentRepository fakeCommentRepository) {
+	private static void deletedComment(FakeCommentRepository fakeCommentRepository, Post post) {
 		Comment commentToDelete = fakeCommentRepository.save(
-			Comment.create("삭제된 댓글 입니다", User.builder().build(), Post.builder().build())
+			Comment.create("삭제된 댓글 입니다", User.builder().build(), post)
 		);
 		commentToDelete.delete();
 	}
 
-	private static void saveTestComment(FakeCommentRepository fakeCommentRepository) {
-		Post commentedPost = saveTestPost();
+	private static void saveTestComment(FakeCommentRepository fakeCommentRepository, Post post) {
 		fakeCommentRepository.save(
-			Comment.create(TARGET_COMMENT_CONTENT, User.builder().build(), commentedPost)
+			Comment.create(TARGET_COMMENT_CONTENT, User.builder().build(), post)
 		);
 	}
 
