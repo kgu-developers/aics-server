@@ -34,7 +34,7 @@ public class FakeClubRepository implements ClubRepository {
 	@Override
 	public Optional<Club> findById(Long id) {
 		return data.stream()
-			.filter(professor -> professor.getId().equals(id))
+			.filter(club -> club.getId().equals(id))
 			.findFirst();
 	}
 
