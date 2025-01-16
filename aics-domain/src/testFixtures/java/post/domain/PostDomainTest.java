@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.IntStream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,37 +19,41 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
 
 public class PostDomainTest {
+	private Post post;
+	private User author;
+	private static final String TITLE = "Valid Title";
+	private static final String CONTENT = "This is valid content.";
+
+	@BeforeEach
+	public void init() {
+		author = User.create("202411345",
+			"password",
+			"홍길동",
+			"valid@kyonggi.ac.kr",
+			"010-1234-5678", CSE);
+
+		post = Post.create(TITLE, CONTENT, NEWS, author);
+	}
+
 	@Test
 	@DisplayName("POST 객체를 생성할 수 있다")
 	public void createPost_Success() {
-		// given
-		String title = "Valid Title";
-		String content = "This is valid content.";
-		Category category = NEWS;
-		User user = getUser();
 
 		// when
-		Post post = Post.create(title, content, category, user);
-
 		// then
 		assertNotNull(post);
-		assertEquals(title, post.getTitle());
-		assertEquals(content, post.getContent());
+		assertEquals(TITLE, post.getTitle());
+		assertEquals(CONTENT, post.getContent());
 		assertEquals(0, post.getViews());
 		assertFalse(post.isPinned());
-		assertEquals(category, post.getCategory());
-		assertEquals(user, post.getAuthor());
+		assertEquals(NEWS, post.getCategory());
+		assertEquals(author, post.getAuthor());
 	}
 
 	@Test
 	@DisplayName("POST 제목을 업데이트할 수 있다")
 	public void updatePostTitle_Success() {
 		// given
-		String title = "Valid Title";
-		String content = "This is valid content.";
-		User user = getUser();
-
-		Post post = Post.create(title, content, NEWS, user);
 		String newTitle = "Updated Title";
 
 		// when
@@ -62,11 +67,6 @@ public class PostDomainTest {
 	@DisplayName("POST 내용을 업데이트할 수 있다")
 	public void updatePostContent_Success() {
 		// given
-		String title = "Valid Title";
-		String content = "This is valid content.";
-		User user = getUser();
-
-		Post post = Post.create(title, content, NEWS, user);
 		String newContent = "Updated Content";
 
 		// when
@@ -80,11 +80,6 @@ public class PostDomainTest {
 	@DisplayName("POST 카테고리를 업데이트할 수 있다")
 	public void updatePostCategory_Success() {
 		// given
-		String title = "Valid Title";
-		String content = "This is valid content.";
-		User user = getUser();
-
-		Post post = Post.create(title, content, NEWS, user);
 		Category newCategory = NOTIFICATION;
 
 		// when
@@ -98,11 +93,6 @@ public class PostDomainTest {
 	@DisplayName("POST 조회수를 증가시킬 수 있다")
 	public void increasePostViews_Success() {
 		// given
-		String title = "Valid Title";
-		String content = "This is valid content.";
-		User user = getUser();
-
-		Post post = Post.create(title, content, NEWS, user);
 		int incrementCount = 5;
 
 		// when
@@ -116,12 +106,6 @@ public class PostDomainTest {
 	@Test
 	@DisplayName("POST 고정 여부를 토글할 수 있다")
 	public void togglePostPinned_Success() {
-		// given
-		String title = "Valid Title";
-		String content = "This is valid content.";
-		User user = getUser();
-
-		Post post = Post.create(title, content, NEWS, user);
 
 		// when
 		post.togglePinned();
@@ -133,15 +117,4 @@ public class PostDomainTest {
 		// then
 		assertFalse(post.isPinned());
 	}
-
-	private User getUser() {
-		String id = "202411345";
-		String password = "password";
-		String name = "홍길동";
-		String email = "valid@kyonggi.ac.kr";
-		String phone = "010-1234-5678";
-
-		return User.create(id, password, name, email, phone, CSE);
-	}
-
 }

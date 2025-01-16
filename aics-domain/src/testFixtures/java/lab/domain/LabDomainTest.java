@@ -3,27 +3,28 @@ package lab.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.lab.domain.Lab;
 
 public class LabDomainTest {
+	private Lab lab;
 	private static final String NAME = "Lab A";
 	private static final String LOC = "8500";
 	private static final String SITE = "http://lab1.kyonggi.ac.kr";
 	private static final String ADVISOR = "박교수";
 
-	private Lab createTestLab() {
-		return Lab.create(NAME, LOC, SITE, ADVISOR);
+	@BeforeEach
+	public void init() {
+		lab = Lab.create(NAME, LOC, SITE, ADVISOR);
 	}
 
 	@Test
 	@DisplayName("LAB 객체를 생성할 수 있다")
 	public void createLab_Success() {
 		// when
-		Lab lab = createTestLab();
-
 		// then
 		assertNotNull(lab);
 		assertEquals(NAME, lab.getName());
@@ -37,7 +38,6 @@ public class LabDomainTest {
 	@DisplayName("LAB 얀구실명 수정할 수 있다")
 	public void updateName_Success() {
 		// given
-		Lab lab = createTestLab();
 		String newName = "Updated Lab A";
 
 		// when
@@ -51,7 +51,6 @@ public class LabDomainTest {
 	@DisplayName("LAB 위치를 수정할 수 있다")
 	public void updateLoc_Success() {
 		// given
-		Lab lab = createTestLab();
 		String newLoc = "8601";
 
 		// when
@@ -65,7 +64,6 @@ public class LabDomainTest {
 	@DisplayName("LAB 사이트를 수정할 수 있다")
 	public void updateSite_Success() {
 		// given
-		Lab lab = createTestLab();
 		String newSite = "http://new.kyonggi.ac.kr";
 
 		// when
@@ -79,7 +77,6 @@ public class LabDomainTest {
 	@DisplayName("LAB 담당교수를 수정할 수 있다")
 	public void updateAdvisor_Success() {
 		// given
-		Lab lab = createTestLab();
 		String newAdvisor = "이교수";
 
 		// when

@@ -11,13 +11,13 @@ import kgu.developers.domain.club.domain.Club;
 
 public class ClubDomainTest {
 	private Club club;
-	private static final String DEFAULT_NAME = "Club A";
-	private static final String DEFAULT_DESCRIPTION = "a 동아리입니다.";
-	private static final String DEFAULT_SITE = "http://club-a.kyonggi.ac.kr";
+	private static final String NAME = "Club A";
+	private static final String DESCRIPTION = "a 동아리입니다.";
+	private static final String SITE = "http://club-a.kyonggi.ac.kr";
 
 	@BeforeEach
 	void setUp() {
-		club = Club.create(DEFAULT_NAME, DEFAULT_DESCRIPTION, DEFAULT_SITE);
+		club = Club.create(NAME, DESCRIPTION, SITE);
 	}
 
 	@Test
@@ -25,13 +25,13 @@ public class ClubDomainTest {
 	public void createClub_Success() {
 
 		// when
-		Club newClub = Club.create(DEFAULT_NAME, DEFAULT_DESCRIPTION, DEFAULT_SITE);
+		Club newClub = Club.create(NAME, DESCRIPTION, SITE);
 
 		// then
 		assertNotNull(newClub);
-		assertEquals(DEFAULT_NAME, newClub.getName());
-		assertEquals(DEFAULT_DESCRIPTION, newClub.getDescription());
-		assertEquals(DEFAULT_SITE, newClub.getSite());
+		assertEquals(NAME, newClub.getName());
+		assertEquals(DESCRIPTION, newClub.getDescription());
+		assertEquals(SITE, newClub.getSite());
 	}
 
 	@Test
