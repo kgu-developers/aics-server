@@ -1,6 +1,7 @@
 package post.application;
 
 import static kgu.developers.domain.post.domain.Category.NEWS;
+import static kgu.developers.domain.post.domain.Category.NOTIFICATION;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -49,6 +50,11 @@ public class PostQueryServiceTest {
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목4", "테스트용 내용4",
+			NOTIFICATION, author
+		));
+
+		fakePostRepository.save(Post.create(
+			"테스트용 제목5", "테스트용 내용5",
 			NEWS, author
 		));
 	}
@@ -69,15 +75,15 @@ public class PostQueryServiceTest {
 		assertEquals(result.postId(), post.getId());
 		assertEquals(1L, prev.postId());
 		assertEquals("테스트용 제목1", prev.title());
-		assertEquals(4L, next.postId());
-		assertEquals("테스트용 제목4", next.title());
+		assertEquals(5L, next.postId());
+		assertEquals("테스트용 제목5", next.title());
 	}
 
 	@Test
 	@DisplayName("getPostById는 마지막 게시글 조회 시 다음 게시글은 null이어야 한다")
 	public void getPostById_LastPost_Success() {
 		// given
-		Long lastPostId = 4L;
+		Long lastPostId = 5L;
 
 		// when
 		Post post = fakePostRepository.findById(lastPostId).orElse(null);
