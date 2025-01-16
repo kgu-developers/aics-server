@@ -1,9 +1,11 @@
 package user.domain;
 
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +18,19 @@ import kgu.developers.domain.user.exception.EmailDomainNotValidException;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
 
 public class UserDomainTest {
+	private User user;
 	private static final String ID = "202411345";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2";
 	private static final String NAME = "홍길동";
+	private static final String EMAIL = "valid@kgu.ac.kr";
 	private static final String VALID_EMAIL = "valid@kgu.ac.kr";
 	private static final String PHONE = "010-1234-5678";
-	private static final Major MAJOR = Major.CSE;
+	private static final Major MAJOR = CSE;
+
+	@BeforeEach
+	public void init() {
+		user = createTestUser(ID, PASSWORD, EMAIL, MAJOR);
+	}
 
 	private User createTestUser(String id, String password, String email, Major major) {
 		return User.create(id, password, NAME, email, PHONE, major);
@@ -31,8 +40,6 @@ public class UserDomainTest {
 	@DisplayName("USER 객체를 생성할 수 있다")
 	public void createUser_Success() {
 		// when
-		User user = createTestUser(ID, PASSWORD, VALID_EMAIL, MAJOR);
-
 		// then
 		assertNotNull(user);
 		assertEquals(ID, user.getId());
@@ -73,8 +80,6 @@ public class UserDomainTest {
 	@DisplayName("비밀번호가 일치하지 않을 시 InvalidPasswordException이 발생 한다")
 	public void isPasswordMatching_InvalidPassword_ThrowsException() {
 		// given
-		String password = "$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2";
-		User user = createTestUser(ID, password, VALID_EMAIL, MAJOR);
 		String invalidPassword = "invalidPassword";
 
 		// when
