@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 
 import kgu.developers.admin.user.application.UserAdminFacade;
 import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
+import kgu.developers.common.response.PageableResponse;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
@@ -63,16 +64,18 @@ public class UserAdminFacadeTest {
 		Pageable pageable = PageRequest.of(0, 10);
 
 		// when
-		UserDetailPageResponse users = userAdminFacade.getUsers(pageable);
+		UserDetailPageResponse result = userAdminFacade.getUsers(pageable);
 
 		// then
-		List<UserDetailResponse> contents = users.contents();
+		List<UserDetailResponse> contents = result.contents();
+		PageableResponse pageableResult = result.pageable();
 		assertEquals(3, contents.size());
 
 		UserDetailResponse hong3 = contents.get(0);
 		UserDetailResponse hong2 = contents.get(1);
 		UserDetailResponse hong1 = contents.get(2);
 
+		assertEquals(10, pageableResult.size());
 		assertEquals("202411001", hong1.id());
 		assertEquals("202411002", hong2.id());
 		assertEquals("202411003", hong3.id());
