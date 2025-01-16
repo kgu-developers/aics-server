@@ -2,6 +2,7 @@ package user.application;
 
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -79,5 +80,18 @@ public class UserAdminFacadeTest {
 		assertEquals("202411001", hong1.id());
 		assertEquals("202411002", hong2.id());
 		assertEquals("202411003", hong3.id());
+	}
+
+	@Test
+	@DisplayName("getUsers는 잘못된 페이지 요청시 빈 목록을 반환한다")
+	void getUsers_InvalidPage() {
+		// given
+		Pageable pageable = PageRequest.of(1, 10);
+
+		// when
+		UserDetailPageResponse users = userAdminFacade.getUsers(pageable);
+
+		// then
+		assertTrue(users.contents().isEmpty());
 	}
 }

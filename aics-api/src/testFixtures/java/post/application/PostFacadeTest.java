@@ -4,6 +4,7 @@ import static kgu.developers.domain.post.domain.Category.NEWS;
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -95,6 +96,20 @@ public class PostFacadeTest {
 		assertEquals(category.getDescription(), resultData.get(0).category());
 		assertEquals("first title", resultData.get(1).title());
 		assertEquals(category.getDescription(), resultData.get(1).category());
+	}
+
+	@Test
+	@DisplayName("getPostsByKeywordAndCategory는 잘못된 페이지 요청시 빈 목록을 반환한다")
+	public void getPostsByKeywordAndCategory_InvalidPage() {
+		// given
+		PageRequest request = PageRequest.of(1, 10);
+		Category category = NEWS;
+
+		// when
+		PostSummaryPageResponse result = postFacade.getPostsByKeywordAndCategory(request, "title", category);
+
+		// then
+		assertTrue(result.contents().isEmpty());
 	}
 
 	@Test
