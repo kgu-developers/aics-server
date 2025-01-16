@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.comment.application.query.CommentQueryService;
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.exception.CommentNotFoundException;
-import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCommentRepository;
@@ -56,8 +55,7 @@ public class CommentQueryServiceTest {
 		FakePostRepository fakePostRepository = new FakePostRepository();
 		Post commentedPost = Post.create("SW 부트캠프 4기 교육생 모집",
 			"SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.", NEWS, User.builder().build());
-		fakePostRepository.save(commentedPost);
-		return commentedPost;
+		return fakePostRepository.save(commentedPost);
 	}
 
 	@Test

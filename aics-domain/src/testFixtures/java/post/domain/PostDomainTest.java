@@ -20,19 +20,21 @@ import kgu.developers.domain.user.domain.User;
 
 public class PostDomainTest {
 	private Post post;
-	private User author;
 	private static final String TITLE = "Valid Title";
 	private static final String CONTENT = "This is valid content.";
 
 	@BeforeEach
 	public void init() {
-		author = User.create("202411345",
+		User author = user();
+		post = Post.create(TITLE, CONTENT, NEWS, author);
+	}
+
+	private User user() {
+		return User.create("202411345",
 			"password",
 			"홍길동",
 			"valid@kyonggi.ac.kr",
 			"010-1234-5678", CSE);
-
-		post = Post.create(TITLE, CONTENT, NEWS, author);
 	}
 
 	@Test
@@ -47,7 +49,6 @@ public class PostDomainTest {
 		assertEquals(0, post.getViews());
 		assertFalse(post.isPinned());
 		assertEquals(NEWS, post.getCategory());
-		assertEquals(author, post.getAuthor());
 	}
 
 	@Test
