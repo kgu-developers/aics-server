@@ -62,15 +62,14 @@ public class AboutQueryServiceTest {
 	}
 
 	@Test
-	@DisplayName("getAbout은 detail이 null 또는 blank일 때도 올바른 About을 반환한다")
+	@DisplayName("getAbout은 detail이 null 또는 blank여도 요청 시 올바른 About을 반환한다")
 	public void getAbout_WithNullOrBlankDetail_Success() {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = HISTORY;
-		String detail = null;
 
 		// when
-		About result = aboutQueryService.getAbout(main, sub, detail);
+		About result = aboutQueryService.getAbout(main, sub, null);
 
 		// then
 		assertEquals(main, result.getMainCategory());

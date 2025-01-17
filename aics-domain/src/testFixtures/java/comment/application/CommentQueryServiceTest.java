@@ -3,6 +3,8 @@ package comment.application;
 import static kgu.developers.domain.post.domain.Category.NEWS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -80,6 +82,8 @@ public class CommentQueryServiceTest {
 		Comment result = commentQueryService.getById(savedCommentId);
 
 		// then
+		assertNotNull(result);
+		assertNull(result.getDeletedAt());
 		assertEquals(savedCommentId, result.getId());
 		assertEquals(TARGET_COMMENT_CONTENT, result.getContent());
 	}

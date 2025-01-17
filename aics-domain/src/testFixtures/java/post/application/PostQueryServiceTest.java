@@ -73,6 +73,7 @@ public class PostQueryServiceTest {
 		PostTitleResponse next = result.nextPost();
 
 		assertEquals(result.postId(), post.getId());
+		assertNull(post.getDeletedAt());
 		assertEquals(1L, prev.postId());
 		assertEquals("테스트용 제목1", prev.title());
 		assertEquals(5L, next.postId());
