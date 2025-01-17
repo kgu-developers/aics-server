@@ -39,9 +39,10 @@ public class FakeCommentRepository implements CommentRepository {
 	}
 
 	@Override
-	public Optional<Comment> findById(Long commentId) {
+	public Optional<Comment> findByIdAndDeletedAtIsNull(Long commentId) {
 		return data.stream()
-			.filter(comment -> comment.getId().equals(commentId))
+			.filter(comment -> comment.getId().equals(commentId)
+				&& comment.getDeletedAt() == null)
 			.findFirst();
 	}
 
