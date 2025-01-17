@@ -93,7 +93,7 @@ public class UserQueryServiceTest {
 
 	@Test
 	@DisplayName("me는 현재 로그인이 안되어있는 상태에서 호출 시 UserNotAuthenticatiedException을 발생시킨다")
-	public void me_NotAuthenticated_ThrowsException() {
+	public void me_Throws_NotAuthenticated_ThrowsException() {
 		// given
 		SecurityContextHolder.clearContext();
 
