@@ -67,8 +67,6 @@ public class UserDomainTest {
 	@Test
 	@DisplayName("이메일 Null로 USER 생성 시 EmailDomainNotValidException이 발생 한다")
 	public void createUser_NullEmailDomain_ThrowsException() {
-		// given
-		String email = "valid@gmail.com";
 
 		// when
 		// then
@@ -80,7 +78,7 @@ public class UserDomainTest {
 	@DisplayName("잘못된 학과 코드로 USER 생성 시 DeptCodeNotValidException이 발생 한다")
 	public void createUser_InvalidDeptCode_ThrowsException() {
 		// given
-		String id = "202410345"; // 잘못된 학과 코드
+		String id = "202410345";
 
 		// when
 		// then
@@ -98,5 +96,15 @@ public class UserDomainTest {
 		// then
 		assertThatThrownBy(() -> user.isPasswordMatching(invalidPassword, new BCryptPasswordEncoder()))
 			.isInstanceOf(InvalidPasswordException.class);
+	}
+
+	@Test
+	@DisplayName("잘못된 이메일 도메인으로 수정 요청 시 EmailDomainNotValidException이 발생 한다")
+	public void update_InvalidEmail_ThrowsException() {
+
+		// when
+		// then
+		assertThatThrownBy(() -> user.updateEmail(null))
+			.isInstanceOf(EmailDomainNotValidException.class);
 	}
 }
