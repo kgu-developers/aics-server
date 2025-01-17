@@ -63,7 +63,7 @@ public class PostQueryServiceTest {
 	@DisplayName("getPostById는 해당 게시글과 이전, 다음 게시글을 조회할 수 있다")
 	public void getPostById_Success() {
 		// given
-		Post post = fakePostRepository.findById(2L).orElse(null);
+		Post post = fakePostRepository.findByIdAndDeletedAtIsNull(2L).orElse(null);
 
 		// when
 		PostDetailResponse result = postQueryService.getPostByIdWithPrevAndNext(post);
@@ -87,7 +87,7 @@ public class PostQueryServiceTest {
 		Long lastPostId = 5L;
 
 		// when
-		Post post = fakePostRepository.findById(lastPostId).orElse(null);
+		Post post = fakePostRepository.findByIdAndDeletedAtIsNull(lastPostId).orElse(null);
 		PostDetailResponse result = postQueryService.getPostByIdWithPrevAndNext(post);
 
 		// then

@@ -19,7 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class PostQueryService {
 	private final PostRepository postRepository;
 
-	public PaginatedListResponse<Post> getPostsByKeywordAndCategory(PageRequest request, String keyword, Category category) {
+	public PaginatedListResponse<Post> getPostsByKeywordAndCategory(PageRequest request, String keyword,
+		Category category) {
 		return postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
 			keyword, category, request);
 	}
@@ -37,8 +38,7 @@ public class PostQueryService {
 	}
 
 	public Post getById(Long postId) {
-		return postRepository.findById(postId)
-			.filter(post -> post.getDeletedAt() == null)
+		return postRepository.findByIdAndDeletedAtIsNull(postId)
 			.orElseThrow(PostNotFoundException::new);
 	}
 }

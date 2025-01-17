@@ -13,7 +13,7 @@ public interface PostRepository {
 	PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
 		Category category, Pageable pageable);
 
-	Optional<Post> findById(Long postId);
+	Optional<Post> findByIdAndDeletedAtIsNull(Long postId);
 
 	void deleteAllByDeletedAtBefore(int retentionDays);
 

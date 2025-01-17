@@ -77,9 +77,10 @@ public class FakePostRepository implements PostRepository {
 	}
 
 	@Override
-	public Optional<Post> findById(Long postId) {
+	public Optional<Post> findByIdAndDeletedAtIsNull(Long postId) {
 		return data.stream()
-			.filter(post -> post.getId().equals(postId))
+			.filter(post -> post.getId().equals(postId)
+				&& post.getDeletedAt() == null)
 			.findAny();
 	}
 
