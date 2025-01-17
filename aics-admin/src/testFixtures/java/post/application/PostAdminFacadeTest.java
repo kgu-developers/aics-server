@@ -5,7 +5,7 @@ import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +77,7 @@ public class PostAdminFacadeTest {
 
 		// when
 		PostPersistResponse post = postAdminFacade.createPost(postRequest);
-		Post found = fakePostRepository.findById(post.postId()).get();
+		Post found = fakePostRepository.findByIdAndDeletedAtIsNull(post.postId()).get();
 
 		// then
 		assertEquals("new title", found.getTitle());
@@ -95,7 +95,7 @@ public class PostAdminFacadeTest {
 
 		// when
 		postAdminFacade.updatePost(1L, postRequest);
-		Post found = fakePostRepository.findById(1L).get();
+		Post found = fakePostRepository.findByIdAndDeletedAtIsNull(1L).get();
 
 		// then
 		assertEquals("new title", found.getTitle());
@@ -122,12 +122,12 @@ public class PostAdminFacadeTest {
 	@DisplayName("togglePostPinStatus는 Post의 상태를 변경한다")
 	void togglePostPinStatus_Success() {
 		// given
-		Post original = fakePostRepository.findById(1L).get();
+		Post original = fakePostRepository.findByIdAndDeletedAtIsNull(1L).get();
 		boolean originalBool = original.isPinned();
 
 		// when
 		postAdminFacade.togglePostPinStatus(1L);
-		Post found = fakePostRepository.findById(1L).get();
+		Post found = fakePostRepository.findByIdAndDeletedAtIsNull(1L).get();
 
 		// then
 		assertNotEquals(originalBool, found.isPinned());
@@ -140,8 +140,8 @@ public class PostAdminFacadeTest {
 		postAdminFacade.deletePost(1L);
 
 		// then
-		Post found = fakePostRepository.findById(1L).get();
-		assertNotNull(found.getDeletedAt());
+		Post result = fakePostRepository.findByIdAndDeletedAtIsNull(1L).orElse(null);
+		assertNull(result);
 	}
 
 	@Test
