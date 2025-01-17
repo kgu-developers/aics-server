@@ -66,4 +66,20 @@ public class UserCommandServiceTest {
 		assertThatThrownBy(() -> userCommandService.createUser(userId, password, name, email, phone, major))
 			.isInstanceOf(UserIdDuplicateException.class);
 	}
+
+	@Test
+	@DisplayName("updateUserDetails는 User의 정보를 수정할 수 있다")
+	public void updateUserDetails_Success() {
+		// given
+		User user = User.builder().build();
+		String newEmail = "kim@kyonggi.ac.kr";
+		String newPhone = "010-0000-0000";
+
+		// when
+		userCommandService.updateUserDetails(user, newEmail, newPhone);
+
+		// then
+		assertEquals("kim@kyonggi.ac.kr", user.getEmail());
+		assertEquals("010-0000-0000", user.getPhone());
+	}
 }
