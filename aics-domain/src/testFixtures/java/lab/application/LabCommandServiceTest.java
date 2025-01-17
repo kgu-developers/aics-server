@@ -1,7 +1,8 @@
 package lab.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,64 +16,74 @@ public class LabCommandServiceTest {
 	private LabCommandService labCommandService;
 	private FakeLabRepository fakeLabRepository;
 
+	private static final Long TARGET_LAB_ID = 2L;
+
 	@BeforeEach
 	public void init() {
+		initializeLabCommandService();
+	}
+
+	private void initializeLabCommandService() {
 		fakeLabRepository = new FakeLabRepository();
 		labCommandService = new LabCommandService(fakeLabRepository);
+		fakeLabRepository.save(saveTestLab());
+	}
+
+	private static Lab saveTestLab() {
+		return Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철");
 	}
 
 	@Test
 	@DisplayName("createLab은 Lab을 생성할 수 있다")
 	public void createLab_Success() {
 		// given
-		String name = "Lab B";
-		String loc = "8501";
-		String site = "http://labB.kyonggi.ac.kr";
-		String advisor = "박교수";
+		String name = "인공지능 연구실";
+		String loc = "8502, 8503";
+		String site = "http://ailab.kyonggi.ac.kr";
+		String advisor = "김인철";
 
 		// when
-		Long result = labCommandService.createLab(name, loc, site, advisor);
+		Long createdLabId = labCommandService.createLab(name, loc, site, advisor);
 
 		// then
-		assertEquals(1L, result);
+		assertEquals(TARGET_LAB_ID, createdLabId);
 	}
 
 	@Test
 	@DisplayName("updateLab은 Lab을 수정할 수 있다")
 	public void updateLab_Success() {
 		// given
-		Lab lab = Lab.builder().build();
-		String newName = "Lab AA";
-		String newLoc = "제2공학관 200";
-		String newSite = "https://labAA.kyonggi.ac.kr";
-		String newAdvisor = "professor park";
+		Lab lab = saveTestLab();
+		String targetName = "알고리즘 연구실";
+		String targetLoc = "8504";
+		String targetSite = "http://algeo.kyonggi.ac.kr/";
+		String targetAdvisor = "배상원";
 
 		// when
-		labCommandService.updateLab(lab, newName, newLoc, newSite, newAdvisor);
+		labCommandService.updateLab(lab, targetName, targetLoc, targetSite, targetAdvisor);
 
 		// then
-		assertEquals(newName, lab.getName());
-		assertEquals(newLoc, lab.getLoc());
-		assertEquals(newSite, lab.getSite());
-		assertEquals(newAdvisor, lab.getAdvisor());
+		assertEquals(targetName, lab.getName());
+		assertEquals(targetLoc, lab.getLoc());
+		assertEquals(targetSite, lab.getSite());
+		assertEquals(targetAdvisor, lab.getAdvisor());
 	}
 
 	@Test
 	@DisplayName("deleteLab은 Lab을 삭제할 수 있다")
 	public void deleteLab_Success() {
 		// given
-		String name = "Lab A";
-		String loc = "8501";
-		String site = "http://labA.kyonggi.ac.kr";
-		String advisor = "박교수";
+		String name = "인공지능 연구실";
+		String loc = "8502, 8503";
+		String site = "http://ailab.kyonggi.ac.kr";
+		String advisor = "김인철";
 
-		Long labId = labCommandService.createLab(name, loc, site, advisor);
+		Long labIdToDelete = labCommandService.createLab(name, loc, site, advisor);
 
 		// when
-		labCommandService.deleteLabById(labId);
+		labCommandService.deleteLabById(labIdToDelete);
 
 		// then
-		Lab result = fakeLabRepository.findById(labId).orElse(null);
-		assertNull(result);
+		assertEquals(Optional.empty(), fakeLabRepository.findById(labIdToDelete));
 	}
 }
