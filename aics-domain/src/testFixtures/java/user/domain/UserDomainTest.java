@@ -65,6 +65,18 @@ public class UserDomainTest {
 	}
 
 	@Test
+	@DisplayName("이메일 Null로 USER 생성 시 EmailDomainNotValidException이 발생 한다")
+	public void createUser_NullEmailDomain_ThrowsException() {
+		// given
+		String email = "valid@gmail.com";
+
+		// when
+		// then
+		assertThatThrownBy(() -> createTestUser(ID, PASSWORD, null, MAJOR))
+			.isInstanceOf(EmailDomainNotValidException.class);
+	}
+
+	@Test
 	@DisplayName("잘못된 학과 코드로 USER 생성 시 DeptCodeNotValidException이 발생 한다")
 	public void createUser_InvalidDeptCode_ThrowsException() {
 		// given
