@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 public class LabCommandService {
 	private final LabRepository labRepository;
 
-	public Long createLab(String name, String location, String site, String professor) {
-		Lab lab = Lab.create(name, location, site, professor);
+	public Long createLab(String name, String location, String site, String advisor) {
+		Lab lab = Lab.create(name, location, site, advisor);
 		return labRepository.save(lab).getId();
 	}
 

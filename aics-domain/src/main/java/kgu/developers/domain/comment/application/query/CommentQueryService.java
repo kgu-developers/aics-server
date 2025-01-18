@@ -19,8 +19,7 @@ public class CommentQueryService {
 	}
 
 	public Comment getById(Long commentId) {
-		return commentRepository.findById(commentId)
-			.filter(comment -> comment.getDeletedAt() == null)
+		return commentRepository.findByIdAndDeletedAtIsNull(commentId)
 			.orElseThrow(CommentNotFoundException::new);
 	}
 }

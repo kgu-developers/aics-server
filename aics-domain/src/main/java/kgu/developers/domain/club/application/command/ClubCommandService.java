@@ -1,12 +1,14 @@
 package kgu.developers.domain.club.application.command;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.domain.ClubRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ClubCommandService {
 	private final ClubRepository clubRepository;

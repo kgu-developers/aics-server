@@ -24,8 +24,8 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public Optional<Post> findById(Long postId) {
-		return jpaPostRepository.findById(postId);
+	public Optional<Post> findByIdAndDeletedAtIsNull(Long postId) {
+		return jpaPostRepository.findByIdAndDeletedAtIsNull(postId);
 	}
 
 	@Override

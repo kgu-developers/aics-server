@@ -18,7 +18,7 @@ public record LabRequest(
 	@Schema(description = "연구실 위치", example = "8502, 8503", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 10)
-	String location,
+	String loc,
 
 	@Schema(description = "연구실 홈페이지", example = "http://ailab.kyonggi.ac.kr", requiredMode = Schema.RequiredMode.REQUIRED)
 	@NotBlank
@@ -28,6 +28,6 @@ public record LabRequest(
 	@Schema(description = "연구실 담당교수", example = "박민준", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 15)
-	String professor
+	String advisor
 ) {
 }

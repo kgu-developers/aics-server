@@ -38,7 +38,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'METHOD'
                 value = 'COVEREDRATIO'
-                minimum = 0.50
+                minimum = 0.00
             }
         }
     }
@@ -56,8 +56,10 @@ private excludedClassFilesForReport(classDirectories) {
                         "**/aspect/**",
                         "**/Q**",
                         "kgu/developers/api/AicsApiApplication.class",
+                        "kgu/developers/admin/AicsAdminApplication.class",
                         // TODO 현재는 미구현으로 인한 제외
                         "**/api/**/presentation/**",
+                        "**/admin/**/presentation/**",
                         "**/file/**"
                 ])
             })

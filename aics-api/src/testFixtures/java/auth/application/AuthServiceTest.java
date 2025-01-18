@@ -1,26 +1,27 @@
 package auth.application;
 
+import static kgu.developers.common.domain.BaseRole.USER;
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import kgu.developers.api.auth.application.AuthService;
 import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
 import kgu.developers.api.auth.presentation.request.LoginRequest;
 import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
-import kgu.developers.api.auth.presentation.response.TokenResponse;
-import kgu.developers.api.user.application.UserFacade;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
-import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
-import kgu.developers.domain.user.domain.Major;
+import kgu.developers.domain.refreshtoken.domain.RefreshToken;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
-import mock.FakeRefreshTokenRepository;
-import mock.FakeUserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import mock.repository.FakeRefreshTokenRepository;
+import mock.repository.FakeUserRepository;
 
 public class AuthServiceTest {
 	private AuthService authService;
@@ -28,33 +29,30 @@ public class AuthServiceTest {
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
+		FakeRefreshTokenRepository fakeRefreshTokenRepository = new FakeRefreshTokenRepository();
 
-		this.authService = AuthService.builder()
-			.userFacade(
-				UserFacade.builder()
-					.userRepository(fakeUserRepository)
-					.bCryptPasswordEncoder(bCryptPasswordEncoder)
-					.build()
-			)
-			.passwordEncoder(bCryptPasswordEncoder)
-			.tokenProvider(
-				TokenProvider.builder()
-					.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
-					.build()
-			)
-			.refreshTokenRepository(refreshTokenRepository)
-			.build();
+		authService = new AuthService(
+			new UserQueryService(fakeUserRepository),
+			new BCryptPasswordEncoder(),
+			TokenProvider.builder()
+				.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
+				.build(),
+			fakeRefreshTokenRepository
+		);
 
 		fakeUserRepository.save(User.builder()
 			.id("202411345")
-			.password(bCryptPasswordEncoder.encode("password1234"))
+			.password("$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2")
 			.name("홍길동")
 			.email("test@kyonggi.ac.kr")
 			.phone("010-1234-5678")
-			.major(Major.CSE)
+			.major(CSE)
+			.role(USER)
 			.build());
+
+		fakeRefreshTokenRepository.save(
+			RefreshToken.of("202411345", "test")
+		);
 	}
 
 	@Test
@@ -66,13 +64,12 @@ public class AuthServiceTest {
 
 		// when
 		// then
-		assertThatCode(() -> {
-			authService.login(LoginRequest.builder()
+		assertThatCode(() -> authService.login(
+			LoginRequest.builder()
 				.userId(userId)
 				.password(password)
-				.build()
-			);
-		}).doesNotThrowAnyException();
+				.build())
+		).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -84,35 +81,24 @@ public class AuthServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			authService.login(LoginRequest.builder()
+		assertThatThrownBy(() -> authService.login(
+			LoginRequest.builder()
 				.userId(userId)
 				.password(password)
 				.build()
-			);
-		}).isInstanceOf(InvalidPasswordException.class);
+		)).isInstanceOf(InvalidPasswordException.class);
 	}
 
 	@Test
 	@DisplayName("reissue는 토큰을 재발급할 수 있다")
 	public void reissue_Success() {
-		// given
-		String userId = "202411345";
-		String password = "password1234";
-
 		// when
-		TokenResponse tokenResponse = authService.login(LoginRequest.builder()
-			.userId(userId)
-			.password(password)
-			.build()
-		);
-
 		// then
-		assertThatCode(() -> {
-			authService.reissue(RefreshTokenRequest.builder()
-				.refreshToken(tokenResponse.refreshToken())
-				.build());
-		}).doesNotThrowAnyException();
+		assertThatCode(() -> authService.reissue(
+			RefreshTokenRequest.builder()
+				.refreshToken("test")
+				.build())
+		).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -123,10 +109,10 @@ public class AuthServiceTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> {
-			authService.reissue(RefreshTokenRequest.builder()
+		assertThatThrownBy(() -> authService.reissue(
+			RefreshTokenRequest.builder()
 				.refreshToken(refreshToken)
-				.build());
-		}).isInstanceOf(TokenNotFoundException.class);
+				.build()
+		)).isInstanceOf(TokenNotFoundException.class);
 	}
 }

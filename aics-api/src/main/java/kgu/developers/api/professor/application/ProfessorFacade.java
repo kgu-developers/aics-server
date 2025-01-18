@@ -8,10 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import kgu.developers.api.professor.presentation.response.ProfessorListResponse;
 import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.domain.Professor;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
-@Builder
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

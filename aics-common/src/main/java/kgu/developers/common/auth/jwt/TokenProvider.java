@@ -4,19 +4,20 @@ import static io.jsonwebtoken.Header.JWT_TYPE;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static javax.xml.crypto.dsig.SignatureProperties.TYPE;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import java.time.Duration;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Set;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Set;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Builder
@@ -26,11 +27,11 @@ public class TokenProvider {
 
 	public String generateToken(String userId, Duration expiredAt, String role) {
 		Date now = new Date();
-		return makeToken(new Date(now.getTime() + expiredAt.toMillis()), userId, role);
+		Date expiry = new Date(now.getTime() + expiredAt.toMillis());
+		return makeToken(now, expiry, userId, role);
 	}
 
-	private String makeToken(Date expiry, String userId, String role) {
-		Date now = new Date();
+	private String makeToken(Date now, Date expiry, String userId, String role) {
 		return Jwts.builder()
 			.setHeaderParam(TYPE, JWT_TYPE)
 			.setIssuer(jwtProperties.getIssuer())
