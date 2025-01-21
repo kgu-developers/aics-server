@@ -6,33 +6,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.admin.carousel.application.CarouselAdminFacade;
-import kgu.developers.admin.carousel.presentation.request.CarouselRequest;
-import kgu.developers.admin.carousel.presentation.response.CarouselPersistResponse;
 import kgu.developers.domain.carousel.application.command.CarouselCommandService;
 import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.file.domain.FileEntity;
 import mock.repository.FakeCarouselRepository;
 import mock.repository.FakeFileRepository;
 
-public class CarouselAdminFacadeTest {
-	private CarouselAdminFacade carouselAdminFacade;
+public class CarouselCommandServiceTest {
+	private CarouselCommandService carouselCommandService;
 
 	private static final Long TEST_FILE_ID = 1L;
 	private static final Long SAVE_TARGET_ID = 1L;
 
 	@BeforeEach
 	public void init() {
-		initializeCarouselAdminFacade();
+		initializeCarouselCommandService();
 	}
 
-	private void initializeCarouselAdminFacade() {
+	private void initializeCarouselCommandService() {
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
-		carouselAdminFacade = new CarouselAdminFacade(
-			new CarouselCommandService(
-				new FileQueryService(fakeFileRepository),
-				new FakeCarouselRepository()
-			)
+		carouselCommandService = new CarouselCommandService(
+			new FileQueryService(fakeFileRepository),
+			new FakeCarouselRepository()
 		);
 		saveTestFile(fakeFileRepository);
 	}
@@ -49,15 +44,16 @@ public class CarouselAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createCarousel은 Carousel을 생성한다")
-	public void createCarousel_Success() {
+	@DisplayName("createCarousel 메서드는 이미지 파일을 저장하고 Carousel을 생성한다")
+	public void createCarousel_success() {
 		// given
-		CarouselRequest request = new CarouselRequest("경기대학교 AI컴퓨터공학부 메인 이미지", "https://www.kgu.ac.kr/");
+		String targetText = "경기대학교 AI컴퓨터공학부 메인 이미지";
+		String targetLink = "https://www.kgu.ac.kr/";
 
 		// when
-		CarouselPersistResponse response = carouselAdminFacade.createCarousel(TEST_FILE_ID, request);
+		Long savedCarouselId = carouselCommandService.createCarousel(TEST_FILE_ID, targetText, targetLink);
 
 		// then
-		assertEquals(SAVE_TARGET_ID, response.id());
+		assertEquals(SAVE_TARGET_ID, savedCarouselId);
 	}
 }

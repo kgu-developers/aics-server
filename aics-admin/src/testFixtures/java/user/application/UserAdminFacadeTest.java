@@ -60,7 +60,7 @@ public class UserAdminFacadeTest {
 
 	@Test
 	@DisplayName("getUsers는 유저 목록을 페이징해서 조회한다")
-	void getUsers_Success() {
+	public void getUsers_Success() {
 		// given
 		Pageable pageable = PageRequest.of(0, 10);
 
@@ -84,7 +84,7 @@ public class UserAdminFacadeTest {
 
 	@Test
 	@DisplayName("getUsers는 잘못된 페이지 요청시 빈 목록을 반환한다")
-	void getUsers_InvalidPage() {
+	public void getUsers_InvalidPage() {
 		// given
 		Pageable pageable = PageRequest.of(1, 10);
 
