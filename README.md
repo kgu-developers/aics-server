@@ -26,7 +26,11 @@
 │   │   └── ...
 │   ├── buid.gradle
 │   └── Dockerfile
-├── aics-common         // 공통 기능 (인증 및 인가, 로깅 등)
+├── aics-auth           // 인증 및 인가 (추후 분리 예정)
+│   ├── src
+│   │   └── ...
+│   ├── buid.gradle
+├── aics-common         // 공통 엔티티 및 기능 (로깅, 예외 등)
 │   ├── src
 │   │   └── ...
 │   └── buid.gradle
