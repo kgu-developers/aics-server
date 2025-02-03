@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.AboutRepository;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -21,8 +20,8 @@ public class AboutRepositoryImpl implements AboutRepository {
 	}
 
 	@Override
-	public Optional<About> findByMainAndSub(MainCategory main, SubCategory sub) {
-		return jpaAboutRepository.findByMainCategoryAndSubCategory(main, sub);
+	public Optional<About> findByCategory(Category category) {
+		return jpaAboutRepository.findByCategory(category);
 	}
 
 	@Override

@@ -9,8 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.AboutRepository;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import mock.TestEntityUtils;
 
 public class FakeAboutRepository implements AboutRepository {
@@ -22,7 +21,7 @@ public class FakeAboutRepository implements AboutRepository {
 		About newAbout = About.builder()
 			.id(sequence.getAndIncrement())
 			.mainCategory(about.getMainCategory())
-			.subCategory(about.getSubCategory())
+			.category(about.getCategory())
 			.content(about.getContent())
 			.build();
 
@@ -33,10 +32,10 @@ public class FakeAboutRepository implements AboutRepository {
 	}
 
 	@Override
-	public Optional<About> findByMainAndSub(MainCategory main, SubCategory sub) {
+	public Optional<About> findByMainAndSub(MainCategory main, Category sub) {
 		return data.stream()
 			.filter(about -> about.getMainCategory().equals(main)
-				&& about.getSubCategory().equals(sub))
+				&& about.getCategory().equals(sub))
 			.findFirst();
 	}
 

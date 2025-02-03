@@ -1,9 +1,9 @@
 package about.application;
 
+import static kgu.developers.domain.about.domain.Category.CURRICULUM;
+import static kgu.developers.domain.about.domain.Category.EDU_ENVIRONMENT;
+import static kgu.developers.domain.about.domain.Category.HISTORY;
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
-import static kgu.developers.domain.about.domain.SubCategory.EDU_ENVIRONMENT;
-import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.about.application.query.AboutQueryService;
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
@@ -37,14 +36,14 @@ public class AboutQueryServiceTest {
 	public void getAbout_Success() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = HISTORY;
+		Category sub = HISTORY;
 
 		// when
 		About about = aboutQueryService.getAbout(main, sub);
 
 		// then
 		assertEquals(main, about.getMainCategory());
-		assertEquals(sub, about.getSubCategory());
+		assertEquals(sub, about.getCategory());
 		assertEquals("about content", about.getContent());
 	}
 
@@ -53,7 +52,7 @@ public class AboutQueryServiceTest {
 	public void getAbout_NotFound_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = EDU_ENVIRONMENT;
+		Category sub = EDU_ENVIRONMENT;
 
 		// when & then
 		assertThatThrownBy(() -> aboutQueryService.getAbout(main, sub)).isInstanceOf(
@@ -65,7 +64,7 @@ public class AboutQueryServiceTest {
 	public void getAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = CURRICULUM;
+		Category sub = CURRICULUM;
 
 		// when & then
 		assertThatThrownBy(() -> aboutQueryService.getAbout(main, sub)).isInstanceOf(

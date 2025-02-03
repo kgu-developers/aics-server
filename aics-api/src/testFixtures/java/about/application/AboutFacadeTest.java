@@ -1,9 +1,9 @@
 package about.application;
 
+import static kgu.developers.domain.about.domain.Category.CURRICULUM;
+import static kgu.developers.domain.about.domain.Category.HISTORY;
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
 import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
-import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
-import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,8 +15,7 @@ import kgu.developers.api.about.application.AboutFacade;
 import kgu.developers.api.about.presentation.response.AboutResponse;
 import kgu.developers.domain.about.application.query.AboutQueryService;
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
@@ -33,7 +32,7 @@ public class AboutFacadeTest {
 
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
-			.subCategory(CURRICULUM)
+			.category(CURRICULUM)
 			.content("initContent")
 			.build());
 	}
@@ -43,7 +42,7 @@ public class AboutFacadeTest {
 	public void getAbout_Success() {
 		// given
 		MainCategory main = EDU_ACTIVITIES;
-		SubCategory sub = CURRICULUM;
+		Category sub = CURRICULUM;
 
 		// when
 		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub);
@@ -57,7 +56,7 @@ public class AboutFacadeTest {
 	public void getAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = CURRICULUM;
+		Category sub = CURRICULUM;
 
 		// when
 		// then
@@ -70,7 +69,7 @@ public class AboutFacadeTest {
 	public void getAbout_AboutNotFound_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = HISTORY;
+		Category sub = HISTORY;
 
 		// when
 		// then

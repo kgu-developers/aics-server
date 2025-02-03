@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.AboutRepository;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class AboutCommandService {
 	private final AboutRepository aboutRepository;
 
-	public Long createAbout(MainCategory main, SubCategory sub, String content) {
+	public Long createAbout(MainCategory main, Category sub, String content) {
 		categoryMatchCheck(main, sub);
 		About about = About.create(main, sub, content);
 		return aboutRepository.save(about).getId();

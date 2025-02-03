@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kgu.developers.api.about.application.AboutFacade;
 import kgu.developers.api.about.presentation.response.AboutResponse;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,10 +20,9 @@ public class AboutControllerImpl implements AboutController {
 	@Override
 	@GetMapping
 	public ResponseEntity<AboutResponse> getAbout(
-		@RequestParam(name = "main") MainCategory main,
-		@RequestParam(name = "sub") SubCategory sub
+		@RequestParam(name = "category") Category category
 	) {
-		AboutResponse response = aboutFacade.getAbout(main, sub);
+		AboutResponse response = aboutFacade.getAbout(category);
 		return ResponseEntity.ok(response);
 	}
 }

@@ -1,9 +1,5 @@
 package about.application;
 
-import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
-import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
-import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,8 +13,7 @@ import kgu.developers.admin.about.presentation.request.AboutUpdateRequest;
 import kgu.developers.admin.about.presentation.response.AboutPersistResponse;
 import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
@@ -36,7 +31,7 @@ public class AboutAdminFacadeTest {
 
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
-			.subCategory(CURRICULUM)
+			.category(CURRICULUM)
 			.content("initContent")
 			.build());
 	}
@@ -46,7 +41,7 @@ public class AboutAdminFacadeTest {
 	public void createAbout_Success() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = HISTORY;
+		Category sub = HISTORY;
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()
@@ -67,7 +62,7 @@ public class AboutAdminFacadeTest {
 	public void createAbout_CategoryNotMatch_ThrowsException() {
 		// given
 		MainCategory main = DEPT_INTRO;
-		SubCategory sub = CURRICULUM;
+		Category sub = CURRICULUM;
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()

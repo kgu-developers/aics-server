@@ -4,8 +4,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import lombok.Builder;
 
 @Builder
@@ -16,7 +15,7 @@ public record AboutCreateRequest(
 
 	@Schema(description = "보조 카테고리", example = "CURRICULUM", requiredMode = REQUIRED)
 	@NotNull
-	SubCategory sub,
+	Category sub,
 
 	@Schema(description = "페이지 내용(JSON 형식)", example = "{key:value}", requiredMode = REQUIRED)
 	@NotNull

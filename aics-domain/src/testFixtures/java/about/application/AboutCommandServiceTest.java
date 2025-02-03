@@ -1,8 +1,8 @@
 package about.application;
 
+import static kgu.developers.domain.about.domain.Category.CURRICULUM;
+import static kgu.developers.domain.about.domain.Category.HISTORY;
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
-import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
 import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
@@ -38,11 +37,11 @@ public class AboutCommandServiceTest {
 	public void createAbout_Success() {
 		// given
 		MainCategory mainCategory = DEPT_INTRO;
-		SubCategory subCategory = HISTORY;
+		Category category = HISTORY;
 		String content = "testContent";
 
 		// when
-		Long result = aboutCommandService.createAbout(mainCategory, subCategory, content);
+		Long result = aboutCommandService.createAbout(mainCategory, category, content);
 
 		// then
 		assertEquals(2L, result);
@@ -53,12 +52,12 @@ public class AboutCommandServiceTest {
 	public void createAbout_Failed() {
 		// given
 		MainCategory mainCategory = DEPT_INTRO;
-		SubCategory subCategory = CURRICULUM;
+		Category category = CURRICULUM;
 		String content = "testContent";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutCommandService.createAbout(mainCategory, subCategory, content))
+		assertThatThrownBy(() -> aboutCommandService.createAbout(mainCategory, category, content))
 			.isInstanceOf(CategoryNotMatchException.class).hasMessage("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
 	}
 

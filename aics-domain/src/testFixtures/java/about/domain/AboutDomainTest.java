@@ -1,42 +1,54 @@
 package about.domain;
 
-import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
+import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 
 public class AboutDomainTest {
 	@Test
 	@DisplayName("ABOUT 객체를 생성할 수 있다.")
 	public void createAbout_Success() {
 		// given
-		MainCategory mainCategory = DEPT_INTRO;
-		SubCategory subCategory = HISTORY;
-		String content = "testContent";
+		Category category = DEPT_INTRO;
+		String description = "test description";
+		String content = "test content";
 
 		// when
-		About about = About.create(mainCategory, subCategory, content);
+		About about = About.create(category, description, content);
 
 		// then
-		assertEquals(mainCategory, about.getMainCategory());
-		assertEquals(subCategory, about.getSubCategory());
+		assertEquals(category, about.getCategory());
+		assertEquals(description, about.getDescription());
 		assertEquals(content, about.getContent());
+	}
+
+	@Test
+	@DisplayName("UpdateDescription은 About 객체의 description을 수정할 수 있다.")
+	public void updateDescription_Success() {
+		// given
+		About about = About.create(DEPT_INTRO, "test description", "test content");
+
+		String updateDescription = "update description";
+
+		// when
+		about.updateContent(updateDescription);
+
+		// then
+		assertEquals(updateDescription, about.getContent());
 	}
 
 	@Test
 	@DisplayName("UpdateContent는 About 객체의 content를 수정할 수 있다.")
 	public void updateContent_Success() {
 		// given
-		String content = "testContent";
-		About about = About.create(DEPT_INTRO, HISTORY, content);
+		About about = About.create(DEPT_INTRO, "test description", "test content");
 
-		String updateContent = "updateContent";
+		String updateContent = "update content";
 
 		// when
 		about.updateContent(updateContent);

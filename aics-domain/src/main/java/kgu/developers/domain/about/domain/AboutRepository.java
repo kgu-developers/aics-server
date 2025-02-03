@@ -5,7 +5,7 @@ import java.util.Optional;
 public interface AboutRepository {
 	About save(About about);
 
-	Optional<About> findByMainAndSub(MainCategory main, SubCategory sub);
-
 	Optional<About> findById(Long id);
+
+	Optional<About> findByCategory(Category category);
 }
