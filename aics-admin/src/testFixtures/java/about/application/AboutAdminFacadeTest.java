@@ -37,7 +37,6 @@ public class AboutAdminFacadeTest {
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
 			.subCategory(CURRICULUM)
-			.detailCategory("initDetail")
 			.content("initContent")
 			.build());
 	}
@@ -48,13 +47,11 @@ public class AboutAdminFacadeTest {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = HISTORY;
-		String detail = "detail";
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()
 			.main(main)
 			.sub(sub)
-			.detail(detail)
 			.content(content)
 			.build();
 
@@ -71,13 +68,11 @@ public class AboutAdminFacadeTest {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = CURRICULUM;
-		String detail = "detail";
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()
 			.main(main)
 			.sub(sub)
-			.detail(detail)
 			.content(content)
 			.build();
 

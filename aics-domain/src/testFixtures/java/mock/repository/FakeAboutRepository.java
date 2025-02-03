@@ -23,7 +23,6 @@ public class FakeAboutRepository implements AboutRepository {
 			.id(sequence.getAndIncrement())
 			.mainCategory(about.getMainCategory())
 			.subCategory(about.getSubCategory())
-			.detailCategory(about.getDetailCategory())
 			.content(about.getContent())
 			.build();
 
@@ -31,15 +30,6 @@ public class FakeAboutRepository implements AboutRepository {
 
 		data.add(newAbout);
 		return newAbout;
-	}
-
-	@Override
-	public Optional<About> findByMainAndSubAndDetail(MainCategory main, SubCategory sub, String detail) {
-		return data.stream()
-			.filter(about -> about.getMainCategory().equals(main)
-				&& about.getSubCategory().equals(sub)
-				&& about.getDetailCategory().equals(detail))
-			.findFirst();
 	}
 
 	@Override

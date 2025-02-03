@@ -18,16 +18,14 @@ public class AboutDomainTest {
 		// given
 		MainCategory mainCategory = DEPT_INTRO;
 		SubCategory subCategory = HISTORY;
-		String detailCategory = "test";
 		String content = "testContent";
 
 		// when
-		About about = About.create(mainCategory, subCategory, detailCategory, content);
+		About about = About.create(mainCategory, subCategory, content);
 
 		// then
 		assertEquals(mainCategory, about.getMainCategory());
 		assertEquals(subCategory, about.getSubCategory());
-		assertEquals(detailCategory, about.getDetailCategory());
 		assertEquals(content, about.getContent());
 	}
 
@@ -35,9 +33,8 @@ public class AboutDomainTest {
 	@DisplayName("UpdateContent는 About 객체의 content를 수정할 수 있다.")
 	public void updateContent_Success() {
 		// given
-		String detailCategory = "test";
 		String content = "testContent";
-		About about = About.create(DEPT_INTRO, HISTORY, detailCategory, content);
+		About about = About.create(DEPT_INTRO, HISTORY, content);
 
 		String updateContent = "updateContent";
 
