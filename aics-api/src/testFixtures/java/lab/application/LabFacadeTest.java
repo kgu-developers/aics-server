@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import kgu.developers.domain.file.domain.FileEntity;
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,16 +23,20 @@ public class LabFacadeTest {
 	@BeforeEach
 	public void init() {
 		FakeLabRepository fakeLabRepository = new FakeLabRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		labFacade = new LabFacade(
 			new LabQueryService(fakeLabRepository)
 		);
+
+		FileEntity testFile = fakeFileRepository.save(FileEntity.builder().id(1L).build());
 
 		fakeLabRepository.save(
 			Lab.create(
 				"인공지능 연구실",
 				"8502, 8503",
 				"http://ailab.kyonggi.ac.kr",
-				"김인철"
+				"김인철",
+				testFile
 			)
 		);
 
@@ -39,7 +45,8 @@ public class LabFacadeTest {
 				"알고리즘 연구실",
 				"8504",
 				"http://algeo.kyonggi.ac.kr/",
-				"배상원"
+				"배상원",
+				testFile
 			)
 		);
 	}
