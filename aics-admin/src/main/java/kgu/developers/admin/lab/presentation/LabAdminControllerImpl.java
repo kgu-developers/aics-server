@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,16 +31,17 @@ public class LabAdminControllerImpl implements LabAdminController{
 	@Override
 	@PostMapping
 	public ResponseEntity<LabPersistResponse> createLab(
+		@Positive @RequestParam(required = false) Long fileId,
 		@Valid @RequestBody LabRequest request
 	) {
-		LabPersistResponse response = labAdminFacade.createLab(request);
+		LabPersistResponse response = labAdminFacade.createLab(fileId, request);
 		return ResponseEntity.status(CREATED).body(response);
 	}
 
 	@Override
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateLab(
-		@Parameter(description = "수정할 연구실 id", example = "1", required = true) @PathVariable @Positive Long id,
+		@PathVariable @Positive Long id,
 		@Valid @RequestBody LabRequest request
 	) {
 		labAdminFacade.updateLab(id, request);
@@ -49,7 +51,7 @@ public class LabAdminControllerImpl implements LabAdminController{
 	@Override
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteLab(
-		@Parameter(description = "삭제할 연구실의 id", example = "1", required = true) @PathVariable @Positive Long id
+		@PathVariable @Positive Long id
 	) {
 		labAdminFacade.deleteLab(id);
 		return ResponseEntity.noContent().build();

@@ -17,8 +17,8 @@ public class LabAdminFacade {
 	private final LabCommandService labCommandService;
 	private final LabQueryService labQueryService;
 
-	public LabPersistResponse createLab(LabRequest request) {
-		Long id = labCommandService.createLab(request.name(), request.loc(), request.site(), request.advisor());
+	public LabPersistResponse createLab(Long fileId, LabRequest request) {
+		Long id = labCommandService.createLab(fileId, request.name(), request.loc(), request.site(), request.advisor());
 		return LabPersistResponse.of(id);
 	}
 

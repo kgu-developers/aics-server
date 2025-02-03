@@ -3,6 +3,7 @@ package kgu.developers.admin.lab.presentation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,6 +27,10 @@ public interface LabAdminController {
 		responseCode = "201",
 		content = @Content(schema = @Schema(implementation = LabPersistResponse.class)))
 	ResponseEntity<LabPersistResponse> createLab(
+		@Parameter(
+			description = "이미지 파일 ID는 URL 쿼리 파라미터 입니다.",
+			example = "1"
+		) @Positive @RequestParam(required = false) Long fileId,
 		@Parameter(
 			description = "연구실 생성 request 객체 입니다.",
 			required = true

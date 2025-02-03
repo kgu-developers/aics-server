@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.domain.Lab;
 
 public class LabDomainTest {
@@ -18,7 +19,7 @@ public class LabDomainTest {
 
 	@BeforeEach
 	public void init() {
-		lab = Lab.create(NAME, LOC, SITE, ADVISOR);
+		lab = Lab.create(NAME, LOC, SITE, ADVISOR, FileEntity.builder().build());
 	}
 
 	@Test

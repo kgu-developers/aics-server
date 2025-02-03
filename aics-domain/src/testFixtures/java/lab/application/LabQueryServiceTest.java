@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
 import kgu.developers.domain.lab.exception.LabNotFoundException;
@@ -20,6 +21,7 @@ public class LabQueryServiceTest {
 	private static final int TARGET_LAB_COUNT = 2;
 	private static final Long TARGET_LAB_ID = 1L;
 	private static final Long NOT_EXIST_LAB_ID = 3L;
+	private static final Long TEST_FILE_ID = 1L;
 
 	@BeforeEach
 	public void init() {
@@ -30,10 +32,12 @@ public class LabQueryServiceTest {
 
 	private static void saveTestLabs(FakeLabRepository fakeLabRepository) {
 		fakeLabRepository.save(
-			Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철")
+			Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철",
+				FileEntity.builder().id(TEST_FILE_ID).build())
 		);
 		fakeLabRepository.save(
-			Lab.create("알고리즘 연구실", "8504", "http://algeo.kyonggi.ac.kr/", "배상원")
+			Lab.create("알고리즘 연구실", "8504", "http://algeo.kyonggi.ac.kr/", "배상원",
+				FileEntity.builder().id(TEST_FILE_ID).build())
 		);
 	}
 
