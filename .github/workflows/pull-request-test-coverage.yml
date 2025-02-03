@@ -38,7 +38,7 @@ jobs:
         uses: madrapps/jacoco-report@v1.6
         with:
           title: Test Coverage Report
-          paths: |
+          paths: >
             ${{ github.workspace }}/aics-domain/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-api/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-admin/build/jacoco/test/jacocoTestReport.xml
