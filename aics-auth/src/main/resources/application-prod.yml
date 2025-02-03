@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      default_batch_fetch_size: 1000
+      jdbc:
+        time_zone: Asia/Seoul
+    defer-datasource-initialization: true
+    show-sql: false
+    open-in-view: false
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD}

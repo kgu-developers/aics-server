@@ -1,4 +1,4 @@
-package kgu.developers.admin.config;
+package kgu.developers.auth.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -25,7 +25,6 @@ import static org.springframework.security.config.Elements.JWT;
 @Configuration
 @RequiredArgsConstructor
 public class SwaggerConfig {
-
 	private final Environment environment;
 
 	@Value("${profiles.current-ip}")
@@ -44,8 +43,8 @@ public class SwaggerConfig {
 
 	@PostConstruct
 	public void initializeProfileServerConfig() {
-		profileServerConfig.put("local", Map.of("url", "http://localhost", "port", adminApiPort));
-		profileServerConfig.put("dev", Map.of("url", "http://" + currentIp, "port", adminApiPort));
+		profileServerConfig.put("local", Map.of("url", "http://localhost", "port", authApiPort));
+		profileServerConfig.put("dev", Map.of("url", "http://" + currentIp, "port", authApiPort));
 	}
 
 	@Bean
@@ -63,7 +62,7 @@ public class SwaggerConfig {
 
 	private Info apiInfo() {
 		return new Info()
-			.title("AICS-HOME ADMIN API")
+			.title("AICS-HOME API")
 			.description(getDescription());
 	}
 
@@ -73,7 +72,7 @@ public class SwaggerConfig {
 			.map(entry -> {
 				String url = (String) entry.getValue().get("url");
 				int port = (int) entry.getValue().get("port");
-				return openApiServer(url + ":" + port, "AICS-HOME ADMIN API " + entry.getKey().toUpperCase());
+				return openApiServer(url + ":" + port, "AICS-HOME API " + entry.getKey().toUpperCase());
 			})
 			.collect(Collectors.toList());
 	}
@@ -105,27 +104,29 @@ public class SwaggerConfig {
 				
 				사용자 API 문서는 다음 링크에서 확인하실 수 있습니다.
 				<ul>
-				    <li>AICS-HOME ADMIN API : <a href="%s" target="_blank">%s</a></li>
+				    <li>AICS-HOME API : <a href="%s" target="_blank">%s</a></li>
 				</ul>
 				
-				인증 인가 API 문서는 다음 링크에서 확인하실 수 있습니다.
+				관리자 API 문서는 다음 링크에서 확인하실 수 있습니다.
 				<ul>
-				    <li>AICS-HOME AUTH API : <a href="%s" target="_blank">%s</a></li>
+				    <li>AICS-HOME ADMIN API : <a href="%s" target="_blank">%s</a></li>
 				</ul>
 				""",
-			getApiSwaggerByProfile(activeProfile), getApiSwaggerByProfile(activeProfile),
-			getAuthSwaggerByProfile(activeProfile), getAuthSwaggerByProfile(activeProfile)
+			getApiSwaggerByProfile(activeProfile),
+			getApiSwaggerByProfile(activeProfile),
+			getAdminSwaggerByProfile(activeProfile),
+			getAdminSwaggerByProfile(activeProfile)
 		);
-	}
-
-	private String getAuthSwaggerByProfile(String profile) {
-		String url = (String) profileServerConfig.get(profile).get("url");
-		return url + ":" + authApiPort + "/swagger-ui/index.html";
 	}
 
 	private String getApiSwaggerByProfile(String profile) {
 		String url = (String) profileServerConfig.get(profile).get("url");
 		return url + ":" + apiPort + "/swagger-ui/index.html";
+	}
+
+	private String getAdminSwaggerByProfile(String profile) {
+		String url = (String) profileServerConfig.get(profile).get("url");
+		return url + ":" + adminApiPort + "/swagger-ui/index.html";
 	}
 
 	private String getActiveProfile() {
