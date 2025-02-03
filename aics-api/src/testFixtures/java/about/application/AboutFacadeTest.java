@@ -1,9 +1,7 @@
 package about.application;
 
-import static kgu.developers.domain.about.domain.Category.CURRICULUM;
-import static kgu.developers.domain.about.domain.Category.HISTORY;
-import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
+import static kgu.developers.domain.about.domain.Category.CLUB;
+import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,7 +15,6 @@ import kgu.developers.domain.about.application.query.AboutQueryService;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
-import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
 
 public class AboutFacadeTest {
@@ -31,9 +28,9 @@ public class AboutFacadeTest {
 		);
 
 		fakeAboutRepository.save(About.builder()
-			.mainCategory(EDU_ACTIVITIES)
-			.category(CURRICULUM)
-			.content("initContent")
+			.category(DEPT_INTRO)
+			.description("description")
+			.content("content")
 			.build());
 	}
 
@@ -41,39 +38,26 @@ public class AboutFacadeTest {
 	@DisplayName("getAbout은 About을 조회한다")
 	public void getAbout_Success() {
 		// given
-		MainCategory main = EDU_ACTIVITIES;
-		Category sub = CURRICULUM;
+		Category category = DEPT_INTRO;
 
 		// when
-		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub);
+		AboutResponse aboutResponse = aboutFacade.getAbout(category);
 
 		// then
-		assertEquals("initContent", aboutResponse.content());
-	}
-
-	@Test
-	@DisplayName("getAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않을 시 CategoryNotMatchException을 발생시킨다")
-	public void getAbout_CategoryNotMatch_ThrowsException() {
-		// given
-		MainCategory main = DEPT_INTRO;
-		Category sub = CURRICULUM;
-
-		// when
-		// then
-		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub))
-			.isInstanceOf(CategoryNotMatchException.class);
+		assertEquals(category.getDescription(), aboutResponse.category());
+		assertEquals("content", aboutResponse.content());
+		assertEquals("description", aboutResponse.description());
 	}
 
 	@Test
 	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotFoundException을 발생시킨다")
 	public void getAbout_AboutNotFound_ThrowsException() {
 		// given
-		MainCategory main = DEPT_INTRO;
-		Category sub = HISTORY;
+		Category category = CLUB;
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub))
+		assertThatThrownBy(() -> aboutFacade.getAbout(category))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }
