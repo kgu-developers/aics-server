@@ -16,7 +16,8 @@ public record LabListResponse(
 			+ "\"loc\": \"8502, 8503\", "
 			+ "\"site\": \"http://ailab.kyonggi.ac.kr\", "
 			+ "\"professor\": \"박민준\", "
-			+ "\"img\": \"/files/lab/LAB-A.png\"}]",
+			+ "\"img\": {\"id\": 1, \"physicalPath\": \"/files/lab/20250131/lab-A.png\"}"
+			+ "}]",
 		requiredMode = REQUIRED)
 	List<LabDetailResponse> contents
 ) {

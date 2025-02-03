@@ -17,6 +17,9 @@ import kgu.developers.domain.club.domain.ClubRepository;
 import kgu.developers.domain.comment.application.command.CommentCommandService;
 import kgu.developers.domain.comment.application.query.CommentQueryService;
 import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.file.application.command.FileCommandService;
+import kgu.developers.domain.file.application.query.FileQueryService;
+import kgu.developers.domain.file.domain.FileRepository;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.LabRepository;
@@ -34,6 +37,7 @@ import kgu.developers.domain.user.domain.UserRepository;
 import mock.repository.FakeAboutRepository;
 import mock.repository.FakeClubRepository;
 import mock.repository.FakeCommentRepository;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakeLabRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeProfessorRepository;
@@ -66,6 +70,10 @@ public class TestContainer {
 	public final ProfessorRepository professorRepository;
 	public final ProfessorQueryService professorQueryService;
 	public final ProfessorCommandService professorCommandService;
+
+	public final FileRepository fileRepository;
+	public final FileQueryService fileQueryService;
+	public final FileCommandService fileCommandService;
 
 	public final LabRepository labRepository;
 	public final LabQueryService labQueryService;
@@ -112,8 +120,12 @@ public class TestContainer {
 		this.commentQueryService = new CommentQueryService(commentRepository);
 		this.commentCommandService = new CommentCommandService(postQueryService, userQueryService, commentRepository);
 
+		this.fileRepository = new FakeFileRepository();
+		this.fileQueryService = new FileQueryService(fileRepository);
+		this.fileCommandService = new FileCommandService(fileRepository);
+
 		this.labRepository = new FakeLabRepository();
 		this.labQueryService = new LabQueryService(labRepository);
-		this.labCommandService = new LabCommandService(labRepository);
+		this.labCommandService = new LabCommandService(fileQueryService, labRepository);
 	}
 }

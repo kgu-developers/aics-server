@@ -2,14 +2,18 @@ package lab.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.domain.Lab;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakeLabRepository;
 
 public class LabCommandServiceTest {
@@ -17,6 +21,7 @@ public class LabCommandServiceTest {
 	private FakeLabRepository fakeLabRepository;
 
 	private static final Long TARGET_LAB_ID = 2L;
+	private static final Long TEST_FILE_ID = 1L;
 
 	@BeforeEach
 	public void init() {
@@ -24,13 +29,15 @@ public class LabCommandServiceTest {
 	}
 
 	private void initializeLabCommandService() {
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
-		labCommandService = new LabCommandService(fakeLabRepository);
+		labCommandService = new LabCommandService(new FileQueryService(fakeFileRepository), fakeLabRepository);
 		fakeLabRepository.save(saveTestLab());
 	}
 
 	private static Lab saveTestLab() {
-		return Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철");
+		return Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철",
+			FileEntity.builder().id(TEST_FILE_ID).build());
 	}
 
 	@Test
@@ -43,7 +50,7 @@ public class LabCommandServiceTest {
 		String advisor = "김인철";
 
 		// when
-		Long createdLabId = labCommandService.createLab(name, loc, site, advisor);
+		Long createdLabId = labCommandService.createLab(TEST_FILE_ID, name, loc, site, advisor);
 
 		// then
 		assertEquals(TARGET_LAB_ID, createdLabId);
@@ -78,7 +85,7 @@ public class LabCommandServiceTest {
 		String site = "http://ailab.kyonggi.ac.kr";
 		String advisor = "김인철";
 
-		Long labIdToDelete = labCommandService.createLab(name, loc, site, advisor);
+		Long labIdToDelete = labCommandService.createLab(TEST_FILE_ID, name, loc, site, advisor);
 
 		// when
 		labCommandService.deleteLabById(labIdToDelete);

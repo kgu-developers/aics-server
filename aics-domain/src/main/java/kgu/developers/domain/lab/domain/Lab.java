@@ -42,12 +42,13 @@ public class Lab extends BaseTimeEntity {
 	@JoinColumn(name = "file_id")
 	private FileEntity file;
 
-	public static Lab create(String name, String loc, String site, String advisor) {
+	public static Lab create(String name, String loc, String site, String advisor, FileEntity file) {
 		return Lab.builder()
 			.name(name)
 			.loc(loc)
 			.site(site)
 			.advisor(advisor)
+			.file(file)
 			.build();
 	}
 
