@@ -39,8 +39,8 @@ public class Lab extends BaseTimeEntity {
 	private String advisor;
 
 	@OneToOne
-	@JoinColumn(name = "file_id")
-	private FileEntity file;
+	@JoinColumn(name = "file_id", nullable = false)
+	private FileEntity imgFile;
 
 	public static Lab create(String name, String loc, String site, String advisor, FileEntity file) {
 		return Lab.builder()
@@ -48,7 +48,7 @@ public class Lab extends BaseTimeEntity {
 			.loc(loc)
 			.site(site)
 			.advisor(advisor)
-			.file(file)
+			.imgFile(file)
 			.build();
 	}
 
