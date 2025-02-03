@@ -29,7 +29,7 @@ public class AboutCommandServiceTest {
 		aboutCommandService = new AboutCommandService(fakeAboutRepository);
 
 		fakeAboutRepository.save(
-			About.create(DEPT_INTRO, HISTORY, "detailCategory", "about content")
+			About.create(DEPT_INTRO, HISTORY, "about content")
 		);
 	}
 
@@ -39,11 +39,10 @@ public class AboutCommandServiceTest {
 		// given
 		MainCategory mainCategory = DEPT_INTRO;
 		SubCategory subCategory = HISTORY;
-		String detail = "testDetail";
 		String content = "testContent";
 
 		// when
-		Long result = aboutCommandService.createAbout(mainCategory, subCategory, detail, content);
+		Long result = aboutCommandService.createAbout(mainCategory, subCategory, content);
 
 		// then
 		assertEquals(2L, result);
@@ -55,12 +54,11 @@ public class AboutCommandServiceTest {
 		// given
 		MainCategory mainCategory = DEPT_INTRO;
 		SubCategory subCategory = CURRICULUM;
-		String detail = "testDetail";
 		String content = "testContent";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutCommandService.createAbout(mainCategory, subCategory, detail, content))
+		assertThatThrownBy(() -> aboutCommandService.createAbout(mainCategory, subCategory, content))
 			.isInstanceOf(CategoryNotMatchException.class).hasMessage("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
 	}
 

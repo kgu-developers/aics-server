@@ -16,9 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class AboutCommandService {
 	private final AboutRepository aboutRepository;
 
-	public Long createAbout(MainCategory main, SubCategory sub, String detail, String content) {
+	public Long createAbout(MainCategory main, SubCategory sub, String content) {
 		categoryMatchCheck(main, sub);
-		About about = About.create(main, sub, detail, content);
+		About about = About.create(main, sub, content);
 		return aboutRepository.save(about).getId();
 	}
 

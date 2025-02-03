@@ -16,16 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class AboutQueryService {
 	private final AboutRepository aboutRepository;
 
-	public About getAbout(MainCategory main, SubCategory sub, String detail) {
+	public About getAbout(MainCategory main, SubCategory sub) {
 		categoryMatchCheck(main, sub);
-		About about;
-		if (detail == null || detail.isBlank()) {
-			about = aboutRepository.findByMainAndSub(main, sub)
-				.orElseThrow(AboutNotFoundException::new);
-		} else {
-			about = aboutRepository.findByMainAndSubAndDetail(main, sub, detail)
-				.orElseThrow(AboutNotFoundException::new);
-		}
-		return about;
+		return aboutRepository.findByMainAndSub(main, sub)
+			.orElseThrow(AboutNotFoundException::new);
 	}
 }

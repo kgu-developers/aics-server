@@ -15,17 +15,16 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/abouts")
-public class AboutControllerImpl implements AboutController{
+public class AboutControllerImpl implements AboutController {
 	private final AboutFacade aboutFacade;
 
 	@Override
 	@GetMapping
 	public ResponseEntity<AboutResponse> getAbout(
 		@RequestParam(name = "main") MainCategory main,
-		@RequestParam(name = "sub") SubCategory sub,
-		@RequestParam(name = "detail", required = false) String detail
+		@RequestParam(name = "sub") SubCategory sub
 	) {
-		AboutResponse response = aboutFacade.getAbout(main, sub, detail);
+		AboutResponse response = aboutFacade.getAbout(main, sub);
 		return ResponseEntity.ok(response);
 	}
 }

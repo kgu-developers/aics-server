@@ -34,7 +34,6 @@ public class AboutFacadeTest {
 		fakeAboutRepository.save(About.builder()
 			.mainCategory(EDU_ACTIVITIES)
 			.subCategory(CURRICULUM)
-			.detailCategory("initDetail")
 			.content("initContent")
 			.build());
 	}
@@ -45,10 +44,9 @@ public class AboutFacadeTest {
 		// given
 		MainCategory main = EDU_ACTIVITIES;
 		SubCategory sub = CURRICULUM;
-		String detail = "initDetail";
 
 		// when
-		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub, detail);
+		AboutResponse aboutResponse = aboutFacade.getAbout(main, sub);
 
 		// then
 		assertEquals("initContent", aboutResponse.content());
@@ -60,11 +58,10 @@ public class AboutFacadeTest {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = CURRICULUM;
-		String detail = "failDetail";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub, detail))
+		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub))
 			.isInstanceOf(CategoryNotMatchException.class);
 	}
 
@@ -74,14 +71,10 @@ public class AboutFacadeTest {
 		// given
 		MainCategory main = DEPT_INTRO;
 		SubCategory sub = HISTORY;
-		String detail = "failDetail";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub, null))
-			.isInstanceOf(AboutNotFoundException.class);
-
-		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub, detail))
+		assertThatThrownBy(() -> aboutFacade.getAbout(main, sub))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

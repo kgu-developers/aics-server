@@ -46,16 +46,13 @@ public class About extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private SubCategory subCategory;
 
-	private String detailCategory;
-
 	@Column(nullable = false, columnDefinition = "text")
 	private String content;
 
-	public static About create(MainCategory mainCategory, SubCategory subCategory, String detailCategory, String content) {
+	public static About create(MainCategory mainCategory, SubCategory subCategory, String content) {
 		return About.builder()
 			.mainCategory(mainCategory)
 			.subCategory(subCategory)
-			.detailCategory(detailCategory)
 			.content(content)
 			.build();
 	}

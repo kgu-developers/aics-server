@@ -33,10 +33,6 @@ public interface AboutController {
 			description = "보조 카테고리 ENUM 타입 입니다.",
 			example = "CURRICULUM",
 			required = true
-		) @RequestParam(name = "sub") SubCategory sub,
-		@Parameter(
-			description = "세부 카테고리 입니다.",
-			example = "2019"
-		) @RequestParam(name = "detail", required = false) String detail
+		) @RequestParam(name = "sub") SubCategory sub
 	);
 }
