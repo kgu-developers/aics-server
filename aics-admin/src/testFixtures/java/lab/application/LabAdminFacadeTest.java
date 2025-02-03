@@ -13,28 +13,36 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.admin.lab.application.LabAdminFacade;
 import kgu.developers.admin.lab.presentation.request.LabRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
+import kgu.developers.domain.file.application.query.FileQueryService;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.Lab;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakeLabRepository;
 
 public class LabAdminFacadeTest {
 	private LabAdminFacade labAdminFacade;
 	private FakeLabRepository fakeLabRepository;
 
+	private static final Long TEST_FILE_ID = 1L;
+
 	@BeforeEach
 	public void init() {
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
 		labAdminFacade = new LabAdminFacade(
-			new LabCommandService(fakeLabRepository),
+			new LabCommandService(new FileQueryService(fakeFileRepository), fakeLabRepository),
 			new LabQueryService(fakeLabRepository)
 		);
 
+		FileEntity testFile = fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).build());
 		fakeLabRepository.save(Lab.builder()
 			.name("Lab A")
 			.loc("8500")
 			.site("http://labA.kyonggi.ac.kr")
 			.advisor("박민준")
+			.file(testFile)
 			.build()
 		);
 	}
@@ -51,7 +59,7 @@ public class LabAdminFacadeTest {
 			.build();
 
 		// when
-		LabPersistResponse response = labAdminFacade.createLab(request);
+		LabPersistResponse response = labAdminFacade.createLab(TEST_FILE_ID, request);
 
 		// then
 		Lab lab = fakeLabRepository.findById(response.id()).orElse(null);

@@ -21,6 +21,8 @@ import kgu.developers.domain.club.domain.ClubRepository;
 import kgu.developers.domain.comment.application.command.CommentCommandService;
 import kgu.developers.domain.comment.application.query.CommentQueryService;
 import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.file.application.query.FileQueryService;
+import kgu.developers.domain.file.domain.FileRepository;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.application.query.LabQueryService;
 import kgu.developers.domain.lab.domain.LabRepository;
@@ -82,7 +84,7 @@ public class FakeTestContainer {
 
 		suppliers.put(LabRepository.class, FakeLabRepository::new);
 		suppliers.put(LabQueryService.class, () -> new LabQueryService(get(LabRepository.class)));
-		suppliers.put(LabCommandService.class, () -> new LabCommandService(get(LabRepository.class)));
+		suppliers.put(LabCommandService.class, () -> new LabCommandService(get(FileQueryService.class), get(LabRepository.class)));
 
 		// Preload specific instances if necessary
 		UserRepository userRepository = get(UserRepository.class);

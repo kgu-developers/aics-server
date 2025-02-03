@@ -22,10 +22,12 @@ public record LabDetailResponse(
 	@Schema(description = "연구실 담당교수", example = "박민준", requiredMode = REQUIRED)
 	String advisor,
 
-	@Schema(description = "첨부 파일 정보",
-		example = "{\"physicalPath\": \"/cloud/file/3/lab-logo-image\"}",
+	@Schema(description = "연구실 이미지 파일",
+		example = "{"
+			+ "\"id\": 1, "
+			+ "\"physicalPath\": \"/files/lab/20250131/lab-A.png\"}",
 		requiredMode = NOT_REQUIRED)
-	FilePathResponse file
+	FilePathResponse img
 ) {
 	public static LabDetailResponse from(Lab lab) {
 		return LabDetailResponse.builder()
@@ -33,8 +35,8 @@ public record LabDetailResponse(
 			.loc(lab.getLoc())
 			.site(lab.getSite())
 			.advisor(lab.getAdvisor())
-			.file(lab.getFile() != null ?
-				FilePathResponse.from(lab.getFile()) : null)
+			.img(lab.getImgFile() != null ?
+				FilePathResponse.from(lab.getImgFile()) : null)
 			.build();
 	}
 }
