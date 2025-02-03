@@ -38,7 +38,7 @@ jobs:
         uses: madrapps/jacoco-report@v1.6
         with:
           title: Test Coverage Report
-          paths: >
+          paths: |
             ${{ github.workspace }}/aics-domain/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-api/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-admin/build/jacoco/test/jacocoTestReport.xml
@@ -46,6 +46,7 @@ jobs:
           min-coverage-overall: 80
           min-coverage-changed-files: 70
           update-comment: true
+          debug-mode: true
 
       - name: Fail PR if overall coverage is less than 80%
         if: ${{ steps.jacoco.outputs.coverage-overall < 80.0 }}
