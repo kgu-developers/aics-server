@@ -85,7 +85,7 @@
 aics-api.src.main.java.kgu.developers.api
 ├── foo
 │   ├── application                 // 비즈니스 로직
-│   │   └── FooFacde.java           // CQRS 패턴 적용을 위한 Facade 계층
+│   │   └── FooFacade.java           // CQRS 패턴 적용을 위한 Facade 계층
 │   └── presentation
 │       ├── response                // 응답 객체
 │       │   └── ...
