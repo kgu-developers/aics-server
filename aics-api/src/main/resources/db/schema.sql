@@ -9,6 +9,8 @@ CREATE TABLE about
     content         TEXT         NOT NULL,
     description VARCHAR(100),
     category   VARCHAR(50)  NOT NULL UNIQUE
+       CONSTRAINT about_category_check
+           CHECK ((category)::TEXT = ANY (ARRAY ['DEPT_INTRO', 'DIRECTIONS', 'CLUB']))
 );
 
 -- club
