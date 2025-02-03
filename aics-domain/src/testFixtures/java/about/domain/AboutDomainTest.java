@@ -32,14 +32,13 @@ public class AboutDomainTest {
 	public void updateDescription_Success() {
 		// given
 		About about = About.create(DEPT_INTRO, "test description", "test content");
-
 		String updateDescription = "update description";
 
 		// when
-		about.updateContent(updateDescription);
+		about.updateDescription(updateDescription);
 
 		// then
-		assertEquals(updateDescription, about.getContent());
+		assertEquals(updateDescription, about.getDescription());
 	}
 
 	@Test
@@ -47,7 +46,6 @@ public class AboutDomainTest {
 	public void updateContent_Success() {
 		// given
 		About about = About.create(DEPT_INTRO, "test description", "test content");
-
 		String updateContent = "update content";
 
 		// when
