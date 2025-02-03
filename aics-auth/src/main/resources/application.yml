@@ -1,0 +1,53 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: aics-auth
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:aics}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      default_batch_fetch_size: 1000
+      jdbc:
+        time_zone: Asia/Seoul
+    defer-datasource-initialization: true
+    show-sql: true
+    open-in-view: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:10MB}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD}
+
+file:
+  url: /cloud
+  upload-path: ${user.dir}/cloud
+  secret-key: ${FILE_SECRET_KEY}
+  disallowed-extensions: exe, bat, sh, cmd, js, html, jsp, php, asp, aspx, dll, so, ps1, vbs, msi, htaccess, phtml, jar, war
+
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret_key: ${JWT_SECRET_KEY}
+
+
