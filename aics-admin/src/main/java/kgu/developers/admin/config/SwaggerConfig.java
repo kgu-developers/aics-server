@@ -105,7 +105,7 @@ public class SwaggerConfig {
 				
 				사용자 API 문서는 다음 링크에서 확인하실 수 있습니다.
 				<ul>
-				    <li>AICS-HOME ADMIN API : <a href="%s" target="_blank">%s</a></li>
+				    <li>AICS-HOME API : <a href="%s" target="_blank">%s</a></li>
 				</ul>
 				
 				인증 인가 API 문서는 다음 링크에서 확인하실 수 있습니다.
