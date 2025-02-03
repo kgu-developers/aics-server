@@ -16,11 +16,11 @@ public class AboutAdminFacade {
 	private final AboutCommandService aboutCommandService;
 
 	public AboutPersistResponse createAbout(AboutCreateRequest request) {
-		Long id = aboutCommandService.createAbout(request.main(), request.sub(), request.content());
+		Long id = aboutCommandService.createAbout(request.category(), request.description(), request.content());
 		return AboutPersistResponse.of(id);
 	}
 
 	public void updateAbout(Long id, AboutUpdateRequest request) {
-		aboutCommandService.updateAbout(id, request.content());
+		aboutCommandService.updateAbout(id, request.description(), request.content());
 	}
 }

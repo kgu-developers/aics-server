@@ -1,6 +1,7 @@
 package about.application;
 
 import static kgu.developers.domain.about.domain.Category.CURRICULUM;
+import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
 import static kgu.developers.domain.about.domain.Category.HISTORY;
 import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -28,7 +29,7 @@ public class AboutCommandServiceTest {
 		aboutCommandService = new AboutCommandService(fakeAboutRepository);
 
 		fakeAboutRepository.save(
-			About.create(DEPT_INTRO, HISTORY, "about content")
+			About.create(DEPT_INTRO, "intro description", "intro content")
 		);
 	}
 
@@ -36,29 +37,15 @@ public class AboutCommandServiceTest {
 	@DisplayName("createAbout은 About 객체를 생성한다")
 	public void createAbout_Success() {
 		// given
-		MainCategory mainCategory = DEPT_INTRO;
-		Category category = HISTORY;
-		String content = "testContent";
+		Category category = DEPT_INTRO;
+		String description = "test description";
+		String content = "test content";
 
 		// when
-		Long result = aboutCommandService.createAbout(mainCategory, category, content);
+		Long result = aboutCommandService.createAbout(category, description, content);
 
 		// then
 		assertEquals(2L, result);
-	}
-
-	@Test
-	@DisplayName("createAbout은 main, subCategory가 매칭이 안될 시 CategoryNotMatchException을 발생시킨다")
-	public void createAbout_Failed() {
-		// given
-		MainCategory mainCategory = DEPT_INTRO;
-		Category category = CURRICULUM;
-		String content = "testContent";
-
-		// when
-		// then
-		assertThatThrownBy(() -> aboutCommandService.createAbout(mainCategory, category, content))
-			.isInstanceOf(CategoryNotMatchException.class).hasMessage("메인 카테고리와 보조 카테고리가 일치하지 않습니다.");
 	}
 
 	@Test
@@ -66,7 +53,8 @@ public class AboutCommandServiceTest {
 	public void updateAbout_Success() {
 		// given
 		Long aboutId = 1L;
-		String newContent = "newContent";
+		String description = "update description";
+		String newContent = "update content";
 
 		// when
 		aboutCommandService.updateAbout(aboutId, newContent);

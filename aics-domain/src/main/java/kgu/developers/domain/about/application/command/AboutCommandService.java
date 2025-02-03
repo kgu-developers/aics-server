@@ -1,7 +1,5 @@
 package kgu.developers.domain.about.application.command;
 
-import static kgu.developers.domain.about.domain.About.categoryMatchCheck;
-
 import org.springframework.stereotype.Service;
 
 import kgu.developers.domain.about.domain.About;
@@ -15,15 +13,15 @@ import lombok.RequiredArgsConstructor;
 public class AboutCommandService {
 	private final AboutRepository aboutRepository;
 
-	public Long createAbout(MainCategory main, Category sub, String content) {
-		categoryMatchCheck(main, sub);
-		About about = About.create(main, sub, content);
+	public Long createAbout(Category category, String description, String content) {
+		About about = About.create(category, description, content);
 		return aboutRepository.save(about).getId();
 	}
 
-	public void updateAbout(Long id, String content) {
+	public void updateAbout(Long id, String description, String content) {
 		About about = aboutRepository.findById(id)
 			.orElseThrow(AboutNotFoundException::new);
+		about.updateDescription(description);
 		about.updateContent(content);
 	}
 }
