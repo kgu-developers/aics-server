@@ -1,11 +1,11 @@
-package kgu.developers.api.auth.presentation.exception;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+package kgu.developers.auth.api.presentation.exception;
 
 import kgu.developers.common.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Getter
 @AllArgsConstructor

@@ -1,7 +1,4 @@
-package kgu.developers.api.auth.presentation;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+package kgu.developers.auth.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,9 +7,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import kgu.developers.api.auth.presentation.request.LoginRequest;
-import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
-import kgu.developers.api.auth.presentation.response.TokenResponse;
+import kgu.developers.auth.api.presentation.request.LoginRequest;
+import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
+import kgu.developers.auth.api.presentation.response.TokenResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Auth", description = "로그인 API")
 public interface AuthController {

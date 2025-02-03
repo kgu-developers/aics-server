@@ -1,21 +1,20 @@
-package kgu.developers.api.auth.application;
+package kgu.developers.auth.api.application;
 
-import java.time.Duration;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
-import kgu.developers.api.auth.presentation.request.LoginRequest;
-import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
-import kgu.developers.api.auth.presentation.response.TokenResponse;
+import kgu.developers.auth.api.presentation.exception.TokenNotFoundException;
+import kgu.developers.auth.api.presentation.request.LoginRequest;
+import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
+import kgu.developers.auth.api.presentation.response.TokenResponse;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
