@@ -1,8 +1,8 @@
 -- about
 INSERT INTO about (content, category, description, created_at, updated_at)
 VALUES ('학과 소개 내용입니다.', 'DEPT_INTRO', "경기대학교 AI컴퓨터공학부를 소개해요.", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('커리큘럼 설명입니다.', 'DIRECTIONS', "경기대학교 AI컴퓨터공학부에 찾아오시는 길을 알려드려요.", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('연혁 더미데이터입니다.', 'CLUB', "경기대학교 AI컴퓨터공학부에 어떤 동아리가 있는지 알려드려요.", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('경기대학교 수원캠퍼스 8강의동에 있습니다.', 'DIRECTIONS', "경기대학교 AI컴퓨터공학부에 찾아오시는 길을 알려드려요.", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('이런 저런 동아리가 있습니다.', 'CLUB', "경기대학교 AI컴퓨터공학부에 어떤 동아리가 있는지 알려드려요.", CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
 -- club
 INSERT INTO club (name, description, site, created_at, updated_at)
