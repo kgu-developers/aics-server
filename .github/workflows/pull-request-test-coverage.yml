@@ -42,6 +42,7 @@ jobs:
             ${{ github.workspace }}/aics-domain/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-api/build/jacoco/test/jacocoTestReport.xml
             ${{ github.workspace }}/aics-admin/build/jacoco/test/jacocoTestReport.xml
+            ${{ github.workspace }}/aics-auth/build/jacoco/test/jacocoTestReport.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 80
           min-coverage-changed-files: 70

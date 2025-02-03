@@ -60,6 +60,7 @@ private excludedClassFilesForReport(classDirectories) {
                         // TODO 현재는 미구현으로 인한 제외
                         "**/api/**/presentation/**",
                         "**/admin/**/presentation/**",
+                        "**/auth/**/presentation/**",
                         "**/file/**"
                 ])
             })

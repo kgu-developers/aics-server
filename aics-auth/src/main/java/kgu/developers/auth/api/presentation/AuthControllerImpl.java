@@ -1,10 +1,4 @@
-package kgu.developers.auth.api;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+package kgu.developers.auth.api.presentation;
 
 import jakarta.validation.Valid;
 import kgu.developers.auth.api.application.AuthService;
@@ -13,6 +7,11 @@ import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
 import kgu.developers.auth.api.presentation.response.TokenResponse;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Builder
 @RestController

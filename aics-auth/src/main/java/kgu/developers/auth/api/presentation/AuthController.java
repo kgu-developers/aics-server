@@ -1,4 +1,4 @@
-package kgu.developers.auth.api;
+package kgu.developers.auth.api.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -1,19 +1,9 @@
 package auth.application;
 
-import static kgu.developers.common.domain.BaseRole.USER;
-import static kgu.developers.domain.user.domain.Major.CSE;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import kgu.developers.api.auth.application.AuthService;
-import kgu.developers.api.auth.presentation.exception.TokenNotFoundException;
-import kgu.developers.api.auth.presentation.request.LoginRequest;
-import kgu.developers.api.auth.presentation.request.RefreshTokenRequest;
+import kgu.developers.auth.api.application.AuthService;
+import kgu.developers.auth.api.presentation.exception.TokenNotFoundException;
+import kgu.developers.auth.api.presentation.request.LoginRequest;
+import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
 import kgu.developers.common.auth.jwt.JwtProperties;
 import kgu.developers.common.auth.jwt.TokenProvider;
 import kgu.developers.domain.refreshtoken.domain.RefreshToken;
@@ -22,6 +12,15 @@ import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
 import mock.repository.FakeRefreshTokenRepository;
 import mock.repository.FakeUserRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static kgu.developers.common.domain.BaseRole.USER;
+import static kgu.developers.domain.user.domain.Major.CSE;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class AuthServiceTest {
 	private AuthService authService;
