@@ -1,9 +1,6 @@
 package about.application;
 
-import static kgu.developers.domain.about.domain.Category.CURRICULUM;
 import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.Category.HISTORY;
-import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,7 +13,6 @@ import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
-import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
 
 public class AboutCommandServiceTest {
@@ -53,11 +49,11 @@ public class AboutCommandServiceTest {
 	public void updateAbout_Success() {
 		// given
 		Long aboutId = 1L;
-		String description = "update description";
+		String newDescription = "update description";
 		String newContent = "update content";
 
 		// when
-		aboutCommandService.updateAbout(aboutId, newContent);
+		aboutCommandService.updateAbout(aboutId, newDescription, newContent);
 
 		// then
 		About about = fakeAboutRepository.findById(aboutId).orElse(null);
@@ -72,11 +68,12 @@ public class AboutCommandServiceTest {
 	public void updateAbout_Throws_AboutNotFoundException() {
 		// given
 		Long aboutId = 10L;
-		String newContent = "newContent";
+		String newDescription = "update description";
+		String newContent = "update content";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutCommandService.updateAbout(aboutId, newContent))
+		assertThatThrownBy(() -> aboutCommandService.updateAbout(aboutId, newDescription, newContent))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

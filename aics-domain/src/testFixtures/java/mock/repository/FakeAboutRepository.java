@@ -20,8 +20,8 @@ public class FakeAboutRepository implements AboutRepository {
 	public About save(About about) {
 		About newAbout = About.builder()
 			.id(sequence.getAndIncrement())
-			.mainCategory(about.getMainCategory())
 			.category(about.getCategory())
+			.description(about.getDescription())
 			.content(about.getContent())
 			.build();
 
@@ -32,10 +32,9 @@ public class FakeAboutRepository implements AboutRepository {
 	}
 
 	@Override
-	public Optional<About> findByMainAndSub(MainCategory main, Category sub) {
+	public Optional<About> findByCategory(Category category) {
 		return data.stream()
-			.filter(about -> about.getMainCategory().equals(main)
-				&& about.getCategory().equals(sub))
+			.filter(about -> about.getCategory().equals(category))
 			.findFirst();
 	}
 

@@ -1,5 +1,7 @@
 package about.application;
 
+import static kgu.developers.domain.about.domain.Category.CLUB;
+import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +17,6 @@ import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
-import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
 
 public class AboutAdminFacadeTest {
@@ -30,9 +31,9 @@ public class AboutAdminFacadeTest {
 		);
 
 		fakeAboutRepository.save(About.builder()
-			.mainCategory(EDU_ACTIVITIES)
-			.category(CURRICULUM)
-			.content("initContent")
+			.category(DEPT_INTRO)
+			.description("description")
+			.content("content")
 			.build());
 	}
 
@@ -40,13 +41,13 @@ public class AboutAdminFacadeTest {
 	@DisplayName("createAbout은 about을 생성한다")
 	public void createAbout_Success() {
 		// given
-		MainCategory main = DEPT_INTRO;
-		Category sub = HISTORY;
+		Category category = CLUB;
+		String description = "description";
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()
-			.main(main)
-			.sub(sub)
+			.category(category)
+			.description(description)
 			.content(content)
 			.build();
 
@@ -58,32 +59,13 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생시킨다")
-	public void createAbout_CategoryNotMatch_ThrowsException() {
-		// given
-		MainCategory main = DEPT_INTRO;
-		Category sub = CURRICULUM;
-		String content = "content";
-
-		AboutCreateRequest request = AboutCreateRequest.builder()
-			.main(main)
-			.sub(sub)
-			.content(content)
-			.build();
-
-		// when
-		// then
-		assertThatThrownBy(() -> aboutAdminFacade.createAbout(request))
-			.isInstanceOf(CategoryNotMatchException.class);
-	}
-
-	@Test
-	@DisplayName("updateAbout은 About의 content를 수정한다")
+	@DisplayName("updateAbout은 About의 description과 content를 수정한다")
 	public void updateAbout_Success() {
 		// given
 		Long id = 1L;
 
 		AboutUpdateRequest request = AboutUpdateRequest.builder()
+			.description("updateDescription")
 			.content("updateContent")
 			.build();
 
