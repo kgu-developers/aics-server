@@ -25,7 +25,7 @@ public class AboutCommandServiceTest {
 		aboutCommandService = new AboutCommandService(fakeAboutRepository);
 
 		fakeAboutRepository.save(
-			About.create(DEPT_INTRO, "intro description", "intro content")
+			About.create(DEPT_INTRO, "intro content")
 		);
 	}
 
@@ -34,11 +34,10 @@ public class AboutCommandServiceTest {
 	public void createAbout_Success() {
 		// given
 		Category category = DEPT_INTRO;
-		String description = "test description";
 		String content = "test content";
 
 		// when
-		Long result = aboutCommandService.createAbout(category, description, content);
+		Long result = aboutCommandService.createAbout(category, content);
 
 		// then
 		assertEquals(2L, result);
@@ -49,11 +48,10 @@ public class AboutCommandServiceTest {
 	public void updateAbout_Success() {
 		// given
 		Long aboutId = 1L;
-		String newDescription = "update description";
 		String newContent = "update content";
 
 		// when
-		aboutCommandService.updateAbout(aboutId, newDescription, newContent);
+		aboutCommandService.updateAbout(aboutId, newContent);
 
 		// then
 		About about = fakeAboutRepository.findById(aboutId).orElse(null);
@@ -67,13 +65,12 @@ public class AboutCommandServiceTest {
 	@DisplayName("updateAbout은 존재하지 않는 about 수정 요청 시 AboutNotFoundException을 발생시킨다")
 	public void updateAbout_Throws_AboutNotFoundException() {
 		// given
-		Long aboutId = 10L;
-		String newDescription = "update description";
+		Long aboutId = 3L;
 		String newContent = "update content";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutCommandService.updateAbout(aboutId, newDescription, newContent))
+		assertThatThrownBy(() -> aboutCommandService.updateAbout(aboutId, newContent))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

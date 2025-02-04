@@ -21,7 +21,6 @@ public class FakeAboutRepository implements AboutRepository {
 		About newAbout = About.builder()
 			.id(sequence.getAndIncrement())
 			.category(about.getCategory())
-			.description(about.getDescription())
 			.content(about.getContent())
 			.build();
 

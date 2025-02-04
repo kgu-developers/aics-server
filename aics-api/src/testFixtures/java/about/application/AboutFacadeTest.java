@@ -1,7 +1,7 @@
 package about.application;
 
-import static kgu.developers.domain.about.domain.Category.CLUB;
 import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
+import static kgu.developers.domain.about.domain.Category.DIRECTIONS;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,7 +29,6 @@ public class AboutFacadeTest {
 
 		fakeAboutRepository.save(About.builder()
 			.category(DEPT_INTRO)
-			.description("description")
 			.content("content")
 			.build());
 	}
@@ -44,16 +43,14 @@ public class AboutFacadeTest {
 		AboutResponse aboutResponse = aboutFacade.getAbout(category);
 
 		// then
-		assertEquals(category.getDescription(), aboutResponse.category());
 		assertEquals("content", aboutResponse.content());
-		assertEquals("description", aboutResponse.description());
 	}
 
 	@Test
 	@DisplayName("getAbout은 존재하지 않는 카테고리로 조회 시 AboutNotFoundException을 발생시킨다")
 	public void getAbout_AboutNotFound_ThrowsException() {
 		// given
-		Category category = CLUB;
+		Category category = DIRECTIONS;
 
 		// when
 		// then

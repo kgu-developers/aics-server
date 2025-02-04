@@ -1,6 +1,5 @@
 package about.application;
 
-import static kgu.developers.domain.about.domain.Category.CLUB;
 import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +31,6 @@ public class AboutAdminFacadeTest {
 
 		fakeAboutRepository.save(About.builder()
 			.category(DEPT_INTRO)
-			.description("description")
 			.content("content")
 			.build());
 	}
@@ -41,13 +39,11 @@ public class AboutAdminFacadeTest {
 	@DisplayName("createAbout은 about을 생성한다")
 	public void createAbout_Success() {
 		// given
-		Category category = CLUB;
-		String description = "description";
+		Category category = DEPT_INTRO;
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()
 			.category(category)
-			.description(description)
 			.content(content)
 			.build();
 
@@ -59,13 +55,12 @@ public class AboutAdminFacadeTest {
 	}
 
 	@Test
-	@DisplayName("updateAbout은 About의 description과 content를 수정한다")
+	@DisplayName("updateAbout은 About의 content를 수정한다")
 	public void updateAbout_Success() {
 		// given
 		Long id = 1L;
 
 		AboutUpdateRequest request = AboutUpdateRequest.builder()
-			.description("updateDescription")
 			.content("updateContent")
 			.build();
 

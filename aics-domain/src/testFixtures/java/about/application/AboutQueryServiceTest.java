@@ -21,7 +21,7 @@ public class AboutQueryServiceTest {
 		aboutQueryService = new AboutQueryService(fakeAboutRepository);
 
 		fakeAboutRepository.save(
-			About.create(DEPT_INTRO, "description", "content")
+			About.create(DEPT_INTRO, "content")
 		);
 	}
 
@@ -36,7 +36,6 @@ public class AboutQueryServiceTest {
 
 		// then
 		assertEquals(category, about.getCategory());
-		assertEquals("description", about.getDescription());
 		assertEquals("content", about.getContent());
 	}
 }
