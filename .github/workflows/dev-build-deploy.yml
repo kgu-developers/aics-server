@@ -1,4 +1,4 @@
-name: Build and Deploy to Dev Server
+name: Build and Deploy to Development Server
 
 on:
   push:
@@ -28,8 +28,9 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: |
-          ./gradlew clean build -p aics-api -x test
           ./gradlew clean build -p aics-admin -x test
+          ./gradlew clean build -p aics-api -x test
+          ./gradlew clean build -p aics-auth -x test
 
       # DockerHub 로그인
       - name: Docker login
@@ -39,26 +40,36 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       # Docker 이미지 빌드
-      - name: Docker image build for aics-api
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }} -f aics-api/Dockerfile .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
-
       - name: Docker image build for aics-admin
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:${{ github.sha }} -f aics-admin/Dockerfile .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:latest
 
+      - name: Docker image build for aics-api
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }} -f aics-api/Dockerfile .
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
+
+      - name: Docker image build for aics-auth
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }} -f aics-auth/Dockerfile .
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:latest
+
       # Docker Hub 이미지 푸시
+      - name: docker Hub push for aics-admin
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:latest
+
       - name: docker Hub push for aics-api
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
 
-      - name: docker Hub push for aics-admin
+      - name: docker Hub push for aics-auth
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:${{ github.sha }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-admin:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:latest
 
   deploy-to-dev:
     runs-on: ubuntu-latest
@@ -78,7 +89,11 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             echo "${{ secrets.SERVER_PASSWORD }}" | scp docker/development/docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.DOCKER_COMPOSE_PATH }}
+            
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-api
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-admin
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-auth
+            
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-api
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-admin
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-auth
