@@ -1,5 +1,6 @@
 package kgu.developers.admin.about.presentation.request;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +14,7 @@ public record AboutCreateRequest(
 	@NotNull
 	Category category,
 
-	@Schema(description = "카테고리 설명", example = "경기대학교 AI컴퓨터공학부를 소개해요.", requiredMode = REQUIRED)
+	@Schema(description = "카테고리 설명", example = "경기대학교 AI컴퓨터공학부를 소개해요.", requiredMode = NOT_REQUIRED)
 	@NotNull
 	String description,
 
