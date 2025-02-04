@@ -22,7 +22,7 @@ public class AboutControllerImpl implements AboutController {
 	public ResponseEntity<AboutResponse> getAbout(
 		@RequestParam(name = "category") Category category
 	) {
-		AboutResponse response = aboutFacade.getAbout(category);
+		AboutResponse response = aboutFacade.getAboutByCategory(category);
 		return ResponseEntity.ok(response);
 	}
 }

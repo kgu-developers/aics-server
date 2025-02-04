@@ -15,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class AboutFacade {
 	private final AboutQueryService aboutQueryService;
 
-	public AboutResponse getAbout(Category category) {
-		About about = aboutQueryService.getAbout(category);
+	public AboutResponse getAboutByCategory(Category category) {
+		About about = aboutQueryService.getAboutByCategory(category);
 		return AboutResponse.from(about);
 	}
 }

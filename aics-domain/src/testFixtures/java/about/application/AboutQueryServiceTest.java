@@ -32,7 +32,7 @@ public class AboutQueryServiceTest {
 		Category category = DEPT_INTRO;
 
 		// when
-		About about = aboutQueryService.getAbout(category);
+		About about = aboutQueryService.getAboutByCategory(category);
 
 		// then
 		assertEquals(category, about.getCategory());

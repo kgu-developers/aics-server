@@ -34,13 +34,13 @@ public class AboutFacadeTest {
 	}
 
 	@Test
-	@DisplayName("getAbout은 About을 조회한다")
-	public void getAbout_Success() {
+	@DisplayName("getAboutByCategory은 About을 조회한다")
+	public void getAboutByCategory() {
 		// given
 		Category category = DEPT_INTRO;
 
 		// when
-		AboutResponse aboutResponse = aboutFacade.getAbout(category);
+		AboutResponse aboutResponse = aboutFacade.getAboutByCategory(category);
 
 		// then
 		assertEquals("content", aboutResponse.content());
@@ -54,7 +54,7 @@ public class AboutFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutFacade.getAbout(category))
+		assertThatThrownBy(() -> aboutFacade.getAboutByCategory(category))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

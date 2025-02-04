@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class AboutQueryService {
 	private final AboutRepository aboutRepository;
 
-	public About getAbout(Category category) {
+	public About getAboutByCategory(Category category) {
 		return aboutRepository.findByCategory(category)
 			.orElseThrow(AboutNotFoundException::new);
 	}
