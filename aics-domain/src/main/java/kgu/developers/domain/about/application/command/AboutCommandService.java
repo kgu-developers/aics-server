@@ -13,15 +13,14 @@ import lombok.RequiredArgsConstructor;
 public class AboutCommandService {
 	private final AboutRepository aboutRepository;
 
-	public Long createAbout(Category category, String description, String content) {
-		About about = About.create(category, description, content);
+	public Long createAbout(Category category, String content) {
+		About about = About.create(category, content);
 		return aboutRepository.save(about).getId();
 	}
 
-	public void updateAbout(Long id, String description, String content) {
+	public void updateAbout(Long id, String content) {
 		About about = aboutRepository.findById(id)
 			.orElseThrow(AboutNotFoundException::new);
-		about.updateDescription(description);
 		about.updateContent(content);
 	}
 }

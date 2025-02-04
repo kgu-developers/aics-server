@@ -29,21 +29,14 @@ public class About extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private Category category;
 
-	private String description;
-
 	@Column(nullable = false, columnDefinition = "text")
 	private String content;
 
-	public static About create(Category category, String description, String content) {
+	public static About create(Category category, String content) {
 		return About.builder()
 			.category(category)
-			.description(description)
 			.content(content)
 			.build();
-	}
-
-	public void updateDescription(String description) {
-		this.description = description;
 	}
 
 	public void updateContent(String content) {
