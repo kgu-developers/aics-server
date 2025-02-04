@@ -29,7 +29,6 @@ public class About extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private Category category;
 
-	@Column(nullable = false)
 	private String description;
 
 	@Column(nullable = false, columnDefinition = "text")
