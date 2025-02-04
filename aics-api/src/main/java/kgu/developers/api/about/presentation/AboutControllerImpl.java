@@ -20,7 +20,7 @@ public class AboutControllerImpl implements AboutController {
 	@Override
 	@GetMapping
 	public ResponseEntity<AboutResponse> getAbout(
-		@RequestParam(name = "category") Category category
+		@RequestParam Category category
 	) {
 		AboutResponse response = aboutFacade.getAboutByCategory(category);
 		return ResponseEntity.ok(response);
