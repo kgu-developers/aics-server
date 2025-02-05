@@ -16,7 +16,7 @@ public class AboutAdminFacade {
 	private final AboutCommandService aboutCommandService;
 
 	public AboutPersistResponse createAbout(AboutCreateRequest request) {
-		Long id = aboutCommandService.createAbout(request.main(), request.sub(), request.detail(), request.content());
+		Long id = aboutCommandService.createAbout(request.category(), request.content());
 		return AboutPersistResponse.of(id);
 	}
 

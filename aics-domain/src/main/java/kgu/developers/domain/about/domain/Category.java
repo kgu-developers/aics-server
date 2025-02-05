@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum MainCategory {
-	DEPT_INTRO("학과소개"),
-	EDU_ACTIVITIES("교육활동"),
+public enum Category {
+	// 소개
+	DEPT_INTRO("학부 소개"),
+	DIRECTIONS("찾아오시는 길"),
 	;
 
 	private final String description;

@@ -7,14 +7,10 @@ CREATE TABLE about
     updated_at      TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted_at      TIMESTAMP(6)          DEFAULT NULL,
     content         TEXT         NOT NULL,
-    detail_category VARCHAR(100),
-    main_category   VARCHAR(50)  NOT NULL
-        CONSTRAINT about_main_category_check
-            CHECK ((main_category)::TEXT = ANY (ARRAY ['DEPT_INTRO', 'EDU_ACTIVITIES'])),
-    sub_category    VARCHAR(50)  NOT NULL
-        CONSTRAINT about_sub_category_check
-            CHECK ((sub_category)::TEXT = ANY
-                   (ARRAY ['DEPT_INTRO', 'HISTORY', 'EDU_ENVIRONMENT', 'EDU_OBJECTIVES', 'CURRICULUM', 'LEARNING_ACTIVITIES', 'CLUB_INTRO']))
+    description VARCHAR(100),
+    category   VARCHAR(50)  NOT NULL UNIQUE
+       CONSTRAINT about_category_check
+           CHECK ((category)::TEXT = ANY (ARRAY ['DEPT_INTRO', 'DIRECTIONS', 'CLUB']))
 );
 
 -- club

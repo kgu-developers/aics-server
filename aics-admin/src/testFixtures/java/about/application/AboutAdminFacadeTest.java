@@ -1,9 +1,6 @@
 package about.application;
 
-import static kgu.developers.domain.about.domain.MainCategory.DEPT_INTRO;
-import static kgu.developers.domain.about.domain.MainCategory.EDU_ACTIVITIES;
-import static kgu.developers.domain.about.domain.SubCategory.CURRICULUM;
-import static kgu.developers.domain.about.domain.SubCategory.HISTORY;
+import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,10 +14,8 @@ import kgu.developers.admin.about.presentation.request.AboutUpdateRequest;
 import kgu.developers.admin.about.presentation.response.AboutPersistResponse;
 import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
+import kgu.developers.domain.about.domain.Category;
 import kgu.developers.domain.about.exception.AboutNotFoundException;
-import kgu.developers.domain.about.exception.CategoryNotMatchException;
 import mock.repository.FakeAboutRepository;
 
 public class AboutAdminFacadeTest {
@@ -35,10 +30,8 @@ public class AboutAdminFacadeTest {
 		);
 
 		fakeAboutRepository.save(About.builder()
-			.mainCategory(EDU_ACTIVITIES)
-			.subCategory(CURRICULUM)
-			.detailCategory("initDetail")
-			.content("initContent")
+			.category(DEPT_INTRO)
+			.content("content")
 			.build());
 	}
 
@@ -46,15 +39,11 @@ public class AboutAdminFacadeTest {
 	@DisplayName("createAbout은 about을 생성한다")
 	public void createAbout_Success() {
 		// given
-		MainCategory main = DEPT_INTRO;
-		SubCategory sub = HISTORY;
-		String detail = "detail";
+		Category category = DEPT_INTRO;
 		String content = "content";
 
 		AboutCreateRequest request = AboutCreateRequest.builder()
-			.main(main)
-			.sub(sub)
-			.detail(detail)
+			.category(category)
 			.content(content)
 			.build();
 
@@ -63,28 +52,6 @@ public class AboutAdminFacadeTest {
 
 		// then
 		assertEquals(2L, result.id());
-	}
-
-	@Test
-	@DisplayName("createAbout은 메인 카테고리와 서브 카테고리의 관계가 올바르지 않은 생성 요청 시 CategoryNotMatchException을 발생시킨다")
-	public void createAbout_CategoryNotMatch_ThrowsException() {
-		// given
-		MainCategory main = DEPT_INTRO;
-		SubCategory sub = CURRICULUM;
-		String detail = "detail";
-		String content = "content";
-
-		AboutCreateRequest request = AboutCreateRequest.builder()
-			.main(main)
-			.sub(sub)
-			.detail(detail)
-			.content(content)
-			.build();
-
-		// when
-		// then
-		assertThatThrownBy(() -> aboutAdminFacade.createAbout(request))
-			.isInstanceOf(CategoryNotMatchException.class);
 	}
 
 	@Test

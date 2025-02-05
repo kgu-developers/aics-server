@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  aics-api:
+    image: ${DOCKER_USERNAME}/aics-api:latest
+    container_name: aics-api
+    ports:
+      - "${AICS_API_PORT}:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - aics-network
+
+  aics-admin:
+    image: ${DOCKER_USERNAME}/aics-admin:latest
+    container_name: aics-admin
+    ports:
+      - "${AICS_ADMIN_PORT}:8081"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - aics-network
+
+  aics-auth:
+    image: ${DOCKER_USERNAME}/aics-auth:latest
+    container_name: aics-auth
+    ports:
+      - "${AICS_AUTH_PORT}:8082"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - aics-network
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres-data:${DB_VOLUME_PATH}
+    networks:
+      - aics-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    command: redis-server
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - aics-network
+
+networks:
+  aics-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

@@ -1,13 +1,13 @@
 package kgu.developers.domain.about.infrastructure;
 
-import kgu.developers.domain.about.domain.About;
-import kgu.developers.domain.about.domain.AboutRepository;
-import kgu.developers.domain.about.domain.MainCategory;
-import kgu.developers.domain.about.domain.SubCategory;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import kgu.developers.domain.about.domain.About;
+import kgu.developers.domain.about.domain.AboutRepository;
+import kgu.developers.domain.about.domain.Category;
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,13 +20,8 @@ public class AboutRepositoryImpl implements AboutRepository {
 	}
 
 	@Override
-	public Optional<About> findByMainAndSubAndDetail(MainCategory main, SubCategory sub, String detail) {
-		return jpaAboutRepository.findByMainCategoryAndSubCategoryAndDetailCategory(main, sub, detail);
-	}
-
-	@Override
-	public Optional<About> findByMainAndSub(MainCategory main, SubCategory sub) {
-		return jpaAboutRepository.findByMainCategoryAndSubCategory(main, sub);
+	public Optional<About> findByCategory(Category category) {
+		return jpaAboutRepository.findByCategory(category);
 	}
 
 	@Override
