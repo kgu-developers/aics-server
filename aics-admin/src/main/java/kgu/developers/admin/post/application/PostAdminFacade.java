@@ -18,8 +18,8 @@ public class PostAdminFacade {
 	private final PostQueryService postQueryService;
 	private final PostSchedulingService postSchedulingService;
 
-	public PostPersistResponse createPost(PostRequest request) {
-		Long id = postCommandService.createPost(request.title(), request.content(), request.category());
+	public PostPersistResponse createPost(Long fileId, PostRequest request) {
+		Long id = postCommandService.createPost(request.title(), request.content(), request.category(), fileId);
 		return PostPersistResponse.from(id);
 	}
 

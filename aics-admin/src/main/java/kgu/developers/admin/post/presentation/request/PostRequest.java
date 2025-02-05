@@ -28,7 +28,7 @@ public record PostRequest(
 	@NotBlank
 	String content,
 
-	@Schema(description = "게시물 카테고리", example = "DEPT_INFO", requiredMode = NOT_REQUIRED)
+	@Schema(description = "게시물 카테고리", example = "NOTIFICATION", requiredMode = NOT_REQUIRED)
 	Category category
 ) {
 }

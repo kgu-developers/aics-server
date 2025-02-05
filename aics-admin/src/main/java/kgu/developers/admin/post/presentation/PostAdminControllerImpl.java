@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -29,9 +30,10 @@ public class PostAdminControllerImpl implements PostAdminController {
 	@Override
 	@PostMapping
 	public ResponseEntity<PostPersistResponse> createPost(
+		@Positive @RequestParam Long fileId,
 		@Valid @RequestBody PostRequest request
 	) {
-		PostPersistResponse response = postAdminFacade.createPost(request);
+		PostPersistResponse response = postAdminFacade.createPost(fileId, request);
 		return ResponseEntity.status(CREATED).body(response);
 	}
 

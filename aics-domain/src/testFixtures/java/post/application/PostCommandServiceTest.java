@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,11 +30,13 @@ public class PostCommandServiceTest {
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
 		postCommandService = new PostCommandService(
 			userQueryService,
-			new FakePostRepository()
+			new FakePostRepository(),
+			new FileQueryService(fakeFileRepository)
 		);
 
 		fakeUserRepository.save(User.builder()
@@ -58,9 +62,10 @@ public class PostCommandServiceTest {
 		String title = "test";
 		String content = "test";
 		Category category = NOTIFICATION;
+		Long fileId = 1L;
 
 		// when
-		Long result = postCommandService.createPost(title, content, category);
+		Long result = postCommandService.createPost(title, content, category, fileId);
 
 		// then
 		assertEquals(1L, result);

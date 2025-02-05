@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,11 +41,13 @@ public class PostFacadeTest {
 	public void init() {
 		FakePostRepository fakePostRepository = new FakePostRepository();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 
 		postFacade = new PostFacade(
-			new PostCommandService(userQueryService, fakePostRepository),
+			new PostCommandService(userQueryService, fakePostRepository, fileQueryService),
 			new PostQueryService(fakePostRepository)
 		);
 
@@ -63,16 +67,16 @@ public class PostFacadeTest {
 		);
 
 		fakePostRepository.save(Post.create(
-			"first title", "first content", NEWS, author
+			"first title", "first content", NEWS, author, null
 		));
 
 		Post delete = fakePostRepository.save(Post.create(
-			"second title", "second content", NEWS, author
+			"second title", "second content", NEWS, author, null
 		));
 		delete.delete();
 
 		fakePostRepository.save(Post.create(
-			"third title", "third content", NEWS, author
+			"third title", "third content", NEWS, author, null
 		));
 	}
 

@@ -62,7 +62,7 @@ public class CommentFacadeTest {
 			.build());
 
 		Post post = fakePostRepository.save(Post.create(
-			"테스트용 제목1", "테스트용 내용1", NEWS, author
+			"테스트용 제목1", "테스트용 내용1", NEWS, author, null
 		));
 
 		fakeCommentRepository.save(Comment.create(

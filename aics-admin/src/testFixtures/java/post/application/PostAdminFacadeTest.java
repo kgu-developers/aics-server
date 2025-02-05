@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,9 +38,11 @@ public class PostAdminFacadeTest {
 	public void init() {
 		fakePostRepository = new FakePostRepository();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 		this.postAdminFacade = new PostAdminFacade(
-			new PostCommandService(userQueryService, fakePostRepository),
+			new PostCommandService(userQueryService, fakePostRepository, fileQueryService),
 			new PostQueryService(fakePostRepository),
 			new PostSchedulingService(fakePostRepository)
 		);
@@ -60,7 +64,7 @@ public class PostAdminFacadeTest {
 
 		fakePostRepository.save(
 			Post.create(
-				"post title", "post content", NOTIFICATION, author
+				"post title", "post content", NOTIFICATION, author, null
 			)
 		);
 	}
@@ -74,9 +78,10 @@ public class PostAdminFacadeTest {
 			.content("new content")
 			.category(NOTIFICATION)
 			.build();
+		Long fileId = 1L;
 
 		// when
-		PostPersistResponse post = postAdminFacade.createPost(postRequest);
+		PostPersistResponse post = postAdminFacade.createPost(fileId, postRequest);
 		Post found = fakePostRepository.findByIdAndDeletedAtIsNull(post.postId()).get();
 
 		// then

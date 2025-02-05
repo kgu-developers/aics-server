@@ -40,7 +40,8 @@ public class CommentDomainTest {
 			"title",
 			"content.",
 			NEWS,
-			author
+			author,
+			null
 		);
 	}
 

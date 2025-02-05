@@ -112,17 +112,17 @@ public class TestContainer {
 			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
 		);
 
+		this.fileRepository = new FakeFileRepository();
+		this.fileQueryService = new FileQueryService(fileRepository);
+		this.fileCommandService = new FileCommandService(fileRepository);
+
 		this.postRepository = new FakePostRepository();
 		this.postQueryService = new PostQueryService(postRepository);
-		this.postCommandService = new PostCommandService(userQueryService, postRepository);
+		this.postCommandService = new PostCommandService(userQueryService, postRepository, fileQueryService);
 
 		this.commentRepository = new FakeCommentRepository();
 		this.commentQueryService = new CommentQueryService(commentRepository);
 		this.commentCommandService = new CommentCommandService(postQueryService, userQueryService, commentRepository);
-
-		this.fileRepository = new FakeFileRepository();
-		this.fileQueryService = new FileQueryService(fileRepository);
-		this.fileCommandService = new FileCommandService(fileRepository);
 
 		this.labRepository = new FakeLabRepository();
 		this.labQueryService = new LabQueryService(labRepository);

@@ -1,5 +1,9 @@
 package kgu.developers.domain.post.application.command;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
+import kgu.developers.domain.file.domain.FileEntity;
+import kgu.developers.domain.file.domain.FileRepository;
+import kgu.developers.domain.file.exception.FileNotFoundException;
 import org.springframework.stereotype.Service;
 
 import kgu.developers.domain.post.domain.Category;
@@ -14,10 +18,18 @@ import lombok.RequiredArgsConstructor;
 public class PostCommandService {
 	private final UserQueryService userQueryService;
 	private final PostRepository postRepository;
+	private final FileQueryService fileQueryService;
 
-	public Long createPost(String title, String content, Category category) {
+	public Long createPost(String title, String content, Category category, Long fileId) {
 		User author = userQueryService.me();
-		Post post = Post.create(title, content, category, author);
+
+		FileEntity file = null;
+		try {
+			file = fileQueryService.getFileById(fileId);
+		} catch (FileNotFoundException ignored) {
+		}
+
+		Post post = Post.create(title, content, category, author, file);
 		return postRepository.save(post).getId();
 	}
 

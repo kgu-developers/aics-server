@@ -43,19 +43,19 @@ public class CommentCommandServiceTest {
 	}
 
 	private static void saveTestUserAndPost(FakeUserRepository fakeUserRepository,
-		FakePostRepository fakePostRepository) {
+											FakePostRepository fakePostRepository) {
 		fakeUserRepository.save(
 			User.create(TEST_USER_ID, "password1234", "홍길동", "honggildong@kyonggi.ac.kr",
 				"010-1234-5678", CSE)
 		);
 		fakePostRepository.save(Post.create(
 			"SW 부트캠프 4기 교육생 모집", "SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.", NEWS,
-			User.builder().build()
+			User.builder().build(), null
 		));
 	}
 
 	private void initializeCommentCommandService(FakePostRepository fakePostRepository,
-		UserQueryService userQueryService) {
+												 UserQueryService userQueryService) {
 		commentCommandService = new CommentCommandService(
 			new PostQueryService(fakePostRepository),
 			userQueryService,

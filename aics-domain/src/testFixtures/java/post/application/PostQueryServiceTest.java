@@ -34,28 +34,28 @@ public class PostQueryServiceTest {
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1",
-			NEWS, author
+			NEWS, author, null
 		));
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목2", "테스트용 내용2",
-			NEWS, author
+			NEWS, author, null
 		));
 
 		Post delete = fakePostRepository.save(Post.create(
 			"테스트용 제목3", "테스트용 내용3",
-			NEWS, author
+			NEWS, author, null
 		));
 		delete.delete();
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목4", "테스트용 내용4",
-			NOTIFICATION, author
+			NOTIFICATION, author, null
 		));
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목5", "테스트용 내용5",
-			NEWS, author
+			NEWS, author, null
 		));
 	}
 

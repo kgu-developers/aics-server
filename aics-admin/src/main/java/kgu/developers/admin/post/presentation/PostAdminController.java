@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.post.presentation.request.PostRequest;
 import kgu.developers.admin.post.presentation.response.PostPersistResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Post", description = "게시글 관리자 API")
 public interface PostAdminController {
@@ -27,6 +28,11 @@ public interface PostAdminController {
 		responseCode = "201",
 		content = @Content(schema = @Schema(implementation = PostPersistResponse.class)))
 	ResponseEntity<PostPersistResponse> createPost(
+		@Parameter(
+			description = "게시글에 저장할 파일의 ID 입니다.",
+			example = "1",
+			required = true
+		) @Positive @RequestParam Long fileId,
 		@Parameter(
 			description = "게시글 생성 request 객체 입니다.",
 			required = true

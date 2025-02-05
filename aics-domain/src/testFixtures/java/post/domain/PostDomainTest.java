@@ -26,7 +26,7 @@ public class PostDomainTest {
 	@BeforeEach
 	public void init() {
 		User author = user();
-		post = Post.create(TITLE, CONTENT, NEWS, author);
+		post = Post.create(TITLE, CONTENT, NEWS, author, null);
 	}
 
 	private User user() {

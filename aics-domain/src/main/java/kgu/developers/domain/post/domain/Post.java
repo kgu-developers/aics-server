@@ -65,7 +65,7 @@ public class Post extends BaseTimeEntity {
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-	public static Post create(String title, String content, Category category, User author) {
+	public static Post create(String title, String content, Category category, User author, FileEntity file) {
 		return Post.builder()
 			.title(title)
 			.content(content)
@@ -73,6 +73,7 @@ public class Post extends BaseTimeEntity {
 			.isPinned(false)
 			.category(category)
 			.author(author) // NOTE: User Setter 주입 방지 위해 생성자 주입
+			.file(file)
 			.build();
 	}
 
