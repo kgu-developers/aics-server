@@ -89,7 +89,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: docker/development/docker-compose.yml
           target: ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}
-          strip_components: 3
+          strip_components: 2
 
       - name: ssh to server and deploy
         uses: appleboy/ssh-action@v1.1.0
