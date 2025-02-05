@@ -31,15 +31,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final TokenProvider tokenProvider;
 
-	@Value("${docs.api-docs-url}")
-	private String apiDocsUrl;
-
-	@Value("${docs.admin-docs-url}")
-	private String adminDocsUrl;
-
-	@Value("${docs.auth-docs-url}")
-	private String authDocsUrl;
-
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
@@ -103,9 +94,9 @@ public class SecurityConfig {
 				"http://localhost:8080",
 				"http://localhost:8081",
 				"http://localhost:8082",
-				apiDocsUrl,
-				adminDocsUrl,
-				authDocsUrl
+				"https://aics-api.ummdev.com",
+				"https://aics-admin.ummdev.com",
+				"https://aics-auth.ummdev.com"
 			));
 			config.setAllowCredentials(true);
 			return config;
