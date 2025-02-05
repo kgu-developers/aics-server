@@ -2,15 +2,21 @@ package kgu.developers.api.config;
 
 import static java.lang.String.format;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -26,12 +32,31 @@ public class SwaggerConfig {
 	@Value("${docs.auth-docs-url}")
 	private String authDocsUrl;
 
+	private final Environment environment;
+
+	private static final Map<String, String> PROFILE_SERVER_URL_MAP = Map.of(
+		"local", "http://localhost:8082",
+		"development", "https://aics-auth.ummdev.com"
+	);
+
 	@Bean
 	public OpenAPI openAPI() {
 		return new OpenAPI()
 			.info(apiInfo())
 			.addSecurityItem(securityRequirement())
+			.servers(initializeServers())
 			.components(components());
+	}
+
+	private List<Server> initializeServers() {
+		return PROFILE_SERVER_URL_MAP.entrySet().stream()
+			.filter(entry -> environment.matchesProfiles(entry.getKey()))
+			.map(entry -> openApiServer(entry.getValue(), "AICS-HOME AUTH " + entry.getKey().toUpperCase()))
+			.collect(Collectors.toList());
+	}
+
+	private Server openApiServer(String url, String description) {
+		return new Server().url(url).description(description);
 	}
 
 	private SecurityRequirement securityRequirement() {
