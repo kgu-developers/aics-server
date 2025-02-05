@@ -30,9 +30,8 @@ public interface PostAdminController {
 	ResponseEntity<PostPersistResponse> createPost(
 		@Parameter(
 			description = "게시글에 저장할 파일의 ID 입니다.",
-			example = "1",
-			required = true
-		) @Positive @RequestParam Long fileId,
+			example = "1"
+		) @RequestParam(required = false, defaultValue = "0") Long fileId,
 		@Parameter(
 			description = "게시글 생성 request 객체 입니다.",
 			required = true
