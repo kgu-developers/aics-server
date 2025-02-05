@@ -24,6 +24,9 @@ public record PostSummaryResponse(
 	@Schema(description = "작성자 이름", example = "홈피관리자", requiredMode = REQUIRED)
 	String author,
 
+	@Schema(description = "게시글 내용 앞부분 30자", example = "2024학년도 학과 소개가 아래와 같은 일정으로 진행됩", requiredMode = REQUIRED)
+	String description,
+
 	@Schema(description = "조회수", example = "19", requiredMode = REQUIRED)
 	int views,
 
@@ -39,11 +42,14 @@ public record PostSummaryResponse(
 ) {
 	public static PostSummaryResponse from(Post post) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String description = post.getContent().substring(0, 30);
+
 		return PostSummaryResponse.builder()
 			.postId(post.getId())
 			.category(post.getCategory().getDescription())
 			.title(post.getTitle())
 			.author(post.getAuthor().getName())
+			.description(description)
 			.views(post.getViews())
 			.hasAttachment(false) // TODO : 첨부파일 여부 확인
 			.isPinned(post.isPinned())

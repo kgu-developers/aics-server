@@ -14,8 +14,10 @@ public record PostSummaryPageResponse<T>(
 	@Schema(description = "게시글 정보 리스트",
 		example = "[{"
 			+ "\"postId\": 3, "
+			+ "\"category\": \"공지사항\", "
 			+ "\"title\": \"SW 부트캠프 4기 교육생 모집\", "
 			+ "\"author\": \"홈피관리자\", "
+			+ "\"description\": \"2024학년도 학과 소개가 아래와 같은 일정으로 진행됩\", "
 			+ "\"views\": 19, "
 			+ "\"hasAttachment\": false, "
 			+ "\"isPinned\": false, "
