@@ -94,9 +94,9 @@ public class SecurityConfig {
 				"http://localhost:8080",
 				"http://localhost:8081",
 				"http://localhost:8082",
-				"https://aics-api.ummdev.com",
-				"https://aics-admin.ummdev.com",
-				"https://aics-auth.ummdev.com"
+				"http://aics-api.ummdev.com",
+				"http://aics-admin.ummdev.com",
+				"http://aics-auth.ummdev.com"
 			));
 			config.setAllowCredentials(true);
 			return config;
