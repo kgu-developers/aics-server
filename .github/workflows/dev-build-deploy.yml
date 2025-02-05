@@ -90,10 +90,10 @@ jobs:
           script: |
             echo "${{ secrets.SERVER_PASSWORD }}" | scp docker/development/docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.DOCKER_COMPOSE_PATH }}
             
-            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-api
-            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-admin
-            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-auth
+            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-api
+            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-admin
+            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-auth
 
-            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-api
-            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-admin
-            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-auth
+            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml up -d aics-api
+            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml up -d aics-admin
+            echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml up -d aics-auth
