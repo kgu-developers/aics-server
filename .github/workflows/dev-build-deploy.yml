@@ -55,11 +55,6 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }} -f aics-auth/Dockerfile .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:latest
 
-      - name: Docker image build for aics-auth
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }} -f aics-auth/Dockerfile .
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:latest
-
       # Docker Hub 이미지 푸시
       - name: docker Hub push for aics-admin
         run: |
@@ -70,11 +65,6 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:${{ github.sha }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-api:latest
-
-      - name: docker Hub push for aics-auth
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:${{ github.sha }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/aics-auth:latest
 
       - name: docker Hub push for aics-auth
         run: |
@@ -103,7 +93,7 @@ jobs:
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-api
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-admin
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} pull aics-auth
-
+            
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-api
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-admin
             echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }} up -d aics-auth
