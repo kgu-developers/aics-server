@@ -3,6 +3,7 @@ package kgu.developers.common.config;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,15 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 	private final TokenProvider tokenProvider;
+
+	@Value("${docs.api-docs-url}")
+	private String apiDocsUrl;
+
+	@Value("${docs.admin-docs-url}")
+	private String adminDocsUrl;
+
+	@Value("${docs.auth-docs-url}")
+	private String authDocsUrl;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -91,7 +101,11 @@ public class SecurityConfig {
 			config.setAllowedOriginPatterns(Arrays.asList(
 				"http://localhost:3000",
 				"http://localhost:8080",
-				"http://localhost:8081"
+				"http://localhost:8081",
+				"http://localhost:8082",
+				apiDocsUrl,
+				adminDocsUrl,
+				authDocsUrl
 			));
 			config.setAllowCredentials(true);
 			return config;
