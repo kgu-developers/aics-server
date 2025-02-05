@@ -8,6 +8,8 @@ services:
       - "${AICS_API_PORT}:8080"
     env_file:
       - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
     depends_on:
       - postgres
       - redis
@@ -21,6 +23,8 @@ services:
       - "${AICS_ADMIN_PORT}:8081"
     env_file:
       - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
     depends_on:
       - postgres
       - redis
@@ -34,6 +38,8 @@ services:
       - "${AICS_AUTH_PORT}:8082"
     env_file:
       - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
     depends_on:
       - postgres
       - redis

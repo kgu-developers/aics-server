@@ -1,10 +1,9 @@
-package kgu.developers.api.config;
+package kgu.developers.admin.config;
 
 import static java.lang.String.format;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,8 +34,8 @@ public class SwaggerConfig {
 	private final Environment environment;
 
 	private static final Map<String, String> PROFILE_SERVER_URL_MAP = Map.of(
-		"local", "http://localhost:8081",
-		"development", "https://aics-admin.ummdev.com"
+		"dev", "https://aics-admin.ummdev.com",
+		"local", "http://localhost:8081"
 	);
 
 	@Bean
@@ -44,19 +43,14 @@ public class SwaggerConfig {
 		return new OpenAPI()
 			.info(apiInfo())
 			.addSecurityItem(securityRequirement())
-			.servers(initializeServers())
-			.components(components());
+			.components(components())
+			.servers(initializeServers());
 	}
 
 	private List<Server> initializeServers() {
-		return PROFILE_SERVER_URL_MAP.entrySet().stream()
-			.filter(entry -> environment.matchesProfiles(entry.getKey()))
-			.map(entry -> openApiServer(entry.getValue(), "AICS-HOME ADMIN " + entry.getKey().toUpperCase()))
-			.collect(Collectors.toList());
-	}
-
-	private Server openApiServer(String url, String description) {
-		return new Server().url(url).description(description);
+		String activeProfile = environment.getActiveProfiles()[0];
+		String serverUrl = PROFILE_SERVER_URL_MAP.getOrDefault(activeProfile, "http://localhost:8081");
+		return List.of(new Server().url(serverUrl).description("AICS-HOME ADMIN (" + activeProfile + ")"));
 	}
 
 	private SecurityRequirement securityRequirement() {
