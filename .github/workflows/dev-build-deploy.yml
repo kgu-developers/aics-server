@@ -98,10 +98,10 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-api
-            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-admin
-            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-auth
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-api
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-admin
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-auth
 
-            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-api
-            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-admin
-            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-auth
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-api
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-admin
+            echo "${{ secrets.SERVER_PASSWORD }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-auth
