@@ -88,7 +88,7 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp docker/development/docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.DOCKER_COMPOSE_PATH }}
+            sshpass -p "${{ secrets.SERVER_PASSWORD }}" scp ${{ github.workspace }}/docker/development/docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:${{ secrets.DOCKER_COMPOSE_PATH }}
             
             echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-api
             echo "${{ secrets.SERVER_PASSWORD }}" | docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-admin
