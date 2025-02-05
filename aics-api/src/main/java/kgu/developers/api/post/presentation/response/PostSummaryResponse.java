@@ -1,14 +1,13 @@
 package kgu.developers.api.post.presentation.response;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
-
-import java.time.format.DateTimeFormatter;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.post.domain.Post;
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.format.DateTimeFormatter;
+
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
 public record PostSummaryResponse(
@@ -42,7 +41,13 @@ public record PostSummaryResponse(
 ) {
 	public static PostSummaryResponse from(Post post) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String description = post.getContent().substring(0, 30);
+
+		String description;
+		try {
+			description = post.getContent().substring(0, 30);
+		} catch (StringIndexOutOfBoundsException e) {
+			description = post.getContent();
+		}
 
 		return PostSummaryResponse.builder()
 			.postId(post.getId())
