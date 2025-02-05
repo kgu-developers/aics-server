@@ -49,3 +49,8 @@ springdoc:
 jwt:
   issuer: ${JWT_ISSUER}
   secret_key: ${JWT_SECRET_KEY}
+
+docs:
+  admin-docs-url: ${ADMIN_DOCS_URL}
+  api-docs-url: ${API_DOCS_URL}
+  auth-docs-url: ${AUTH_DOCS_URL}

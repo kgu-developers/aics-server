@@ -2,9 +2,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
-profiles:
-  current-ip: ${CURRENT_IP:localhost}
-  api-port: ${API_SERVER_PORT:8080}
-  admin-api-port: ${ADMIN_API_SERVER_PORT:8081}
-  auth-api-port: ${AUTH_API_SERVER_PORT:8082}

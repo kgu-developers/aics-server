@@ -3,6 +3,7 @@ package kgu.developers.common.config;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -91,7 +92,11 @@ public class SecurityConfig {
 			config.setAllowedOriginPatterns(Arrays.asList(
 				"http://localhost:3000",
 				"http://localhost:8080",
-				"http://localhost:8081"
+				"http://localhost:8081",
+				"http://localhost:8082",
+				"https://aics-api.ummdev.com",
+				"https://aics-admin.ummdev.com",
+				"https://aics-auth.ummdev.com"
 			));
 			config.setAllowCredentials(true);
 			return config;

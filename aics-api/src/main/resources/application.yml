@@ -11,12 +11,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-      default_batch_fetch_size: 1000
-      jdbc:
-        time_zone: Asia/Seoul
     defer-datasource-initialization: true
     show-sql: true
     open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   servlet:
     multipart:
@@ -47,4 +47,7 @@ jwt:
   issuer: ${JWT_ISSUER}
   secret_key: ${JWT_SECRET_KEY}
 
-
+docs:
+  admin-docs-url: ${ADMIN_DOCS_URL}
+  api-docs-url: ${API_DOCS_URL}
+  auth-docs-url: ${AUTH_DOCS_URL}
