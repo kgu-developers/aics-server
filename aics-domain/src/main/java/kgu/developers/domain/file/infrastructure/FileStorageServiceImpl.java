@@ -59,7 +59,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
             String contentType = file.getContentType();
             if (contentType != null && contentType.startsWith("image/")) {
-                imageResizingService.imageResize(originalFile, 800, 600, 0.8);
+                imageResizingService.imageResize(originalFile, 800, 600, 1);
             }
 
             String relativePath = this.rootLocation.relativize(originalFile.toPath()).toString();
