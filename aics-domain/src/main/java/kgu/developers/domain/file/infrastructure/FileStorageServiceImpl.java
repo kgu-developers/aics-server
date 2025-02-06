@@ -26,6 +26,8 @@ import kgu.developers.domain.file.exception.NotSupportedFileExtensionException;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
+    private static final String IMAGE_CONTENT_TYPE_PREFIX = "image/";
+
     private final Path rootLocation;
     private final String url;
     private final Set<String> disallowedExtensions;
@@ -58,7 +60,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             File originalFile = targetLocation.toFile();
 
             String contentType = file.getContentType();
-            if (contentType != null && contentType.startsWith("image/")) {
+            if (contentType != null && contentType.startsWith(IMAGE_CONTENT_TYPE_PREFIX)) {
                 imageResizingService.imageResize(originalFile, 800, 600, 1);
             }
 
