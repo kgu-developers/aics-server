@@ -16,8 +16,8 @@ public class FileAdminFacade {
 	private final FileStorageService fileStorageService;
 	private final FileCommandService fileCommandService;
 
-	public FilePathResponse saveFile(MultipartFile file, FileDomain fileDomain, Long directoryId) {
-		String storedPath = fileStorageService.store(file, fileDomain, directoryId);
+	public FilePathResponse saveFile(MultipartFile file, FileDomain fileDomain) {
+		String storedPath = fileStorageService.store(file, fileDomain);
 		FileEntity savedFile = fileCommandService.saveFile(file, storedPath);
 		return FilePathResponse.from(savedFile);
 	}

@@ -46,9 +46,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public String store(MultipartFile file, FileDomain fileDomain, Long directoryId) {
+    public String store(MultipartFile file, FileDomain fileDomain) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        String path = getFullPath(fileDomain, directoryId, fileName);
+        String path = getFullPath(fileDomain, fileName);
         validateAttributes(path, fileName);
         try {
             Path targetLocation = this.rootLocation.resolve(path);
@@ -87,7 +87,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         if (disallowedExtensions.contains(extension)) throw new NotSupportedFileExtensionException();
     }
 
-    private String getFullPath(FileDomain fileDomain, Long directoryId, String fileName) {
+    private String getFullPath(FileDomain fileDomain, String fileName) {
         try {
             Path domainPath = this.rootLocation.resolve(fileDomain.name().toLowerCase());
             if (!Files.exists(domainPath)) Files.createDirectories(domainPath);

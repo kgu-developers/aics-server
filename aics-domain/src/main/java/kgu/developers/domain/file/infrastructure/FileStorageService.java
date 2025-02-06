@@ -7,7 +7,7 @@ import kgu.developers.domain.file.domain.FileDomain;
 
 public interface FileStorageService {
 
-    String store(MultipartFile file, FileDomain fileDomain, Long directoryId);
+    String store(MultipartFile file, FileDomain fileDomain);
 
     Resource loadAsResource(String filename);
 

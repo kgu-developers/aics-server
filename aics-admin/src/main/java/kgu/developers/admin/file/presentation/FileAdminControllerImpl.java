@@ -31,40 +31,36 @@ public class FileAdminControllerImpl implements FileAdminController {
 	@Override
 	@PostMapping(value = "/post", consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilePathResponse> postFileUpload(
-		@RequestPart(value = "file") MultipartFile file,
-		@Positive @RequestParam(required = false) Long id
+		@RequestPart(value = "file") MultipartFile file
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, POST, id);
+		FilePathResponse path = fileAdminFacade.saveFile(file, POST);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 
 	@Override
 	@PostMapping(value = "/about", consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilePathResponse> aboutFileUpload(
-		@RequestPart(value = "file") MultipartFile file,
-		@Positive @RequestParam(required = false) Long id
+		@RequestPart(value = "file") MultipartFile file
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, ABOUT, id);
+		FilePathResponse path = fileAdminFacade.saveFile(file, ABOUT);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 
 	@Override
 	@PostMapping(value = "/carousel", consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilePathResponse> carouselFileUpload(
-		@RequestPart(value = "file") MultipartFile file,
-		@Positive @RequestParam(required = false) Long id
+		@RequestPart(value = "file") MultipartFile file
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, CAROUSEL, id);
+		FilePathResponse path = fileAdminFacade.saveFile(file, CAROUSEL);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 
 	@Override
 	@PostMapping(value = "/lab", consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<FilePathResponse> labFileUpload(
-		@RequestPart(value = "file") MultipartFile file,
-		@Positive @RequestParam(required = false) Long id
+		@RequestPart(value = "file") MultipartFile file
 	) {
-		FilePathResponse path = fileAdminFacade.saveFile(file, LAB, id);
+		FilePathResponse path = fileAdminFacade.saveFile(file, LAB);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 }
