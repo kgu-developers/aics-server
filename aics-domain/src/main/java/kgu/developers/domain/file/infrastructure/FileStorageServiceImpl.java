@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,9 +46,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public String store(MultipartFile file, FileDomain fileDomain, Long directoryId) {
+    public String store(MultipartFile file, FileDomain fileDomain) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        String path = getFullPath(fileDomain, directoryId, fileName);
+        String path = getFullPath(fileDomain, fileName);
         validateAttributes(path, fileName);
         try {
             Path targetLocation = this.rootLocation.resolve(path);
@@ -85,13 +87,17 @@ public class FileStorageServiceImpl implements FileStorageService {
         if (disallowedExtensions.contains(extension)) throw new NotSupportedFileExtensionException();
     }
 
-    private String getFullPath(FileDomain fileDomain, Long directoryId, String fileName) {
+    private String getFullPath(FileDomain fileDomain, String fileName) {
         try {
             Path domainPath = this.rootLocation.resolve(fileDomain.name().toLowerCase());
             if (!Files.exists(domainPath)) Files.createDirectories(domainPath);
 
-            Path directoryPath = domainPath.resolve(String.valueOf(directoryId));
-            if (!Files.exists(directoryPath)) Files.createDirectories(directoryPath);
+            LocalDate now = LocalDate.now();
+            String year = now.format(DateTimeFormatter.ofPattern("yyyy"));
+            String month = now.format(DateTimeFormatter.ofPattern("MM"));
+            String day = now.format(DateTimeFormatter.ofPattern("dd"));
+            Path directoryPath = domainPath.resolve(year).resolve(month).resolve(day);
+			if (!Files.exists(directoryPath)) Files.createDirectories(directoryPath);
 
             return directoryPath.resolve(fileName).toString();
         } catch (Exception e) {

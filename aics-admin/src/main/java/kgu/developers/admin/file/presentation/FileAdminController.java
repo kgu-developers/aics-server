@@ -1,20 +1,17 @@
 package kgu.developers.admin.file.presentation;
 
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Positive;
 import kgu.developers.domain.file.application.response.FilePathResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Tag(name = "File", description = "파일 업로드 관리 API")
 public interface FileAdminController {
@@ -31,11 +28,7 @@ public interface FileAdminController {
 			description = "게시글 첨부 파일",
 			content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE),
 			required = true
-		) @RequestPart(value = "file") MultipartFile file,
-		@Parameter(
-			description = "게시글 ID는 쿼리 파라미터 입니다.",
-			example = "2"
-		) @Positive @RequestParam(required = false) Long id
+		) @RequestPart(value = "file") MultipartFile file
 	);
 
 	@Operation(summary = "소개글 이미지 업로드 API", description = """
@@ -50,11 +43,7 @@ public interface FileAdminController {
 			description = "소개글 첨부 이미지",
 			content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE),
 			required = true
-		) @RequestPart(value = "file") MultipartFile file,
-		@Parameter(
-			description = "소개글 ID는 쿼리 파라미터 입니다.",
-			example = "3"
-		) @Positive @RequestParam(required = false) Long id
+		) @RequestPart(value = "file") MultipartFile file
 	);
 
 	@Operation(summary = "캐러셀 이미지 업로드 API", description = """
@@ -69,11 +58,7 @@ public interface FileAdminController {
 			description = "캐러셀 이미지",
 			content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE),
 			required = true
-		) @RequestPart(value = "file") MultipartFile file,
-		@Parameter(
-			description = "캐러셀 ID는 쿼리 파라미터 입니다.",
-			example = "1"
-		) @Positive @RequestParam(required = false) Long id
+		) @RequestPart(value = "file") MultipartFile file
 	);
 
 	@Operation(summary = "연구실 로고 이미지 업로드 API", description = """
@@ -88,10 +73,6 @@ public interface FileAdminController {
 			description = "연구실 로고 이미지",
 			content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE),
 			required = true
-		) @RequestPart(value = "file") MultipartFile file,
-		@Parameter(
-			description = "연구실 ID는 쿼리 파라미터 입니다.",
-			example = "1"
-		) @Positive @RequestParam(required = false) Long id
+		) @RequestPart(value = "file") MultipartFile file
 	);
 }
