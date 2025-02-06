@@ -22,10 +22,8 @@ public class PostCommandService {
 		User author = userQueryService.me();
 
 		FileEntity file = null;
-		try {
+		if (fileId != null)
 			file = fileQueryService.getFileById(fileId);
-		} catch (FileNotFoundException ignored) {
-		}
 
 		Post post = Post.create(title, content, category, author, file);
 		return postRepository.save(post).getId();

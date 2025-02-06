@@ -13,6 +13,6 @@ public class FileQueryService {
 	private final FileRepository fileRepository;
 
 	public FileEntity getFileById(Long id) {
-		return fileRepository.findById(id).orElseThrow(FileNotFoundException::new);
+		return fileRepository.findById(id).orElse(null);
 	}
 }

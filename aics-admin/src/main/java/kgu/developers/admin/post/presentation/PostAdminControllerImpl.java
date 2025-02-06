@@ -29,7 +29,7 @@ public class PostAdminControllerImpl implements PostAdminController {
 	@Override
 	@PostMapping
 	public ResponseEntity<PostPersistResponse> createPost(
-		@RequestParam(required = false, defaultValue = "0") Long fileId,
+		@RequestParam(required = false) Long fileId,
 		@Valid @RequestBody PostRequest request
 	) {
 		PostPersistResponse response = postAdminFacade.createPost(fileId, request);
@@ -39,7 +39,7 @@ public class PostAdminControllerImpl implements PostAdminController {
 	@Override
 	@PatchMapping("/{postId}")
 	public ResponseEntity<Void> updatePost(
-		@Positive @PathVariable  Long postId,
+		@Positive @PathVariable Long postId,
 		@Valid @RequestBody PostRequest request
 	) {
 		postAdminFacade.updatePost(postId, request);
