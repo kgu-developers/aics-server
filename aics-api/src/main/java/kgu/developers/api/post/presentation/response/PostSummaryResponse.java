@@ -42,12 +42,8 @@ public record PostSummaryResponse(
 	public static PostSummaryResponse from(Post post) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-		String description;
-		try {
-			description = post.getContent().substring(0, 30);
-		} catch (StringIndexOutOfBoundsException e) {
-			description = post.getContent();
-		}
+		String content = post.getContent();
+		String description = content.length() > 30 ? content.substring(0, 30) : content;
 
 		return PostSummaryResponse.builder()
 			.postId(post.getId())
