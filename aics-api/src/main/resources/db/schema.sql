@@ -7,10 +7,9 @@ CREATE TABLE about
     updated_at      TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted_at      TIMESTAMP(6)          DEFAULT NULL,
     content         TEXT         NOT NULL,
-    description VARCHAR(100),
     category   VARCHAR(50)  NOT NULL UNIQUE
        CONSTRAINT about_category_check
-           CHECK ((category)::TEXT = ANY (ARRAY ['DEPT_INTRO', 'DIRECTIONS', 'CLUB']))
+           CHECK ((category)::TEXT = ANY (ARRAY ['DEPT_INTRO', 'DIRECTIONS']))
 );
 
 -- club
