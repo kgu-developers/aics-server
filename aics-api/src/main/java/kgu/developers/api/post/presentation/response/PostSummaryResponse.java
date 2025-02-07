@@ -43,7 +43,7 @@ public record PostSummaryResponse(
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		String content = post.getContent();
-		String description = content.length() > 30 ? content.substring(0, 30) : content;
+		String description = content.length() > 80 ? content.substring(0, 80) : content;
 
 		return PostSummaryResponse.builder()
 			.postId(post.getId())
