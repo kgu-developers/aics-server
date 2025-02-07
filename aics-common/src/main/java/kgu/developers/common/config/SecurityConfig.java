@@ -82,6 +82,7 @@ public class SecurityConfig {
 		"/api/v1/posts/**",
 		"/api/v1/labs",
 		"/api/v1/comments",
+		"/api/v1/carousels",
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {
