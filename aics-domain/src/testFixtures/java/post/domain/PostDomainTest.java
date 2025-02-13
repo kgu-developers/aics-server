@@ -17,11 +17,14 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PostDomainTest {
 	private Post post;
 	private static final String TITLE = "Valid Title";
 	private static final String CONTENT = "This is valid content.";
+	private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
 	@BeforeEach
 	public void init() {
@@ -34,7 +37,9 @@ public class PostDomainTest {
 			"password",
 			"홍길동",
 			"valid@kyonggi.ac.kr",
-			"010-1234-5678", CSE);
+			"010-1234-5678",
+			CSE,
+			PASSWORD_ENCODER);
 	}
 
 	@Test

@@ -16,7 +16,7 @@ public class UserCommandService {
 
 	public String createUser(String userId, String password, String name, String email, String phone, Major major) {
 		validateDuplicateId(userId);
-		User user = User.create(userId, encodePassword(password), name, email, phone, major);
+		User user = User.create(userId, password, name, email, phone, major,  bCryptPasswordEncoder);
 		return userRepository.save(user).getId();
 	}
 
@@ -33,10 +33,6 @@ public class UserCommandService {
 	public void updatePassword(User user, String originalPassword, String newPassword) {
 		user.isNewPasswordMatching(newPassword, bCryptPasswordEncoder);
 		user.isPasswordMatching(originalPassword, bCryptPasswordEncoder);
-		user.updatePassword(encodePassword(newPassword));
-	}
-
-	private String encodePassword(String password) {
-		return bCryptPasswordEncoder.encode(password);
+		user.updatePassword(newPassword,  bCryptPasswordEncoder);
 	}
 }

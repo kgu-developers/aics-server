@@ -69,11 +69,12 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
 	List<Post> posts = new ArrayList<>();
 
-	public static User create(String id, String password, String name, String email, String phone, Major major) {
+	public static User create(String id, String password, String name, String email,
+							  String phone, Major major, PasswordEncoder passwordEncoder) {
 		validateDept(id, email);
 		return User.builder()
 			.id(id)
-			.password(password)
+			.password(encodePassword(password, passwordEncoder))
 			.name(name)
 			.email(email)
 			.phone(phone)
@@ -140,7 +141,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 		}
 	}
 
-	public void updatePassword(String password) {
-		this.password = password;
+	public void updatePassword(String password, PasswordEncoder passwordEncoder) {
+		this.password = encodePassword(password, passwordEncoder);
+	}
+
+	private static String encodePassword(String password, PasswordEncoder passwordEncoder) {
+		return passwordEncoder.encode(password);
 	}
 }

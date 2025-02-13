@@ -23,6 +23,8 @@ import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCommentRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeUserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class CommentCommandServiceTest {
 	private CommentCommandService commentCommandService;
@@ -30,6 +32,7 @@ public class CommentCommandServiceTest {
 	private static final Long TARGET_COMMENT_ID = 1L;
 	private static final Long TEST_POST_ID = 1L;
 	private static final String TEST_USER_ID = "202411345";
+	private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
 	@BeforeEach
 	public void init() {
@@ -46,7 +49,7 @@ public class CommentCommandServiceTest {
 											FakePostRepository fakePostRepository) {
 		fakeUserRepository.save(
 			User.create(TEST_USER_ID, "password1234", "홍길동", "honggildong@kyonggi.ac.kr",
-				"010-1234-5678", CSE)
+				"010-1234-5678", CSE,  PASSWORD_ENCODER)
 		);
 		fakePostRepository.save(Post.create(
 			"SW 부트캠프 4기 교육생 모집", "SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.", NEWS,
