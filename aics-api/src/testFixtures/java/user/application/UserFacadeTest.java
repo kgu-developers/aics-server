@@ -10,7 +10,6 @@ import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
-import kgu.developers.domain.user.exception.UserIdDuplicateException;
 import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
