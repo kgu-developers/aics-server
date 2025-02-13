@@ -1,13 +1,13 @@
 package kgu.developers.domain.user.application.command;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
+import kgu.developers.domain.user.exception.DuplicatePasswordException;
 import kgu.developers.domain.user.exception.UserIdDuplicateException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +33,9 @@ public class UserCommandService {
 	}
 
 	public void updatePassword(User user, String originalPassword, String newPassword) {
+		if (user.isPasswordMatching(newPassword, bCryptPasswordEncoder))
+			throw new DuplicatePasswordException();
+
 		user.isPasswordMatching(originalPassword, bCryptPasswordEncoder);
 		String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
 		user.updatePassword(encodedPassword);

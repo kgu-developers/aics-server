@@ -3,6 +3,7 @@ package user.application;
 import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
+import kgu.developers.domain.user.exception.DuplicatePasswordException;
 import kgu.developers.domain.user.exception.UserIdDuplicateException;
 import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -96,5 +97,18 @@ public class UserCommandServiceTest {
 		// when
 		// then
 		assertDoesNotThrow(() -> userCommandService.updatePassword(user, originalPassword, newPassword));
+	}
+
+	@Test
+	@DisplayName("updatePassword는 기존 비밀번호와 같은 비밀번호로 수정하면 DuplicatePasswordException를 발생시킨다")
+	public void updatePassword_ThrowsException() {
+		// given
+		String originalPassword = "password";
+		String newPassword = "password";
+
+		// when
+		// then
+		assertThatThrownBy(() -> userCommandService.updatePassword(user, originalPassword, newPassword))
+			.isInstanceOf(DuplicatePasswordException.class);
 	}
 }

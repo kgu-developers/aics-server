@@ -59,8 +59,7 @@ public interface UserController {
 			- Description : 이 API는 회원의 비밀번호를 수정 합니다.
 			- Assignee : 이신행
 		""")
-	@ApiResponse(
-		responseCode = "204")
+	@ApiResponse(responseCode = "204")
 	ResponseEntity<Void> updatePassword(
 		@Parameter(
 			description = "회원 비밀번호 수정 request 객체 입니다.",

@@ -128,10 +128,11 @@ public class User extends BaseTimeEntity implements UserDetails {
 			.anyMatch(email::endsWith);
 	}
 
-	public void isPasswordMatching(String rawPassword, PasswordEncoder passwordEncoder) {
+	public boolean isPasswordMatching(String rawPassword, PasswordEncoder passwordEncoder) {
 		if (!passwordEncoder.matches(rawPassword, this.password)) {
 			throw new InvalidPasswordException();
 		}
+		return true;
 	}
 
 	public void updatePassword(String password) {
