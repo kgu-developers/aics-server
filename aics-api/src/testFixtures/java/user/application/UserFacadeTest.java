@@ -1,8 +1,17 @@
 package user.application;
 
-import static kgu.developers.domain.user.domain.Major.CSE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import kgu.developers.api.user.application.UserFacade;
+import kgu.developers.api.user.presentation.request.UserCreateRequest;
+import kgu.developers.api.user.presentation.request.UserPasswordUpdateRequest;
+import kgu.developers.api.user.presentation.request.UserUpdateRequest;
+import kgu.developers.api.user.presentation.response.UserPersistResponse;
+import kgu.developers.domain.user.application.command.UserCommandService;
+import kgu.developers.domain.user.application.query.UserQueryService;
+import kgu.developers.domain.user.application.response.UserDetailResponse;
+import kgu.developers.domain.user.domain.User;
+import kgu.developers.domain.user.exception.InvalidPasswordException;
+import kgu.developers.domain.user.exception.UserIdDuplicateException;
+import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,15 +21,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import kgu.developers.api.user.application.UserFacade;
-import kgu.developers.api.user.presentation.request.UserCreateRequest;
-import kgu.developers.api.user.presentation.request.UserUpdateRequest;
-import kgu.developers.api.user.presentation.response.UserPersistResponse;
-import kgu.developers.domain.user.application.command.UserCommandService;
-import kgu.developers.domain.user.application.query.UserQueryService;
-import kgu.developers.domain.user.application.response.UserDetailResponse;
-import kgu.developers.domain.user.domain.User;
-import mock.repository.FakeUserRepository;
+import static kgu.developers.domain.user.domain.Major.CSE;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserFacadeTest {
 	private UserFacade userFacade;
@@ -29,14 +33,15 @@ public class UserFacadeTest {
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		userFacade = new UserFacade(
 			userQueryService,
-			new UserCommandService(new BCryptPasswordEncoder(), fakeUserRepository)
+			new UserCommandService(passwordEncoder, fakeUserRepository)
 		);
 
 		fakeUserRepository.save(User.builder()
 			.id("202411345")
-			.password("password1234")
+			.password(passwordEncoder.encode("password1234"))
 			.name("홍길동")
 			.email("test@kyonggi.ac.kr")
 			.phone("010-1234-5678")
@@ -101,5 +106,33 @@ public class UserFacadeTest {
 		assertEquals("test@kyonggi.ac.kr", result.email());
 		assertEquals("010-1234-5678", result.phone());
 		assertEquals(CSE, result.major());
+	}
+
+	@Test
+	@DisplayName("updatePassword는 주어진 형식으로 변경하는 경우 예외를 던지지 않는다")
+	public void updatePassword_Success() {
+		// given
+		UserPasswordUpdateRequest request = UserPasswordUpdateRequest.builder()
+			.originalPassword("password1234")
+			.newPassword("newpass1234")
+			.build();
+
+		// then
+		assertDoesNotThrow(() -> userFacade.updatePassword(request));
+	}
+
+	@Test
+	@DisplayName("updatePassword는 원래 비밀번호를 잘못 입력할 경우 예외를 발생시킨다")
+	public void updatePassword_ThrowsException() {
+		// given
+		UserPasswordUpdateRequest request = UserPasswordUpdateRequest.builder()
+			.originalPassword("wrong1234")
+			.newPassword("newpass1234")
+			.build();
+
+		// when
+		// then
+		assertThatThrownBy(() -> userFacade.updatePassword(request))
+			.isInstanceOf(InvalidPasswordException.class);
 	}
 }

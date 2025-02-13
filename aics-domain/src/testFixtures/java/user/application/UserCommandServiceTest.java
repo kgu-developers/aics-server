@@ -2,8 +2,10 @@ package user.application;
 
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import kgu.developers.domain.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,19 +19,22 @@ import mock.repository.FakeUserRepository;
 
 public class UserCommandServiceTest {
 	private UserCommandService userCommandService;
+	private User user;
 
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		userCommandService = new UserCommandService(
 			new BCryptPasswordEncoder(),
 			fakeUserRepository
 		);
 
-		fakeUserRepository.save(User.builder()
+		user = User.builder()
 			.id("202411345")
-			.build()
-		);
+			.password(passwordEncoder.encode("password"))
+			.build();
+		fakeUserRepository.save(user);
 	}
 
 	@Test
@@ -81,5 +86,17 @@ public class UserCommandServiceTest {
 		// then
 		assertEquals("kim@kyonggi.ac.kr", user.getEmail());
 		assertEquals("010-0000-0000", user.getPhone());
+	}
+
+	@Test
+	@DisplayName("updatePassword는 User의 비밀번호를 수정할 수 있다")
+	public void updatePassword_Success() {
+		// given
+		String originalPassword = "password";
+		String newPassword = "newPassword";
+
+		// when
+		// then
+		assertDoesNotThrow(() -> userCommandService.updatePassword(user, originalPassword, newPassword));
 	}
 }

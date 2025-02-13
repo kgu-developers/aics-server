@@ -107,4 +107,17 @@ public class UserDomainTest {
 		assertThatThrownBy(() -> user.updateEmail(null))
 			.isInstanceOf(EmailDomainNotValidException.class);
 	}
+
+	@Test
+	@DisplayName("updatePassword는 User의 password를 수정한다.")
+	public void updatePassword_Success() {
+		// given
+		String newPassword = "newPassword";
+
+		// when
+		user.updatePassword(newPassword);
+
+		// then
+		assertEquals(newPassword, user.getPassword());
+	}
 }
