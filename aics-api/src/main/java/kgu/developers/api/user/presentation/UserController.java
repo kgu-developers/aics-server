@@ -1,5 +1,6 @@
 package kgu.developers.api.user.presentation;
 
+import kgu.developers.api.user.presentation.request.UserPasswordUpdateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -53,5 +54,19 @@ public interface UserController {
 			description = "회원 정보 수정 request 객체 입니다.",
 			required = true
 		) @Valid @RequestBody UserUpdateRequest request
+	);
+
+	@Operation(summary = "회원 비밀번호 수정 API", description = """
+			- Description : 이 API는 회원의 비밀번호를 수정 합니다.
+			- Assignee : 이신행
+		""")
+	@ApiResponse(
+		responseCode = "204",
+		content = @Content(schema = @Schema(implementation = UserUpdateRequest.class)))
+	ResponseEntity<Void> updatePassword(
+		@Parameter(
+			description = "회원 비밀번호 수정 request 객체 입니다.",
+			required = true
+		) @Valid @RequestBody UserPasswordUpdateRequest request
 	);
 }

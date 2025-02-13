@@ -133,4 +133,8 @@ public class User extends BaseTimeEntity implements UserDetails {
 			throw new InvalidPasswordException();
 		}
 	}
+
+	public void updatePassword(String password) {
+		this.password = password;
+	}
 }

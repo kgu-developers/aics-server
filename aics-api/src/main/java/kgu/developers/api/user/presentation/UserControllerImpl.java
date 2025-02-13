@@ -2,6 +2,7 @@ package kgu.developers.api.user.presentation;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+import kgu.developers.api.user.presentation.request.UserPasswordUpdateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -46,6 +47,15 @@ public class UserControllerImpl implements UserController{
 		@Valid @RequestBody UserUpdateRequest request
 	) {
 		userFacade.updateUser(request);
+		return ResponseEntity.noContent().build();
+	}
+
+	@Override
+	@PatchMapping
+	public ResponseEntity<Void> updatePassword(
+		@Valid @RequestBody UserPasswordUpdateRequest request
+	) {
+		userFacade.updatePassword(request);
 		return ResponseEntity.noContent().build();
 	}
 }

@@ -1,5 +1,6 @@
 package kgu.developers.api.user.application;
 
+import kgu.developers.api.user.presentation.request.UserPasswordUpdateRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,5 +35,10 @@ public class UserFacade {
 
 	public UserDetailResponse getUserDetail() {
 		return userQueryService.getUserDetail();
+	}
+
+	public void updatePassword(UserPasswordUpdateRequest request) {
+		User user = userQueryService.me();
+		userCommandService.updatePassword(user, request.originalPassword(), request.newPassword());
 	}
 }

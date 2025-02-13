@@ -31,4 +31,10 @@ public class UserCommandService {
 		if (userRepository.existsById(id))
 			throw new UserIdDuplicateException();
 	}
+
+	public void updatePassword(User user, String originalPassword, String newPassword) {
+		user.isPasswordMatching(originalPassword, bCryptPasswordEncoder);
+		String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+		user.updatePassword(encodedPassword);
+	}
 }
