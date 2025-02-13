@@ -10,6 +10,7 @@ import kgu.developers.common.domain.BaseRole;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;
+import kgu.developers.domain.user.exception.DuplicatePasswordException;
 import kgu.developers.domain.user.exception.EmailDomainNotValidException;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
 import lombok.AllArgsConstructor;
@@ -135,7 +136,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
 	public void isNewPasswordMatching(String rawPassword, PasswordEncoder passwordEncoder) {
 		if (passwordEncoder.matches(rawPassword, this.password)) {
-			throw new InvalidPasswordException();
+			throw new DuplicatePasswordException();
 		}
 	}
 
