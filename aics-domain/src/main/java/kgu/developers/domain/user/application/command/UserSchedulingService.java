@@ -17,11 +17,11 @@ public class UserSchedulingService {
 	public static final int USER_RETENTION_DAYS = 30;
 	private LocalDateTime lastScheduledRun;
 
-	@Scheduled(cron = "0 0 0 1 * ?")
+//	@Scheduled(cron = "0 0 0 1 * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	@Transactional
 	public void cleanupOldDeletedPosts() {
 		userRepository.deleteAllByDeletedAtBefore(USER_RETENTION_DAYS);
-		System.out.println("user: " + lastScheduledRun);
 		lastScheduledRun = LocalDateTime.now();
 	}
 
