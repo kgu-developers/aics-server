@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class PostSchedulingService {
 	private final PostRepository postRepository;
 
-	public static final int POST_RETENTION_DAYS = 60 * 60 * 24 * 30;
+	public static final int POST_RETENTION_DAYS = 30;
 	private LocalDateTime lastScheduledRun;
 
 	@Scheduled(cron = "0 0 0 * * *")

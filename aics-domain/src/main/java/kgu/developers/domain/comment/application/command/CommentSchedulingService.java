@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentSchedulingService {
 	private final CommentRepository commentRepository;
 
-	public static final int COMMENT_RETENTION_DAYS = 60 * 60 * 24 * 30;
+	public static final int COMMENT_RETENTION_DAYS = 30;
 	private LocalDateTime lastScheduledRun;
 
 	@Scheduled(cron = "0 0 0 * * *")
