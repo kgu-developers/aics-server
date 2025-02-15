@@ -57,4 +57,12 @@ public class UserControllerImpl implements UserController {
 		userFacade.updatePassword(request);
 		return ResponseEntity.noContent().build();
 	}
+
+	// TODO 회원 탈퇴
+	@Override
+	@PostMapping("/delete")
+	public ResponseEntity<Void> signup() {
+		userFacade.deleteUser();
+		return ResponseEntity.noContent().build();
+	}
 }

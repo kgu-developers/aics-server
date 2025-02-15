@@ -66,4 +66,11 @@ public interface UserController {
 			required = true
 		) @Valid @RequestBody UserPasswordUpdateRequest request
 	);
+
+	@Operation(summary = "회원 탈퇴 API", description = """
+			- Description : 이 API는 회원을 탈퇴 시킵니다.
+			- Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "204")
+	public ResponseEntity<Void> signup();
 }

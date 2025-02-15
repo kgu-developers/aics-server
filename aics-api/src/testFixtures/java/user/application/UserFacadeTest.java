@@ -17,16 +17,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class UserFacadeTest {
 	private UserFacade userFacade;
+	private User user;
 
 	@BeforeEach
 	public void init() {
@@ -38,7 +39,7 @@ public class UserFacadeTest {
 			new UserCommandService(passwordEncoder, fakeUserRepository)
 		);
 
-		fakeUserRepository.save(User.builder()
+		user = fakeUserRepository.save(User.builder()
 			.id("202411345")
 			.password(passwordEncoder.encode("password1234"))
 			.name("홍길동")
@@ -47,7 +48,6 @@ public class UserFacadeTest {
 			.major(CSE)
 			.build());
 
-		UserDetails user = userQueryService.getUserById("202411345");
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
 			new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities())
@@ -133,5 +133,16 @@ public class UserFacadeTest {
 		// then
 		assertThatThrownBy(() -> userFacade.updatePassword(request))
 			.isInstanceOf(InvalidPasswordException.class);
+	}
+
+	@Test
+	@DisplayName("deleteUser는 user의 deleteAt을 설정한다.")
+	public void deleteUser_Success() {
+		// given
+		// when
+		userFacade.deleteUser();
+
+		// then
+		assertNotNull(user.getDeletedAt());
 	}
 }

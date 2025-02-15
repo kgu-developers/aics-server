@@ -41,4 +41,9 @@ public class UserFacade {
 		User user = userQueryService.me();
 		userCommandService.updatePassword(user, request.originalPassword(), request.newPassword());
 	}
+
+	public void deleteUser() {
+		User user = userQueryService.me();
+		userCommandService.deleteUser(user);
+	}
 }

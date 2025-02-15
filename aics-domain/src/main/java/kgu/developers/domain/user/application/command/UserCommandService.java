@@ -35,4 +35,12 @@ public class UserCommandService {
 		user.isPasswordMatching(originalPassword, bCryptPasswordEncoder);
 		user.updatePassword(newPassword,  bCryptPasswordEncoder);
 	}
+
+	public void deleteUser(User user) {
+		user.delete();
+	}
+
+	public void kickOutUser(User user) {
+		user.delete();
+	}
 }

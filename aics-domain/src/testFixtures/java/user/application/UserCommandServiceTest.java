@@ -15,6 +15,8 @@ import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class UserCommandServiceTest {
 	private UserCommandService userCommandService;
@@ -110,5 +112,17 @@ public class UserCommandServiceTest {
 		// then
 		assertThatThrownBy(() -> userCommandService.updatePassword(user, originalPassword, newPassword))
 			.isInstanceOf(DuplicatePasswordException.class);
+	}
+
+	@Test
+	@DisplayName("deleteUser는 회원의 deletedAt을 설정한다")
+	public void deleteUser_Success() {
+		// given
+		// when
+		assertNull(user.getDeletedAt());
+		userCommandService.deleteUser(user);
+
+		// then
+		assertNotNull(user.getDeletedAt());
 	}
 }
