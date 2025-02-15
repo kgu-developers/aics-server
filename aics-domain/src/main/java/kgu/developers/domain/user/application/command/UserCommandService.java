@@ -39,8 +39,4 @@ public class UserCommandService {
 	public void deleteUser(User user) {
 		user.delete();
 	}
-
-	public void kickOutUser(User user) {
-		user.delete();
-	}
 }

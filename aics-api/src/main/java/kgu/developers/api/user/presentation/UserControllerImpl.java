@@ -58,7 +58,6 @@ public class UserControllerImpl implements UserController {
 		return ResponseEntity.noContent().build();
 	}
 
-	// TODO 회원 탈퇴
 	@Override
 	@PostMapping("/delete")
 	public ResponseEntity<Void> signup() {

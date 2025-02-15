@@ -2,10 +2,13 @@ package user.application;
 
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
+import kgu.developers.domain.user.application.command.UserCommandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,18 +22,22 @@ import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.application.response.UserDetailResponse;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeUserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserAdminFacadeTest {
 	private UserAdminFacade userAdminFacade;
+	private User user;
 
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		this.userAdminFacade = new UserAdminFacade(
+			new UserCommandService(passwordEncoder, fakeUserRepository),
 			new UserQueryService(fakeUserRepository)
 		);
 
-		fakeUserRepository.save(User.builder()
+		user = fakeUserRepository.save(User.builder()
 			.id("202411001")
 			.password("password1234")
 			.name("홍길동")
@@ -93,5 +100,20 @@ public class UserAdminFacadeTest {
 
 		// then
 		assertTrue(users.contents().isEmpty());
+	}
+
+	@Test
+	@DisplayName("kickOutUser는 회원을 삭제한다")
+	public void kickOutUser_Success() {
+		// given
+		UserKickOutRequest request = UserKickOutRequest.builder()
+			.userId("202411001")
+			.build();
+
+		// when
+		userAdminFacade.kickOutUser(request);
+
+		// then
+		assertNotNull(user.getDeletedAt());
 	}
 }

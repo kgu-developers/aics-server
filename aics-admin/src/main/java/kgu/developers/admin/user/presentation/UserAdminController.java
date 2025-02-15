@@ -1,6 +1,10 @@
 package kgu.developers.admin.user.presentation;
 
+import jakarta.validation.Valid;
+import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,5 +38,15 @@ public interface UserAdminController {
 			example = "10",
 			required = true
 		) @Positive @RequestParam(defaultValue = "10") int size
+	);
+
+
+	@Operation(summary = "유저 삭제 API", description = """
+		    - Description : 이 API는 유저를 페이징 조회합니다.
+		    - Assignee : 이신행
+		""")
+	@ApiResponse(responseCode = "204")
+	ResponseEntity<Void> kickOutUser(
+		@Valid @RequestBody UserKickOutRequest request
 	);
 }
