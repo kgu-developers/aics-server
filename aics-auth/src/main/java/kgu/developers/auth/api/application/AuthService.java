@@ -1,5 +1,6 @@
 package kgu.developers.auth.api.application;
 
+import kgu.developers.auth.api.presentation.exception.AlreadyDeletedUserException;
 import kgu.developers.auth.api.presentation.exception.TokenNotFoundException;
 import kgu.developers.auth.api.presentation.request.LoginRequest;
 import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
@@ -30,6 +31,10 @@ public class AuthService {
 		String password = request.password();
 
 		User user = userQueryService.getUserById(userId);
+
+		if (user.getDeletedAt() != null)
+			throw new AlreadyDeletedUserException();
+
 		user.isPasswordMatching(password, passwordEncoder);
 
 		String role = user.getRole().name();

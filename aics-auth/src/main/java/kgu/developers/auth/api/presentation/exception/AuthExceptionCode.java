@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Getter
 @AllArgsConstructor
 public enum AuthExceptionCode implements ExceptionCode {
 	TOKEN_NOT_FOUND(NOT_FOUND, "유효한 토큰을 찾을 수 없습니다."),
+	ALREADY_DELETED_USER(BAD_REQUEST, "이미 탈퇴한 회원입니다.")
 	;
 
 	private final HttpStatus status;

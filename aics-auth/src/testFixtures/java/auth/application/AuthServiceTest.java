@@ -1,6 +1,7 @@
 package auth.application;
 
 import kgu.developers.auth.api.application.AuthService;
+import kgu.developers.auth.api.presentation.exception.AlreadyDeletedUserException;
 import kgu.developers.auth.api.presentation.exception.TokenNotFoundException;
 import kgu.developers.auth.api.presentation.request.LoginRequest;
 import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
@@ -24,6 +25,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
 public class AuthServiceTest {
 	private AuthService authService;
+	private User user;
 
 	@BeforeEach
 	public void init() {
@@ -39,7 +41,7 @@ public class AuthServiceTest {
 			fakeRefreshTokenRepository
 		);
 
-		fakeUserRepository.save(User.builder()
+		user = fakeUserRepository.save(User.builder()
 			.id("202411345")
 			.password("$2a$10$ViIAGtB9Y/9cE//3WY6i4e6RQVHbJhQQDWshsFlElNnyz88.8EOu2")
 			.name("홍길동")
@@ -86,6 +88,25 @@ public class AuthServiceTest {
 				.password(password)
 				.build()
 		)).isInstanceOf(InvalidPasswordException.class);
+	}
+
+	@Test
+	@DisplayName("탈퇴한 회원이 로그인 요청을 하면 발생시킨다")
+	public void login_alreadyDeleted_ThrowsException() {
+		// given
+		String userId = "202411345";
+		String password = "password1234";
+		LoginRequest request = LoginRequest.builder()
+			.userId(userId)
+			.password(password)
+			.build();
+
+		// when
+		user.delete();
+
+		// then
+		assertThatThrownBy(() -> authService.login(request))
+			.isInstanceOf(AlreadyDeletedUserException.class);
 	}
 
 	@Test
