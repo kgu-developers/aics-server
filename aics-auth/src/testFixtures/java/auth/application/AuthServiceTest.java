@@ -91,7 +91,7 @@ public class AuthServiceTest {
 	}
 
 	@Test
-	@DisplayName("탈퇴한 회원이 로그인 요청을 하면 발생시킨다")
+	@DisplayName("탈퇴한 회원이 로그인 요청을 하면 AlreadyDeletedUserException 발생시킨다")
 	public void login_alreadyDeleted_ThrowsException() {
 		// given
 		String userId = "202411345";

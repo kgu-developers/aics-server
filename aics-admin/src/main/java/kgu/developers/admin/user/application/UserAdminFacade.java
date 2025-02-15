@@ -27,6 +27,7 @@ public class UserAdminFacade {
 	@Transactional
 	public void kickOutUser(UserKickOutRequest request) {
 		User user = userQueryService.getUserById(request.userId());
+		user.validateDeletable();
 		userCommandService.deleteUser(user);
 	}
 

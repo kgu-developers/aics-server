@@ -1,6 +1,8 @@
 package user.application;
 
+import static kgu.developers.common.domain.BaseRole.ADMIN;
 import static kgu.developers.domain.user.domain.Major.CSE;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,6 +12,7 @@ import java.util.List;
 import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
 import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.application.command.UserSchedulingService;
+import kgu.developers.domain.user.exception.NotDeletableUserException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,6 +58,7 @@ public class UserAdminFacadeTest {
 			.email("hong2@kyonggi.ac.kr")
 			.phone("010-0000-0002")
 			.major(CSE)
+			.role(ADMIN)
 			.build());
 
 		fakeUserRepository.save(User.builder()
@@ -117,6 +121,20 @@ public class UserAdminFacadeTest {
 
 		// then
 		assertNotNull(user.getDeletedAt());
+	}
+
+	@Test
+	@DisplayName("kickOutUser는 관리자 삭제 요청의 경우 NotDeletableUserException을 발생시킨다")
+	public void kickOutUser_ThrowsException() {
+		// given
+		UserKickOutRequest request = UserKickOutRequest.builder()
+			.userId("202411002")
+			.build();
+
+		// when
+		// then
+		assertThatThrownBy(() -> userAdminFacade.kickOutUser(request))
+			.isInstanceOf(NotDeletableUserException.class);
 	}
 
 	@Test

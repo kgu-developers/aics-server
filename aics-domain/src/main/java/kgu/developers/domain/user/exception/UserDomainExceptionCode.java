@@ -21,6 +21,7 @@ public enum UserDomainExceptionCode implements ExceptionCode {
 	USER_NOT_AUTHENTICATED(UNAUTHORIZED, "회원 인증에 실패하였습니다."),
 	USER_NOT_FOUND(NOT_FOUND, "해당 회원을 찾을 수 없습니다."),
 	USER_ID_DUPLICATED(CONFLICT, "이미 동일한 학번으로 가입이 되어있습니다."),
+	NOT_DELETABLE_USER(BAD_REQUEST, "일반 사용자만 삭제 가능합니다."),
 	;
 
 	private final HttpStatus status;
