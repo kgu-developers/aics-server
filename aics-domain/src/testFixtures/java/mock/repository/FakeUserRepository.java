@@ -68,6 +68,6 @@ public class FakeUserRepository implements UserRepository {
 	@Override
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 		LocalDateTime threshold = LocalDateTime.now().minusDays(retentionDays);
-		data.removeIf(post -> post.getDeletedAt() != null && post.getDeletedAt().isBefore(threshold));
+		data.removeIf(user -> user.getDeletedAt() != null && user.getDeletedAt().isBefore(threshold));
 	}
 }
