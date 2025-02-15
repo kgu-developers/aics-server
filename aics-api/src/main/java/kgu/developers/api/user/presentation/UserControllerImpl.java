@@ -60,7 +60,7 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	@PostMapping("/delete")
-	public ResponseEntity<Void> signup() {
+	public ResponseEntity<Void> delete() {
 		userFacade.deleteUser();
 		return ResponseEntity.noContent().build();
 	}

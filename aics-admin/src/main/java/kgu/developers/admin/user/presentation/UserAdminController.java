@@ -41,7 +41,7 @@ public interface UserAdminController {
 
 
 	@Operation(summary = "유저 삭제 API", description = """
-		    - Description : 이 API는 유저를 페이징 조회합니다.
+		    - Description : 이 API는 유저를 삭제합니다.
 		    - Assignee : 이신행
 		""")
 	@ApiResponse(responseCode = "204")

@@ -72,5 +72,5 @@ public interface UserController {
 			- Assignee : 이신행
 		""")
 	@ApiResponse(responseCode = "204")
-	public ResponseEntity<Void> signup();
+	public ResponseEntity<Void> delete();
 }
