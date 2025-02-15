@@ -9,6 +9,7 @@ import java.util.List;
 
 import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
 import kgu.developers.domain.user.application.command.UserCommandService;
+import kgu.developers.domain.user.application.command.UserSchedulingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,8 @@ public class UserAdminFacadeTest {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		this.userAdminFacade = new UserAdminFacade(
 			new UserCommandService(passwordEncoder, fakeUserRepository),
-			new UserQueryService(fakeUserRepository)
+			new UserQueryService(fakeUserRepository),
+			new UserSchedulingService(fakeUserRepository)
 		);
 
 		user = fakeUserRepository.save(User.builder()
@@ -115,5 +117,15 @@ public class UserAdminFacadeTest {
 
 		// then
 		assertNotNull(user.getDeletedAt());
+	}
+
+	@Test
+	@DisplayName("getLastCleanupRunTime는 마지막 scheduling cleaning 시간을 조회한다")
+	void getLastCleanupRunTime_Success() {
+		// when
+		String lastCleanupRunTime = userAdminFacade.getLastCleanupRunTime();
+
+		// then
+		assertEquals("아직 클린업 작업이 실행되지 않았습니다.", lastCleanupRunTime);
 	}
 }

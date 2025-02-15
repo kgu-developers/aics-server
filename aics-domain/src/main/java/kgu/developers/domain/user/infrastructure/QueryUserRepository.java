@@ -2,6 +2,7 @@ package kgu.developers.domain.user.infrastructure;
 
 import static kgu.developers.domain.user.domain.QUser.user;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -33,5 +34,13 @@ public class QueryUserRepository {
 			.fetch();
 
 		return PaginatedListResponse.of(users, PageableResponse.of(pageable, userIds));
+	}
+
+	public void deleteAllByDeletedAtBefore(int retentionDays) {
+		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
+
+		queryFactory.delete(user)
+			.where(user.deletedAt.isNotNull().and(user.deletedAt.before(thresholdDate)))
+			.execute();
 	}
 }

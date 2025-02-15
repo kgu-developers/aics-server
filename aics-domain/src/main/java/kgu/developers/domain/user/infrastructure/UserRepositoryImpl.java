@@ -35,4 +35,9 @@ public class UserRepositoryImpl implements UserRepository {
 	public PaginatedListResponse findAllOrderByIdDesc(Pageable pageable) {
 		return queryUserRepository.findAllOrderByIdDesc(pageable);
 	}
+
+	@Override
+	public void deleteAllByDeletedAtBefore(int retentionDays) {
+		queryUserRepository.deleteAllByDeletedAtBefore(retentionDays);
+	}
 }

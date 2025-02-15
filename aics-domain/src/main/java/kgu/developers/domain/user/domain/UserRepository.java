@@ -14,4 +14,6 @@ public interface UserRepository {
 	Optional<User> findById(String userId);
 
 	PaginatedListResponse findAllOrderByIdDesc(Pageable pageable);
+
+	void deleteAllByDeletedAtBefore(int retentionDays);
 }

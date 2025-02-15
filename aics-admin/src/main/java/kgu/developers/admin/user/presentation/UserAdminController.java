@@ -1,5 +1,6 @@
 package kgu.developers.admin.user.presentation;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -47,4 +48,11 @@ public interface UserAdminController {
 	ResponseEntity<Void> kickOutUser(
 		@Valid @RequestBody UserKickOutRequest request
 	);
+
+	@Hidden
+	@Operation(summary = "삭제된 유저 정리 API", description = """
+		    - Description : 이 API는 삭제된 지 일정 기간 지난 유저를 영구적으로 삭제 합니다.
+		    - Assignee : 이신행
+		""")
+	ResponseEntity<String> getLastCleanupRunTime();
 }

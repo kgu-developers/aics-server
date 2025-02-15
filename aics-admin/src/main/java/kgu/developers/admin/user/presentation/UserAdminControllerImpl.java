@@ -43,4 +43,11 @@ public class UserAdminControllerImpl implements UserAdminController {
 		userAdminFacade.kickOutUser(request);
 		return ResponseEntity.noContent().build();
 	}
+
+	@Override
+	@GetMapping("/cleanup-last-run")
+	public ResponseEntity<String> getLastCleanupRunTime() {
+		String response = userAdminFacade.getLastCleanupRunTime();
+		return ResponseEntity.ok(response);
+	}
 }
