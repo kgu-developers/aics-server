@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import kgu.developers.common.domain.BaseRole;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.user.exception.AlreadyDeletedUserException;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;
 import kgu.developers.domain.user.exception.DuplicatePasswordException;
 import kgu.developers.domain.user.exception.EmailDomainNotValidException;
@@ -155,5 +156,10 @@ public class User extends BaseTimeEntity implements UserDetails {
 		if (role != null && role != USER) {
 			throw new NotDeletableUserException();
 		}
+	}
+
+	public void isDeleted() {
+		if (deletedAt != null)
+			throw new AlreadyDeletedUserException();
 	}
 }

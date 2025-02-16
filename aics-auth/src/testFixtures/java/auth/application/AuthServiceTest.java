@@ -1,7 +1,7 @@
 package auth.application;
 
 import kgu.developers.auth.api.application.AuthService;
-import kgu.developers.auth.api.presentation.exception.AlreadyDeletedUserException;
+import kgu.developers.domain.user.exception.AlreadyDeletedUserException;
 import kgu.developers.auth.api.presentation.exception.TokenNotFoundException;
 import kgu.developers.auth.api.presentation.request.LoginRequest;
 import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
