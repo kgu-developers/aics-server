@@ -1,7 +1,6 @@
 package kgu.developers.domain.post.domain;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
@@ -11,7 +10,7 @@ import kgu.developers.common.response.PaginatedListResponse;
 public interface PostRepository {
 	Post save(Post post);
 
-	PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keyword,
+	PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
 		Category category, Pageable pageable);
 
 	Optional<Post> findByIdAndDeletedAtIsNull(Long postId);

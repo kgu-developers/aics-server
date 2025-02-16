@@ -1,7 +1,5 @@
 package kgu.developers.api.post.presentation;
 
-import java.util.List;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +27,10 @@ public class PostControllerImpl implements PostController {
 	public ResponseEntity<PostSummaryPageResponse> getPostsByKeywordAndCategory(
 		@PositiveOrZero @RequestParam(defaultValue = "0") int page,
 		@Positive @RequestParam(defaultValue = "10")  int size,
-		@RequestParam(required = false) List<String> keywords,
+		@RequestParam(required = false) String keyword,
 		@RequestParam(required = false) Category category
 	) {
-		PostSummaryPageResponse response = postFacade.getPostsByKeywordAndCategory(PageRequest.of(page, size), keywords,
+		PostSummaryPageResponse response = postFacade.getPostsByKeywordAndCategory(PageRequest.of(page, size), keyword,
 			category);
 		return ResponseEntity.ok(response);
 	}

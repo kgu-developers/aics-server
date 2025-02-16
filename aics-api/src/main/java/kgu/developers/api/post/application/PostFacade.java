@@ -1,7 +1,5 @@
 package kgu.developers.api.post.application;
 
-import java.util.List;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +19,10 @@ public class PostFacade {
 	private final PostCommandService postCommandService;
 	private final PostQueryService postQueryService;
 
-	public PostSummaryPageResponse getPostsByKeywordAndCategory(PageRequest request, List<String> keywords,
+	public PostSummaryPageResponse getPostsByKeywordAndCategory(PageRequest request, String keyword,
 		Category category) {
 		PaginatedListResponse<Post> paginatedListResponse = postQueryService.getPostsByKeywordAndCategory(request,
-			keywords, category);
+			keyword, category);
 		return PostSummaryPageResponse.of(paginatedListResponse.contents(), paginatedListResponse.pageable());
 	}
 
