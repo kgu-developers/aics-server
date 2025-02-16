@@ -3,6 +3,7 @@ package user.domain;
 import kgu.developers.common.domain.BaseRole;
 import kgu.developers.domain.user.domain.Major;
 import kgu.developers.domain.user.domain.User;
+import kgu.developers.domain.user.exception.AlreadyDeletedUserException;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;
 import kgu.developers.domain.user.exception.EmailDomainNotValidException;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
@@ -149,5 +150,26 @@ public class UserDomainTest {
 		// then
 		assertThatThrownBy(user::validateDeletable)
 			.isInstanceOf(NotDeletableUserException.class);
+	}
+
+	@Test
+	@DisplayName("isDeleted는 아직 삭제하지 않은 경우 아무일도 하지 않는다")
+	public void isDeleted_Success() {
+		// given
+		// when
+		// then
+		assertDoesNotThrow(() -> user.isDeleted());
+	}
+
+	@Test
+	@DisplayName("isDeleted는 이미 삭제한 경우 AlreadyDeletedUserException를 반환한다")
+	public void isDeleted_throwsException() {
+		// given
+		// when
+		user.delete();
+
+		// then
+		assertThatThrownBy(user::isDeleted)
+			.isInstanceOf(AlreadyDeletedUserException.class);
 	}
 }
