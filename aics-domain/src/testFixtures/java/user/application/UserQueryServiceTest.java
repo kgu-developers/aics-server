@@ -128,8 +128,8 @@ public class UserQueryServiceTest {
 	}
 
 	@Test
-	@DisplayName("getUsers는 유저 리스트를 페이징 조회할 수 있다")
-	public void getUsers_Success() {
+	@DisplayName("getUsersByName은 유저 리스트를 이름을 검색하여 페이징 조회할 수 있다")
+	public void getUsersByAll_Success() {
 		// given
 		int page = 0;
 		int size = 10;
@@ -155,5 +155,4 @@ public class UserQueryServiceTest {
 		assertEquals(page, resultPageable.page());
 		assertEquals(size, resultPageable.size());
 	}
-
 }
