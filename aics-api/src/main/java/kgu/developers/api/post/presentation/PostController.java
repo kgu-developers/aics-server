@@ -1,5 +1,7 @@
 package kgu.developers.api.post.presentation;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +42,7 @@ public interface PostController {
 		@Parameter(
 			description = "검색 키워드 입니다. 미 입력 시 전체 게시글을 조회합니다.",
 			example = "컴퓨터공학과"
-		) @RequestParam(required = false) String keyword,
+		) @RequestParam(required = false) List<String> keywords,
 		@Parameter(
 			description = "게시글 카테고리 입니다. 미 지정 시 전체 게시글을 조회합니다.",
 			example = "NOTIFICATION"

@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -115,14 +117,14 @@ public class PostQueryServiceTest {
 	@DisplayName("getPostsByKeywordAndCategory는 게시글을 페이징 조회할 수 있다")
 	public void getPostsByKeywordAndCategory_Success() {
 		// given
-		String keyword = "제목";
+		List<String> keywords = List.of("제목");
 		Category category = NEWS;
 		int page = 0;
 		int size = 10;
 
 		// when
 		PaginatedListResponse<Post> result = postQueryService.getPostsByKeywordAndCategory(
-			PageRequest.of(page, size), keyword, category
+			PageRequest.of(page, size), keywords, category
 		);
 
 		// then

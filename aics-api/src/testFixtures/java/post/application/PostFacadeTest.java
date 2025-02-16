@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
-import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +21,7 @@ import kgu.developers.api.post.application.PostFacade;
 import kgu.developers.api.post.presentation.response.PostSummaryPageResponse;
 import kgu.developers.api.post.presentation.response.PostSummaryResponse;
 import kgu.developers.common.response.PageableResponse;
+import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.query.PostQueryService;
 import kgu.developers.domain.post.application.response.PostDetailResponse;
@@ -31,6 +30,7 @@ import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeUserRepository;
 
@@ -84,11 +84,12 @@ public class PostFacadeTest {
 	@DisplayName("getPostsByKeywordAndCategory는 삭제된 게시글을 제외하고 최신순으로 페이징 조회할 수 있다")
 	public void getPostsByKeywordAndCategory_Success() {
 		// given
+		List<String> keywords = List.of("title");
 		PageRequest request = PageRequest.of(0, 10);
 		Category category = NEWS;
 
 		// when
-		PostSummaryPageResponse result = postFacade.getPostsByKeywordAndCategory(request, "title", category);
+		PostSummaryPageResponse result = postFacade.getPostsByKeywordAndCategory(request, keywords, category);
 
 		// then
 		List<PostSummaryResponse> resultData = result.contents();
@@ -106,11 +107,12 @@ public class PostFacadeTest {
 	@DisplayName("getPostsByKeywordAndCategory는 잘못된 페이지 요청시 빈 목록을 반환한다")
 	public void getPostsByKeywordAndCategory_InvalidPage() {
 		// given
+		List<String> keywords = List.of("title");
 		PageRequest request = PageRequest.of(1, 10);
 		Category category = NEWS;
 
 		// when
-		PostSummaryPageResponse result = postFacade.getPostsByKeywordAndCategory(request, "title", category);
+		PostSummaryPageResponse result = postFacade.getPostsByKeywordAndCategory(request, keywords, category);
 
 		// then
 		assertTrue(result.contents().isEmpty());

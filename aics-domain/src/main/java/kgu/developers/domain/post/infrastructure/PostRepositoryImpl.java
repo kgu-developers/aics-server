@@ -1,6 +1,7 @@
 package kgu.developers.domain.post.infrastructure;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
@@ -29,9 +30,9 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
+	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keywords,
 		Category category, Pageable pageable) {
-		return queryPostRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(keyword, category, pageable);
+		return queryPostRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(keywords, category, pageable);
 	}
 
 	@Override
