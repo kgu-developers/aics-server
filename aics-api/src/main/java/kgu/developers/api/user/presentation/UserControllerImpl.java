@@ -59,7 +59,7 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	@PostMapping("/delete")
+	@PatchMapping("/delete")
 	public ResponseEntity<Void> delete() {
 		userFacade.deleteUser();
 		return ResponseEntity.noContent().build();

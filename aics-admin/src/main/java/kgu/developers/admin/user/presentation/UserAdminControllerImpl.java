@@ -36,7 +36,7 @@ public class UserAdminControllerImpl implements UserAdminController {
 	}
 
 	@Override
-	@PostMapping("/kick-out")
+	@PostMapping("/delete")
 	public ResponseEntity<Void> kickOutUser(
 		@Valid @RequestBody UserKickOutRequest request
 	) {
