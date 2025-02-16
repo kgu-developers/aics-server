@@ -23,12 +23,26 @@ import lombok.RequiredArgsConstructor;
 public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
+	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keywords,
 		Category category, Pageable pageable) {
 
 		BooleanExpression whereClause = post.deletedAt.isNull()
-			.and(keyword != null ? post.title.contains(keyword) : null)
 			.and(category != null ? post.category.eq(category) : null);
+
+		if (keywords != null && !keywords.isEmpty()) {
+			BooleanExpression keywordCondition = null;
+
+			for (String keyword : keywords) {
+				if (keyword != null) {
+					BooleanExpression condition = post.title.contains(keyword);
+					keywordCondition = (keywordCondition == null) ? condition : keywordCondition.or(condition);
+				}
+			}
+
+			if (keywordCondition != null) {
+				whereClause = whereClause.and(keywordCondition);
+			}
+		}
 
 		List<Post> posts = queryFactory.select(post)
 			.from(post)

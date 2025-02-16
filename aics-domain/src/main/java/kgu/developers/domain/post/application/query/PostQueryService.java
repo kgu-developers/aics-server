@@ -1,6 +1,7 @@
 package kgu.developers.domain.post.application.query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class PostQueryService {
 	private final PostRepository postRepository;
 
-	public PaginatedListResponse<Post> getPostsByKeywordAndCategory(PageRequest request, String keyword,
+	public PaginatedListResponse<Post> getPostsByKeywordAndCategory(PageRequest request, List<String> keyword,
 		Category category) {
 		return postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
 			keyword, category, request);
