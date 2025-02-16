@@ -21,7 +21,8 @@ public class UserQueryService {
 	private final UserRepository userRepository;
 
 	public PaginatedListResponse getUsersByName(Pageable pageable, String name) {
-		return userRepository.findAllByNameOrderByIdDesc(pageable, name);
+		String searchName = (name != null && !name.trim().isEmpty()) ? name.trim() : null;
+		return userRepository.findAllByNameOrderByIdDesc(pageable, searchName);
 	}
 
 	public User getUserById(String id) {

@@ -17,7 +17,7 @@ import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
 public interface UserAdminController {
 
 	@Operation(summary = "유저 페이징 조회 API", description = """
-		    - Description : 이 API는 유저를 페이징 조회합니다.
+		    - Description : 이 API는 유저를 페이징 조회하며, 선택적으로 이름으로 필터링할 수 있습니다.
 		    - Assignee : 박민준
 		""")
 	@ApiResponse(

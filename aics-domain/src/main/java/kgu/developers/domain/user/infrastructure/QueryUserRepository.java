@@ -22,7 +22,7 @@ public class QueryUserRepository {
 
 	public PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name) {
 		BooleanExpression whereClause = user.deletedAt.isNull()
-			.and(name != null && !name.trim().isEmpty() ? user.name.contains(name.trim()) : null);
+			.and(name != null ? user.name.contains(name) : null);
 
 		List<User> users = queryFactory.select(user)
 			.from(user)
