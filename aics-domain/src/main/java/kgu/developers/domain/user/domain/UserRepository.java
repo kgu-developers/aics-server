@@ -13,5 +13,5 @@ public interface UserRepository {
 
 	Optional<User> findById(String userId);
 
-	PaginatedListResponse findAllOrderByIdDesc(Pageable pageable);
+	PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name);
 }

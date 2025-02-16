@@ -23,11 +23,12 @@ public class UserAdminControllerImpl implements UserAdminController {
 
 	@Override
 	@GetMapping
-	public ResponseEntity<UserDetailPageResponse> getUsers(
-		@PositiveOrZero @RequestParam(defaultValue = "0")  int page,
-		@Positive @RequestParam(defaultValue = "10")  int size
+	public ResponseEntity<UserDetailPageResponse> getUsersByName(
+		@PositiveOrZero @RequestParam(defaultValue = "0") int page,
+		@Positive @RequestParam(defaultValue = "10") int size,
+		@RequestParam (required = false) String name
 	) {
-		UserDetailPageResponse response = userAdminFacade.getUsers(PageRequest.of(page, size));
+		UserDetailPageResponse response = userAdminFacade.getUsersByName(PageRequest.of(page, size), name);
 		return ResponseEntity.ok(response);
 	}
 }

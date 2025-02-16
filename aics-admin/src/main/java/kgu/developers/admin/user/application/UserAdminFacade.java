@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 public class UserAdminFacade {
 	private final UserQueryService userQueryService;
 
-	public UserDetailPageResponse getUsers(Pageable pageable) {
-		PaginatedListResponse response = userQueryService.getUsers(pageable);
+	public UserDetailPageResponse getUsersByName(Pageable pageable, String name) {
+		PaginatedListResponse response = userQueryService.getUsersByName(pageable, name);
 		return UserDetailPageResponse.of(response.contents(), response.pageable());
 	}
 }

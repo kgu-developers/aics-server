@@ -23,7 +23,7 @@ public interface UserAdminController {
 	@ApiResponse(
 		responseCode = "200",
 		content = @Content(schema = @Schema(implementation = UserDetailPageResponse.class)))
-	ResponseEntity<UserDetailPageResponse> getUsers(
+	ResponseEntity<UserDetailPageResponse> getUsersByName(
 		@Parameter(
 			description = "페이지 인덱스",
 			example = "0",
@@ -33,6 +33,10 @@ public interface UserAdminController {
 			description = "응답 개수",
 			example = "10",
 			required = true
-		) @Positive @RequestParam(defaultValue = "10") int size
+		) @Positive @RequestParam(defaultValue = "10") int size,
+		@Parameter(
+			description = "유저 이름",
+			example = "박민준"
+		) @RequestParam(required = false) String name
 	);
 }

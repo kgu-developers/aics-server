@@ -45,8 +45,9 @@ public class FakeUserRepository implements UserRepository {
 	}
 
 	@Override
-	public PaginatedListResponse findAllOrderByIdDesc(Pageable pageable) {
+	public PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name) {
 		List<User> sortedUsers = data.stream()
+			.filter(user -> name == null || user.getName().contains(name))
 			.sorted(Comparator.comparing(User::getId).reversed())
 			.collect(Collectors.toList());
 

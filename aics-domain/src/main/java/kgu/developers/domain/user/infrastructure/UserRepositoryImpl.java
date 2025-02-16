@@ -32,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public PaginatedListResponse findAllOrderByIdDesc(Pageable pageable) {
-		return queryUserRepository.findAllOrderByIdDesc(pageable);
+	public PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name) {
+		return queryUserRepository.findAllByNameOrderByIdDesc(pageable, name);
 	}
 }
