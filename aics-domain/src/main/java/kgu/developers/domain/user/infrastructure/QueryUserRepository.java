@@ -1,6 +1,5 @@
 package kgu.developers.domain.user.infrastructure;
 
-import static kgu.developers.domain.post.domain.QPost.post;
 import static kgu.developers.domain.user.domain.QUser.user;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class QueryUserRepository {
 
 	public PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name) {
 		BooleanExpression whereClause = user.deletedAt.isNull()
-			.and(name != null ? user.name.contains(name) : null);
+			.and(name != null && !name.trim().isEmpty() ? user.name.contains(name.trim()) : null);
 
 		List<User> users = queryFactory.select(user)
 			.from(user)
