@@ -14,6 +14,8 @@ import kgu.developers.domain.user.exception.UserNotAuthenticatedException;
 import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -42,5 +44,9 @@ public class UserQueryService {
 		} catch (Exception e) {
 			throw new UserNotAuthenticatedException();
 		}
+	}
+
+	public List<User> getAllUsersByIds(List<String> ids) {
+		return userRepository.findAllById(ids);
 	}
 }

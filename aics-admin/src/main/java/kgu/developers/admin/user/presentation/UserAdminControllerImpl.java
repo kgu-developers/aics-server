@@ -1,7 +1,7 @@
 package kgu.developers.admin.user.presentation;
 
 import jakarta.validation.Valid;
-import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
+import kgu.developers.admin.user.presentation.request.UserKickOutListRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,7 +38,7 @@ public class UserAdminControllerImpl implements UserAdminController {
 	@Override
 	@PostMapping("/delete")
 	public ResponseEntity<Void> kickOutUser(
-		@Valid @RequestBody UserKickOutRequest request
+		@Valid @RequestBody UserKickOutListRequest request
 	) {
 		userAdminFacade.kickOutUser(request);
 		return ResponseEntity.noContent().build();

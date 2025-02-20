@@ -7,9 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
+import kgu.developers.admin.user.presentation.request.UserKickOutListRequest;
 import kgu.developers.domain.user.application.command.UserCommandService;
 import kgu.developers.domain.user.application.command.UserSchedulingService;
 import kgu.developers.domain.user.exception.NotDeletableUserException;
@@ -30,7 +33,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserAdminFacadeTest {
 	private UserAdminFacade userAdminFacade;
-	private User user;
+	private User user1;
+	private User user2;
 
 	@BeforeEach
 	public void init() {
@@ -42,7 +46,7 @@ public class UserAdminFacadeTest {
 			new UserSchedulingService(fakeUserRepository)
 		);
 
-		user = fakeUserRepository.save(User.builder()
+		user1 = fakeUserRepository.save(User.builder()
 			.id("202411001")
 			.password("password1234")
 			.name("홍길동")
@@ -51,14 +55,13 @@ public class UserAdminFacadeTest {
 			.major(CSE)
 			.build());
 
-		fakeUserRepository.save(User.builder()
+		user2 = fakeUserRepository.save(User.builder()
 			.id("202411002")
 			.password("password1234")
 			.name("홍길동")
 			.email("hong2@kyonggi.ac.kr")
 			.phone("010-0000-0002")
 			.major(CSE)
-			.role(ADMIN)
 			.build());
 
 		fakeUserRepository.save(User.builder()
@@ -68,6 +71,7 @@ public class UserAdminFacadeTest {
 			.email("hong3@kyonggi.ac.kr")
 			.phone("010-0000-0003")
 			.major(CSE)
+			.role(ADMIN)
 			.build());
 	}
 
@@ -112,23 +116,40 @@ public class UserAdminFacadeTest {
 	@DisplayName("kickOutUser는 회원을 삭제한다")
 	public void kickOutUser_Success() {
 		// given
-		UserKickOutRequest request = UserKickOutRequest.builder()
-			.userId("202411001")
+		UserKickOutListRequest request = UserKickOutListRequest.builder()
+			.userIds(new ArrayList<>(Collections.singleton("202411001")))
 			.build();
 
 		// when
 		userAdminFacade.kickOutUser(request);
 
 		// then
-		assertNotNull(user.getDeletedAt());
+		assertNotNull(user1.getDeletedAt());
+	}
+
+	@Test
+	@DisplayName("kickOutUser는 여러 회원을 삭제한다")
+	public void kickOutUserList_Success() {
+		new ArrayList<>();
+		// given
+		UserKickOutListRequest request = UserKickOutListRequest.builder()
+			.userIds(Arrays.asList("202411001", "202411002"))
+			.build();
+
+		// when
+		userAdminFacade.kickOutUser(request);
+
+		// then
+		assertNotNull(user1.getDeletedAt());
+		assertNotNull(user2.getDeletedAt());
 	}
 
 	@Test
 	@DisplayName("kickOutUser는 관리자 삭제 요청의 경우 NotDeletableUserException을 발생시킨다")
 	public void kickOutUser_ThrowsException() {
 		// given
-		UserKickOutRequest request = UserKickOutRequest.builder()
-			.userId("202411002")
+		UserKickOutListRequest request = UserKickOutListRequest.builder()
+			.userIds(new ArrayList<>(Collections.singleton("202411003")))
 			.build();
 
 		// when

@@ -1,6 +1,6 @@
 package kgu.developers.admin.user.application;
 
-import kgu.developers.admin.user.presentation.request.UserKickOutRequest;
+import kgu.developers.admin.user.presentation.request.UserKickOutListRequest;
 import kgu.developers.admin.user.presentation.response.UserDetailPageResponse;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.user.application.command.UserCommandService;
@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -25,10 +27,10 @@ public class UserAdminFacade {
 	}
 
 	@Transactional
-	public void kickOutUser(UserKickOutRequest request) {
-		User user = userQueryService.getUserById(request.userId());
-		user.validateDeletable();
-		userCommandService.deleteUser(user);
+	public void kickOutUser(UserKickOutListRequest request) {
+		List<User> users = userQueryService.getAllUsersByIds(request.userIds());
+		users.forEach(User::validateDeletable);
+		users.forEach(userCommandService::deleteUser);
 	}
 
 	public String getLastCleanupRunTime() {

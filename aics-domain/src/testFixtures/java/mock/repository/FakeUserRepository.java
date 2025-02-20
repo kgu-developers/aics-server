@@ -70,4 +70,9 @@ public class FakeUserRepository implements UserRepository {
 		LocalDateTime threshold = LocalDateTime.now().minusDays(retentionDays);
 		data.removeIf(user -> user.getDeletedAt() != null && user.getDeletedAt().isBefore(threshold));
 	}
+
+	@Override
+	public List<User> findAllById(List<String> ids) {
+		return data.stream().filter(item -> ids.contains(item.getId())).collect(Collectors.toList());
+	}
 }
