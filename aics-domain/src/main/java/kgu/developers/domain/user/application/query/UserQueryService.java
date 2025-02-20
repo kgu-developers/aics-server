@@ -22,8 +22,8 @@ import java.util.List;
 public class UserQueryService {
 	private final UserRepository userRepository;
 
-	public PaginatedListResponse getUsers(Pageable pageable) {
-		return userRepository.findAllOrderByIdDesc(pageable);
+	public PaginatedListResponse getUsersByName(Pageable pageable, String name) {
+		return userRepository.findAllByNameOrderByIdDesc(pageable, name);
 	}
 
 	public User getUserById(String id) {

@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserAdminController {
 
 	@Operation(summary = "유저 페이징 조회 API", description = """
-		    - Description : 이 API는 유저를 페이징 조회합니다.
+		    - Description : 이 API는 유저를 페이징 조회하며, 선택적으로 이름으로 필터링할 수 있습니다.
 		    - Assignee : 박민준
 		""")
 	@ApiResponse(
 		responseCode = "200",
 		content = @Content(schema = @Schema(implementation = UserDetailPageResponse.class)))
-	ResponseEntity<UserDetailPageResponse> getUsers(
+	ResponseEntity<UserDetailPageResponse> getUsersByName(
 		@Parameter(
 			description = "페이지 인덱스",
 			example = "0",
@@ -36,7 +36,11 @@ public interface UserAdminController {
 			description = "응답 개수",
 			example = "10",
 			required = true
-		) @Positive @RequestParam(defaultValue = "10") int size
+		) @Positive @RequestParam(defaultValue = "10") int size,
+		@Parameter(
+			description = "유저 이름",
+			example = "박민준"
+		) @RequestParam(required = false) String name
 	);
 
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kgu.developers.common.response.PageableResponse;
@@ -23,12 +24,17 @@ import lombok.RequiredArgsConstructor;
 public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(String keyword,
+	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keywords,
 		Category category, Pageable pageable) {
 
 		BooleanExpression whereClause = post.deletedAt.isNull()
-			.and(keyword != null ? post.title.contains(keyword) : null)
 			.and(category != null ? post.category.eq(category) : null);
+
+		BooleanExpression keywordCondition = buildKeywordCondition(keywords, post.title);
+
+		if (keywordCondition != null) {
+			whereClause = whereClause.and(keywordCondition);
+		}
 
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
@@ -57,5 +63,22 @@ public class QueryPostRepository {
 		queryFactory.delete(post)
 			.where(post.deletedAt.isNotNull().and(post.deletedAt.before(thresholdDate)))
 			.execute();
+	}
+
+	private BooleanExpression buildKeywordCondition(List<String> keywords, StringPath field) {
+		if (keywords == null || keywords.isEmpty()) {
+			return null;
+		}
+
+		BooleanExpression keywordCondition = null;
+
+		for (String keyword : keywords) {
+			if (keyword != null && !keyword.isBlank()) {
+				BooleanExpression condition = field.contains(keyword);
+				keywordCondition = (keywordCondition == null) ? condition : keywordCondition.or(condition);
+			}
+		}
+
+		return keywordCondition;
 	}
 }

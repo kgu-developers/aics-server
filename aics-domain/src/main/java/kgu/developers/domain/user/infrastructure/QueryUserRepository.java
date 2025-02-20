@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import kgu.developers.common.response.PageableResponse;
@@ -20,9 +21,13 @@ import lombok.RequiredArgsConstructor;
 public class QueryUserRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllOrderByIdDesc(Pageable pageable) {
+	public PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name) {
+		BooleanExpression whereClause = user.deletedAt.isNull()
+			.and(name != null ? user.name.contains(name) : null);
+
 		List<User> users = queryFactory.select(user)
 			.from(user)
+			.where(whereClause)
 			.orderBy(user.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())

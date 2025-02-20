@@ -82,7 +82,7 @@ public class UserAdminFacadeTest {
 		Pageable pageable = PageRequest.of(0, 10);
 
 		// when
-		UserDetailPageResponse result = userAdminFacade.getUsers(pageable);
+		UserDetailPageResponse result = userAdminFacade.getUsersByName(pageable, null);
 
 		// then
 		List<UserDetailResponse> contents = result.contents();
@@ -106,7 +106,7 @@ public class UserAdminFacadeTest {
 		Pageable pageable = PageRequest.of(1, 10);
 
 		// when
-		UserDetailPageResponse users = userAdminFacade.getUsers(pageable);
+		UserDetailPageResponse users = userAdminFacade.getUsersByName(pageable, null);
 
 		// then
 		assertTrue(users.contents().isEmpty());

@@ -51,11 +51,12 @@ public class FakePostRepository implements PostRepository {
 
 	@Override
 	public PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
-		String keyword, Category category, Pageable pageable
+		List<String> keywords, Category category, Pageable pageable
 	) {
 		List<Post> filteredPosts = data.stream()
 			.filter(
-				post -> post.getTitle().contains(keyword)
+				post ->
+					keywords.stream().anyMatch(keyword -> post.getTitle().contains(keyword))
 					&& post.getCategory().equals(category)
 					&& post.getDeletedAt() == null
 			)

@@ -41,6 +41,15 @@ public class UserQueryServiceTest {
 			.major(CSE)
 			.build());
 
+		fakeUserRepository.save(User.builder()
+			.id("202411346")
+			.password("password1234")
+			.name("박민준")
+			.email("test1@kyonggi.ac.kr")
+			.phone("010-1234-5679")
+			.major(CSE)
+			.build());
+
 		UserDetails user = userQueryService.getUserById("202411345");
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
@@ -119,15 +128,16 @@ public class UserQueryServiceTest {
 	}
 
 	@Test
-	@DisplayName("getUsers는 유저 리스트를 페이징 조회할 수 있다")
-	public void getUsers_Success() {
+	@DisplayName("getUsersByName은 유저 리스트를 이름을 검색하여 페이징 조회할 수 있다")
+	public void getUsersByAll_Success() {
 		// given
 		int page = 0;
 		int size = 10;
+		String name = "길동";
 
 		// when
-		PaginatedListResponse<User> result = userQueryService.getUsers(
-			PageRequest.of(page, size)
+		PaginatedListResponse<User> result = userQueryService.getUsersByName(
+			PageRequest.of(page, size), name
 		);
 
 		// then
@@ -145,5 +155,4 @@ public class UserQueryServiceTest {
 		assertEquals(page, resultPageable.page());
 		assertEquals(size, resultPageable.size());
 	}
-
 }
