@@ -4,6 +4,7 @@ import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -154,5 +155,20 @@ public class UserQueryServiceTest {
 
 		assertEquals(page, resultPageable.page());
 		assertEquals(size, resultPageable.size());
+	}
+
+	@Test
+	@DisplayName("getAllUsersByIds은 아이디 리스트로 유저 리스트를 조회한다")
+	public void getAllUsersByIds_Success() {
+		// given
+		List<String>  ids = Arrays.asList("202411345", "202411346");
+
+		// when
+		List<User> users = userQueryService.getAllUsersByIds(ids);
+
+		// then
+		assertEquals(ids.size(), users.size());
+		assertEquals("202411345", users.get(0).getId());
+		assertEquals("202411346", users.get(1).getId());
 	}
 }
