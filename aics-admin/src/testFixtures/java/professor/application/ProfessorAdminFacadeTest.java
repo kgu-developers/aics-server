@@ -1,22 +1,20 @@
 package professor.application;
 
-import static kgu.developers.domain.professor.domain.Role.ASSISTANT;
-import static kgu.developers.domain.professor.domain.Role.PROFESSOR;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import kgu.developers.domain.professor.domain.Role;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import kgu.developers.admin.professor.application.ProfessorAdminFacade;
 import kgu.developers.admin.professor.presentation.request.ProfessorRequest;
 import kgu.developers.admin.professor.presentation.response.ProfessorPersistResponse;
 import kgu.developers.domain.professor.application.command.ProfessorCommandService;
 import kgu.developers.domain.professor.application.query.ProfessorQueryService;
 import kgu.developers.domain.professor.domain.Professor;
+import kgu.developers.domain.professor.domain.Role;
 import mock.repository.FakeProfessorRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static kgu.developers.domain.professor.domain.Role.ASSISTANT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ProfessorAdminFacadeTest {
 	private ProfessorAdminFacade professorAdminFacade;

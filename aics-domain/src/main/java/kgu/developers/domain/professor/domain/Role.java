@@ -13,12 +13,10 @@ public enum Role {
 	private final String description;
 
 	public static Role of(String description) {
-		switch (description) {
-			case "교수":
-				return PROFESSOR;
-			case "조교수":
-				return ASSISTANT;
-		}
-		throw new NoSuchRoleException();
+		return switch (description) {
+			case "교수" -> PROFESSOR;
+			case "조교수" -> ASSISTANT;
+			default -> throw new NoSuchRoleException();
+		};
 	}
 }
