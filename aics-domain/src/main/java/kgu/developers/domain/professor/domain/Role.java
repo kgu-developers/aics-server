@@ -1,5 +1,6 @@
 package kgu.developers.domain.professor.domain;
 
+import kgu.developers.domain.professor.exception.NoSuchRoleException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,4 +11,14 @@ public enum Role {
 	ASSISTANT("조교수");
 
 	private final String description;
+
+	public static Role of(String description) {
+		switch (description) {
+			case "교수":
+				return PROFESSOR;
+			case "조교수":
+				return ASSISTANT;
+		}
+		throw new NoSuchRoleException();
+	}
 }

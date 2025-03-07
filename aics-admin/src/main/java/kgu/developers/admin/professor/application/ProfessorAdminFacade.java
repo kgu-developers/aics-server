@@ -1,5 +1,6 @@
 package kgu.developers.admin.professor.application;
 
+import kgu.developers.domain.professor.domain.Role;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +19,14 @@ public class ProfessorAdminFacade {
 	private final ProfessorQueryService professorQueryService;
 
 	public ProfessorPersistResponse createProfessor(ProfessorRequest request) {
-		Long id = professorCommandService.createProfessor(request.name(), request.role(), request.contact(),
+		Long id = professorCommandService.createProfessor(request.name(), Role.of(request.role()), request.contact(),
 			request.email(), request.img(), request.officeLoc());
 		return ProfessorPersistResponse.of(id);
 	}
 
 	public void updateProfessor(Long id, ProfessorRequest request) {
 		Professor professor = professorQueryService.getProfessorById(id);
-		professorCommandService.updateProfessor(professor, request.name(), request.role(), request.contact(),
+		professorCommandService.updateProfessor(professor, request.name(), Role.of(request.role()), request.contact(),
 			request.email(), request.img(), request.officeLoc());
 	}
 

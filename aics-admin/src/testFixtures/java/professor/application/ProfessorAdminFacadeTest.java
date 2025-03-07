@@ -5,6 +5,7 @@ import static kgu.developers.domain.professor.domain.Role.PROFESSOR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import kgu.developers.domain.professor.domain.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ public class ProfessorAdminFacadeTest {
 		// given
 		ProfessorRequest request = ProfessorRequest.builder()
 			.name("권기현")
-			.role(PROFESSOR)
+			.role("교수")
 			.email("kkh1111@kgu.ac.kr")
 			.contact("010-1234-5678")
 			.img("kkhImg")
@@ -67,7 +68,7 @@ public class ProfessorAdminFacadeTest {
 		Long professorId = 1L;
 		ProfessorRequest request = ProfessorRequest.builder()
 			.name("권기현")
-			.role(PROFESSOR)
+			.role("교수")
 			.email("kkh1111@kgu.ac.kr")
 			.contact("010-1234-5678")
 			.img("kkhImg")
@@ -83,7 +84,7 @@ public class ProfessorAdminFacadeTest {
 		assertEquals(request.name(), professor.getName());
 		assertEquals(request.email(), professor.getEmail());
 		assertEquals(request.contact(), professor.getContact());
-		assertEquals(request.role(), professor.getRole());
+		assertEquals(Role.of(request.role()), professor.getRole());
 		assertEquals(request.img(), professor.getImg());
 		assertEquals(request.officeLoc(), professor.getOfficeLoc());
 	}
