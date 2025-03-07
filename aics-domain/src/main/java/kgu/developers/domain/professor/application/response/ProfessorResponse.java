@@ -15,7 +15,7 @@ public record ProfessorResponse(
 	String name,
 
 	@Schema(description = "직위", example = "조교수", requiredMode = REQUIRED)
-	String type,
+	String role,
 
 	@Schema(description = "연락처", example = "031-249-9671", requiredMode = REQUIRED)
 	String contact,
@@ -33,7 +33,7 @@ public record ProfessorResponse(
 		return ProfessorResponse.builder()
 			.id(professor.getId())
 			.name(professor.getName())
-			.type(professor.getRole().getDescription())
+			.role(professor.getRole().getDescription())
 			.contact(professor.getContact())
 			.officeLoc(professor.getOfficeLoc())
 			.email(professor.getEmail())

@@ -15,7 +15,7 @@ public record ProfessorListResponse(
 		example = "[{"
 			+ "\"id\": 1, "
 			+ "\"name\": \"이은정\", "
-			+ "\"type\": \"조교수\", "
+			+ "\"role\": \"조교수\", "
 			+ "\"contact\": \"031-249-9671\", "
 			+ "\"officeLoc\": \"8213호\", "
 			+ "\"email\": \"ejlee@kyonggi.ac.kr\", "

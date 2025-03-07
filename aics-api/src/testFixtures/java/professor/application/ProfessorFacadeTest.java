@@ -62,7 +62,7 @@ public class ProfessorFacadeTest {
 
 		ProfessorResponse professor1 = professors.get(0);
 		assertEquals("권기현", professor1.name());
-		assertEquals(PROFESSOR.getDescription(), professor1.type());
+		assertEquals(PROFESSOR.getDescription(), professor1.role());
 		assertEquals("031-249-9666", professor1.contact());
 		assertEquals("http://cs.kyonggi.ac.kr:8080/img/professor/20180209095754-%EA%B6%8C%EA%B8%B0%ED%98%84.jpeg",
 			professor1.img());
@@ -70,7 +70,7 @@ public class ProfessorFacadeTest {
 
 		ProfessorResponse professor2 = professors.get(1);
 		assertEquals("임현기", professor2.name());
-		assertEquals(ASSISTANT.getDescription(), professor2.type());
+		assertEquals(ASSISTANT.getDescription(), professor2.role());
 		assertEquals("031-249-1318", professor2.contact());
 		assertEquals("http://cs.kyonggi.ac.kr:8080/img/professor/20210428143902-%EC%9C%A4%EC%9B%90%ED%98%84.jpg",
 			professor2.img());
