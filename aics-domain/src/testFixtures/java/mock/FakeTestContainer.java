@@ -1,5 +1,17 @@
 package mock;
 
+import static kgu.developers.domain.user.domain.Major.CSE;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import kgu.developers.domain.about.application.command.AboutCommandService;
 import kgu.developers.domain.about.application.query.AboutQueryService;
 import kgu.developers.domain.about.domain.AboutRepository;
@@ -32,17 +44,6 @@ import mock.repository.FakePostRepository;
 import mock.repository.FakeProfessorRepository;
 import mock.repository.FakeRefreshTokenRepository;
 import mock.repository.FakeUserRepository;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
-
-import static kgu.developers.domain.user.domain.Major.CSE;
 
 public class FakeTestContainer {
 	private final Map<Class<?>, Supplier<?>> suppliers = new HashMap<>();
@@ -56,7 +57,8 @@ public class FakeTestContainer {
 
 		suppliers.put(ClubRepository.class, FakeClubRepository::new);
 		suppliers.put(ClubQueryService.class, () -> new ClubQueryService(get(ClubRepository.class)));
-		suppliers.put(ClubCommandService.class, () -> new ClubCommandService(get(ClubRepository.class)));
+		suppliers.put(ClubCommandService.class, () -> new ClubCommandService(get(ClubRepository.class), get(
+			FileQueryService.class)));
 
 		suppliers.put(ProfessorRepository.class, FakeProfessorRepository::new);
 		suppliers.put(ProfessorQueryService.class, () -> new ProfessorQueryService(get(ProfessorRepository.class)));

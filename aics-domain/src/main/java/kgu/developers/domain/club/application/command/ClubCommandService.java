@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.domain.ClubRepository;
+import kgu.developers.domain.file.application.query.FileQueryService;
+import kgu.developers.domain.file.domain.FileEntity;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -12,9 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClubCommandService {
 	private final ClubRepository clubRepository;
+	private final FileQueryService fileQueryService;
 
-	public Long createClub(String name, String description, String site) {
-		Club club = Club.create(name, description, site);
+	public Long createClub(String name, String description, String site, Long fileId) {
+		FileEntity file = null;
+		if (fileId != null)
+			file = fileQueryService.getFileById(fileId);
+
+		Club club = Club.create(name, description, site, file);
+
 		return clubRepository.save(club).getId();
 	}
 

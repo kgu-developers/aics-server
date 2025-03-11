@@ -7,7 +7,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import kgu.developers.common.domain.BaseTimeEntity;
+import kgu.developers.domain.file.domain.FileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,11 +35,16 @@ public class Club extends BaseTimeEntity {
 	@Column(length = 50)
 	private String site;
 
-	public static Club create(String name, String description, String site) {
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private FileEntity file;
+
+	public static Club create(String name, String description, String site, FileEntity file) {
 		return Club.builder()
 			.name(name)
 			.description(description)
 			.site(site)
+			.file(file)
 			.build();
 	}
 

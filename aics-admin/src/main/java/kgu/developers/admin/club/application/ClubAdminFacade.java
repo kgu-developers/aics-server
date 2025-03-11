@@ -17,8 +17,8 @@ public class ClubAdminFacade {
 	private final ClubCommandService clubCommandService;
 	private final ClubQueryService clubQueryService;
 
-	public ClubPersistResponse createClub(ClubRequest request) {
-		Long id = clubCommandService.createClub(request.name(), request.description(), request.site());
+	public ClubPersistResponse createClub(Long fileId, ClubRequest request) {
+		Long id = clubCommandService.createClub(request.name(), request.description(), request.site(), fileId);
 		return ClubPersistResponse.of(id);
 	}
 

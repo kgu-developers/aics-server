@@ -16,7 +16,9 @@ import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.exception.ClubNotFoundException;
+import kgu.developers.domain.file.application.query.FileQueryService;
 import mock.repository.FakeClubRepository;
+import mock.repository.FakeFileRepository;
 
 public class ClubAdminFacadeTest {
 	private ClubAdminFacade clubAdminFacade;
@@ -24,15 +26,18 @@ public class ClubAdminFacadeTest {
 
 	@BeforeEach
 	public void init() {
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
+		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
+
 		this.fakeClubRepository = new FakeClubRepository();
 		this.clubAdminFacade = new ClubAdminFacade(
-			new ClubCommandService(fakeClubRepository),
+			new ClubCommandService(fakeClubRepository, fileQueryService),
 			new ClubQueryService(fakeClubRepository)
 		);
 
 		fakeClubRepository.save(
 			Club.create(
-				"C-Lab", "경기대학교 AI컴퓨터공학부 개발동아리입니다.", "https://www.clab.page"
+				"C-Lab", "경기대학교 AI컴퓨터공학부 개발동아리입니다.", "https://www.clab.page", null
 			)
 		);
 	}
@@ -46,9 +51,10 @@ public class ClubAdminFacadeTest {
 			"New Club Description",
 			"https://www.new-club.page"
 		);
+		Long fileId = 1L;
 
 		// when
-		ClubPersistResponse result = clubAdminFacade.createClub(clubRequest);
+		ClubPersistResponse result = clubAdminFacade.createClub(fileId, clubRequest);
 		List<Club> resultData = fakeClubRepository.findAll();
 
 		// then

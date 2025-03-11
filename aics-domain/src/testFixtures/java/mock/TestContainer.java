@@ -84,10 +84,6 @@ public class TestContainer {
 		this.aboutQueryService = new AboutQueryService(aboutRepository);
 		this.aboutCommandService = new AboutCommandService(aboutRepository);
 
-		this.clubRepository = new FakeClubRepository();
-		this.clubQueryService = new ClubQueryService(clubRepository);
-		this.clubCommandService = new ClubCommandService(clubRepository);
-
 		this.professorRepository = new FakeProfessorRepository();
 		this.professorQueryService = new ProfessorQueryService(professorRepository);
 		this.professorCommandService = new ProfessorCommandService(professorRepository);
@@ -127,5 +123,11 @@ public class TestContainer {
 		this.labRepository = new FakeLabRepository();
 		this.labQueryService = new LabQueryService(labRepository);
 		this.labCommandService = new LabCommandService(fileQueryService, labRepository);
+
+		this.clubRepository = new FakeClubRepository();
+		this.clubQueryService = new ClubQueryService(clubRepository);
+		this.clubCommandService = new ClubCommandService(clubRepository, fileQueryService);
+
+
 	}
 }
