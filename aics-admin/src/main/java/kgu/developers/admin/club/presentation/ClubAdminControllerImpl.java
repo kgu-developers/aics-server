@@ -33,7 +33,7 @@ public class ClubAdminControllerImpl implements ClubAdminController {
 		@RequestParam(required = false) Long fileId,
 		@Valid @RequestBody ClubRequest request
 	) {
-		ClubPersistResponse response = clubAdminFacade.createClub(request);
+		ClubPersistResponse response = clubAdminFacade.createClub(fileId, request);
 		return ResponseEntity.status(CREATED).body(response);
 	}
 

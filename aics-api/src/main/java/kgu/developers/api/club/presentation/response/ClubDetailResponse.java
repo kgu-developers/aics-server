@@ -5,6 +5,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.club.domain.Club;
+import kgu.developers.domain.file.application.response.FilePathResponse;
 import lombok.Builder;
 
 @Builder
@@ -16,13 +17,20 @@ public record ClubDetailResponse(
 	String description,
 
 	@Schema(description = "동아리 사이트", example = "https://www.clab.page/", requiredMode = NOT_REQUIRED)
-	String site
+	String site,
+
+	@Schema(description = "첨부 파일 정보",
+		example = "{\"physicalPath\": \"/cloud/file/3/2025-curriculum\"}",
+		requiredMode = NOT_REQUIRED)
+	FilePathResponse file
 ) {
 	public static ClubDetailResponse from(Club club) {
 		return ClubDetailResponse.builder()
 			.name(club.getName())
 			.description(club.getDescription())
 			.site(club.getSite())
+			.file(club.getFile() != null ?
+				FilePathResponse.from(club.getFile()) : null)
 			.build();
 	}
 }
