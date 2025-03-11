@@ -17,7 +17,7 @@ public class ClubDomainTest {
 
 	@BeforeEach
 	void setUp() {
-		club = Club.create(NAME, DESCRIPTION, SITE);
+		club = Club.create(NAME, DESCRIPTION, SITE, null);
 	}
 
 	@Test
@@ -25,7 +25,7 @@ public class ClubDomainTest {
 	public void createClub_Success() {
 
 		// when
-		Club newClub = Club.create(NAME, DESCRIPTION, SITE);
+		Club newClub = Club.create(NAME, DESCRIPTION, SITE, null);
 
 		// then
 		assertNotNull(newClub);

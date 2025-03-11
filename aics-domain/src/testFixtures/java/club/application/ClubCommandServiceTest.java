@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.domain.Club;
+import kgu.developers.domain.file.application.query.FileQueryService;
 import mock.repository.FakeClubRepository;
+import mock.repository.FakeFileRepository;
 
 public class ClubCommandServiceTest {
 	private ClubCommandService clubCommandService;
@@ -17,13 +19,16 @@ public class ClubCommandServiceTest {
 
 	@BeforeEach
 	public void init() {
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
+		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 		fakeClubRepository = new FakeClubRepository();
-		clubCommandService = new ClubCommandService(fakeClubRepository);
+		clubCommandService = new ClubCommandService(fakeClubRepository, fileQueryService);
 
 		fakeClubRepository.save(
 			Club.create("club",
 				"description",
-				"http://club.kyonggi.ac.kr"
+				"http://club.kyonggi.ac.kr",
+				null
 			)
 		);
 	}
@@ -37,7 +42,7 @@ public class ClubCommandServiceTest {
 		String site = "http://club-a.kyonggi.ac.kr";
 
 		// when
-		Long result = clubCommandService.createClub(name, description, site);
+		Long result = clubCommandService.createClub(name, description, site, null);
 
 		// then
 		assertEquals(2L, result);
@@ -47,7 +52,7 @@ public class ClubCommandServiceTest {
 	@DisplayName("updateClub은 Club 객체를 수정한다.")
 	public void updateClub_Success() {
 		// given
-		Club club = Club.create("a", "a 동아리", "http://club-a.kyonggi.ac.kr");
+		Club club = Club.create("a", "a 동아리", "http://club-a.kyonggi.ac.kr", null);
 
 		String newName = "b";
 		String newDescription = "b 동아리";
