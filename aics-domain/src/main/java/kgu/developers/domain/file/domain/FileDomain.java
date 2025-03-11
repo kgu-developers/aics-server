@@ -10,6 +10,7 @@ public enum FileDomain {
 	CAROUSEL("캐러셀"),
 	POST("게시글"),
 	LAB("연구실"),
+	CLUB("동아리"),
 	;
 
 	private final String description;

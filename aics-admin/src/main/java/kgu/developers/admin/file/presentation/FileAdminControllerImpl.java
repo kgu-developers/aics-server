@@ -1,8 +1,13 @@
 package kgu.developers.admin.file.presentation;
 
-import kgu.developers.admin.file.application.FileAdminFacade;
-import kgu.developers.domain.file.application.response.FilePathResponse;
-import lombok.RequiredArgsConstructor;
+import static kgu.developers.domain.file.domain.FileDomain.ABOUT;
+import static kgu.developers.domain.file.domain.FileDomain.CAROUSEL;
+import static kgu.developers.domain.file.domain.FileDomain.CLUB;
+import static kgu.developers.domain.file.domain.FileDomain.LAB;
+import static kgu.developers.domain.file.domain.FileDomain.POST;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static kgu.developers.domain.file.domain.FileDomain.ABOUT;
-import static kgu.developers.domain.file.domain.FileDomain.CAROUSEL;
-import static kgu.developers.domain.file.domain.FileDomain.LAB;
-import static kgu.developers.domain.file.domain.FileDomain.POST;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+import kgu.developers.admin.file.application.FileAdminFacade;
+import kgu.developers.domain.file.application.response.FilePathResponse;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,6 +60,15 @@ public class FileAdminControllerImpl implements FileAdminController {
 		@RequestPart(value = "file") MultipartFile file
 	) {
 		FilePathResponse path = fileAdminFacade.saveFile(file, LAB);
+		return ResponseEntity.status(CREATED).body(path);
+	}
+
+	@Override
+	@PostMapping(value = "/club", consumes = MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<FilePathResponse> clubFileUpload(
+		@RequestPart(value = "file") MultipartFile file
+	) {
+		FilePathResponse path = fileAdminFacade.saveFile(file, CLUB);
 		return ResponseEntity.status(CREATED).body(path);
 	}
 }
