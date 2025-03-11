@@ -3,13 +3,6 @@ INSERT INTO about (content, category, created_at, updated_at)
 VALUES ('학과 소개 내용입니다.', 'DEPT_INTRO', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('경기대학교 수원캠퍼스 8강의동에 있습니다.', 'DIRECTIONS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
--- club
-INSERT INTO club (name, description, site, created_at, updated_at)
-VALUES ('SSF', '웹 개발 동아리 SSF입니다.', 'https://www.ssf.or.kr', '2025-03-03 00:00:00', '2025-03-03 00:00:00'),
-       ('K.Knock', '경기대학교 정보보안 동아리 K.Knock입니다.', NULL, '2025-03-03 01:00:00', '2025-03-03 01:00:00'),
-       ('C-Lab', '경기대학교 AI컴퓨터공학부 개발동아리입니다.', 'https://clab.page', '2025-03-03 02:00:00', '2025-03-03 02:00:00'),
-       ('InQ', '개발자 플랫폼 동아리 InQ입니다.', NULL, '2025-03-03 03:00:00', '2025-03-03 03:00:00');
-
 -- password: password1234!
 INSERT INTO "user" (id, password, name, email, phone, major, role, created_at, updated_at)
 VALUES ('202412346', '$2a$10$NkQj6yk0Xh4QhKevjrOkouQBymXUgpKqmHQFnTUKRaVhDrRZf5OTG',
@@ -57,7 +50,11 @@ VALUES ('학과소개파일', '/files/about/dept_intro.pdf', 'pdf', '12345', CUR
        ('LAB G 로고 이미지', '/files/lab/LAB-G.jpg', 'jpg', '12351', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('LAB H 로고 이미지', '/files/lab/LAB-H.jpg', 'jpg', '12352', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('LAB I 로고 이미지', '/files/lab/LAB-I.png', 'png', '12353', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('LAB J 로고 이미지', '/files/lab/LAB-J.png', 'png', '12354', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+       ('LAB J 로고 이미지', '/files/lab/LAB-J.png', 'png', '12354', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('CLUB SSF 로고 이미지', '/files/club/SSF.jpg', 'jpg', '12351', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('CLUB K.Knock 로고 이미지', '/files/club/K-Knock.jpg', 'jpg', '12352', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('CLUB C-Lab 로고 이미지', '/files/club/C-Lab.png', 'png', '12353', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('CLUB InQ 로고 이미지', '/files/club/InQ.png', 'png', '12354', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- lab
 INSERT INTO lab (name, loc, site, advisor, file_id, created_at, updated_at)
@@ -71,6 +68,13 @@ VALUES ('Lab A', '8500', 'http://lab1.kyonggi.ac.kr', '김교수', 11, CURRENT_T
        ('Lab H', '9000', 'http://lab8.kyonggi.ac.kr', '전교수', 18, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('Lab I', '9100', 'https://lab9.kyonggi.ac.kr', '주교수', 19, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('Lab J', '9200', 'http://lab10.kyonggi.ac.kr', '성교수', 20, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- club
+INSERT INTO club (name, description, site, file_id, created_at, updated_at)
+VALUES ('SSF', '웹 개발 동아리 SSF입니다.', 'https://www.ssf.or.kr', 21, '2025-03-03 00:00:00', '2025-03-03 00:00:00'),
+       ('K.Knock', '경기대학교 정보보안 동아리 K.Knock입니다.', NULL, 22, '2025-03-03 01:00:00', '2025-03-03 01:00:00'),
+       ('C-Lab', '경기대학교 AI컴퓨터공학부 개발동아리입니다.', 'https://clab.page', 23, '2025-03-03 02:00:00', '2025-03-03 02:00:00'),
+       ('InQ', '개발자 플랫폼 동아리 InQ입니다.', NULL, 24, '2025-03-03 03:00:00', '2025-03-03 03:00:00');
 
 -- carousel
 INSERT INTO carousel (file_id, text, link, created_at, updated_at)

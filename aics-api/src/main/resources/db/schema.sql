@@ -19,6 +19,7 @@ CREATE TABLE club
     name        VARCHAR(16)  NOT NULL UNIQUE,
     description VARCHAR(100)  NOT NULL,
     site        VARCHAR(50)           DEFAULT NULL,
+    file_id     BIGINT UNIQUE,
     created_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted_at  TIMESTAMP(6)          DEFAULT NULL
