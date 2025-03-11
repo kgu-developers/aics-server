@@ -3,6 +3,7 @@ package kgu.developers.admin.club.presentation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,6 +27,10 @@ public interface ClubAdminController {
 		responseCode = "201",
 		content = @Content(schema = @Schema(implementation = ClubPersistResponse.class)))
 	ResponseEntity<ClubPersistResponse> createClub(
+		@Parameter(
+			description = "동아리 이미지에 저장할 파일의 ID 입니다.",
+			example = "1"
+		) @RequestParam(required = false) Long fileId,
 		@Parameter(
 			description = "동아리 생성 request 객체 입니다.",
 			required = true
