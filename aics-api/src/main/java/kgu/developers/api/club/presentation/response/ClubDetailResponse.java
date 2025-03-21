@@ -10,6 +10,9 @@ import lombok.Builder;
 
 @Builder
 public record ClubDetailResponse(
+	@Schema(description = "동아리 id", example = "1", requiredMode = REQUIRED)
+	Long id,
+
 	@Schema(description = "동아리 이름", example = "C-Lab", requiredMode = REQUIRED)
 	String name,
 
@@ -26,6 +29,7 @@ public record ClubDetailResponse(
 ) {
 	public static ClubDetailResponse from(Club club) {
 		return ClubDetailResponse.builder()
+			.id(club.getId())
 			.name(club.getName())
 			.description(club.getDescription())
 			.site(club.getSite())
