@@ -10,6 +10,9 @@ import lombok.Builder;
 
 @Builder
 public record LabDetailResponse(
+	@Schema(description = "연구실 id", example = "1", requiredMode = REQUIRED)
+	Long id,
+
 	@Schema(description = "연구실 이름", example = "보안 연구실", requiredMode = REQUIRED)
 	String name,
 
@@ -31,6 +34,7 @@ public record LabDetailResponse(
 ) {
 	public static LabDetailResponse from(Lab lab) {
 		return LabDetailResponse.builder()
+			.id(lab.getId())
 			.name(lab.getName())
 			.loc(lab.getLoc())
 			.site(lab.getSite())
