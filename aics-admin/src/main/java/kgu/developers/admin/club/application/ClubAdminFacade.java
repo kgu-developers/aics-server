@@ -23,6 +23,7 @@ public class ClubAdminFacade {
 		return ClubPersistResponse.of(id);
 	}
 
+	@Transactional
 	public void updateClub(Long id, ClubUpdateRequest request) {
 		Club club = clubQueryService.getById(id);
 		clubCommandService.updateClub(club, request.name(), request.description(), request.site(), request.fileId());

@@ -1,14 +1,13 @@
 package kgu.developers.admin.carousel.presentation.request;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import org.hibernate.validator.constraints.URL;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 
-public record CarouselRequest(
+public record CarouselUpdateRequest(
 	@Schema(description = "캐러셀 설명", example = "경기대학교 AI컴퓨터공학부 메인 이미지", requiredMode = NOT_REQUIRED)
 	@Size(max = 255, message = "설명은 255자를 초과할 수 없습니다")
 	String text,
@@ -17,7 +16,7 @@ public record CarouselRequest(
 	@URL(message = "올바른 URL 형식이어야 합니다")
 	String link,
 
-	@Schema(description = "캐러셀 이미지 파일 ID", example = "1", requiredMode = REQUIRED)
+	@Schema(description = "캐러셀 이미지 ID", example = "1")
 	Long fileId
 ) {
 }

@@ -44,4 +44,17 @@ public class Carousel extends BaseTimeEntity {
 			.file(file)
 			.build();
 	}
+
+	public void updateText(String text) {
+		this.text = text;
+	}
+
+	public void updateLink(String link) {
+		this.link = link;
+	}
+
+	public void updateFile(FileEntity file) {
+		this.file = file;
+	}
 }
+

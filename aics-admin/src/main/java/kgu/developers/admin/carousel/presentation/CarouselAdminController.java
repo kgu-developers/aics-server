@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.carousel.presentation.request.CarouselRequest;
+import kgu.developers.admin.carousel.presentation.request.CarouselUpdateRequest;
 import kgu.developers.admin.carousel.presentation.response.CarouselPersistResponse;
 
 @Tag(name = "Carousel", description = "캐러셀 관리자 API")
@@ -35,6 +36,22 @@ public interface CarouselAdminController {
 		@Parameter(
 			description = "캐러셀 생성 request 객체 입니다."
 		) @Valid @RequestBody CarouselRequest request
+	);
+
+	@Operation(summary = "캐러셀 수정 API", description = """
+			- Description : 이 API는 캐러셀을 수정합니다.
+			- Assignee : 박민준
+		""")
+	@ApiResponse(responseCode = "204")
+	ResponseEntity<Void> updateCarousel(
+		@Parameter(
+			description = "캐러셀 ID는 URL 경로 변수 입니다.",
+			example = "1",
+			required = true
+		) @Positive @PathVariable Long id,
+		@Parameter(
+			description = "캐러셀 생성 request 객체 입니다."
+		) @Valid @RequestBody CarouselUpdateRequest request
 	);
 
 	@Operation(summary = "캐러셀 삭제 API", description = """

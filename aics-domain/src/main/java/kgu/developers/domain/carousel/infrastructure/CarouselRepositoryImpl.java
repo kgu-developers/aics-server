@@ -1,6 +1,7 @@
 package kgu.developers.domain.carousel.infrastructure;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +27,10 @@ public class CarouselRepositoryImpl implements CarouselRepository {
 	@Override
 	public List<Carousel> findAllByFileIsNotNullOrderByCreatedAtDesc() {
 		return jpaCarouselRepository.findAllByFileIsNotNullOrderByCreatedAtDesc();
+	}
+
+	@Override
+	public Optional<Carousel> findById(Long id) {
+		return jpaCarouselRepository.findById(id);
 	}
 }

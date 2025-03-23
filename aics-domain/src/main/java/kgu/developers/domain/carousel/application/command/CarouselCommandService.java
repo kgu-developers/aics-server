@@ -1,6 +1,7 @@
 package kgu.developers.domain.carousel.application.command;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.carousel.domain.CarouselRepository;
@@ -20,6 +21,18 @@ public class CarouselCommandService {
 		return carouselRepository.save(carousel).getId();
 	}
 
+	@Transactional
+	public void updateCarousel(Carousel carousel, String link, String text, Long fileId) {
+		carousel.updateText(text);
+		carousel.updateLink(link);
+
+		FileEntity file = null;
+		if (fileId != null) {
+			file = fileQueryService.getFileById(fileId);
+		}
+
+		carousel.updateFile(file);
+	}
 	public void deleteCarouselById(Long id) {
 		carouselRepository.deleteById(id);
 	}

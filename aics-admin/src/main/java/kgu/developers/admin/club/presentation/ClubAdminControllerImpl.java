@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.club.application.ClubAdminFacade;
 import kgu.developers.admin.club.presentation.request.ClubCreateRequest;
+import kgu.developers.admin.club.presentation.request.ClubUpdateRequest;
 import kgu.developers.admin.club.presentation.response.ClubPersistResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -41,7 +42,7 @@ public class ClubAdminControllerImpl implements ClubAdminController {
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateClub(
 		@Positive @PathVariable Long id,
-		@Valid @RequestBody ClubCreateRequest request
+		@Valid @RequestBody ClubUpdateRequest request
 	) {
 		clubAdminFacade.updateClub(id, request);
 		return ResponseEntity.noContent().build();
