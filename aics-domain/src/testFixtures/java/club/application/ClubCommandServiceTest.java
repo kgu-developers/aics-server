@@ -59,12 +59,13 @@ public class ClubCommandServiceTest {
 		String newSite = "http://club-b.kyonggi.ac.kr";
 
 		// when
-		clubCommandService.updateClub(club, newName, newDescription, newSite, 1L);
+		clubCommandService.updateClub(club, newName, newDescription, newSite, null);
 
 		// then
 		assertEquals(newName, club.getName());
 		assertEquals(newDescription, club.getDescription());
 		assertEquals(newSite, club.getSite());
+		assertNull(club.getFile());
 	}
 
 	@Test

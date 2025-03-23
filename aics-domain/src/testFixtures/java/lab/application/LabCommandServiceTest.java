@@ -1,6 +1,7 @@
 package lab.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Optional;
 
@@ -67,13 +68,14 @@ public class LabCommandServiceTest {
 		String targetAdvisor = "배상원";
 
 		// when
-		labCommandService.updateLab(lab, targetName, targetLoc, targetSite, targetAdvisor, 1L);
+		labCommandService.updateLab(lab, targetName, targetLoc, targetSite, targetAdvisor, null);
 
 		// then
 		assertEquals(targetName, lab.getName());
 		assertEquals(targetLoc, lab.getLoc());
 		assertEquals(targetSite, lab.getSite());
 		assertEquals(targetAdvisor, lab.getAdvisor());
+		assertNull(lab.getFile());
 	}
 
 	@Test

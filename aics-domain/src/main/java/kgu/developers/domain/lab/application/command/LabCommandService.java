@@ -31,7 +31,7 @@ public class LabCommandService {
 			file = fileQueryService.getFileById(fileId);
 		}
 
-		lab.updateImgFile(file);
+		lab.updateFile(file);
 	}
 
 	public void deleteLabById(Long id) {
