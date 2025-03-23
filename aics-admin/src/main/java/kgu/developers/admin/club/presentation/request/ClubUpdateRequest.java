@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record ClubRequest(
+public record ClubUpdateRequest(
 	@Schema(description = "동아리 이름", example = "C-Lab", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 15)
@@ -21,6 +21,9 @@ public record ClubRequest(
 
 	@Schema(description = "동아리 홈페이지", example = "https://www.clab.page/", requiredMode = NOT_REQUIRED)
 	@Pattern(regexp = "^(http|https)://.*$", message = "URL은 http:// 또는 https://으로 시작해야 합니다.")
-	String site
+	String site,
+
+	@Schema(description = "파일 ID", example = "1")
+	Long fileId
 ) {
 }

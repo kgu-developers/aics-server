@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.lab.application.LabAdminFacade;
-import kgu.developers.admin.lab.presentation.request.LabRequest;
+import kgu.developers.admin.lab.presentation.request.LabCreateRequest;
 import kgu.developers.admin.lab.presentation.request.LabUpdateRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class LabAdminControllerImpl implements LabAdminController{
 	@PostMapping
 	public ResponseEntity<LabPersistResponse> createLab(
 		@Positive @RequestParam(required = false) Long fileId,
-		@Valid @RequestBody LabRequest request
+		@Valid @RequestBody LabCreateRequest request
 	) {
 		LabPersistResponse response = labAdminFacade.createLab(fileId, request);
 		return ResponseEntity.status(CREATED).body(response);

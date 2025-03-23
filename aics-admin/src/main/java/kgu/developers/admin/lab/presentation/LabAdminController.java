@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import kgu.developers.admin.lab.presentation.request.LabRequest;
+import kgu.developers.admin.lab.presentation.request.LabCreateRequest;
 import kgu.developers.admin.lab.presentation.request.LabUpdateRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 
@@ -35,7 +35,7 @@ public interface LabAdminController {
 		@Parameter(
 			description = "연구실 생성 request 객체 입니다.",
 			required = true
-		) @Valid @RequestBody LabRequest request
+		) @Valid @RequestBody LabCreateRequest request
 	);
 
 	@Operation(summary = "연구실 수정 API", description = """

@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 @Builder
-public record LabRequest(
+public record LabCreateRequest(
 	@Schema(description = "연구실 이름", example = "인공지능연구실", requiredMode = REQUIRED)
 	@NotBlank
 	@Size(max = 15)

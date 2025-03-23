@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import kgu.developers.admin.club.presentation.request.ClubRequest;
+import kgu.developers.admin.club.presentation.request.ClubCreateRequest;
 import kgu.developers.admin.club.presentation.response.ClubPersistResponse;
 
 @Tag(name = "Club", description = "동아리 관리자 API")
@@ -34,7 +34,7 @@ public interface ClubAdminController {
 		@Parameter(
 			description = "동아리 생성 request 객체 입니다.",
 			required = true
-		) @Valid @RequestBody ClubRequest request
+		) @Valid @RequestBody ClubCreateRequest request
 	);
 
 	@Operation(summary = "동아리 수정 API", description = """
@@ -51,7 +51,7 @@ public interface ClubAdminController {
 		@Parameter(
 			description = "동아리 수정 request 객체 입니다.",
 			required = true
-		) @Valid @RequestBody ClubRequest request
+		) @Valid @RequestBody ClubCreateRequest request
 	);
 
 	@Operation(summary = "동아리 삭제 API", description = """

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.club.application.ClubAdminFacade;
-import kgu.developers.admin.club.presentation.request.ClubRequest;
+import kgu.developers.admin.club.presentation.request.ClubCreateRequest;
 import kgu.developers.admin.club.presentation.response.ClubPersistResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +31,7 @@ public class ClubAdminControllerImpl implements ClubAdminController {
 	@PostMapping
 	public ResponseEntity<ClubPersistResponse> createClub(
 		@RequestParam(required = false) Long fileId,
-		@Valid @RequestBody ClubRequest request
+		@Valid @RequestBody ClubCreateRequest request
 	) {
 		ClubPersistResponse response = clubAdminFacade.createClub(fileId, request);
 		return ResponseEntity.status(CREATED).body(response);
@@ -41,7 +41,7 @@ public class ClubAdminControllerImpl implements ClubAdminController {
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateClub(
 		@Positive @PathVariable Long id,
-		@Valid @RequestBody ClubRequest request
+		@Valid @RequestBody ClubCreateRequest request
 	) {
 		clubAdminFacade.updateClub(id, request);
 		return ResponseEntity.noContent().build();
