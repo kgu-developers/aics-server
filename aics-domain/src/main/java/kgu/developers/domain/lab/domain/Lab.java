@@ -67,4 +67,8 @@ public class Lab extends BaseTimeEntity {
 	public void updateAdvisor(String advisor) {
 		this.advisor = advisor;
 	}
+
+	public void updateImgFile(FileEntity imgFile) {
+		this.imgFile = imgFile;
+	}
 }

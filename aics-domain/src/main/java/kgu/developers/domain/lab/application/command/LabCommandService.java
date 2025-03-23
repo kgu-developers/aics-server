@@ -20,11 +20,18 @@ public class LabCommandService {
 		return labRepository.save(lab).getId();
 	}
 
-	public void updateLab(Lab lab, String name, String loc, String site, String advisor) {
+	public void updateLab(Lab lab, String name, String loc, String site, String advisor, Long fileId) {
 		lab.updateName(name);
 		lab.updateLoc(loc);
 		lab.updateSite(site);
 		lab.updateAdvisor(advisor);
+
+		FileEntity file = null;
+		if (fileId != null) {
+			file = fileQueryService.getFileById(fileId);
+		}
+
+		lab.updateImgFile(file);
 	}
 
 	public void deleteLabById(Long id) {

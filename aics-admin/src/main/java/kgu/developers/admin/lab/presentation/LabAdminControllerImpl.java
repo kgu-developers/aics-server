@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.lab.application.LabAdminFacade;
 import kgu.developers.admin.lab.presentation.request.LabRequest;
+import kgu.developers.admin.lab.presentation.request.LabUpdateRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +42,7 @@ public class LabAdminControllerImpl implements LabAdminController{
 	@PatchMapping("/{id}")
 	public ResponseEntity<Void> updateLab(
 		@PathVariable @Positive Long id,
-		@Valid @RequestBody LabRequest request
+		@Valid @RequestBody LabUpdateRequest request
 	) {
 		labAdminFacade.updateLab(id, request);
 		return ResponseEntity.noContent().build();
