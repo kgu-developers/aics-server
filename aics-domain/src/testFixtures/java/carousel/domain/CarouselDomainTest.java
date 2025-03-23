@@ -26,4 +26,46 @@ public class CarouselDomainTest {
 		assertEquals(TARGET_CAROUSEL_TEXT, createdCarousel.getText());
 		assertEquals(TARGET_CAROUSEL_LINK, createdCarousel.getLink());
 	}
+
+	@Test
+	@DisplayName("updateText는 text를 수정한다.")
+	public void updateText_success() {
+		// given
+		Carousel carousel = Carousel.builder().build();
+		String text = "text";
+
+		// when
+		carousel.updateText(text);
+
+		// then
+		assertEquals(text, carousel.getText());
+	}
+
+	@Test
+	@DisplayName("updateLink는 link를 수정한다.")
+	public void updateLink_success() {
+		// given
+		Carousel carousel = Carousel.builder().build();
+		String link = "link";
+
+		// when
+		carousel.updateLink(link);
+
+		// then
+		assertEquals(link, carousel.getLink());
+	}
+
+	@Test
+	@DisplayName("updateFile은 file를 수정한다.")
+	public void updateFile_success() {
+		// given
+		Carousel carousel = Carousel.builder().build();
+		FileEntity file = FileEntity.builder().build();
+
+		// when
+		carousel.updateFile(file);
+
+		// then
+		assertEquals(file, carousel.getFile());
+	}
 }
