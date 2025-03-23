@@ -1,11 +1,7 @@
 package kgu.developers.admin.post.presentation;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
-import kgu.developers.admin.post.application.PostAdminFacade;
-import kgu.developers.admin.post.presentation.request.PostRequest;
-import kgu.developers.admin.post.presentation.response.PostPersistResponse;
-import lombok.RequiredArgsConstructor;
+import static org.springframework.http.HttpStatus.CREATED;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.HttpStatus.CREATED;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import kgu.developers.admin.post.application.PostAdminFacade;
+import kgu.developers.admin.post.presentation.request.PostCreateRequest;
+import kgu.developers.admin.post.presentation.request.PostUpdateRequest;
+import kgu.developers.admin.post.presentation.response.PostPersistResponse;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class PostAdminControllerImpl implements PostAdminController {
 	@PostMapping
 	public ResponseEntity<PostPersistResponse> createPost(
 		@RequestParam(required = false) Long fileId,
-		@Valid @RequestBody PostRequest request
+		@Valid @RequestBody PostCreateRequest request
 	) {
 		PostPersistResponse response = postAdminFacade.createPost(fileId, request);
 		return ResponseEntity.status(CREATED).body(response);
@@ -40,7 +42,7 @@ public class PostAdminControllerImpl implements PostAdminController {
 	@PatchMapping("/{postId}")
 	public ResponseEntity<Void> updatePost(
 		@Positive @PathVariable Long postId,
-		@Valid @RequestBody PostRequest request
+		@Valid @RequestBody PostUpdateRequest request
 	) {
 		postAdminFacade.updatePost(postId, request);
 		return ResponseEntity.noContent().build();

@@ -3,7 +3,8 @@ package kgu.developers.admin.post.application;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import kgu.developers.admin.post.presentation.request.PostRequest;
+import kgu.developers.admin.post.presentation.request.PostCreateRequest;
+import kgu.developers.admin.post.presentation.request.PostUpdateRequest;
 import kgu.developers.admin.post.presentation.response.PostPersistResponse;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.command.PostSchedulingService;
@@ -18,15 +19,15 @@ public class PostAdminFacade {
 	private final PostQueryService postQueryService;
 	private final PostSchedulingService postSchedulingService;
 
-	public PostPersistResponse createPost(Long fileId, PostRequest request) {
+	public PostPersistResponse createPost(Long fileId, PostCreateRequest request) {
 		Long id = postCommandService.createPost(request.title(), request.content(), request.category(), fileId);
 		return PostPersistResponse.from(id);
 	}
 
 	@Transactional
-	public void updatePost(Long postId, PostRequest request) {
+	public void updatePost(Long postId, PostUpdateRequest request) {
 		Post post = postQueryService.getById(postId);
-		postCommandService.updatePost(post, request.title(), request.content(), request.category());
+		postCommandService.updatePost(post, request.title(), request.content(), request.category(), request.fileId());
 	}
 
 	@Transactional

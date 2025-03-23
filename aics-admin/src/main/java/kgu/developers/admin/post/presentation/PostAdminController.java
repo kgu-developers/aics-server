@@ -1,5 +1,10 @@
 package kgu.developers.admin.post.presentation;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,12 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import kgu.developers.admin.post.presentation.request.PostRequest;
+import kgu.developers.admin.post.presentation.request.PostCreateRequest;
+import kgu.developers.admin.post.presentation.request.PostUpdateRequest;
 import kgu.developers.admin.post.presentation.response.PostPersistResponse;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Post", description = "게시글 관리자 API")
 public interface PostAdminController {
@@ -34,7 +36,7 @@ public interface PostAdminController {
 		@Parameter(
 			description = "게시글 생성 request 객체 입니다.",
 			required = true
-		) @Valid @RequestBody PostRequest request
+		) @Valid @RequestBody PostCreateRequest request
 	);
 
 	@Operation(summary = "게시글 수정 API", description = """
@@ -51,7 +53,7 @@ public interface PostAdminController {
 		@Parameter(
 			description = "게시글 수정 request 객체 입니다.",
 			required = true
-		) @Valid @RequestBody PostRequest request
+		) @Valid @RequestBody PostUpdateRequest request
 	);
 
 	@Operation(summary = "게시글 상단 고정 상태 토글 API", description = """

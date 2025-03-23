@@ -96,4 +96,8 @@ public class Post extends BaseTimeEntity {
 	public void increaseViews() {
 		this.views++;
 	}
+
+	public void updateFile(FileEntity file) {
+		this.file = file;
+	}
 }

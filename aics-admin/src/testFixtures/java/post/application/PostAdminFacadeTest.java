@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
-import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import kgu.developers.admin.post.application.PostAdminFacade;
-import kgu.developers.admin.post.presentation.request.PostRequest;
+import kgu.developers.admin.post.presentation.request.PostCreateRequest;
+import kgu.developers.admin.post.presentation.request.PostUpdateRequest;
 import kgu.developers.admin.post.presentation.response.PostPersistResponse;
+import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.application.command.PostSchedulingService;
 import kgu.developers.domain.post.application.query.PostQueryService;
@@ -27,6 +27,7 @@ import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.exception.PostNotFoundException;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeUserRepository;
 
@@ -73,7 +74,7 @@ public class PostAdminFacadeTest {
 	@DisplayName("createPost는 Post를 생성한다")
 	void createPost_Success() {
 		// given
-		PostRequest postRequest = PostRequest.builder()
+		PostCreateRequest postCreateRequest = PostCreateRequest.builder()
 			.title("new title")
 			.content("new content")
 			.category(NOTIFICATION)
@@ -81,7 +82,7 @@ public class PostAdminFacadeTest {
 		Long fileId = 1L;
 
 		// when
-		PostPersistResponse post = postAdminFacade.createPost(fileId, postRequest);
+		PostPersistResponse post = postAdminFacade.createPost(fileId, postCreateRequest);
 		Post found = fakePostRepository.findByIdAndDeletedAtIsNull(post.postId()).get();
 
 		// then
@@ -92,14 +93,14 @@ public class PostAdminFacadeTest {
 	@DisplayName("updatePost는 Post를 수정한다")
 	void updatePost_Success() {
 		// given
-		PostRequest postRequest = PostRequest.builder()
+		PostUpdateRequest request = PostUpdateRequest.builder()
 			.title("new title")
 			.content("new content")
 			.category(NOTIFICATION)
 			.build();
 
 		// when
-		postAdminFacade.updatePost(1L, postRequest);
+		postAdminFacade.updatePost(1L, request);
 		Post found = fakePostRepository.findByIdAndDeletedAtIsNull(1L).get();
 
 		// then
@@ -111,7 +112,7 @@ public class PostAdminFacadeTest {
 	@DisplayName("updatePost는 존재하지 않는 Post를 수정하면 PostNotFoundException을 발생시킨다")
 	void updatePost_throws_PostNotFoundException() {
 		// given
-		PostRequest postRequest = PostRequest.builder()
+		PostUpdateRequest request = PostUpdateRequest.builder()
 			.title("new title")
 			.content("new content")
 			.category(NOTIFICATION)
@@ -119,7 +120,7 @@ public class PostAdminFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> postAdminFacade.updatePost(2L, postRequest))
+		assertThatThrownBy(() -> postAdminFacade.updatePost(2L, request))
 			.isInstanceOf(PostNotFoundException.class);
 	}
 

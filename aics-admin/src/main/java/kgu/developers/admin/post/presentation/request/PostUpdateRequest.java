@@ -10,8 +10,7 @@ import kgu.developers.domain.post.domain.Category;
 import lombok.Builder;
 
 @Builder
-public record PostRequest(
-
+public record PostUpdateRequest(
 	@Schema(description = "게시물 제목", example = "SW 부트캠프 4기 교육생 모집", requiredMode = REQUIRED)
 	@NotBlank @Size(max = 100, message = "제목은 100자 이내여야 합니다.")
 	String title,
@@ -29,6 +28,9 @@ public record PostRequest(
 	String content,
 
 	@Schema(description = "게시물 카테고리", example = "NOTIFICATION", requiredMode = NOT_REQUIRED)
-	Category category
+	Category category,
+
+	@Schema(description = "파일 ID", example = "1")
+	Long fileId
 ) {
 }
