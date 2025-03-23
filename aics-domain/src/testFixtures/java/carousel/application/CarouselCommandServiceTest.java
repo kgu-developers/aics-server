@@ -1,12 +1,14 @@
 package carousel.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.carousel.application.command.CarouselCommandService;
+import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.file.domain.FileEntity;
 import mock.repository.FakeCarouselRepository;
@@ -55,5 +57,22 @@ public class CarouselCommandServiceTest {
 
 		// then
 		assertEquals(SAVE_TARGET_ID, savedCarouselId);
+	}
+
+	@Test
+	@DisplayName("upateCarousel은 캐러셀을 수정한다.")
+	public void updateCarousel_success() {
+		Carousel carousel = Carousel.builder().build();
+
+		String link = "https://www.new.kgu.ac.kr/";
+		String text = "newText";
+
+		// when
+		carouselCommandService.updateCarousel(carousel, link, text, null);
+
+		// then
+		assertEquals(text, carousel.getText());
+		assertEquals(link, carousel.getLink());
+		assertNull(carousel.getFile());
 	}
 }
