@@ -15,6 +15,7 @@ import mock.repository.FakeCarouselRepository;
 
 public class CarouselQueryServiceTest {
 	private CarouselQueryService carouselQueryService;
+	private static Carousel carousel;
 
 	@BeforeEach
 	public void init() {
@@ -24,7 +25,7 @@ public class CarouselQueryServiceTest {
 	}
 
 	private static void saveTestCarousel(FakeCarouselRepository fakeCarouselRepository) {
-		fakeCarouselRepository.save(
+		carousel = fakeCarouselRepository.save(
 			Carousel.create("컴퓨터공학부 홈페이지 메인 이미지", "https://kgu.ac.kr", FileEntity.builder().build())
 		);
 
@@ -46,5 +47,18 @@ public class CarouselQueryServiceTest {
 		assertEquals("https://kgu.ac.kr", contents.get(0).getLink());
 		assertEquals("컴퓨터공학부 홈페이지 메인 이미지", contents.get(1).getText());
 		assertEquals("https://kgu.ac.kr", contents.get(1).getLink());
+	}
+
+	@Test
+	@DisplayName("getById는 해당 캐러셀을 조회한다.")
+	public void getById_success() {
+		// given
+		Long id = 1L;
+
+		// when
+		Carousel result = carouselQueryService.getById(id);
+
+		// then
+		assertEquals(carousel, result);
 	}
 }
