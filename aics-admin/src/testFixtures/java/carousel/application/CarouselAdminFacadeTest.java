@@ -10,6 +10,7 @@ import kgu.developers.admin.carousel.application.CarouselAdminFacade;
 import kgu.developers.admin.carousel.presentation.request.CarouselRequest;
 import kgu.developers.admin.carousel.presentation.response.CarouselPersistResponse;
 import kgu.developers.domain.carousel.application.command.CarouselCommandService;
+import kgu.developers.domain.carousel.application.query.CarouselQueryService;
 import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.file.domain.FileEntity;
 import mock.repository.FakeCarouselRepository;
@@ -28,11 +29,13 @@ public class CarouselAdminFacadeTest {
 
 	private void initializeCarouselAdminFacade() {
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
+		FakeCarouselRepository fakeCarouselRepository = new FakeCarouselRepository();
 		carouselAdminFacade = new CarouselAdminFacade(
 			new CarouselCommandService(
 				new FileQueryService(fakeFileRepository),
-				new FakeCarouselRepository()
-			)
+				fakeCarouselRepository
+			),
+			new CarouselQueryService(fakeCarouselRepository)
 		);
 		saveTestFile(fakeFileRepository);
 	}
