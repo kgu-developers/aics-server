@@ -18,9 +18,9 @@ public class UserSchedulingService {
 	public static final int USER_RETENTION_DAYS = 30;
 	private LocalDateTime lastScheduledRun;
 
-	@Scheduled(cron = "0 0 0 1 * ?")
+	@Scheduled(cron = "0 0 0 * * ?")
 	@Transactional
-	public void cleanupOldDeletedPosts() {
+	public void cleanupOldDeleted() {
 		userRepository.deleteAllByDeletedAtBefore(USER_RETENTION_DAYS);
 		lastScheduledRun = LocalDateTime.now();
 	}
