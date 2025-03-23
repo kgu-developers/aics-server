@@ -26,10 +26,16 @@ public class ClubCommandService {
 		return clubRepository.save(club).getId();
 	}
 
-	public void updateClub(Club club, String name, String description, String site) {
+	public void updateClub(Club club, String name, String description, String site, Long fileId) {
 		club.updateName(name);
 		club.updateDescription(description);
 		club.updateSite(site);
+
+		FileEntity file = null;
+		if (fileId != null) {
+			file = fileQueryService.getFileById(fileId);
+		}
+		club.updateFile(file);
 	}
 
 	public void deleteClubById(Long id) {

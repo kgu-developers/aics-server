@@ -59,4 +59,8 @@ public class Club extends BaseTimeEntity {
 	public void updateSite(String site) {
 		this.site = site;
 	}
+
+	public void updateFile(FileEntity file) {
+		this.file = file;
+	}
 }

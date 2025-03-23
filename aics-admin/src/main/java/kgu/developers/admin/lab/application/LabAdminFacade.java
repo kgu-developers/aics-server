@@ -3,7 +3,7 @@ package kgu.developers.admin.lab.application;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import kgu.developers.admin.lab.presentation.request.LabRequest;
+import kgu.developers.admin.lab.presentation.request.LabCreateRequest;
 import kgu.developers.admin.lab.presentation.request.LabUpdateRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 import kgu.developers.domain.lab.application.command.LabCommandService;
@@ -18,7 +18,7 @@ public class LabAdminFacade {
 	private final LabCommandService labCommandService;
 	private final LabQueryService labQueryService;
 
-	public LabPersistResponse createLab(Long fileId, LabRequest request) {
+	public LabPersistResponse createLab(Long fileId, LabCreateRequest request) {
 		Long id = labCommandService.createLab(fileId, request.name(), request.loc(), request.site(), request.advisor());
 		return LabPersistResponse.of(id);
 	}
