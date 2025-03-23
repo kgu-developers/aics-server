@@ -68,7 +68,7 @@ public class CarouselAdminFacadeTest {
 		CarouselPersistResponse response = carouselAdminFacade.createCarousel(TEST_FILE_ID, request);
 
 		// then
-		assertEquals(SAVE_TARGET_ID, response.id());
+		assertEquals(2, response.id());
 	}
 
 	@Test
