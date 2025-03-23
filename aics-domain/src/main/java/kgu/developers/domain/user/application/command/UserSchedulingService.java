@@ -1,13 +1,14 @@
 package kgu.developers.domain.user.application.command;
 
-import kgu.developers.domain.user.domain.UserRepository;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import kgu.developers.domain.user.domain.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +18,7 @@ public class UserSchedulingService {
 	public static final int USER_RETENTION_DAYS = 30;
 	private LocalDateTime lastScheduledRun;
 
-//	@Scheduled(cron = "0 0 0 1 * ?")
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0 0 1 * ?")
 	@Transactional
 	public void cleanupOldDeletedPosts() {
 		userRepository.deleteAllByDeletedAtBefore(USER_RETENTION_DAYS);
