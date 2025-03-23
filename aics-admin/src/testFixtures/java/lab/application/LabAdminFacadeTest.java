@@ -43,7 +43,7 @@ public class LabAdminFacadeTest {
 			.loc("8500")
 			.site("http://labA.kyonggi.ac.kr")
 			.advisor("박민준")
-			.imgFile(testFile)
+			.file(testFile)
 			.build()
 		);
 	}
