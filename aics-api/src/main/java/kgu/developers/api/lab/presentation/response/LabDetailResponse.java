@@ -39,8 +39,8 @@ public record LabDetailResponse(
 			.loc(lab.getLoc())
 			.site(lab.getSite())
 			.advisor(lab.getAdvisor())
-			.img(lab.getImgFile() != null ?
-				FilePathResponse.from(lab.getImgFile()) : null)
+			.img(lab.getFile() != null ?
+				FilePathResponse.from(lab.getFile()) : null)
 			.build();
 	}
 }
