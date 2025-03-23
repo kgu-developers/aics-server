@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
-import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,11 +14,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeUserRepository;
 
@@ -82,7 +82,7 @@ public class PostCommandServiceTest {
 		Category newCategory = NOTIFICATION;
 
 		// when
-		postCommandService.updatePost(post, newTitle, newContent, newCategory);
+		postCommandService.updatePost(post, newTitle, newContent, newCategory, 1L);
 
 		// then
 		assertEquals(newTitle, post.getTitle());

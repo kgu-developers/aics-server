@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.carousel.domain.Carousel;
@@ -40,5 +41,12 @@ public class FakeCarouselRepository implements CarouselRepository {
 			.filter(carousel -> carousel.getFile() != null)
 			.sorted((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()))
 			.toList();
+	}
+
+	@Override
+	public Optional<Carousel> findById(Long id) {
+		return data.stream()
+			.filter(carousel -> carousel.getId().equals(id))
+			.findFirst();
 	}
 }

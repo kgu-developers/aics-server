@@ -59,7 +59,7 @@ public class ClubCommandServiceTest {
 		String newSite = "http://club-b.kyonggi.ac.kr";
 
 		// when
-		clubCommandService.updateClub(club, newName, newDescription, newSite);
+		clubCommandService.updateClub(club, newName, newDescription, newSite, 1L);
 
 		// then
 		assertEquals(newName, club.getName());
