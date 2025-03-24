@@ -38,7 +38,9 @@ public class CarouselAdminControllerImpl implements CarouselAdminController {
 
 	@Override
 	@PatchMapping("/{id}")
-	public ResponseEntity<Void> updateCarousel(Long id, CarouselUpdateRequest request) {
+	public ResponseEntity<Void> updateCarousel(
+		@Positive @PathVariable Long id,
+		@Valid @RequestBody CarouselUpdateRequest request) {
 		carouselAdminFacade.updateCarousel(id, request);
 		return ResponseEntity.noContent().build();
 	}
