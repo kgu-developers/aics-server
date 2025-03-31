@@ -35,6 +35,7 @@ public class QueryUserRepository {
 
 		List<String> userIds = queryFactory.select(user.id)
 			.from(user)
+			.where(whereClause)
 			.orderBy(user.id.desc())
 			.fetch();
 
