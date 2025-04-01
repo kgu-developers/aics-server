@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kgu.developers.domain.comment.application.command.CommentCommandService;
 import kgu.developers.domain.comment.domain.Comment;
@@ -23,8 +25,6 @@ import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCommentRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeUserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class CommentCommandServiceTest {
 	private CommentCommandService commentCommandService;
@@ -53,7 +53,7 @@ public class CommentCommandServiceTest {
 		);
 		fakePostRepository.save(Post.create(
 			"SW 부트캠프 4기 교육생 모집", "SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.", NEWS,
-			User.builder().build(), null
+			User.builder().build(), null, false
 		));
 	}
 

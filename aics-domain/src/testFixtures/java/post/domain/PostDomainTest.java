@@ -13,12 +13,12 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.domain.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PostDomainTest {
 	private Post post;
@@ -29,7 +29,7 @@ public class PostDomainTest {
 	@BeforeEach
 	public void init() {
 		User author = user();
-		post = Post.create(TITLE, CONTENT, NEWS, author, null);
+		post = Post.create(TITLE, CONTENT, NEWS, author, null, true);
 	}
 
 	private User user() {
@@ -52,7 +52,7 @@ public class PostDomainTest {
 		assertEquals(TITLE, post.getTitle());
 		assertEquals(CONTENT, post.getContent());
 		assertEquals(0, post.getViews());
-		assertFalse(post.isPinned());
+		assertTrue(post.isPinned());
 		assertEquals(NEWS, post.getCategory());
 	}
 
