@@ -20,7 +20,7 @@ public class PostAdminFacade {
 	private final PostSchedulingService postSchedulingService;
 
 	public PostPersistResponse createPost(Long fileId, PostCreateRequest request) {
-		Long id = postCommandService.createPost(request.title(), request.content(), request.category(), fileId);
+		Long id = postCommandService.createPost(request.title(), request.content(), request.category(), fileId, request.isPinned());
 		return PostPersistResponse.from(id);
 	}
 

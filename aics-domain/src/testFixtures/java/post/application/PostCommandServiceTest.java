@@ -65,7 +65,7 @@ public class PostCommandServiceTest {
 		Long fileId = 1L;
 
 		// when
-		Long result = postCommandService.createPost(title, content, category, fileId);
+		Long result = postCommandService.createPost(title, content, category, fileId, false);
 
 		// then
 		assertEquals(1L, result);
@@ -82,7 +82,7 @@ public class PostCommandServiceTest {
 		Category newCategory = NOTIFICATION;
 
 		// when
-		postCommandService.updatePost(post, newTitle, newContent, newCategory, 1L);
+		postCommandService.updatePost(post, newTitle, newContent, newCategory, 1L, false);
 
 		// then
 		assertEquals(newTitle, post.getTitle());

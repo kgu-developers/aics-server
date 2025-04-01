@@ -65,14 +65,14 @@ public class Post extends BaseTimeEntity {
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-	public static Post create(String title, String content, Category category, User author, FileEntity file) {
+	public static Post create(String title, String content, Category category, User author, FileEntity file, boolean isPinned) {
 		return Post.builder()
 			.title(title)
 			.content(content)
 			.views(0)
-			.isPinned(false)
+			.isPinned(isPinned)
 			.category(category)
-			.author(author) // NOTE: User Setter 주입 방지 위해 생성자 주입
+			.author(author)
 			.file(file)
 			.build();
 	}
@@ -89,8 +89,8 @@ public class Post extends BaseTimeEntity {
 		this.category = category;
 	}
 
-	public void togglePinned() {
-		this.isPinned = !this.isPinned;
+	public void updatePinned(boolean isPinned) {
+		this.isPinned = isPinned;
 	}
 
 	public void increaseViews() {

@@ -18,21 +18,22 @@ public class PostCommandService {
 	private final PostRepository postRepository;
 	private final FileQueryService fileQueryService;
 
-	public Long createPost(String title, String content, Category category, Long fileId) {
+	public Long createPost(String title, String content, Category category, Long fileId, boolean isPinned) {
 		User author = userQueryService.me();
 
 		FileEntity file = null;
 		if (fileId != null)
 			file = fileQueryService.getFileById(fileId);
 
-		Post post = Post.create(title, content, category, author, file);
+		Post post = Post.create(title, content, category, author, file, isPinned);
 		return postRepository.save(post).getId();
 	}
 
-	public void updatePost(Post post, String title, String content, Category category, Long fileId) {
+	public void updatePost(Post post, String title, String content, Category category, Long fileId, boolean isPinned) {
 		post.updateTitle(title);
 		post.updateContent(content);
 		post.updateCategory(category);
+		post.togglePinned();
 
 		FileEntity file = null;
 		if (fileId != null)

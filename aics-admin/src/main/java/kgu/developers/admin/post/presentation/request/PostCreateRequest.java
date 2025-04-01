@@ -28,6 +28,9 @@ public record PostCreateRequest(
 	String content,
 
 	@Schema(description = "게시물 카테고리", example = "NOTIFICATION", requiredMode = NOT_REQUIRED)
-	Category category
+	Category category,
+
+	@Schema(description = "게시글 고정 여부", example = "FALSE", requiredMode = REQUIRED)
+	boolean isPinned
 ) {
 }
