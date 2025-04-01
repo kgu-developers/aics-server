@@ -65,7 +65,7 @@ public class PostAdminFacadeTest {
 
 		fakePostRepository.save(
 			Post.create(
-				"post title", "post content", NOTIFICATION, author, null
+				"post title", "post content", NOTIFICATION, author, null, false
 			)
 		);
 	}
