@@ -67,16 +67,16 @@ public class PostFacadeTest {
 		);
 
 		fakePostRepository.save(Post.create(
-			"first title", "first content", NEWS, author, null
+			"first title", "first content", NEWS, author, null, false
 		));
 
 		Post delete = fakePostRepository.save(Post.create(
-			"second title", "second content", NEWS, author, null
+			"second title", "second content", NEWS, author, null, false
 		));
 		delete.delete();
 
 		fakePostRepository.save(Post.create(
-			"third title", "third content", NEWS, author, null
+			"third title", "third content", NEWS, author, null, false
 		));
 	}
 
