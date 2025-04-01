@@ -100,4 +100,8 @@ public class Post extends BaseTimeEntity {
 	public void updateFile(FileEntity file) {
 		this.file = file;
 	}
+
+	public void togglePinned() {
+		this.isPinned = !this.isPinned;
+	}
 }

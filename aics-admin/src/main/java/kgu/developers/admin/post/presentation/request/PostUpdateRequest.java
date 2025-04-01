@@ -31,6 +31,9 @@ public record PostUpdateRequest(
 	Category category,
 
 	@Schema(description = "파일 ID", example = "1")
-	Long fileId
+	Long fileId,
+
+	@Schema(description = "게시글 고정 여부", example = "FALSE", requiredMode = REQUIRED)
+	boolean isPinned
 ) {
 }

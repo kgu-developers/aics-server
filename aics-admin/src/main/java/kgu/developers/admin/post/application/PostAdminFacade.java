@@ -27,7 +27,7 @@ public class PostAdminFacade {
 	@Transactional
 	public void updatePost(Long postId, PostUpdateRequest request) {
 		Post post = postQueryService.getById(postId);
-		postCommandService.updatePost(post, request.title(), request.content(), request.category(), request.fileId());
+		postCommandService.updatePost(post, request.title(), request.content(), request.category(), request.fileId(), request.isPinned());
 	}
 
 	@Transactional

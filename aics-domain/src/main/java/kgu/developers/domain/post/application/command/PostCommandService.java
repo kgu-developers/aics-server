@@ -33,7 +33,7 @@ public class PostCommandService {
 		post.updateTitle(title);
 		post.updateContent(content);
 		post.updateCategory(category);
-		post.togglePinned();
+		post.updatePinned(isPinned);
 
 		FileEntity file = null;
 		if (fileId != null)
