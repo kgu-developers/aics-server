@@ -116,11 +116,11 @@ public class PostDomainTest {
 		// when
 		post.togglePinned();
 		// then
-		assertTrue(post.isPinned());
+		assertFalse(post.isPinned());
 
 		// when
 		post.togglePinned();
 		// then
-		assertFalse(post.isPinned());
+		assertTrue(post.isPinned());
 	}
 }
