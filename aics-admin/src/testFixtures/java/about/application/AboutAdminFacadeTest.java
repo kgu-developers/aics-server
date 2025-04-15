@@ -40,11 +40,9 @@ public class AboutAdminFacadeTest {
 	@DisplayName("createAbout은 about을 생성한다")
 	public void createAbout_Success() {
 		// given
-		Category category = DEPT_INTRO;
 		String content = "content";
-
 		AboutCreateRequest request = AboutCreateRequest.builder()
-			.category(category)
+			.category(DEPT_INTRO)
 			.content(content)
 			.build();
 
@@ -77,15 +75,13 @@ public class AboutAdminFacadeTest {
 	@DisplayName("updateAbout은 존재하지 않는 id로 수정 요청 시 AboutNotFoundException을 발생시킨다")
 	public void updateAbout_AboutNotFound_ThrowsException() {
 		// given
-		Category category = DIRECTIONS;
-
 		AboutUpdateRequest request = AboutUpdateRequest.builder()
 			.content("updateContent")
 			.build();
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutAdminFacade.updateAbout(category, request))
+		assertThatThrownBy(() -> aboutAdminFacade.updateAbout(DIRECTIONS, request))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

@@ -34,11 +34,10 @@ public class AboutCommandServiceTest {
 	@DisplayName("createAbout은 About 객체를 생성한다")
 	public void createAbout_Success() {
 		// given
-		Category category = DEPT_INTRO;
 		String content = "test content";
 
 		// when
-		Long result = aboutCommandService.createAbout(category, content);
+		Long result = aboutCommandService.createAbout(DEPT_INTRO, content);
 
 		// then
 		assertEquals(2L, result);
@@ -66,12 +65,11 @@ public class AboutCommandServiceTest {
 	@DisplayName("updateAbout은 존재하지 않는 about 수정 요청 시 AboutNotFoundException을 발생시킨다")
 	public void updateAbout_Throws_AboutNotFoundException() {
 		// given
-		Category category = DIRECTIONS;
 		String newContent = "update content";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutCommandService.updateAbout(category, newContent))
+		assertThatThrownBy(() -> aboutCommandService.updateAbout(DIRECTIONS, newContent))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }
