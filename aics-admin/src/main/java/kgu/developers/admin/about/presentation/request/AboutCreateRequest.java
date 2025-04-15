@@ -13,7 +13,7 @@ public record AboutCreateRequest(
 	@NotNull
 	Category category,
 
-	@Schema(description = "페이지 내용(JSON 형식)", example = "{key:value}", requiredMode = REQUIRED)
+	@Schema(description = "페이지 내용", example = "학과 소개 내용입니다.", requiredMode = REQUIRED)
 	@NotNull
 	String content
 ) {

@@ -8,7 +8,7 @@ import lombok.Builder;
 
 @Builder
 public record AboutResponse(
-	@Schema(description = "페이지 내용(JSON 형식)", example = "{key:value}", requiredMode = REQUIRED)
+	@Schema(description = "페이지 내용", example = "학과 소개 내용입니다.", requiredMode = REQUIRED)
 	String content
 ) {
 	public static AboutResponse from(About about) {
