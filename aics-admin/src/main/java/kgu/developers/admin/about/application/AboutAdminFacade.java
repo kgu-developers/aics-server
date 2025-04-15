@@ -1,5 +1,6 @@
 package kgu.developers.admin.about.application;
 
+import kgu.developers.domain.about.domain.Category;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class AboutAdminFacade {
 		return AboutPersistResponse.of(id);
 	}
 
-	public void updateAbout(Long id, AboutUpdateRequest request) {
-		aboutCommandService.updateAbout(id, request.content());
+	public void updateAbout(Category category, AboutUpdateRequest request) {
+		aboutCommandService.updateAbout(category, request.content());
 	}
 }

@@ -1,6 +1,7 @@
 package about.application;
 
 import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
+import static kgu.developers.domain.about.domain.Category.DIRECTIONS;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -58,17 +59,17 @@ public class AboutAdminFacadeTest {
 	@DisplayName("updateAbout은 About의 content를 수정한다")
 	public void updateAbout_Success() {
 		// given
-		Long id = 1L;
+		Category category = DEPT_INTRO;
 
 		AboutUpdateRequest request = AboutUpdateRequest.builder()
 			.content("updateContent")
 			.build();
 
 		// when
-		aboutAdminFacade.updateAbout(id, request);
+		aboutAdminFacade.updateAbout(category, request);
 
 		// then
-		About about = fakeAboutRepository.findById(id).orElseThrow();
+		About about = fakeAboutRepository.findByCategory(category).orElseThrow();
 		assertEquals(request.content(), about.getContent());
 	}
 
@@ -76,7 +77,7 @@ public class AboutAdminFacadeTest {
 	@DisplayName("updateAbout은 존재하지 않는 id로 수정 요청 시 AboutNotFoundException을 발생시킨다")
 	public void updateAbout_AboutNotFound_ThrowsException() {
 		// given
-		Long id = 0L;
+		Category category = DIRECTIONS;
 
 		AboutUpdateRequest request = AboutUpdateRequest.builder()
 			.content("updateContent")
@@ -84,7 +85,7 @@ public class AboutAdminFacadeTest {
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutAdminFacade.updateAbout(id, request))
+		assertThatThrownBy(() -> aboutAdminFacade.updateAbout(category, request))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }

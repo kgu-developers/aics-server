@@ -1,5 +1,6 @@
 package kgu.developers.admin.about.presentation;
 
+import kgu.developers.domain.about.domain.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.about.presentation.request.AboutCreateRequest;
 import kgu.developers.admin.about.presentation.request.AboutUpdateRequest;
 import kgu.developers.admin.about.presentation.response.AboutPersistResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "About", description = "소개글 관리자 API")
 public interface AboutAdminController {
@@ -40,10 +42,10 @@ public interface AboutAdminController {
 	@ApiResponse(responseCode = "204")
 	ResponseEntity<Void> updateAbout(
 		@Parameter(
-			description = "소개글 ID는 URL 경로 변수 입니다.",
-			example = "1",
+			description = "카테고리 ENUM 타입 입니다.",
+			example = "DEPT_INTRO",
 			required = true
-		) @Positive @PathVariable Long id,
+		) @RequestParam(name = "category") Category category,
 		@Parameter(
 			description = "소개글 수정 request 객체 입니다.",
 			required = true

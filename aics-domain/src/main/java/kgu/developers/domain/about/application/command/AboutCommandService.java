@@ -18,8 +18,8 @@ public class AboutCommandService {
 		return aboutRepository.save(about).getId();
 	}
 
-	public void updateAbout(Long id, String content) {
-		About about = aboutRepository.findById(id)
+	public void updateAbout(Category category, String content) {
+		About about = aboutRepository.findByCategory(category)
 			.orElseThrow(AboutNotFoundException::new);
 		about.updateContent(content);
 	}

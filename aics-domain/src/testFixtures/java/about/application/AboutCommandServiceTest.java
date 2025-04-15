@@ -1,6 +1,7 @@
 package about.application;
 
 import static kgu.developers.domain.about.domain.Category.DEPT_INTRO;
+import static kgu.developers.domain.about.domain.Category.DIRECTIONS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -47,17 +48,17 @@ public class AboutCommandServiceTest {
 	@DisplayName("updateAbout은 About을 수정할 수 있다")
 	public void updateAbout_Success() {
 		// given
-		Long aboutId = 1L;
+		Category category = DEPT_INTRO;
 		String newContent = "update content";
 
 		// when
-		aboutCommandService.updateAbout(aboutId, newContent);
+		aboutCommandService.updateAbout(category, newContent);
 
 		// then
-		About about = fakeAboutRepository.findById(aboutId).orElse(null);
+		About about = fakeAboutRepository.findByCategory(category).orElse(null);
 
 		assertNotNull(about);
-		assertEquals(aboutId, about.getId());
+		assertEquals(category, about.getCategory());
 		assertEquals(newContent, about.getContent());
 	}
 
@@ -65,12 +66,12 @@ public class AboutCommandServiceTest {
 	@DisplayName("updateAbout은 존재하지 않는 about 수정 요청 시 AboutNotFoundException을 발생시킨다")
 	public void updateAbout_Throws_AboutNotFoundException() {
 		// given
-		Long aboutId = 3L;
+		Category category = DIRECTIONS;
 		String newContent = "update content";
 
 		// when
 		// then
-		assertThatThrownBy(() -> aboutCommandService.updateAbout(aboutId, newContent))
+		assertThatThrownBy(() -> aboutCommandService.updateAbout(category, newContent))
 			.isInstanceOf(AboutNotFoundException.class);
 	}
 }
