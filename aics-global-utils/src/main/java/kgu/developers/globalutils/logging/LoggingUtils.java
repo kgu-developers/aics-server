@@ -75,6 +75,7 @@ public class LoggingUtils {
 		if (ex == null) {
 			log.info("[DURATION] ENDPOINT : {} {} || STATUS : {} || DURATION : {}ms", httpMethod, requestUrl,
 				httpStatus, duration);
+			ex.printStackTrace();
 		} else {
 			log.error("[DURATION] ENDPOINT : {} {} || STATUS : {} || DURATION : {}ms || EXCEPTION : {}",
 				httpMethod, requestUrl, httpStatus, duration, ex.getMessage());
