@@ -28,7 +28,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
 		Exception ex) {
 		if (isNoLogging(handler)) return;
-		LoggingUtils.logDuration(request, response, ex);
+		// LoggingUtils.logDuration(request, response, ex);
 	}
 
 	private boolean isNoLogging(Object handler) {
