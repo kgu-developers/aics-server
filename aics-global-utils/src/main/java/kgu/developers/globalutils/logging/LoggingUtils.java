@@ -26,6 +26,9 @@ public class LoggingUtils {
 
 	public static String getObjectFields(Object obj) {
 		StringBuilder result = new StringBuilder();
+		if (obj == null) {
+			return "null";
+		}
 		Class<?> objClass = obj.getClass();
 		result.append(objClass.getSimpleName()).append(" {");
 
