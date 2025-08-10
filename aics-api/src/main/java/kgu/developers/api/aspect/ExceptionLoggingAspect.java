@@ -14,7 +14,6 @@ import kgu.developers.common.exception.CustomException;
 import kgu.developers.globalutils.logging.LoggingUtils;
 import lombok.extern.slf4j.Slf4j;
 
-/*
 @Slf4j
 @Aspect
 @Component
@@ -43,4 +42,3 @@ public class ExceptionLoggingAspect {
 		log.error("[ERROR] MESSAGE : {}", exception.getMessage());
 	}
 }
-*/
