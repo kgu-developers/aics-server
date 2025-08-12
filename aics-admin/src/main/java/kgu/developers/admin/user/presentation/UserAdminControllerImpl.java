@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/admin/users")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserAdminControllerImpl implements UserAdminController {
 	private final UserAdminFacade userAdminFacade;

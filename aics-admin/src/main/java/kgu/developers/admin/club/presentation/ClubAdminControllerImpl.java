@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/clubs")
+@RequestMapping("/api/v1/admin/clubs")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ClubAdminControllerImpl implements ClubAdminController {
 	private final ClubAdminFacade clubAdminFacade;

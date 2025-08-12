@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/abouts")
+@RequestMapping("/api/v1/admin/abouts")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AboutAdminControllerImpl implements AboutAdminController {
 	private final AboutAdminFacade aboutAdminFacade;

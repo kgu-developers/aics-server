@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/carousels")
+@RequestMapping("/api/v1/admin/carousels")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CarouselAdminControllerImpl implements CarouselAdminController {
 	private final CarouselAdminFacade carouselAdminFacade;

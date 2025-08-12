@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/labs")
+@RequestMapping("/api/v1/admin/labs")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class LabAdminControllerImpl implements LabAdminController{
 	private final LabAdminFacade labAdminFacade;

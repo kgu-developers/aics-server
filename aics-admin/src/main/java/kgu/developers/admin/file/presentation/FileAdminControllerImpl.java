@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/files")
+@RequestMapping("/api/v1/admin/files")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class FileAdminControllerImpl implements FileAdminController {
 	private final FileAdminFacade fileAdminFacade;

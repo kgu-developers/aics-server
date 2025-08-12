@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/comments")
+@RequestMapping("/api/v1/admin/comments")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CommentAdminControllerImpl implements CommentAdminController {
 	private final CommentAdminFacade commentAdminFacade;

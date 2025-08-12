@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/api/v1/admin/posts")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class PostAdminControllerImpl implements PostAdminController {
 	private final PostAdminFacade postAdminFacade;
