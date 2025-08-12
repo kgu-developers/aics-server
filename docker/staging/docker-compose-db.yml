@@ -1,0 +1,4 @@
+include:
+  - networks.yml
+  - service-postgres.yml
+  - service-redis.yml
