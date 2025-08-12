@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    command: redis-server
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    networks:
+      - aics-network

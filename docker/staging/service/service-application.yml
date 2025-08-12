@@ -1,0 +1,66 @@
+services:
+  aics-api:
+    image: ${DOCKER_USERNAME}/aics-api:latest
+    container_name: aics-api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_ISSUER: kgudevelopers@gmail.com
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      FILE_SECRET_KEY: ${FILE_SECRET_KEY}
+    networks:
+      - aics-network
+
+  aics-admin:
+    image: ${DOCKER_USERNAME}/aics-admin:latest
+    container_name: aics-admin
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_ISSUER: kgudevelopers@gmail.com
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      FILE_SECRET_KEY: ${FILE_SECRET_KEY}
+    networks:
+      - aics-network
+
+  aics-auth:
+    image: ${DOCKER_USERNAME}/aics-auth:latest
+    container_name: aics-auth
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_ISSUER: kgudevelopers@gmail.com
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      FILE_SECRET_KEY: ${FILE_SECRET_KEY}
+    networks:
+      - aics-network
