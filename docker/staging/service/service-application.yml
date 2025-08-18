@@ -2,8 +2,6 @@ services:
   aics-api:
     image: aics-api:latest
     container_name: aics-api
-    ports:
-      - "8080:8080"
     env_file:
       - .env
     environment:
@@ -24,8 +22,6 @@ services:
   aics-admin:
     image: aics-admin:latest
     container_name: aics-admin
-    ports:
-      - "8081:8081"
     env_file:
       - .env
     environment:
@@ -46,8 +42,6 @@ services:
   aics-auth:
     image: aics-auth:latest
     container_name: aics-auth
-    ports:
-      - "8082:8082"
     env_file:
       - .env
     environment:
