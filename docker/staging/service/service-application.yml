@@ -1,6 +1,6 @@
 services:
   aics-api:
-    image: ${DOCKER_USERNAME}/aics-api:latest
+    image: aics-api:latest
     container_name: aics-api
     ports:
       - "8080:8080"
@@ -22,7 +22,7 @@ services:
       - aics-network
 
   aics-admin:
-    image: ${DOCKER_USERNAME}/aics-admin:latest
+    image: aics-admin:latest
     container_name: aics-admin
     ports:
       - "8081:8081"
@@ -44,7 +44,7 @@ services:
       - aics-network
 
   aics-auth:
-    image: ${DOCKER_USERNAME}/aics-auth:latest
+    image: aics-auth:latest
     container_name: aics-auth
     ports:
       - "8082:8082"
