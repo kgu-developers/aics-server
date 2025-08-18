@@ -41,7 +41,7 @@ jobs:
           docker save aics-auth:${GITHUB_SHA} -o deploy/aics-auth.tar
 
       - name: Upload Docker images to server
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.STAGING_SERVER_HOST }}
           username: ${{ secrets.STAGING_SERVER_USERNAME }}
