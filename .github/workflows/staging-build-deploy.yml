@@ -45,7 +45,7 @@ jobs:
         with:
           host: ${{ secrets.STAGING_SERVER_HOST }}
           username: ${{ secrets.STAGING_SERVER_USERNAME }}
-          password: ${{ secrets.STAGING_SERVER_PASSWORD }}
+          key: ${{ secrets.STAGING_SERVER_KEY }}
           port: ${{ secrets.STAGING_SERVER_PORT }}
           source: "deploy/*"
           target: ${{ secrets.STAGING_DEPLOY_PATH }}
@@ -55,7 +55,7 @@ jobs:
         with:
           host: ${{ secrets.STAGING_SERVER_HOST }}
           username: ${{ secrets.STAGING_SERVER_USERNAME }}
-          password: ${{ secrets.STAGING_SERVER_PASSWORD }}
+          key: ${{ secrets.STAGING_SERVER_KEY }}
           port: ${{ secrets.STAGING_SERVER_PORT }}
           script: |
             cd ${{ secrets.STAGING_DEPLOY_PATH }}
