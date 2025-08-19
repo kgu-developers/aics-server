@@ -100,7 +100,8 @@ public class SecurityConfig {
 				"https://aics-auth.ummdev.com",
 				"https://aics-client-dev.vercel.app/",
 				"http://175.45.195.63",
-				"http://203.249.22.207:8080"
+				"http://203.249.22.207",
+				"http://13.125.230.147"
 			));
 			config.setAllowCredentials(true);
 			return config;
