@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,11 +27,13 @@ import mock.repository.FakePostRepository;
 public class PostQueryServiceTest {
 	private PostQueryService postQueryService;
 	private FakePostRepository fakePostRepository;
+	private FakeFileRepository fakeFileRepository;
 
 	@BeforeEach
 	public void init() {
 		fakePostRepository = new FakePostRepository();
-		postQueryService = new PostQueryService(fakePostRepository);
+		fakeFileRepository = new FakeFileRepository();
+		postQueryService = new PostQueryService(fakePostRepository, fakeFileRepository);
 
 		User author = User.builder().build();
 

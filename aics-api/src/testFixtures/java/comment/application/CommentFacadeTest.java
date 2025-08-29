@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,12 +40,13 @@ public class CommentFacadeTest {
 	public void init() {
 		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		FakePostRepository fakePostRepository = new FakePostRepository();
 
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 		commentFacade = new CommentFacade(
 			new CommentCommandService(
-				new PostQueryService(fakePostRepository),
+				new PostQueryService(fakePostRepository, fakeFileRepository),
 				userQueryService,
 				fakeCommentRepository
 			),

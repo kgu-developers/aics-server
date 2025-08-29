@@ -21,11 +21,7 @@ public class PostCommandService {
 	public Long createPost(String title, String content, Category category, Long fileId, boolean isPinned) {
 		User author = userQueryService.me();
 
-		FileEntity file = null;
-		if (fileId != null)
-			file = fileQueryService.getFileById(fileId);
-
-		Post post = Post.create(title, content, category, author, file, isPinned);
+		Post post = Post.create(title, content, category, author, fileId, isPinned);
 		return postRepository.save(post).getId();
 	}
 
@@ -34,12 +30,7 @@ public class PostCommandService {
 		post.updateContent(content);
 		post.updateCategory(category);
 		post.updatePinned(isPinned);
-
-		FileEntity file = null;
-		if (fileId != null)
-			file = fileQueryService.getFileById(fileId);
-
-		post.updateFile(file);
+		post.updateFile(fileId);
 	}
 
 	public void togglePostPinStatus(Post post) {

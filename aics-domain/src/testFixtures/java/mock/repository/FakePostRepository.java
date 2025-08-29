@@ -40,7 +40,7 @@ public class FakePostRepository implements PostRepository {
 			.author(post.getAuthor())
 			.isPinned(post.isPinned())
 			.comments(new ArrayList<>(post.getComments()))
-			.file(post.getFile())
+			.fileId(post.getFileId())
 			.build();
 
 		TestEntityUtils.setCreatedAt(newPost, LocalDateTime.now());

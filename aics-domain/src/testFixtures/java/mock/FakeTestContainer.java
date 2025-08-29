@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import kgu.developers.domain.file.domain.FileRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,7 +73,7 @@ public class FakeTestContainer {
 			() -> new UserCommandService(new BCryptPasswordEncoder(), get(UserRepository.class)));
 
 		suppliers.put(PostRepository.class, FakePostRepository::new);
-		suppliers.put(PostQueryService.class, () -> new PostQueryService(get(PostRepository.class)));
+		suppliers.put(PostQueryService.class, () -> new PostQueryService(get(PostRepository.class), get(FileRepository.class)));
 		suppliers.put(PostCommandService.class,
 			() -> new PostCommandService(get(UserQueryService.class), get(PostRepository.class), get(FileQueryService.class)));
 

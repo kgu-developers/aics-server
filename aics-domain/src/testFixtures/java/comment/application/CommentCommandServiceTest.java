@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,10 +38,11 @@ public class CommentCommandServiceTest {
 	@BeforeEach
 	public void init() {
 		FakePostRepository fakePostRepository = new FakePostRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
-		initializeCommentCommandService(fakePostRepository, userQueryService);
+		initializeCommentCommandService(fakePostRepository, userQueryService, fakeFileRepository);
 		saveTestUserAndPost(fakeUserRepository, fakePostRepository);
 		setTestSecurityContext(userQueryService);
 	}
@@ -58,9 +60,10 @@ public class CommentCommandServiceTest {
 	}
 
 	private void initializeCommentCommandService(FakePostRepository fakePostRepository,
-												 UserQueryService userQueryService) {
+												 UserQueryService userQueryService,
+												 FakeFileRepository fakeFileRepository) {
 		commentCommandService = new CommentCommandService(
-			new PostQueryService(fakePostRepository),
+			new PostQueryService(fakePostRepository, fakeFileRepository),
 			userQueryService,
 			new FakeCommentRepository()
 		);

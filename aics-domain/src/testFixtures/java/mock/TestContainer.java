@@ -113,7 +113,7 @@ public class TestContainer {
 		this.fileCommandService = new FileCommandService(fileRepository);
 
 		this.postRepository = new FakePostRepository();
-		this.postQueryService = new PostQueryService(postRepository);
+		this.postQueryService = new PostQueryService(postRepository,fileRepository);
 		this.postCommandService = new PostCommandService(userQueryService, postRepository, fileQueryService);
 
 		this.commentRepository = new FakeCommentRepository();

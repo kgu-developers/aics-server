@@ -57,15 +57,13 @@ public class Post extends BaseTimeEntity {
 	@Column(nullable = false)
 	private boolean isPinned;
 
-	@OneToOne
-	@JoinColumn(name = "file_id")
-	private FileEntity file;
+	private Long fileId;
 
 	@Builder.Default
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-	public static Post create(String title, String content, Category category, User author, FileEntity file, boolean isPinned) {
+	public static Post create(String title, String content, Category category, User author, Long fileId, boolean isPinned) {
 		return Post.builder()
 			.title(title)
 			.content(content)
@@ -73,7 +71,7 @@ public class Post extends BaseTimeEntity {
 			.isPinned(isPinned)
 			.category(category)
 			.author(author)
-			.file(file)
+			.fileId(fileId)
 			.build();
 	}
 
@@ -97,8 +95,8 @@ public class Post extends BaseTimeEntity {
 		this.views++;
 	}
 
-	public void updateFile(FileEntity file) {
-		this.file = file;
+	public void updateFile(Long fileId) {
+		this.fileId = fileId;
 	}
 
 	public void togglePinned() {

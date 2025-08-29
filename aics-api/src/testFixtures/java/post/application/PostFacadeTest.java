@@ -48,7 +48,7 @@ public class PostFacadeTest {
 
 		postFacade = new PostFacade(
 			new PostCommandService(userQueryService, fakePostRepository, fileQueryService),
-			new PostQueryService(fakePostRepository)
+			new PostQueryService(fakePostRepository, fakeFileRepository)
 		);
 
 		User author = fakeUserRepository.save(User.builder()
