@@ -44,7 +44,7 @@ public class PostAdminFacadeTest {
 		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 		this.postAdminFacade = new PostAdminFacade(
 			new PostCommandService(userQueryService, fakePostRepository, fileQueryService),
-			new PostQueryService(fakePostRepository, fakeFileRepository),
+			new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository),
 			new PostSchedulingService(fakePostRepository)
 		);
 
@@ -65,7 +65,7 @@ public class PostAdminFacadeTest {
 
 		fakePostRepository.save(
 			Post.create(
-				"post title", "post content", NOTIFICATION, author, null, false
+				"post title", "post content", NOTIFICATION, author.getId(), null, false
 			)
 		);
 	}

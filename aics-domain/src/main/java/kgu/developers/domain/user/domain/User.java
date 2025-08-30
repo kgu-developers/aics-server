@@ -68,10 +68,6 @@ public class User extends BaseTimeEntity implements UserDetails {
 	@Enumerated(STRING)
 	private Major major;
 
-	@Builder.Default
-	@OneToMany(mappedBy = "author", cascade = ALL, fetch = LAZY)
-	List<Post> posts = new ArrayList<>();
-
 	public static User create(String id, String password, String name, String email,
 							  String phone, Major major, PasswordEncoder passwordEncoder) {
 		validateDept(id, email);

@@ -46,7 +46,7 @@ public class CommentFacadeTest {
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 		commentFacade = new CommentFacade(
 			new CommentCommandService(
-				new PostQueryService(fakePostRepository, fakeFileRepository),
+				new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository),
 				userQueryService,
 				fakeCommentRepository
 			),
@@ -64,7 +64,7 @@ public class CommentFacadeTest {
 			.build());
 
 		Post post = fakePostRepository.save(Post.create(
-			"테스트용 제목1", "테스트용 내용1", NEWS, author, null, false
+			"테스트용 제목1", "테스트용 내용1", NEWS, author.getId(), null, false
 		));
 
 		fakeCommentRepository.save(Comment.create(

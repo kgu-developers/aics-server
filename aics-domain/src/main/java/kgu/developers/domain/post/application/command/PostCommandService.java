@@ -21,7 +21,7 @@ public class PostCommandService {
 	public Long createPost(String title, String content, Category category, Long fileId, boolean isPinned) {
 		User author = userQueryService.me();
 
-		Post post = Post.create(title, content, category, author, fileId, isPinned);
+		Post post = Post.create(title, content, category, author.getId(), fileId, isPinned);
 		return postRepository.save(post).getId();
 	}
 

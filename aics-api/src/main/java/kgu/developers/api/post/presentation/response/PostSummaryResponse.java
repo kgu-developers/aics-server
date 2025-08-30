@@ -2,6 +2,7 @@ package kgu.developers.api.post.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -39,7 +40,7 @@ public record PostSummaryResponse(
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	String createdAt
 ) {
-	public static PostSummaryResponse from(Post post) {
+	public static PostSummaryResponse from(Post post, String authorName) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		String content = post.getContent();
@@ -49,7 +50,7 @@ public record PostSummaryResponse(
 			.postId(post.getId())
 			.category(post.getCategory().getDescription())
 			.title(post.getTitle())
-			.author(post.getAuthor().getName())
+			.author(authorName)
 			.description(description)
 			.views(post.getViews())
 			.hasAttachment(false) // TODO : 첨부파일 여부 확인

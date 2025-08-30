@@ -5,9 +5,11 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.common.response.PageableResponse;
 import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 
 import java.util.List;
+import java.util.Map;
 
 @Builder
 public record PostSummaryPageResponse<T>(
@@ -28,10 +30,10 @@ public record PostSummaryPageResponse<T>(
 	@Schema(description = "페이징 정보", requiredMode = REQUIRED)
 	PageableResponse<T> pageable
 ) {
-	public static <T> PostSummaryPageResponse<T> of(List<Post> posts, PageableResponse<T> pageable) {
+	public static <T> PostSummaryPageResponse<T> of(List<Post> posts, PageableResponse<T> pageable, Map<String, String>authorNameMap) {
 		return PostSummaryPageResponse.<T>builder()
 			.contents(posts.stream()
-				.map(PostSummaryResponse::from)
+				.map(post -> PostSummaryResponse.from(post, authorNameMap.get(post.getAuthorId())))
 				.toList())
 			.pageable(pageable)
 			.build();

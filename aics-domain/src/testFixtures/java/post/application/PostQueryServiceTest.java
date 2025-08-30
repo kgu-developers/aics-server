@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.List;
 
 import mock.repository.FakeFileRepository;
+import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,39 +29,41 @@ public class PostQueryServiceTest {
 	private PostQueryService postQueryService;
 	private FakePostRepository fakePostRepository;
 	private FakeFileRepository fakeFileRepository;
+	private FakeUserRepository fakeUserRepository;
 
 	@BeforeEach
 	public void init() {
 		fakePostRepository = new FakePostRepository();
 		fakeFileRepository = new FakeFileRepository();
-		postQueryService = new PostQueryService(fakePostRepository, fakeFileRepository);
+		fakeUserRepository = new FakeUserRepository();
+		postQueryService = new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository);
 
 		User author = User.builder().build();
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1",
-			NEWS, author, null, true
+			NEWS, author.getId(), null, true
 		));
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목2", "테스트용 내용2",
-			NEWS, author, null, false
+			NEWS, author.getId(), null, false
 		));
 
 		Post delete = fakePostRepository.save(Post.create(
 			"테스트용 제목3", "테스트용 내용3",
-			NEWS, author, null, false
+			NEWS, author.getId(), null, false
 		));
 		delete.delete();
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목4", "테스트용 내용4",
-			NOTIFICATION, author, null, false
+			NOTIFICATION, author.getId(), null, false
 		));
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목5", "테스트용 내용5",
-			NEWS, author, null, false
+			NEWS, author.getId(), null, false
 		));
 	}
 

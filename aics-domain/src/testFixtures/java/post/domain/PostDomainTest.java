@@ -29,7 +29,7 @@ public class PostDomainTest {
 	@BeforeEach
 	public void init() {
 		User author = user();
-		post = Post.create(TITLE, CONTENT, NEWS, author, null, true);
+		post = Post.create(TITLE, CONTENT, NEWS, author.getId(), null, true);
 	}
 
 	private User user() {

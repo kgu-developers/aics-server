@@ -37,7 +37,7 @@ public class FakePostRepository implements PostRepository {
 			.content(post.getContent())
 			.views(post.getViews())
 			.category(post.getCategory())
-			.author(post.getAuthor())
+			.authorId(post.getAuthorId())
 			.isPinned(post.isPinned())
 			.comments(new ArrayList<>(post.getComments()))
 			.fileId(post.getFileId())

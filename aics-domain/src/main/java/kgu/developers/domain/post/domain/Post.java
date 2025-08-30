@@ -50,9 +50,8 @@ public class Post extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private Category category;
 
-	@ManyToOne(fetch = EAGER)
-	@JoinColumn(name = "author_id")
-	private User author;
+	@Column(nullable = false)
+	private String authorId;
 
 	@Column(nullable = false)
 	private boolean isPinned;
@@ -63,14 +62,14 @@ public class Post extends BaseTimeEntity {
 	@OneToMany(mappedBy = "post", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-	public static Post create(String title, String content, Category category, User author, Long fileId, boolean isPinned) {
+	public static Post create(String title, String content, Category category, String authorId, Long fileId, boolean isPinned) {
 		return Post.builder()
 			.title(title)
 			.content(content)
 			.views(0)
 			.isPinned(isPinned)
 			.category(category)
-			.author(author)
+			.authorId(authorId)
 			.fileId(fileId)
 			.build();
 	}

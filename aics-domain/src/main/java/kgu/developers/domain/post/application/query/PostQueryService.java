@@ -7,6 +7,8 @@ import java.util.Optional;
 import kgu.developers.domain.file.application.response.FilePathResponse;
 import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.file.domain.FileRepository;
+import kgu.developers.domain.user.domain.User;
+import kgu.developers.domain.user.domain.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class PostQueryService {
 	private final PostRepository postRepository;
 	private final FileRepository fileRepository;
+	private final UserRepository userRepository;
 
 	public PaginatedListResponse<Post> getPostsByKeywordAndCategory(PageRequest request, List<String> keywords,
 		Category category) {
@@ -39,9 +42,10 @@ public class PostQueryService {
 		Post nextPost = postRepository.findByNextPost(timestamp, category).orElse(null);
 
 		FileEntity file = fileRepository.findById(post.getFileId()).orElse(null);
+		User author = userRepository.findById(post.getAuthorId()).orElse(null);
 		PostTitleResponse prevPostResponse = PostTitleResponse.from(prevPost);
 		PostTitleResponse nextPostResponse = PostTitleResponse.from(nextPost);
-		return PostDetailResponse.from(post, file, prevPostResponse, nextPostResponse);
+		return PostDetailResponse.from(post, author, file, prevPostResponse, nextPostResponse);
 	}
 
 	public Post getById(Long postId) {

@@ -42,7 +42,7 @@ public class CommentCommandServiceTest {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
-		initializeCommentCommandService(fakePostRepository, userQueryService, fakeFileRepository);
+		initializeCommentCommandService(fakePostRepository, fakeFileRepository, fakeUserRepository, userQueryService);
 		saveTestUserAndPost(fakeUserRepository, fakePostRepository);
 		setTestSecurityContext(userQueryService);
 	}
@@ -55,15 +55,16 @@ public class CommentCommandServiceTest {
 		);
 		fakePostRepository.save(Post.create(
 			"SW 부트캠프 4기 교육생 모집", "SW전문인재양성사업단에서는 SW부트캠프 4기 교육생을 모집합니다.", NEWS,
-			User.builder().build(), null, false
+			"202412345", null, false
 		));
 	}
 
 	private void initializeCommentCommandService(FakePostRepository fakePostRepository,
-												 UserQueryService userQueryService,
-												 FakeFileRepository fakeFileRepository) {
+												 FakeFileRepository fakeFileRepository,
+												 FakeUserRepository fakeUserRepository,
+												 UserQueryService userQueryService) {
 		commentCommandService = new CommentCommandService(
-			new PostQueryService(fakePostRepository, fakeFileRepository),
+			new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository),
 			userQueryService,
 			new FakeCommentRepository()
 		);

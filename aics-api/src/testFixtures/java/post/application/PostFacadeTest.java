@@ -48,7 +48,8 @@ public class PostFacadeTest {
 
 		postFacade = new PostFacade(
 			new PostCommandService(userQueryService, fakePostRepository, fileQueryService),
-			new PostQueryService(fakePostRepository, fakeFileRepository)
+			new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository),
+			new UserQueryService(fakeUserRepository)
 		);
 
 		User author = fakeUserRepository.save(User.builder()
@@ -67,16 +68,16 @@ public class PostFacadeTest {
 		);
 
 		fakePostRepository.save(Post.create(
-			"first title", "first content", NEWS, author, null, false
+			"first title", "first content", NEWS, author.getId(), null, false
 		));
 
 		Post delete = fakePostRepository.save(Post.create(
-			"second title", "second content", NEWS, author, null, false
+			"second title", "second content", NEWS, author.getId(), null, false
 		));
 		delete.delete();
 
 		fakePostRepository.save(Post.create(
-			"third title", "third content", NEWS, author, null, false
+			"third title", "third content", NEWS, author.getId(), null, false
 		));
 	}
 
