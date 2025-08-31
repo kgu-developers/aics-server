@@ -1,9 +1,11 @@
 package kgu.developers.api.club.presentation.response;
 
 import java.util.List;
+import java.util.Map;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.club.domain.Club;
+import kgu.developers.domain.file.domain.FileEntity;
 import lombok.Builder;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
@@ -20,10 +22,11 @@ public record ClubListResponse(
 		requiredMode = REQUIRED)
 	List<ClubDetailResponse> contents
 ) {
-	public static ClubListResponse from(List<Club> clubs) {
+	public static ClubListResponse from(List<Club> clubs, Map<Long, FileEntity> fileMap) {
 		return ClubListResponse.builder()
 			.contents(clubs.stream()
-				.map(ClubDetailResponse::from)
+				.map(club -> ClubDetailResponse.from(club,
+						fileMap.get(club.getFileId())))
 				.toList())
 			.build();
 	}

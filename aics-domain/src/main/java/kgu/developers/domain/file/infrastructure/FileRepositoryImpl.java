@@ -1,5 +1,6 @@
 package kgu.developers.domain.file.infrastructure;
 
+import java.util.List;
 import java.util.Optional;
 
 import kgu.developers.domain.file.domain.FileEntity;
@@ -20,5 +21,10 @@ public class FileRepositoryImpl implements FileRepository {
 	@Override
 	public Optional<FileEntity> findById(Long id) {
 		return jpaFileRepository.findById(id);
+	}
+
+	@Override
+	public List<FileEntity> findAllByIds(List<Long> ids) {
+		return jpaFileRepository.findAllById(ids);
 	}
 }

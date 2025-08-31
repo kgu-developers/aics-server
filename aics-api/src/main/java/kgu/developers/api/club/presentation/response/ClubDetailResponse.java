@@ -6,6 +6,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.file.application.response.FilePathResponse;
+import kgu.developers.domain.file.domain.FileEntity;
 import lombok.Builder;
 
 @Builder
@@ -27,14 +28,14 @@ public record ClubDetailResponse(
 		requiredMode = NOT_REQUIRED)
 	FilePathResponse file
 ) {
-	public static ClubDetailResponse from(Club club) {
+	public static ClubDetailResponse from(Club club, FileEntity file) {
 		return ClubDetailResponse.builder()
 			.id(club.getId())
 			.name(club.getName())
 			.description(club.getDescription())
 			.site(club.getSite())
-			.file(club.getFile() != null ?
-				FilePathResponse.from(club.getFile()) : null)
+			.file(file != null ?
+				FilePathResponse.from(file) : null)
 			.build();
 	}
 }

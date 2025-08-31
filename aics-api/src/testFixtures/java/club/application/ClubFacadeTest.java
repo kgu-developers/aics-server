@@ -2,6 +2,8 @@ package club.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import kgu.developers.domain.file.application.query.FileQueryService;
+import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +20,12 @@ public class ClubFacadeTest {
 	@BeforeEach
 	public void init() {
 		FakeClubRepository fakeClubRepository = new FakeClubRepository();
+		FakeFileRepository fakeFileRepository = new FakeFileRepository();
+		FileQueryService fakeFileQueryService = new FileQueryService(fakeFileRepository);
+
 		clubFacade = new ClubFacade(
-			new ClubQueryService(fakeClubRepository)
+			new ClubQueryService(fakeClubRepository),
+			fakeFileQueryService
 		);
 
 		fakeClubRepository.save(

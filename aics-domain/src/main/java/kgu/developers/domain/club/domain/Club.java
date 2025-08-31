@@ -35,16 +35,15 @@ public class Club extends BaseTimeEntity {
 	@Column(length = 50)
 	private String site;
 
-	@OneToOne
-	@JoinColumn(name = "file_id")
-	private FileEntity file;
 
-	public static Club create(String name, String description, String site, FileEntity file) {
+	private Long fileId;
+
+	public static Club create(String name, String description, String site, Long fileId) {
 		return Club.builder()
 			.name(name)
 			.description(description)
 			.site(site)
-			.file(file)
+			.fileId(fileId)
 			.build();
 	}
 
@@ -60,7 +59,7 @@ public class Club extends BaseTimeEntity {
 		this.site = site;
 	}
 
-	public void updateFile(FileEntity file) {
-		this.file = file;
+	public void updateFile(Long fileId) {
+		this.fileId = fileId;
 	}
 }

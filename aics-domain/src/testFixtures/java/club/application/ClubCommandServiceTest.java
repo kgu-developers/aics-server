@@ -65,7 +65,7 @@ public class ClubCommandServiceTest {
 		assertEquals(newName, club.getName());
 		assertEquals(newDescription, club.getDescription());
 		assertEquals(newSite, club.getSite());
-		assertNull(club.getFile());
+		assertNull(club.getFileId());
 	}
 
 	@Test

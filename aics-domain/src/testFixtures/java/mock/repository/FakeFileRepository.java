@@ -30,5 +30,12 @@ public class FakeFileRepository implements FileRepository {
 			.filter(fileEntity -> fileEntity.getId().equals(id))
 			.findFirst();
 	}
+
+	@Override
+	public List<FileEntity> findAllByIds(List<Long> ids) {
+		return data.stream()
+				.filter(file -> ids.contains(file.getId()))
+				.toList();
+	}
 }
 
