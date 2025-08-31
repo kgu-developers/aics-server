@@ -21,11 +21,9 @@ public class ClubFacadeTest {
 	public void init() {
 		FakeClubRepository fakeClubRepository = new FakeClubRepository();
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
-		FileQueryService fakeFileQueryService = new FileQueryService(fakeFileRepository);
 
 		clubFacade = new ClubFacade(
-			new ClubQueryService(fakeClubRepository),
-			fakeFileQueryService
+			new ClubQueryService(fakeClubRepository),new FileQueryService(fakeFileRepository)
 		);
 
 		fakeClubRepository.save(

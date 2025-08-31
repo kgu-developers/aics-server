@@ -16,9 +16,7 @@ public class ClubCommandService {
 	private final FileQueryService fileQueryService;
 
 	public Long createClub(String name, String description, String site, Long fileId) {
-		if(fileId!=null){
-			fileQueryService.getFileById(fileId);
-		}
+
 		Club club = Club.create(name, description, site, fileId);
 
 		return clubRepository.save(club).getId();
@@ -29,9 +27,6 @@ public class ClubCommandService {
 		club.updateDescription(description);
 		club.updateSite(site);
 
-		if (fileId != null) {
-			fileQueryService.getFileById(fileId);
-		}
 		club.updateFile(fileId);
 	}
 
