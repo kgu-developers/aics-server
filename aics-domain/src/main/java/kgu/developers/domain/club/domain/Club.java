@@ -35,7 +35,7 @@ public class Club extends BaseTimeEntity {
 	@Column(length = 50)
 	private String site;
 
-
+	@Column(name = "file_id")
 	private Long fileId;
 
 	public static Club create(String name, String description, String site, Long fileId) {
