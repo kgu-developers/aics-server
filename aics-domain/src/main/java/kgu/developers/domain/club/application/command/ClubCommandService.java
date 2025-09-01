@@ -25,7 +25,7 @@ public class ClubCommandService {
 		club.updateDescription(description);
 		club.updateSite(site);
 
-		club.updateFile(fileId);
+		club.updateFileId(fileId);
 	}
 
 	public void deleteClubById(Long id) {

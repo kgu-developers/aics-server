@@ -59,7 +59,7 @@ public class Club extends BaseTimeEntity {
 		this.site = site;
 	}
 
-	public void updateFile(Long fileId) {
+	public void updateFileId(Long fileId) {
 		this.fileId = fileId;
 	}
 }

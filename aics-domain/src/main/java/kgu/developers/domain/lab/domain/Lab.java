@@ -64,7 +64,7 @@ public class Lab extends BaseTimeEntity {
 		this.advisor = advisor;
 	}
 
-	public void updateFile(Long fileId) {
+	public void updateFileId(Long fileId) {
 		this.fileId = fileId;
 	}
 }
