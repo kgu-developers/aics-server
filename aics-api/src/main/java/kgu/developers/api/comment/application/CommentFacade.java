@@ -1,7 +1,10 @@
 package kgu.developers.api.comment.application;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import kgu.developers.domain.user.application.query.UserQueryService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,7 @@ public class CommentFacade {
 	private final CommentCommandService commentCommandService;
 	private final CommentQueryService commentQueryService;
 	private final CommentSchedulingService commentSchedulingService;
+	private final UserQueryService userQueryService;
 
 	public CommentPersistResponse createComment(CommentRequest request) {
 		Long id = commentCommandService.createComment(request.content(), request.postId());
@@ -30,7 +34,11 @@ public class CommentFacade {
 
 	public CommentListResponse getComments(Long postId) {
 		List<Comment> comments = commentQueryService.getComments(postId);
-		return CommentListResponse.from(comments);
+
+		List<String> authorIds = comments.stream().map(Comment::getAuthorId).collect(Collectors.toList());
+
+		Map<String, String> nameMap = userQueryService.getUserNameMapByIds(authorIds);
+		return CommentListResponse.from(comments,nameMap);
 	}
 
 	public void updateComment(Long commentId, CommentUpdateRequest request) {

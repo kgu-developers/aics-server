@@ -7,6 +7,7 @@ import kgu.developers.domain.comment.domain.Comment;
 import lombok.Builder;
 
 import java.util.List;
+import java.util.Map;
 
 @Builder
 public record CommentListResponse(
@@ -19,10 +20,10 @@ public record CommentListResponse(
 		requiredMode = REQUIRED)
 	List<CommentResponse> contents
 ) {
-	public static CommentListResponse from(List<Comment> comments) {
+	public static CommentListResponse from(List<Comment> comments, Map<String,String> nameMap) {
 		return CommentListResponse.builder()
 			.contents(comments.stream()
-				.map(CommentResponse::from)
+				.map(comment -> CommentResponse.from(comment,nameMap.get(comment.getAuthorId())))
 				.toList())
 			.build();
 	}

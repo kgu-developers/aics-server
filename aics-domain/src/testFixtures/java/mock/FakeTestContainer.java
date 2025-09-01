@@ -73,7 +73,7 @@ public class FakeTestContainer {
 			() -> new UserCommandService(new BCryptPasswordEncoder(), get(UserRepository.class)));
 
 		suppliers.put(PostRepository.class, FakePostRepository::new);
-		suppliers.put(PostQueryService.class, () -> new PostQueryService(get(PostRepository.class), get(FileRepository.class)));
+		suppliers.put(PostQueryService.class, () -> new PostQueryService(get(PostRepository.class), get(FileRepository.class), get(UserRepository.class)));
 		suppliers.put(PostCommandService.class,
 			() -> new PostCommandService(get(UserQueryService.class), get(PostRepository.class), get(FileQueryService.class)));
 

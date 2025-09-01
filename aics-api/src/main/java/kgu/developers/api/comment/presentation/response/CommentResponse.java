@@ -24,11 +24,11 @@ public record CommentResponse(
 	@Schema(description = "내용", example = "예시 코멘트입니다, 좋은 소식이네요!", requiredMode = REQUIRED)
 	String content
 ) {
-	public static CommentResponse from(Comment comment) {
+	public static CommentResponse from(Comment comment, String authorName) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		return CommentResponse.builder()
 			.commentId(comment.getId())
-			.author(comment.getAuthor().getName())
+			.author(authorName)
 			.createdAt(comment.getCreatedAt().format(formatter))
 			.content(comment.getContent())
 			.build();

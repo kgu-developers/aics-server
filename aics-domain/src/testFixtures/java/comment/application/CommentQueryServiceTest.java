@@ -17,7 +17,6 @@ import kgu.developers.domain.comment.application.query.CommentQueryService;
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.exception.CommentNotFoundException;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCommentRepository;
 import mock.repository.FakePostRepository;
 
@@ -35,20 +34,20 @@ public class CommentQueryServiceTest {
 		FakeCommentRepository fakeCommentRepository = new FakeCommentRepository();
 		commentQueryService = new CommentQueryService(fakeCommentRepository);
 		Post post = saveTestPost();
-		deletedComment(fakeCommentRepository, post);
-		saveTestComment(fakeCommentRepository, post);
+		deletedComment(fakeCommentRepository, post.getId());
+		saveTestComment(fakeCommentRepository, post.getId());
 	}
 
-	private static void deletedComment(FakeCommentRepository fakeCommentRepository, Post post) {
+	private static void deletedComment(FakeCommentRepository fakeCommentRepository, Long postId) {
 		Comment commentToDelete = fakeCommentRepository.save(
-			Comment.create("삭제된 댓글 입니다", User.builder().build(), post)
+			Comment.create("삭제된 댓글 입니다", "202312345", postId)
 		);
 		commentToDelete.delete();
 	}
 
-	private static void saveTestComment(FakeCommentRepository fakeCommentRepository, Post post) {
+	private static void saveTestComment(FakeCommentRepository fakeCommentRepository, Long postId) {
 		fakeCommentRepository.save(
-			Comment.create(TARGET_COMMENT_CONTENT, User.builder().build(), post)
+			Comment.create(TARGET_COMMENT_CONTENT, "202312345", postId)
 		);
 	}
 

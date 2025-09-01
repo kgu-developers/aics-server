@@ -44,14 +44,17 @@ public class CommentFacadeTest {
 		FakePostRepository fakePostRepository = new FakePostRepository();
 
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+		PostQueryService postQueryService = new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository);
+
 		commentFacade = new CommentFacade(
 			new CommentCommandService(
-				new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository),
+				postQueryService,
 				userQueryService,
 				fakeCommentRepository
 			),
 			new CommentQueryService(fakeCommentRepository),
-			new CommentSchedulingService(fakeCommentRepository)
+			new CommentSchedulingService(fakeCommentRepository),
+			userQueryService
 		);
 
 		User author = fakeUserRepository.save(User.builder()
@@ -68,11 +71,11 @@ public class CommentFacadeTest {
 		));
 
 		fakeCommentRepository.save(Comment.create(
-			"test1", author, post
+			"test1", author.getId(), post.getId()
 		));
 
 		Comment delete = fakeCommentRepository.save(Comment.create(
-			"test2", author, post
+			"test2", author.getId(), post.getId()
 		));
 		delete.delete();
 

@@ -20,7 +20,7 @@ public class CommentCommandService {
 	public Long createComment(String content, Long postId) {
 		Post post = postQueryService.getById(postId);
 		User user = userQueryService.me();
-		Comment comment = Comment.create(content, user, post);
+		Comment comment = Comment.create(content, user.getId(), post.getId());
 		return commentRepository.save(comment).getId();
 	}
 

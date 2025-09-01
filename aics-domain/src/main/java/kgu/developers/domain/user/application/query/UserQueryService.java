@@ -15,6 +15,8 @@ import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,5 +50,9 @@ public class UserQueryService {
 
 	public List<User> getAllUsersByIds(List<String> ids) {
 		return userRepository.findAllById(ids);
+	}
+
+	public Map<String, String> getUserNameMapByIds(List<String> authorIds) {
+		return getAllUsersByIds(authorIds).stream().collect(Collectors.toMap(User::getId, User::getName));
 	}
 }

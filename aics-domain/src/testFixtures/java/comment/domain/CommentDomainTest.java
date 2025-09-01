@@ -36,7 +36,7 @@ public class CommentDomainTest {
 	public void init() {
 		User author = getUser();
 		Post post = getPost(author);
-		comment = Comment.create(CONTENT, author, post);
+		comment = Comment.create(CONTENT, author.getId(), post.getId());
 	}
 
 	private Post getPost(User author) {

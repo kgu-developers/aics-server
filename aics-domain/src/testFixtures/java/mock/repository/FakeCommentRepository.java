@@ -20,8 +20,8 @@ public class FakeCommentRepository implements CommentRepository {
 		Comment newComment = Comment.builder()
 			.id(sequence.getAndIncrement())
 			.content(comment.getContent())
-			.author(comment.getAuthor())
-			.post(comment.getPost())
+			.authorId(comment.getAuthorId())
+			.postId(comment.getPostId())
 			.build();
 
 		TestEntityUtils.setCreatedAt(newComment, LocalDateTime.now());
@@ -33,7 +33,7 @@ public class FakeCommentRepository implements CommentRepository {
 	@Override
 	public List<Comment> findAllByPostIdAndDeletedAtIsNull(Long postId) {
 		return data.stream()
-			.filter(comment -> comment.getPost().getId().equals(postId)
+			.filter(comment -> comment.getPostId().equals(postId)
 				&& comment.getDeletedAt() == null)
 			.toList();
 	}

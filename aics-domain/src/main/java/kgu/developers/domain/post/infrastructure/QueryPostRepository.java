@@ -6,6 +6,7 @@ import static kgu.developers.domain.post.domain.QPost.post;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.querydsl.jpa.JPAExpressions;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -56,8 +57,12 @@ public class QueryPostRepository {
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
 		queryFactory.delete(comment)
-			.where(comment.post.deletedAt.isNotNull()
-				.and(comment.post.deletedAt.before(thresholdDate)))
+			.where(comment.postId.in(
+				JPAExpressions.select(post.id)
+					.from(post)
+					.where(post.deletedAt.isNotNull()
+						.and(post.deletedAt.before(thresholdDate)))
+			))
 			.execute();
 
 		queryFactory.delete(post)
