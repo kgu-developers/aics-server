@@ -1,13 +1,9 @@
 package kgu.developers.api.lab.application;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,12 +27,7 @@ public class LabFacade {
 				.filter(Objects::nonNull)
 				.toList();
 
-		Map<Long, FileEntity> fileMap =
-				fileQueryService.findAllByIds(fileIds)
-						.stream()
-						.collect(Collectors.toMap(FileEntity::getId, Function.identity()));
 
-
-		return LabListResponse.from(labs,fileMap);
+		return LabListResponse.from(labs,fileQueryService.findFileEntityMapByIds(fileIds));
 	}
 }
