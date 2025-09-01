@@ -35,7 +35,7 @@ public class Lab extends BaseTimeEntity {
 	@Column(nullable = false, length = 16)
 	private String advisor;
 
-	@Column(name = "file_id", nullable = false)
+	@Column(name = "file_id")
 	private Long fileId;
 
 	public static Lab create(String name, String loc, String site, String advisor, Long fileId) {
