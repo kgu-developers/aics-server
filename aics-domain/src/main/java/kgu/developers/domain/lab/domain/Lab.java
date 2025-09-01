@@ -7,10 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import kgu.developers.common.domain.BaseTimeEntity;
-import kgu.developers.domain.file.domain.FileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,17 +35,16 @@ public class Lab extends BaseTimeEntity {
 	@Column(nullable = false, length = 16)
 	private String advisor;
 
-	@OneToOne
-	@JoinColumn(name = "file_id", nullable = false)
-	private FileEntity file;
+	@Column(name = "file_id", nullable = false)
+	private Long fileId;
 
-	public static Lab create(String name, String loc, String site, String advisor, FileEntity file) {
+	public static Lab create(String name, String loc, String site, String advisor, Long fileId) {
 		return Lab.builder()
 			.name(name)
 			.loc(loc)
 			.site(site)
 			.advisor(advisor)
-			.file(file)
+			.fileId(fileId)
 			.build();
 	}
 
@@ -68,7 +64,7 @@ public class Lab extends BaseTimeEntity {
 		this.advisor = advisor;
 	}
 
-	public void updateFile(FileEntity file) {
-		this.file = file;
+	public void updateFile(Long fileId) {
+		this.fileId = fileId;
 	}
 }

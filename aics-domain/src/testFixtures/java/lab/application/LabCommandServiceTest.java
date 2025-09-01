@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.domain.Lab;
@@ -31,14 +30,14 @@ public class LabCommandServiceTest {
 	private void initializeLabCommandService() {
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
-		labCommandService = new LabCommandService(new FileQueryService(fakeFileRepository), fakeLabRepository);
+		labCommandService = new LabCommandService(fakeLabRepository);
 		fakeFileRepository.save(FileEntity.builder().id(1L).build());
 		fakeLabRepository.save(saveTestLab());
 	}
 
 	private static Lab saveTestLab() {
 		return Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철",
-			FileEntity.builder().id(TEST_FILE_ID).build());
+			TEST_FILE_ID);
 	}
 
 	@Test
@@ -75,7 +74,7 @@ public class LabCommandServiceTest {
 		assertEquals(targetLoc, lab.getLoc());
 		assertEquals(targetSite, lab.getSite());
 		assertEquals(targetAdvisor, lab.getAdvisor());
-		assertNull(lab.getFile());
+		assertNull(lab.getFileId());
 	}
 
 	@Test

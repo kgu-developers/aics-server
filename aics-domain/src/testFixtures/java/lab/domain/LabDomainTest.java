@@ -19,7 +19,7 @@ public class LabDomainTest {
 
 	@BeforeEach
 	public void init() {
-		lab = Lab.create(NAME, LOC, SITE, ADVISOR, FileEntity.builder().build());
+		lab = Lab.create(NAME, LOC, SITE, ADVISOR, null);
 	}
 
 	@Test

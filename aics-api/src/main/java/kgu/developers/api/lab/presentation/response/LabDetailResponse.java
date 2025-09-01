@@ -5,6 +5,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.file.application.response.FilePathResponse;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.domain.Lab;
 import lombok.Builder;
 
@@ -32,15 +33,15 @@ public record LabDetailResponse(
 		requiredMode = NOT_REQUIRED)
 	FilePathResponse img
 ) {
-	public static LabDetailResponse from(Lab lab) {
+	public static LabDetailResponse from(Lab lab, FileEntity file) {
 		return LabDetailResponse.builder()
 			.id(lab.getId())
 			.name(lab.getName())
 			.loc(lab.getLoc())
 			.site(lab.getSite())
 			.advisor(lab.getAdvisor())
-			.img(lab.getFile() != null ?
-				FilePathResponse.from(lab.getFile()) : null)
+			.img(file != null ?
+				FilePathResponse.from(file) : null)
 			.build();
 	}
 }

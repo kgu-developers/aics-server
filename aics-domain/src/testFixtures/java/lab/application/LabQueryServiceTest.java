@@ -33,11 +33,11 @@ public class LabQueryServiceTest {
 	private static void saveTestLabs(FakeLabRepository fakeLabRepository) {
 		fakeLabRepository.save(
 			Lab.create("인공지능 연구실", "8502, 8503", "http://ailab.kyonggi.ac.kr", "김인철",
-				FileEntity.builder().id(TEST_FILE_ID).build())
+				TEST_FILE_ID)
 		);
 		fakeLabRepository.save(
 			Lab.create("알고리즘 연구실", "8504", "http://algeo.kyonggi.ac.kr/", "배상원",
-				FileEntity.builder().id(TEST_FILE_ID).build())
+				TEST_FILE_ID)
 		);
 	}
 

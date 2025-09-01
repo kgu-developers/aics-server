@@ -33,17 +33,17 @@ public class LabAdminFacadeTest {
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
 		labAdminFacade = new LabAdminFacade(
-			new LabCommandService(new FileQueryService(fakeFileRepository), fakeLabRepository),
+			new LabCommandService(fakeLabRepository),
 			new LabQueryService(fakeLabRepository)
 		);
 
-		FileEntity testFile = fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).build());
+		fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).build());
 		fakeLabRepository.save(Lab.builder()
 			.name("Lab A")
 			.loc("8500")
 			.site("http://labA.kyonggi.ac.kr")
 			.advisor("박민준")
-			.file(testFile)
+			.fileId(TEST_FILE_ID)
 			.build()
 		);
 	}

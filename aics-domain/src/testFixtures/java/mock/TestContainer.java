@@ -122,11 +122,11 @@ public class TestContainer {
 
 		this.labRepository = new FakeLabRepository();
 		this.labQueryService = new LabQueryService(labRepository);
-		this.labCommandService = new LabCommandService(fileQueryService, labRepository);
+		this.labCommandService = new LabCommandService(labRepository);
 
 		this.clubRepository = new FakeClubRepository();
 		this.clubQueryService = new ClubQueryService(clubRepository);
-		this.clubCommandService = new ClubCommandService(clubRepository, fileQueryService);
+		this.clubCommandService = new ClubCommandService(clubRepository);
 
 
 	}

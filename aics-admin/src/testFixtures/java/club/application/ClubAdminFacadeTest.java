@@ -32,7 +32,7 @@ public class ClubAdminFacadeTest {
 
 		this.fakeClubRepository = new FakeClubRepository();
 		this.clubAdminFacade = new ClubAdminFacade(
-			new ClubCommandService(fakeClubRepository, fileQueryService),
+			new ClubCommandService(fakeClubRepository),
 			new ClubQueryService(fakeClubRepository)
 		);
 

@@ -3,8 +3,10 @@ package kgu.developers.api.lab.presentation.response;
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import java.util.List;
+import java.util.Map;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.domain.Lab;
 import lombok.Builder;
 
@@ -22,10 +24,10 @@ public record LabListResponse(
 		requiredMode = REQUIRED)
 	List<LabDetailResponse> contents
 ) {
-	public static LabListResponse from(List<Lab> labs) {
+	public static LabListResponse from(List<Lab> labs, Map<Long, FileEntity> fileMap) {
 		return LabListResponse.builder()
 			.contents(labs.stream()
-				.map(LabDetailResponse::from)
+				.map(lab -> LabDetailResponse.from(lab,fileMap.get(lab.getFileId())))
 				.toList())
 			.build();
 	}

@@ -22,7 +22,7 @@ public class ClubCommandServiceTest {
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 		fakeClubRepository = new FakeClubRepository();
-		clubCommandService = new ClubCommandService(fakeClubRepository, fileQueryService);
+		clubCommandService = new ClubCommandService(fakeClubRepository);
 
 		fakeClubRepository.save(
 			Club.create("club",

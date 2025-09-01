@@ -57,8 +57,7 @@ public class FakeTestContainer {
 
 		suppliers.put(ClubRepository.class, FakeClubRepository::new);
 		suppliers.put(ClubQueryService.class, () -> new ClubQueryService(get(ClubRepository.class)));
-		suppliers.put(ClubCommandService.class, () -> new ClubCommandService(get(ClubRepository.class), get(
-			FileQueryService.class)));
+		suppliers.put(ClubCommandService.class, () -> new ClubCommandService(get(ClubRepository.class)));
 
 		suppliers.put(ProfessorRepository.class, FakeProfessorRepository::new);
 		suppliers.put(ProfessorQueryService.class, () -> new ProfessorQueryService(get(ProfessorRepository.class)));
@@ -84,7 +83,7 @@ public class FakeTestContainer {
 
 		suppliers.put(LabRepository.class, FakeLabRepository::new);
 		suppliers.put(LabQueryService.class, () -> new LabQueryService(get(LabRepository.class)));
-		suppliers.put(LabCommandService.class, () -> new LabCommandService(get(FileQueryService.class), get(LabRepository.class)));
+		suppliers.put(LabCommandService.class, () -> new LabCommandService(get(LabRepository.class)));
 
 		// Preload specific instances if necessary
 		UserRepository userRepository = get(UserRepository.class);

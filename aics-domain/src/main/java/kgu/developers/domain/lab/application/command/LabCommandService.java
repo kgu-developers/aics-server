@@ -2,8 +2,6 @@ package kgu.developers.domain.lab.application.command;
 
 import org.springframework.stereotype.Service;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.domain.Lab;
 import kgu.developers.domain.lab.domain.LabRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +9,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class LabCommandService {
-	private final FileQueryService fileQueryService;
 	private final LabRepository labRepository;
 
 	public Long createLab(Long fileId, String name, String location, String site, String advisor) {
-		FileEntity labImageFile = fileQueryService.getFileById(fileId);
-		Lab lab = Lab.create(name, location, site, advisor, labImageFile);
+		Lab lab = Lab.create(name, location, site, advisor, fileId);
 		return labRepository.save(lab).getId();
 	}
 
@@ -25,13 +21,7 @@ public class LabCommandService {
 		lab.updateLoc(loc);
 		lab.updateSite(site);
 		lab.updateAdvisor(advisor);
-
-		FileEntity file = null;
-		if (fileId != null) {
-			file = fileQueryService.getFileById(fileId);
-		}
-
-		lab.updateFile(file);
+		lab.updateFile(fileId);
 	}
 
 	public void deleteLabById(Long id) {
