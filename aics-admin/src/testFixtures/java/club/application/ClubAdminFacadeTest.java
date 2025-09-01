@@ -17,9 +17,7 @@ import kgu.developers.domain.club.application.command.ClubCommandService;
 import kgu.developers.domain.club.application.query.ClubQueryService;
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.club.exception.ClubNotFoundException;
-import kgu.developers.domain.file.application.query.FileQueryService;
 import mock.repository.FakeClubRepository;
-import mock.repository.FakeFileRepository;
 
 public class ClubAdminFacadeTest {
 	private ClubAdminFacade clubAdminFacade;
@@ -27,8 +25,6 @@ public class ClubAdminFacadeTest {
 
 	@BeforeEach
 	public void init() {
-		FakeFileRepository fakeFileRepository = new FakeFileRepository();
-		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 
 		this.fakeClubRepository = new FakeClubRepository();
 		this.clubAdminFacade = new ClubAdminFacade(

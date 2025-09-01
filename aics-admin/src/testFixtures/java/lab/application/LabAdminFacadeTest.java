@@ -14,7 +14,6 @@ import kgu.developers.admin.lab.application.LabAdminFacade;
 import kgu.developers.admin.lab.presentation.request.LabCreateRequest;
 import kgu.developers.admin.lab.presentation.request.LabUpdateRequest;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
-import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.application.query.LabQueryService;
