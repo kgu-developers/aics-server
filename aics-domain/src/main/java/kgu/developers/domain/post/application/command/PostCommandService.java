@@ -3,7 +3,6 @@ package kgu.developers.domain.post.application.command;
 import org.springframework.stereotype.Service;
 
 import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;

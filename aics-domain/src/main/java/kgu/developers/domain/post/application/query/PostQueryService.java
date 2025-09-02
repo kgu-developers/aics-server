@@ -2,9 +2,7 @@ package kgu.developers.domain.post.application.query;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import kgu.developers.domain.file.application.response.FilePathResponse;
 import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.file.domain.FileRepository;
 import kgu.developers.domain.user.domain.User;

@@ -2,7 +2,6 @@ package kgu.developers.api.post.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 

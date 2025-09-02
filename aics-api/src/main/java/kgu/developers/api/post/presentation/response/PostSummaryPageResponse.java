@@ -5,7 +5,6 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.common.response.PageableResponse;
 import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.user.domain.User;
 import lombok.Builder;
 
 import java.util.List;
