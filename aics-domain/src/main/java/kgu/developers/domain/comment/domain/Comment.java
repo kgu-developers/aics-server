@@ -25,10 +25,10 @@ public class Comment extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String content;
 
-	@Column(name = "post_id",nullable = false)
+	@Column(nullable = false)
 	private Long postId;
 
-	@Column(name = "author_id", nullable = false)
+	@Column(nullable = false)
 	private String authorId;
 
 	public static Comment create(String content, String authorId, Long postId) {
