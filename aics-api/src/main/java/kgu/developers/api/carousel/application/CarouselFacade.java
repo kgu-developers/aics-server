@@ -20,7 +20,8 @@ public class CarouselFacade {
 		List<CarouselResponse> carousels = carouselQueryService.getAllCarousels()
 			.stream()
 			.map(carousel -> {
-				String filePath = fileQueryService.getFilePhysicalPath(carousel.getFileId());
+				Long fileId = carousel.getFileId();
+				String filePath = (fileId != null) ? fileQueryService.getFilePhysicalPath(fileId) : null;
 				return CarouselResponse.of(carousel, filePath);
 			})
 			.toList();
