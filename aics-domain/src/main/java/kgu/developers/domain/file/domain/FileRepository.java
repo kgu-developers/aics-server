@@ -7,4 +7,5 @@ public interface FileRepository {
 	FileEntity save(FileEntity fileEntity);
 	Optional<FileEntity> findById(Long id);
 	List<FileEntity> findAllByIds(List<Long> ids);
+	Optional<String> findPhysicalPathById(Long id);
 }

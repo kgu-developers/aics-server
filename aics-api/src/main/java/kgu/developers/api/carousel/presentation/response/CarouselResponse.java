@@ -25,12 +25,12 @@ public record CarouselResponse(
 		requiredMode = NOT_REQUIRED)
 	FilePathResponse file
 ) {
-	public static CarouselResponse from(Carousel carousel) {
+	public static CarouselResponse of(Carousel carousel, String physicalPath) {
 		return CarouselResponse.builder()
 			.id(carousel.getId())
 			.text(carousel.getText())
 			.link(carousel.getLink())
-			.file(carousel.getFile() != null ? FilePathResponse.from(carousel.getFile()) : null)
+			.file(carousel.getFileId() != null ? FilePathResponse.of(carousel.getFileId(), physicalPath) : null)
 			.build();
 	}
 }

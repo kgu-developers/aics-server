@@ -26,7 +26,7 @@ public class CarouselRepositoryImpl implements CarouselRepository {
 
 	@Override
 	public List<Carousel> findAllByFileIsNotNullOrderByCreatedAtDesc() {
-		return jpaCarouselRepository.findAllByFileIsNotNullOrderByCreatedAtDesc();
+		return jpaCarouselRepository.findAllByFileIdIsNotNullOrderByCreatedAtDesc();
 	}
 
 	@Override

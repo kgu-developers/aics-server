@@ -1,6 +1,6 @@
 package kgu.developers.domain.file.application.response;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.*;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.file.domain.FileEntity;
@@ -19,6 +19,14 @@ public record FilePathResponse(
 		String decryptedPath = AesUtil.decrypt(fileEntity.getPhysicalPath());
 		return FilePathResponse.builder()
 			.id(fileEntity.getId())
+			.physicalPath(decryptedPath)
+			.build();
+	}
+
+	public static FilePathResponse of(Long id, String physicalPath) {
+		String decryptedPath = AesUtil.decrypt(physicalPath);
+		return FilePathResponse.builder()
+			.id(id)
 			.physicalPath(decryptedPath)
 			.build();
 	}

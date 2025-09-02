@@ -5,7 +5,6 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.domain.carousel.domain.Carousel;
 import lombok.Builder;
 
 @Builder
@@ -25,11 +24,9 @@ public record CarouselListResponse(
 		requiredMode = REQUIRED)
 	List<CarouselResponse> contents
 ) {
-	public static CarouselListResponse from(List<Carousel> carousels) {
+	public static CarouselListResponse from(List<CarouselResponse> carousels) {
 		return CarouselListResponse.builder()
-			.contents(carousels.stream()
-				.map(CarouselResponse::from)
-				.toList())
+			.contents(carousels)
 			.build();
 	}
 }

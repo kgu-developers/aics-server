@@ -5,17 +5,27 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import kgu.developers.api.carousel.presentation.response.CarouselListResponse;
+import kgu.developers.api.carousel.presentation.response.CarouselResponse;
 import kgu.developers.domain.carousel.application.query.CarouselQueryService;
-import kgu.developers.domain.carousel.domain.Carousel;
+import kgu.developers.domain.file.application.query.FileQueryService;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class CarouselFacade {
 	private final CarouselQueryService carouselQueryService;
+	private final FileQueryService fileQueryService;
 
 	public CarouselListResponse getCarousels() {
-		List<Carousel> carousels = carouselQueryService.getAllCarousels();
+		List<CarouselResponse> carousels = carouselQueryService.getAllCarousels()
+			.stream()
+			.map(carousel -> {
+				String filePath = fileQueryService.getFilePhysicalPath(carousel.getFileId());
+				return CarouselResponse.of(carousel, filePath);
+			})
+			.toList();
+
 		return CarouselListResponse.from(carousels);
 	}
 }
+

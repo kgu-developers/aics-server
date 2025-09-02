@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import kgu.developers.domain.carousel.domain.Carousel;
 
 public interface JpaCarouselRepository extends JpaRepository<Carousel, Long> {
-	List<Carousel> findAllByFileIsNotNullOrderByCreatedAtDesc();
+	List<Carousel> findAllByFileIdIsNotNullOrderByCreatedAtDesc();
 }

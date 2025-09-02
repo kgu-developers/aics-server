@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class FileRepositoryImpl implements FileRepository {
 	private final JpaFileRepository jpaFileRepository;
+	private final QueryFileRepository queryFileRepository;
 
 	@Override
 	public FileEntity save(FileEntity fileEntity) {
@@ -26,5 +27,10 @@ public class FileRepositoryImpl implements FileRepository {
 	@Override
 	public List<FileEntity> findAllByIds(List<Long> ids) {
 		return jpaFileRepository.findAllById(ids);
+	}
+
+	@Override
+	public Optional<String> findPhysicalPathById(Long id) {
+		return queryFileRepository.findPhysicalPathById(id);
 	}
 }

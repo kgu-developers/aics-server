@@ -19,4 +19,9 @@ public class FileQueryService {
 	public List<FileEntity> findAllByIds(List<Long> ids) {
 		return fileRepository.findAllByIds(ids);
 	}
+
+	public String getFilePhysicalPath(Long id) {
+		return fileRepository.findPhysicalPathById(id)
+			.orElse(null);
+	}
 }

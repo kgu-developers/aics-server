@@ -17,7 +17,7 @@ public class CarouselCommandService {
 
 	public Long createCarousel(Long fileId, String text, String link) {
 		FileEntity file = fileQueryService.getFileById(fileId);
-		Carousel carousel = Carousel.create(text, link, file);
+		Carousel carousel = Carousel.create(text, link, file.getId());
 		return carouselRepository.save(carousel).getId();
 	}
 
@@ -25,14 +25,9 @@ public class CarouselCommandService {
 	public void updateCarousel(Carousel carousel, String link, String text, Long fileId) {
 		carousel.updateText(text);
 		carousel.updateLink(link);
-
-		FileEntity file = null;
-		if (fileId != null) {
-			file = fileQueryService.getFileById(fileId);
-		}
-
-		carousel.updateFile(file);
+		carousel.updateFileId(fileId);
 	}
+
 	public void deleteCarouselById(Long id) {
 		carouselRepository.deleteById(id);
 	}
