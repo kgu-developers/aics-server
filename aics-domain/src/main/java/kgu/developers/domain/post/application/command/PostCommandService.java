@@ -29,7 +29,7 @@ public class PostCommandService {
 		post.updateContent(content);
 		post.updateCategory(category);
 		post.updatePinned(isPinned);
-		post.updateFile(fileId);
+		post.updateFileId(fileId);
 	}
 
 	public void togglePostPinStatus(Post post) {

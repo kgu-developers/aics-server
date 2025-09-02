@@ -77,7 +77,7 @@ public class Post extends BaseTimeEntity {
 		this.views++;
 	}
 
-	public void updateFile(Long fileId) {
+	public void updateFileId(Long fileId) {
 		this.fileId = fileId;
 	}
 
