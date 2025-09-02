@@ -16,12 +16,12 @@ public class QueryFileRepository {
 	private final JPAQueryFactory queryFactory;
 
 	public Optional<String> findPhysicalPathById(Long id) {
-		String path = queryFactory
-			.select(fileEntity.physicalPath)
-			.from(fileEntity)
-			.where(fileEntity.id.eq(id))
-			.fetchOne();
-
-		return Optional.ofNullable(path);
+		return Optional.ofNullable(id)
+			.map(i -> queryFactory
+				.select(fileEntity.physicalPath)
+				.from(fileEntity)
+				.where(fileEntity.id.eq(i))
+				.fetchOne()
+			);
 	}
 }
