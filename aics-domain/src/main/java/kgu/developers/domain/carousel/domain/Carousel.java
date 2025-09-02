@@ -29,6 +29,7 @@ public class Carousel extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String link;
 
+	@Column(nullable = false)
 	private Long fileId;
 
 	public static Carousel create(String text, String link, Long fileId) {
