@@ -17,6 +17,8 @@ public class CarouselQueryServiceTest {
 	private CarouselQueryService carouselQueryService;
 	private static Carousel carousel;
 
+	private static final Long FAKE_FILE_ID = 1L;
+
 	@BeforeEach
 	public void init() {
 		FakeCarouselRepository fakeCarouselRepository = new FakeCarouselRepository();
@@ -26,11 +28,11 @@ public class CarouselQueryServiceTest {
 
 	private static void saveTestCarousel(FakeCarouselRepository fakeCarouselRepository) {
 		carousel = fakeCarouselRepository.save(
-			Carousel.create("컴퓨터공학부 홈페이지 메인 이미지", "https://kgu.ac.kr", FileEntity.builder().build())
+			Carousel.create("컴퓨터공학부 홈페이지 메인 이미지", "https://kgu.ac.kr", FAKE_FILE_ID)
 		);
 
 		fakeCarouselRepository.save(
-			Carousel.create("SW 중심대학 선정", "https://kgu.ac.kr", FileEntity.builder().build())
+			Carousel.create("SW 중심대학 선정", "https://kgu.ac.kr", FAKE_FILE_ID)
 		);
 	}
 

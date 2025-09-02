@@ -73,6 +73,6 @@ public class CarouselCommandServiceTest {
 		// then
 		assertEquals(text, carousel.getText());
 		assertEquals(link, carousel.getLink());
-		assertNull(carousel.getFile());
+		assertNull(carousel.getFileId());
 	}
 }

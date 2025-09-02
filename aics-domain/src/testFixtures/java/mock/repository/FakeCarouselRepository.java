@@ -21,7 +21,7 @@ public class FakeCarouselRepository implements CarouselRepository {
 			.id(sequence.getAndIncrement())
 			.text(carousel.getText())
 			.link(carousel.getLink())
-			.file(carousel.getFile())
+			.fileId(carousel.getFileId())
 			.build();
 
 		TestEntityUtils.setCreatedAt(savedCarousel, LocalDateTime.now());
@@ -38,7 +38,7 @@ public class FakeCarouselRepository implements CarouselRepository {
 	@Override
 	public List<Carousel> findAllByFileIsNotNullOrderByCreatedAtDesc() {
 		return data.stream()
-			.filter(carousel -> carousel.getFile() != null)
+			.filter(carousel -> carousel.getFileId() != null)
 			.sorted((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()))
 			.toList();
 	}

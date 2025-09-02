@@ -37,5 +37,13 @@ public class FakeFileRepository implements FileRepository {
 				.filter(file -> ids.contains(file.getId()))
 				.toList();
 	}
+
+	@Override
+	public Optional<String> findPhysicalPathById(Long id) {
+		return data.stream()
+			.filter(fileEntity -> fileEntity.getId().equals(id))
+			.map(FileEntity::getPhysicalPath)
+			.findFirst();
+	}
 }
 

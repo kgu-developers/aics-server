@@ -25,7 +25,6 @@ public class CarouselAdminFacadeTest {
 	private Carousel carousel;
 
 	private static final Long TEST_FILE_ID = 1L;
-	private static final Long SAVE_TARGET_ID = 1L;
 
 	@BeforeEach
 	public void init() {
@@ -83,7 +82,7 @@ public class CarouselAdminFacadeTest {
 		// then
 		assertEquals(request.text(), carousel.getText());
 		assertEquals(request.link(), carousel.getLink());
-		assertEquals(request.fileId(), carousel.getFile().getId());
+		assertEquals(request.fileId(), carousel.getFileId());
 	}
 
 	@Test

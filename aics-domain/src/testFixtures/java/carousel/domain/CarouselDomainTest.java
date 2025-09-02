@@ -12,14 +12,14 @@ import kgu.developers.domain.file.domain.FileEntity;
 public class CarouselDomainTest {
 	private static final String TARGET_CAROUSEL_TEXT = "컴퓨터공학부 대표 이미지";
 	private static final String TARGET_CAROUSEL_LINK = "https://kgu.ac.kr";
+	private static final Long FAKE_FILE_ID = 1L;
 
 	@Test
 	@DisplayName("create 정적 팩토리 메서드는 Carousel 객체를 생성할 수 있다")
 	public void createCarousel_success() {
 		//given
 		//when
-		Carousel createdCarousel = Carousel.create(TARGET_CAROUSEL_TEXT, TARGET_CAROUSEL_LINK,
-			FileEntity.builder().build());
+		Carousel createdCarousel = Carousel.create(TARGET_CAROUSEL_TEXT, TARGET_CAROUSEL_LINK, FAKE_FILE_ID);
 
 		//then
 		assertNotNull(createdCarousel);
@@ -63,9 +63,9 @@ public class CarouselDomainTest {
 		FileEntity file = FileEntity.builder().build();
 
 		// when
-		carousel.updateFile(file);
+		carousel.updateFileId(file.getId());
 
 		// then
-		assertEquals(file, carousel.getFile());
+		assertEquals(file.getId(), carousel.getFileId());
 	}
 }
