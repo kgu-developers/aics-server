@@ -12,18 +12,17 @@ import kgu.developers.domain.carousel.domain.Carousel;
 import lombok.RequiredArgsConstructor;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class CarouselAdminFacade {
 	private final CarouselCommandService carouselCommandService;
 	private final CarouselQueryService carouselQueryService;
 
-	@Transactional
 	public CarouselPersistResponse createCarousel(Long fileId, CarouselRequest request) {
 		Long id = carouselCommandService.createCarousel(fileId, request.text(), request.link());
 		return CarouselPersistResponse.of(id);
 	}
 
-	@Transactional
 	public void updateCarousel(Long id, CarouselUpdateRequest request) {
 		Carousel carousel = carouselQueryService.getById(id);
 		carouselCommandService.updateCarousel(carousel, request.link(), request.text(), request.fileId());
