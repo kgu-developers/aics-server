@@ -11,7 +11,7 @@ import kgu.developers.common.response.PaginatedListResponse;
 public interface PostRepository {
 	Post save(Post post);
 
-	PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keywords,
+	PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
 		Category category, Pageable pageable);
 
 	Optional<Post> findByIdAndDeletedAtIsNull(Long postId);

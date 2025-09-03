@@ -49,7 +49,7 @@ public class FakePostRepository implements PostRepository {
 	}
 
 	@Override
-	public PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
+	public PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(
 		List<String> keywords, Category category, Pageable pageable
 	) {
 		List<Post> filteredPosts = data.stream()
@@ -59,7 +59,7 @@ public class FakePostRepository implements PostRepository {
 					&& post.getCategory().equals(category)
 					&& post.getDeletedAt() == null
 			)
-			.sorted(Comparator.comparing(Post::getCreatedAt).reversed())
+			.sorted(Comparator.comparing(Post::getCreatedAt).reversed().thenComparing(Post::getId))
 			.collect(Collectors.toList());
 
 		int start = (int)pageable.getOffset();

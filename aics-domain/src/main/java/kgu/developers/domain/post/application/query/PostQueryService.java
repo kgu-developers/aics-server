@@ -28,7 +28,7 @@ public class PostQueryService {
 
 	public PaginatedListResponse<Post> getPostsByKeywordAndCategory(PageRequest request, List<String> keywords,
 		Category category) {
-		return postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(
+		return postRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(
 			keywords, category, request);
 	}
 

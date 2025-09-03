@@ -30,9 +30,9 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keywords,
+	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
 		Category category, Pageable pageable) {
-		return queryPostRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(keywords, category, pageable);
+		return queryPostRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(keywords, category, pageable);
 	}
 
 	@Override

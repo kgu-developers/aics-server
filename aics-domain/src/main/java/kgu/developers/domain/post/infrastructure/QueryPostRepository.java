@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDesc(List<String> keywords,
+	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
 		Category category, Pageable pageable) {
 
 		BooleanExpression whereClause = post.deletedAt.isNull()
@@ -42,7 +42,7 @@ public class QueryPostRepository {
 		List<Post> posts = queryFactory.select(post)
 			.from(post)
 			.where(whereClause)
-			.orderBy(post.isPinned.desc(), post.createdAt.desc())
+			.orderBy(post.isPinned.desc(), post.createdAt.desc(), post.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
