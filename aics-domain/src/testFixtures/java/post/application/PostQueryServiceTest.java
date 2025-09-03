@@ -2,6 +2,7 @@ package post.application;
 
 import static kgu.developers.domain.post.domain.Category.NEWS;
 import static kgu.developers.domain.post.domain.Category.NOTIFICATION;
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -38,7 +39,14 @@ public class PostQueryServiceTest {
 		fakeUserRepository = new FakeUserRepository();
 		postQueryService = new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository);
 
-		User author = User.builder().build();
+		User author = fakeUserRepository.save(User.builder()
+			.id("202411001")
+			.password("password1234")
+			.name("홍길동")
+			.email("hong1@kyonggi.ac.kr")
+			.phone("010-0000-0001")
+			.major(CSE)
+			.build());
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목1", "테스트용 내용1",
