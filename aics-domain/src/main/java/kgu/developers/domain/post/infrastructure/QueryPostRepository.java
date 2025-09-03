@@ -5,8 +5,10 @@ import static kgu.developers.domain.post.domain.QPost.post;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import com.querydsl.jpa.JPAExpressions;
+import kgu.developers.domain.post.domain.QPost;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -85,5 +87,40 @@ public class QueryPostRepository {
 		}
 
 		return keywordCondition;
+	}
+
+	public Optional<Post> findPreviousPost(Long id, LocalDateTime createdAt, Category category) {
+
+		Post result = queryFactory
+			.selectFrom(post)
+			.where(
+				post.createdAt.lt(createdAt)
+					.or(post.createdAt.eq(createdAt).and(post.id.lt(id))),
+				post.deletedAt.isNull(),
+				post.category.eq(category)
+			)
+			.orderBy(post.createdAt.desc(), post.id.desc())
+			.limit(1)
+			.fetchOne();
+
+		return Optional.ofNullable(result);
+	}
+
+	public Optional<Post> findNextPost(Long id, LocalDateTime createdAt, Category category) {
+		QPost post = QPost.post;
+
+		Post result = queryFactory
+			.selectFrom(post)
+			.where(
+				post.createdAt.gt(createdAt)
+					.or(post.createdAt.eq(createdAt).and(post.id.gt(id))),
+				post.deletedAt.isNull(),
+				post.category.eq(category)
+			)
+			.orderBy(post.createdAt.asc(), post.id.asc())
+			.limit(1)
+			.fetchOne();
+
+		return Optional.ofNullable(result);
 	}
 }

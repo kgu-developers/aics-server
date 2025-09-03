@@ -18,7 +18,7 @@ public interface PostRepository {
 
 	void deleteAllByDeletedAtBefore(int retentionDays);
 
-	Optional<Post> findByPrevPost(LocalDateTime createdAt, Category category);
+	Optional<Post> findByPrevPost(Long postId, LocalDateTime createdAt, Category category);
 
-	Optional<Post> findByNextPost(LocalDateTime createdAt, Category category);
+	Optional<Post> findByNextPost(Long postId, LocalDateTime createdAt, Category category);
 }

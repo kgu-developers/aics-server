@@ -33,11 +33,13 @@ public class PostQueryService {
 	}
 
 	public PostDetailResponse getPostByIdWithPrevAndNext(Post post) {
+
+		Long postId = post.getId();
 		LocalDateTime timestamp = post.getCreatedAt();
 		Category category = post.getCategory();
 
-		Post prevPost = postRepository.findByPrevPost(timestamp, category).orElse(null);
-		Post nextPost = postRepository.findByNextPost(timestamp, category).orElse(null);
+		Post prevPost = postRepository.findByPrevPost(postId, timestamp, category).orElse(null);
+		Post nextPost = postRepository.findByNextPost(postId, timestamp, category).orElse(null);
 
 		FileEntity file = fileRepository.findById(post.getFileId()).orElse(null);
 		User author = userRepository.findById(post.getAuthorId()).orElse(null);

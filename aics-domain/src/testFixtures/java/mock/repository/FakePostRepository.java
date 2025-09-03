@@ -91,18 +91,28 @@ public class FakePostRepository implements PostRepository {
 	}
 
 	@Override
-	public Optional<Post> findByPrevPost(LocalDateTime createdAt, Category category) {
+	public Optional<Post> findByPrevPost(Long postId, LocalDateTime createdAt, Category category) {
 		return data.stream()
-			.filter(post -> post.getCreatedAt().isBefore(createdAt) && post.getCategory().equals(category)
+			.filter(post -> isBeforePost(post, postId, createdAt) && post.getCategory().equals(category)
 				&& post.getDeletedAt() == null)
-			.max(Comparator.comparing(Post::getCreatedAt));
+			.max(Comparator.comparing(Post::getCreatedAt).thenComparing(Post::getId));
+	}
+
+	private boolean isBeforePost(Post post, Long postId, LocalDateTime createdAt) {
+		return post.getCreatedAt().isBefore(createdAt)
+			|| (post.getCreatedAt().equals(createdAt) && post.getId() < postId);
 	}
 
 	@Override
-	public Optional<Post> findByNextPost(LocalDateTime createdAt, Category category) {
+	public Optional<Post> findByNextPost(Long postId, LocalDateTime createdAt, Category category) {
 		return data.stream()
-			.filter(post -> post.getCreatedAt().isAfter(createdAt) && post.getCategory().equals(category)
+			.filter(post -> isAfterPost(post, postId, createdAt) && post.getCategory().equals(category)
 				&& post.getDeletedAt() == null)
-			.min(Comparator.comparing(Post::getCreatedAt));
+			.min(Comparator.comparing(Post::getCreatedAt).thenComparing(Post::getId));
+	}
+
+	private boolean isAfterPost(Post post, Long postId, LocalDateTime createdAt) {
+		return post.getCreatedAt().isAfter(createdAt)
+			|| (post.getCreatedAt().equals(createdAt) && post.getId() > postId);
 	}
 }
