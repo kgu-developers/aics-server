@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.domain.Lab;
 import lombok.Builder;
 
@@ -24,7 +23,7 @@ public record LabListResponse(
 		requiredMode = REQUIRED)
 	List<LabDetailResponse> contents
 ) {
-	public static LabListResponse from(List<Lab> labs, Map<Long, FileEntity> fileMap) {
+	public static LabListResponse from(List<Lab> labs, Map<Long, String> fileMap) {
 		return LabListResponse.builder()
 			.contents(labs.stream()
 				.map(lab -> LabDetailResponse.from(lab,fileMap.get(lab.getFileId())))

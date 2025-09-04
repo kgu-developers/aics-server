@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,11 +18,10 @@ public class FileQueryService {
 		return fileRepository.findById(id).orElse(null);
 	}
 
-
-	public Map<Long,FileEntity> findFileEntityMapByIds(List<Long> ids) {
+	public Map<Long,String> findPhysicalPathMapByIds(List<Long> ids) {
 		return fileRepository.findAllByIds(ids)
 				.stream()
-				.collect(Collectors.toMap(FileEntity::getId, Function.identity()));
+				.collect(Collectors.toMap(FileEntity::getId, FileEntity::getPhysicalPath));
 	}
 
 	public String getFilePhysicalPath(Long id) {

@@ -28,6 +28,6 @@ public class LabFacade {
 				.toList();
 
 
-		return LabListResponse.from(labs,fileQueryService.findFileEntityMapByIds(fileIds));
+		return LabListResponse.from(labs,fileQueryService.findPhysicalPathMapByIds(fileIds));
 	}
 }

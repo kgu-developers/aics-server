@@ -27,6 +27,6 @@ public class ClubFacade {
 				.filter(Objects::nonNull)
 				.toList();
 
-		return ClubListResponse.from(clubs,fileQueryService.findFileEntityMapByIds(fileIds));
+		return ClubListResponse.from(clubs,fileQueryService.findPhysicalPathMapByIds(fileIds));
 	}
 }

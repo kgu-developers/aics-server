@@ -28,14 +28,13 @@ public record ClubDetailResponse(
 		requiredMode = NOT_REQUIRED)
 	FilePathResponse file
 ) {
-	public static ClubDetailResponse from(Club club, FileEntity file) {
+	public static ClubDetailResponse from(Club club, String physicalPath) {
 		return ClubDetailResponse.builder()
 			.id(club.getId())
 			.name(club.getName())
 			.description(club.getDescription())
 			.site(club.getSite())
-			.file(file != null ?
-				FilePathResponse.from(file) : null)
+			.file(club.getFileId() != null ? FilePathResponse.of(club.getFileId(), physicalPath) : null)
 			.build();
 	}
 }

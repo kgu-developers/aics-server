@@ -22,7 +22,7 @@ public record ClubListResponse(
 		requiredMode = REQUIRED)
 	List<ClubDetailResponse> contents
 ) {
-	public static ClubListResponse from(List<Club> clubs, Map<Long, FileEntity> fileMap) {
+	public static ClubListResponse from(List<Club> clubs, Map<Long,String> fileMap) {
 		return ClubListResponse.builder()
 			.contents(clubs.stream()
 				.map(club -> ClubDetailResponse.from(club,
