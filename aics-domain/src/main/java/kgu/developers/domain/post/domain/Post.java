@@ -37,7 +37,7 @@ public class Post extends BaseTimeEntity {
 	@Enumerated(STRING)
 	private Category category;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 10)
 	private String authorId;
 
 	@Column(nullable = false)
