@@ -59,7 +59,9 @@ public class FakePostRepository implements PostRepository {
 					&& post.getCategory().equals(category)
 					&& post.getDeletedAt() == null
 			)
-			.sorted(Comparator.comparing(Post::getCreatedAt).reversed().thenComparing(Post::getId))
+			.sorted(Comparator.comparing(Post::isPinned, Comparator.reverseOrder())
+				.thenComparing(Post::getCreatedAt, Comparator.reverseOrder())
+				.thenComparing(Post::getId))
 			.collect(Collectors.toList());
 
 		int start = (int)pageable.getOffset();
