@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.AboutRepository;
 import kgu.developers.domain.about.domain.Category;
+import kgu.developers.domain.about.infrastructure.AboutEntity;
 import mock.TestEntityUtils;
 
 public class FakeAboutRepository implements AboutRepository {
@@ -24,7 +25,7 @@ public class FakeAboutRepository implements AboutRepository {
 			.content(about.getContent())
 			.build();
 
-		TestEntityUtils.setCreatedAt(newAbout, LocalDateTime.now());
+		TestEntityUtils.setCreatedAt(AboutEntity.fromDomain(newAbout), LocalDateTime.now());
 
 		data.add(newAbout);
 		return newAbout;
