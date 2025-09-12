@@ -1,49 +1,39 @@
 package kgu.developers.domain.post.domain;
 
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import kgu.developers.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class Post extends BaseTimeEntity {
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+public class Post {
+
 	private Long id;
 
-	@Column(nullable = false, length = 100)
 	private String title;
 
-	@Column(nullable = false, columnDefinition = "text")
 	private String content;
 
-	@Column(nullable = false)
 	private int views;
 
-	@Enumerated(STRING)
 	private Category category;
 
-	@Column(nullable = false, length = 10)
 	private String authorId;
 
-	@Column(nullable = false)
 	private boolean isPinned;
 
 	private Long fileId;
+
+	protected LocalDateTime createdAt;
+	protected LocalDateTime updatedAt;
+	protected LocalDateTime deletedAt;
 
 	public static Post create(String title, String content, Category category, String authorId, Long fileId, boolean isPinned) {
 		return Post.builder()
@@ -83,5 +73,9 @@ public class Post extends BaseTimeEntity {
 
 	public void togglePinned() {
 		this.isPinned = !this.isPinned;
+	}
+
+	public void delete(){
+		deletedAt = LocalDateTime.now();
 	}
 }
