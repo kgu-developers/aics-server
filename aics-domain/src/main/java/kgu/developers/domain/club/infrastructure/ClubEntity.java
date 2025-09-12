@@ -32,7 +32,7 @@ public class ClubEntity extends BaseTimeEntity {
     private Long fileId;
 
     @Builder
-    public ClubEntity(Long id,String name, String description, String site, Long fileId) {
+    public ClubEntity(String name, String description, String site, Long fileId) {
         this.name = name;
         this.description = description;
         this.site = site;

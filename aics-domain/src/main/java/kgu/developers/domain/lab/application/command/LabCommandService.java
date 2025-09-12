@@ -22,6 +22,7 @@ public class LabCommandService {
 		lab.updateSite(site);
 		lab.updateAdvisor(advisor);
 		lab.updateFileId(fileId);
+		labRepository.save(lab);
 	}
 
 	public void deleteLabById(Long id) {

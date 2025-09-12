@@ -60,7 +60,7 @@ public class LabCommandServiceTest {
 	@DisplayName("updateLab은 Lab을 수정할 수 있다")
 	public void updateLab_Success() {
 		// given
-		Lab lab = saveTestLab();
+		Lab lab = fakeLabRepository.findById(1L).orElseThrow();
 		String targetName = "알고리즘 연구실";
 		String targetLoc = "8504";
 		String targetSite = "http://algeo.kyonggi.ac.kr/";
@@ -68,13 +68,20 @@ public class LabCommandServiceTest {
 
 		// when
 		labCommandService.updateLab(lab, targetName, targetLoc, targetSite, targetAdvisor, null);
-
+		Lab updateLab = fakeLabRepository.findById(lab.getId()).orElse(null);
 		// then
 		assertEquals(targetName, lab.getName());
 		assertEquals(targetLoc, lab.getLoc());
 		assertEquals(targetSite, lab.getSite());
 		assertEquals(targetAdvisor, lab.getAdvisor());
 		assertNull(lab.getFileId());
+
+		assertEquals(targetName, updateLab.getName());
+		assertEquals(lab.getLoc(), updateLab.getLoc());
+		assertEquals(lab.getSite(), updateLab.getSite());
+		assertEquals(lab.getAdvisor(), updateLab.getAdvisor());
+		assertNull(updateLab.getFileId());
+
 	}
 
 	@Test

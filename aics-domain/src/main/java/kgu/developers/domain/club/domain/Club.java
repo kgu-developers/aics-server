@@ -1,6 +1,5 @@
 package kgu.developers.domain.club.domain;
 
-import kgu.developers.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

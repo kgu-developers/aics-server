@@ -29,7 +29,7 @@ public class AboutEntity extends BaseTimeEntity {
     private String content;
 
     @Builder
-    public AboutEntity(Long id,Category category, String content) {
+    public AboutEntity(Category category, String content) {
         this.category = category;
         this.content = content;
     }
