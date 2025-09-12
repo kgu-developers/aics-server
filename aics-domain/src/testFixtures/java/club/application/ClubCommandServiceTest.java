@@ -52,7 +52,7 @@ public class ClubCommandServiceTest {
 	@DisplayName("updateClub은 Club 객체를 수정한다.")
 	public void updateClub_Success() {
 		// given
-		Club club = Club.create("a", "a 동아리", "http://club-a.kyonggi.ac.kr", null);
+		Club club = fakeClubRepository.findById(1L).orElseThrow();
 
 		String newName = "b";
 		String newDescription = "b 동아리";
@@ -60,12 +60,17 @@ public class ClubCommandServiceTest {
 
 		// when
 		clubCommandService.updateClub(club, newName, newDescription, newSite, null);
-
 		// then
 		assertEquals(newName, club.getName());
 		assertEquals(newDescription, club.getDescription());
 		assertEquals(newSite, club.getSite());
 		assertNull(club.getFileId());
+
+		Club updateClub = fakeClubRepository.findById(club.getId()).orElseThrow();
+		assertEquals(club.getName(), updateClub.getName());
+		assertEquals(club.getDescription(), updateClub.getDescription());
+		assertEquals(club.getSite(), updateClub.getSite());
+		assertNull(updateClub.getFileId());
 	}
 
 	@Test

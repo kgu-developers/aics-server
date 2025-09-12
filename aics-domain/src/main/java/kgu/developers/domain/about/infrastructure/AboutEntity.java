@@ -30,7 +30,6 @@ public class AboutEntity extends BaseTimeEntity {
 
     @Builder
     public AboutEntity(Long id,Category category, String content) {
-        this.id = id;
         this.category = category;
         this.content = content;
     }
@@ -44,7 +43,6 @@ public class AboutEntity extends BaseTimeEntity {
     }
     public static AboutEntity fromDomain(About about){
         return AboutEntity.builder()
-                .id(about.getId())
                 .category(about.getCategory())
                 .content(about.getContent())
                 .build();
