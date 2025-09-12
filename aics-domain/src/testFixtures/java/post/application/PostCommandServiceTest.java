@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
@@ -30,13 +29,11 @@ public class PostCommandServiceTest {
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
 		postCommandService = new PostCommandService(
 			userQueryService,
-			new FakePostRepository(),
-			new FileQueryService(fakeFileRepository)
+			new FakePostRepository()
 		);
 
 		fakeUserRepository.save(User.builder()

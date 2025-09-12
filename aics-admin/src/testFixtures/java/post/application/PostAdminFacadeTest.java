@@ -43,7 +43,7 @@ public class PostAdminFacadeTest {
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 		FileQueryService fileQueryService = new FileQueryService(fakeFileRepository);
 		this.postAdminFacade = new PostAdminFacade(
-			new PostCommandService(userQueryService, fakePostRepository, fileQueryService),
+			new PostCommandService(userQueryService, fakePostRepository),
 			new PostQueryService(fakePostRepository, fakeFileRepository, fakeUserRepository),
 			new PostSchedulingService(fakePostRepository)
 		);

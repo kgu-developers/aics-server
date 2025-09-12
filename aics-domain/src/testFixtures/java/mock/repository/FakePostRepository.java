@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+import kgu.developers.domain.post.infrastructure.PostJpaEntity;
 import org.springframework.data.domain.Pageable;
 
 import kgu.developers.common.response.PageableResponse;
@@ -42,10 +43,19 @@ public class FakePostRepository implements PostRepository {
 			.fileId(post.getFileId())
 			.build();
 
-		TestEntityUtils.setCreatedAt(newPost, LocalDateTime.now());
+		PostJpaEntity entity = PostJpaEntity.fromDomain(newPost);
 
-		data.add(newPost);
-		return newPost;
+		TestEntityUtils.setCreatedAt(entity, LocalDateTime.now());
+
+		Post savedPost = PostJpaEntity.toDomain(entity);
+
+		data.add(savedPost);
+		return savedPost;
+	}
+
+	@Override
+	public void delete(Post post) {
+		data.removeIf(p -> p.getId().equals(post.getId()));
 	}
 
 	@Override
@@ -61,7 +71,7 @@ public class FakePostRepository implements PostRepository {
 			)
 			.sorted(Comparator.comparing(Post::isPinned, Comparator.reverseOrder())
 				.thenComparing(Post::getCreatedAt, Comparator.reverseOrder())
-				.thenComparing(Post::getId))
+				.thenComparing(Post::getId, Comparator.reverseOrder()))
 			.collect(Collectors.toList());
 
 		int start = (int)pageable.getOffset();
