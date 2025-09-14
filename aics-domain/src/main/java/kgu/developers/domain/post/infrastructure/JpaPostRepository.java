@@ -15,5 +15,5 @@ public interface JpaPostRepository extends JpaRepository<PostJpaEntity, Long> {
 	Optional<Post> findFirstByCreatedAtGreaterThanAndDeletedAtIsNullAndCategoryOrderByCreatedAtAsc(
 		LocalDateTime createdAt, Category category);
 
-	Optional<Post> findByIdAndDeletedAtIsNull(Long id);
+	Optional<PostJpaEntity> findByIdAndDeletedAtIsNull(Long id);
 }

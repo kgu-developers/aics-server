@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class QueryPostRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
+	public PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
 		Category category, Pageable pageable) {
 
 		QPostJpaEntity post = QPostJpaEntity.postJpaEntity;
@@ -39,7 +39,7 @@ public class QueryPostRepository {
 			whereClause = whereClause.and(keywordCondition);
 		}
 
-		List<PostJpaEntity> posts = queryFactory.selectFrom(post)
+		List<PostJpaEntity> postEntities = queryFactory.selectFrom(post)
 			.from(post)
 			.where(whereClause)
 			.orderBy(post.isPinned.desc(), post.createdAt.desc(), post.id.desc())
@@ -47,10 +47,14 @@ public class QueryPostRepository {
 			.limit(pageable.getPageSize())
 			.fetch();
 
+		List<Post> posts = postEntities.stream()
+			.map(PostJpaEntity::toDomain)
+			.toList();
+
 		List<Long> postIds = queryFactory.select(post.id)
 			.from(post)
 			.where(whereClause)
-			.orderBy(post.isPinned.desc(), post.createdAt.desc())
+			.orderBy(post.isPinned.desc(), post.createdAt.desc(), post.id.desc())
 			.fetch();
 
 		return PaginatedListResponse.of(posts, PageableResponse.of(pageable, postIds));

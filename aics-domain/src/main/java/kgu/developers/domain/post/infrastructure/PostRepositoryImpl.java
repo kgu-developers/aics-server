@@ -34,11 +34,12 @@ public class PostRepositoryImpl implements PostRepository {
 
 	@Override
 	public Optional<Post> findByIdAndDeletedAtIsNull(Long postId) {
-		return jpaPostRepository.findByIdAndDeletedAtIsNull(postId);
+		return jpaPostRepository.findByIdAndDeletedAtIsNull(postId)
+			.map(PostJpaEntity::toDomain);
 	}
 
 	@Override
-	public PaginatedListResponse findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
+	public PaginatedListResponse<Post> findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(List<String> keywords,
 		Category category, Pageable pageable) {
 		return queryPostRepository.findAllByTitleContainingAndCategoryOrderByCreatedAtDescIdDesc(keywords, category, pageable);
 	}

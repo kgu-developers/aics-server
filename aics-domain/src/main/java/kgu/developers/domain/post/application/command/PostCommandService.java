@@ -34,13 +34,19 @@ public class PostCommandService {
 
 	public void togglePostPinStatus(Post post) {
 		post.togglePinned();
+
+		postRepository.save(post);
 	}
 
 	public void increaseViews(Post post) {
 		post.increaseViews();
+
+		postRepository.save(post);
 	}
 
 	public void deletePost(Post post) {
 		post.delete();
+
+		postRepository.save(post);
 	}
 }

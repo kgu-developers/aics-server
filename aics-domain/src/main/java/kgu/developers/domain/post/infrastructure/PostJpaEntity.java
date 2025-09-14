@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
@@ -20,6 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
+@Table(name = "post")
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 public class PostJpaEntity extends BaseTimeEntity {
