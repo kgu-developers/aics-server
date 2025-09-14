@@ -1,48 +1,24 @@
 package kgu.developers.domain.professor.domain;
 
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PROTECTED;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import kgu.developers.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = PROTECTED)
-public class Professor extends BaseTimeEntity {
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+public class Professor {
 	private Long id;
-
-	@Column(nullable = false, length = 10)
 	private String name;
-
-	@Column(nullable = false)
-	@Enumerated(STRING)
 	private Role role;
-
-	@Column(nullable = false, unique = true, length = 15)
 	private String contact;
-
-	@Column(nullable = false, unique = true, length = 50)
 	private String email;
-
-	@Column(nullable = false)
 	private String img;
-
-	@Column(nullable = false, length = 20)
 	private String officeLoc;
+
+	private LocalDateTime deletedAt;
 
 	public static Professor create(String name, Role role, String contact,
 								   String email, String img, String officeLoc) {
@@ -78,5 +54,9 @@ public class Professor extends BaseTimeEntity {
 
 	public void updateOfficeLoc(String officeLoc) {
 		this.officeLoc = officeLoc;
+	}
+
+	public void deleteProfessor() {
+		this.deletedAt = LocalDateTime.now();
 	}
 }

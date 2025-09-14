@@ -1,6 +1,7 @@
 package kgu.developers.domain.professor.infrastructure;
 
-import static kgu.developers.domain.professor.domain.QProfessor.professor;
+import static kgu.developers.domain.professor.infrastructure.QProfessorEntity.professorEntity;
+
 
 import java.util.List;
 
@@ -19,15 +20,18 @@ public class QueryProfessorRepository {
 	private final JPAQueryFactory queryFactory;
 
 	public List<Professor> findAllOrderByRoleAndName() {
-		return queryFactory.selectFrom(professor)
+		return queryFactory.selectFrom(professorEntity)
 			.orderBy(
 				new CaseBuilder()
-					.when(professor.role.eq(Role.PROFESSOR)).then(1)
-					.when(professor.role.eq(Role.ASSISTANT)).then(2)
+					.when(professorEntity.role.eq(Role.PROFESSOR)).then(1)
+					.when(professorEntity.role.eq(Role.ASSISTANT)).then(2)
 					.otherwise(3)
 					.asc(),
-				professor.name.asc()
+				professorEntity.name.asc()
 			)
-			.fetch();
+			.fetch()
+				.stream()
+				.map(ProfessorEntity::toDomain)
+				.toList();
 	}
 }
