@@ -1,12 +1,11 @@
 package kgu.developers.domain.post.infrastructure;
 
-import static kgu.developers.domain.comment.domain.QComment.comment;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import com.querydsl.jpa.JPAExpressions;
+import kgu.developers.domain.comment.infrastructure.QCommentJpaEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -63,6 +62,7 @@ public class QueryPostRepository {
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
 
 		QPostJpaEntity post = QPostJpaEntity.postJpaEntity;
+		QCommentJpaEntity comment = QCommentJpaEntity.commentJpaEntity;
 
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
 		queryFactory.delete(comment)

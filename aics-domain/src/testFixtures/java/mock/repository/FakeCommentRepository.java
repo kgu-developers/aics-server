@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
+import kgu.developers.domain.comment.infrastructure.CommentJpaEntity;
 import mock.TestEntityUtils;
 
 public class FakeCommentRepository implements CommentRepository {
@@ -24,10 +25,15 @@ public class FakeCommentRepository implements CommentRepository {
 			.postId(comment.getPostId())
 			.build();
 
-		TestEntityUtils.setCreatedAt(newComment, LocalDateTime.now());
+		CommentJpaEntity entity = CommentJpaEntity.fromDomain(newComment);
 
-		data.add(newComment);
-		return newComment;
+		TestEntityUtils.setCreatedAt(entity, LocalDateTime.now());
+
+		Comment savedComment = CommentJpaEntity.toDomain(entity);
+
+		data.add(savedComment);
+
+		return savedComment;
 	}
 
 	@Override

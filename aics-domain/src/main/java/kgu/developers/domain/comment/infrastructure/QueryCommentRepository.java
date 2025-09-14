@@ -1,7 +1,5 @@
 package kgu.developers.domain.comment.infrastructure;
 
-import static kgu.developers.domain.comment.domain.QComment.*;
-
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Repository;
@@ -17,6 +15,8 @@ public class QueryCommentRepository {
 	private final JPAQueryFactory queryFactory;
 
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
+
+		QCommentJpaEntity comment = QCommentJpaEntity.commentJpaEntity;
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
 
 		queryFactory.delete(comment)
