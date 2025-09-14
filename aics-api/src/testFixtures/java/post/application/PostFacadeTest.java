@@ -73,7 +73,8 @@ public class PostFacadeTest {
 		Post delete = fakePostRepository.save(Post.create(
 			"second title", "second content", NEWS, author.getId(), null, false
 		));
-		fakePostRepository.delete(delete);
+		delete.delete();
+		fakePostRepository.save(delete);
 
 		fakePostRepository.save(Post.create(
 			"third title", "third content", NEWS, author.getId(), null, false

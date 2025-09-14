@@ -27,12 +27,6 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public void delete(Post post) {
-		PostJpaEntity entity = PostJpaEntity.fromDomain(post);
-		jpaPostRepository.delete(entity);
-	}
-
-	@Override
 	public Optional<Post> findByIdAndDeletedAtIsNull(Long postId) {
 		return jpaPostRepository.findByIdAndDeletedAtIsNull(postId)
 			.map(PostJpaEntity::toDomain);
