@@ -1,10 +1,10 @@
 package kgu.developers.domain.user.infrastructure;
 
-import static kgu.developers.domain.user.domain.QUser.user;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
+import kgu.developers.domain.post.domain.Post;
+import kgu.developers.domain.post.infrastructure.PostJpaEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -21,17 +21,23 @@ import lombok.RequiredArgsConstructor;
 public class QueryUserRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public PaginatedListResponse findAllByNameOrderByIdDesc(Pageable pageable, String name) {
+	public PaginatedListResponse<User> findAllByNameOrderByIdDesc(Pageable pageable, String name) {
+		QUserJpaEntity user = QUserJpaEntity.userJpaEntity;
+
 		BooleanExpression whereClause = user.deletedAt.isNull()
 			.and(name != null ? user.name.contains(name) : null);
 
-		List<User> users = queryFactory.select(user)
+		List<UserJpaEntity> userEntities = queryFactory.select(user)
 			.from(user)
 			.where(whereClause)
 			.orderBy(user.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
+
+		List<User> users = userEntities.stream()
+			.map(UserJpaEntity::toDomain)
+			.toList();
 
 		List<String> userIds = queryFactory.select(user.id)
 			.from(user)
@@ -43,6 +49,7 @@ public class QueryUserRepository {
 	}
 
 	public void deleteAllByDeletedAtBefore(int retentionDays) {
+		QUserJpaEntity user = QUserJpaEntity.userJpaEntity;
 		LocalDateTime thresholdDate = LocalDateTime.now().minusDays(retentionDays);
 
 		queryFactory.delete(user)
