@@ -17,10 +17,6 @@ public class FakeCommentRepository implements CommentRepository {
 	@Override
 	public Comment save(Comment comment) {
 
-		if (comment.getId() != null) {
-			data.removeIf(p -> p.getId().equals(comment.getId()));
-		}
-
 		Comment savedComment = Comment.builder()
 			.id(comment.getId() == null ? sequence.getAndIncrement() : comment.getId())
 			.content(comment.getContent())
@@ -29,6 +25,10 @@ public class FakeCommentRepository implements CommentRepository {
 			.createdAt(getExistingCreatedAt(comment.getId()))
 			.deletedAt(comment.getDeletedAt())
 			.build();
+
+		if (comment.getId() != null) {
+			data.removeIf(p -> p.getId().equals(comment.getId()));
+		}
 
 		data.add(savedComment);
 		return savedComment;
