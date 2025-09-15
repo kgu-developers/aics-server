@@ -39,7 +39,6 @@ public class QueryPostRepository {
 		}
 
 		List<PostJpaEntity> postEntities = queryFactory.selectFrom(post)
-			.from(post)
 			.where(whereClause)
 			.orderBy(post.isPinned.desc(), post.createdAt.desc(), post.id.desc())
 			.offset(pageable.getOffset())
