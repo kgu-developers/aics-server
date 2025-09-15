@@ -78,6 +78,7 @@ public class CommentFacadeTest {
 			"test2", author.getId(), post.getId()
 		));
 		delete.delete();
+		fakeCommentRepository.save(delete);
 
 		UserDetails user = userQueryService.getUserById("202411345");
 		SecurityContext context = SecurityContextHolder.getContext();

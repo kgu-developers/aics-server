@@ -9,8 +9,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.comment.domain.Comment;
 import kgu.developers.domain.comment.domain.CommentRepository;
-import kgu.developers.domain.comment.infrastructure.CommentJpaEntity;
-import mock.TestEntityUtils;
 
 public class FakeCommentRepository implements CommentRepository {
 	private final List<Comment> data = Collections.synchronizedList(new ArrayList<>());
@@ -18,22 +16,30 @@ public class FakeCommentRepository implements CommentRepository {
 
 	@Override
 	public Comment save(Comment comment) {
-		Comment newComment = Comment.builder()
-			.id(sequence.getAndIncrement())
+
+		if (comment.getId() != null) {
+			data.removeIf(p -> p.getId().equals(comment.getId()));
+		}
+
+		Comment savedComment = Comment.builder()
+			.id(comment.getId() == null ? sequence.getAndIncrement() : comment.getId())
 			.content(comment.getContent())
 			.authorId(comment.getAuthorId())
 			.postId(comment.getPostId())
+			.createdAt(getExistingCreatedAt(comment.getId()))
+			.deletedAt(comment.getDeletedAt())
 			.build();
 
-		CommentJpaEntity entity = CommentJpaEntity.fromDomain(newComment);
-
-		TestEntityUtils.setCreatedAt(entity, LocalDateTime.now());
-
-		Comment savedComment = CommentJpaEntity.toDomain(entity);
-
 		data.add(savedComment);
-
 		return savedComment;
+	}
+
+	private LocalDateTime getExistingCreatedAt(Long id) {
+		return data.stream()
+			.filter(p -> p.getId().equals(id))
+			.findFirst()
+			.map(Comment::getCreatedAt)
+			.orElse(LocalDateTime.now());
 	}
 
 	@Override

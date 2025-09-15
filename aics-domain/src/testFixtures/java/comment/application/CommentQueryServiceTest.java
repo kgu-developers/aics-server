@@ -44,6 +44,7 @@ public class CommentQueryServiceTest {
 			Comment.create("삭제된 댓글 입니다", TEST_AUTHOR_ID, postId)
 		);
 		commentToDelete.delete();
+		fakeCommentRepository.save(commentToDelete);
 	}
 
 	private static void saveTestComment(FakeCommentRepository fakeCommentRepository, Long postId) {
