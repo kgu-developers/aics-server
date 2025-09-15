@@ -3,8 +3,6 @@ package kgu.developers.domain.user.infrastructure;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.post.infrastructure.PostJpaEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

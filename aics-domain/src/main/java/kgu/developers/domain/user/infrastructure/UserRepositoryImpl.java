@@ -3,7 +3,6 @@ package kgu.developers.domain.user.infrastructure;
 import java.util.List;
 import java.util.Optional;
 
-import kgu.developers.domain.post.infrastructure.PostJpaEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

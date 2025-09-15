@@ -7,8 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.comment.domain.Comment;
-import kgu.developers.domain.post.domain.Post;
-import kgu.developers.domain.post.infrastructure.PostJpaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

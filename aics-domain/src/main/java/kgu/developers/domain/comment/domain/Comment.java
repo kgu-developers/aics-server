@@ -1,12 +1,5 @@
 package kgu.developers.domain.comment.domain;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import kgu.developers.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
