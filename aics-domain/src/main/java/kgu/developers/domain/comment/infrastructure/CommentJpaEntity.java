@@ -34,20 +34,20 @@ public class CommentJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String authorId;
 
-    public static CommentJpaEntity toEntity(final Comment post) {
+    public static CommentJpaEntity toEntity(final Comment comment) {
 
-        if ( post == null ) {
+        if ( comment == null ) {
             return null;
         }
 
         CommentJpaEntity entity = CommentJpaEntity.builder()
-            .id(post.getId())
-            .content(post.getContent())
-            .postId(post.getPostId())
-            .authorId(post.getAuthorId())
+            .id(comment.getId())
+            .content(comment.getContent())
+            .postId(comment.getPostId())
+            .authorId(comment.getAuthorId())
             .build();
 
-        entity.setDeletedAt(post.getDeletedAt());
+        entity.setDeletedAt(comment.getDeletedAt());
 
         return entity;
     }
