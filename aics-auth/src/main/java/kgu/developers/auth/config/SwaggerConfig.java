@@ -48,7 +48,7 @@ public class SwaggerConfig {
 	}
 
 	private List<Server> initializeServers() {
-		String activeProfile = environment.getActiveProfiles().length > 0 ? environment.getActiveProfiles()[0] : "local";
+		String activeProfile = environment.getActiveProfiles()[0];
 		String serverUrl = PROFILE_SERVER_URL_MAP.getOrDefault(activeProfile, "http://localhost:8082");
 		return List.of(new Server().url(serverUrl).description("AICS-HOME AUTH (" + activeProfile + ")"));
 	}
