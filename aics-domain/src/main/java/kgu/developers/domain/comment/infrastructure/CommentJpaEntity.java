@@ -34,7 +34,7 @@ public class CommentJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String authorId;
 
-    public static CommentJpaEntity fromDomain(final Comment post) {
+    public static CommentJpaEntity toEntity(final Comment post) {
 
         if ( post == null ) {
             return null;

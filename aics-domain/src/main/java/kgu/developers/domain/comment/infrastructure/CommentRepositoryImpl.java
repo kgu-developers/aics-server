@@ -17,7 +17,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 
 	@Override
 	public Comment save(Comment comment) {
-		CommentJpaEntity entity = CommentJpaEntity.fromDomain(comment);
+		CommentJpaEntity entity = CommentJpaEntity.toEntity(comment);
 		CommentJpaEntity savedEntity = jpaCommentRepository.save(entity);
 		return CommentJpaEntity.toDomain(savedEntity);
 	}

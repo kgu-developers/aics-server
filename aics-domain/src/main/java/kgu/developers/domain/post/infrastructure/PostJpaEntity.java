@@ -49,7 +49,7 @@ public class PostJpaEntity extends BaseTimeEntity {
 
     private Long fileId;
 
-    public static PostJpaEntity fromDomain(final Post post) {
+    public static PostJpaEntity toEntity(final Post post) {
 
         if ( post == null ) {
             return null;

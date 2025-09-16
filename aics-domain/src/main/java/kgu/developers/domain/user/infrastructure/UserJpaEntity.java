@@ -49,7 +49,7 @@ public class UserJpaEntity extends BaseTimeEntity {
     @Enumerated(STRING)
     private Major major;
 
-    public static UserJpaEntity fromDomain(final User user) {
+    public static UserJpaEntity toEntity(final User user) {
 
         if ( user == null ) {
             return null;
