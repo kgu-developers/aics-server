@@ -34,6 +34,7 @@ public class FakeLabRepository implements LabRepository {
 				.loc(lab.getLoc())
 				.site(lab.getSite())
 				.advisor(lab.getAdvisor())
+				.fileId(lab.getFileId())
 				.build();
 
 		data.removeIf(e -> e.getId().equals(id));
