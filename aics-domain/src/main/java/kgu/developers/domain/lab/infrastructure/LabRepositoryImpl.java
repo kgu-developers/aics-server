@@ -17,22 +17,22 @@ public class LabRepositoryImpl implements LabRepository {
 
 	@Override
 	public Lab save(Lab lab) {
-		LabEntity labEntity = LabEntity.fromDomain(lab);
-		LabEntity savedEntity = jpaLabRepository.save(labEntity);
+		LabJpaEntity labJpaEntity = LabJpaEntity.fromDomain(lab);
+		LabJpaEntity savedEntity = jpaLabRepository.save(labJpaEntity);
 		return savedEntity.toDomain();
 	}
 
 	@Override
 	public Optional<Lab> findById(Long id) {
-		Optional<LabEntity> optionalEntity = jpaLabRepository.findById(id);
-		return optionalEntity.map(LabEntity::toDomain);
+		Optional<LabJpaEntity> optionalEntity = jpaLabRepository.findById(id);
+		return optionalEntity.map(LabJpaEntity::toDomain);
 	}
 
 	@Override
 	public List<Lab> findAllByOrderByName() {
-		List<LabEntity> entities = jpaLabRepository.findAllByOrderByName();
+		List<LabJpaEntity> entities = jpaLabRepository.findAllByOrderByName();
 		return entities.stream()
-				.map(LabEntity::toDomain)
+				.map(LabJpaEntity::toDomain)
 				.collect(Collectors.toList());
 	}
 

@@ -8,15 +8,18 @@ import jakarta.persistence.*;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.about.domain.About;
 import kgu.developers.domain.about.domain.Category;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "about")
+@Table(name ="\"about\"")
+@Builder
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class AboutEntity extends BaseTimeEntity {
+public class AboutJpaEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -28,11 +31,6 @@ public class AboutEntity extends BaseTimeEntity {
     @Column(nullable = false, columnDefinition = "text")
     private String content;
 
-    @Builder
-    public AboutEntity(Category category, String content) {
-        this.category = category;
-        this.content = content;
-    }
 
     public About toDomain(){
         return About.builder()
@@ -41,8 +39,9 @@ public class AboutEntity extends BaseTimeEntity {
                 .content(this.content)
                 .build();
     }
-    public static AboutEntity fromDomain(About about){
-        return AboutEntity.builder()
+    public static AboutJpaEntity fromDomain(About about){
+        return AboutJpaEntity.builder()
+                .id(about.getId())
                 .category(about.getCategory())
                 .content(about.getContent())
                 .build();

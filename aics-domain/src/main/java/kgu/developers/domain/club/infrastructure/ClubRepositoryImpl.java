@@ -17,24 +17,24 @@ public class ClubRepositoryImpl implements ClubRepository {
 
 	@Override
 	public Club save(Club club) {
-		ClubEntity entity = ClubEntity.fromDomain(club);
-		ClubEntity savedEntity = jpaClubRepository.save(entity);
+		ClubJpaEntity entity = ClubJpaEntity.fromDomain(club);
+		ClubJpaEntity savedEntity = jpaClubRepository.save(entity);
 
 		return savedEntity.toDomain();
 	}
 
 	@Override
 	public List<Club> findAll() {
-		List<ClubEntity> entities = jpaClubRepository.findAll();
+		List<ClubJpaEntity> entities = jpaClubRepository.findAll();
 		return entities.stream()
-				.map(ClubEntity::toDomain)
+				.map(ClubJpaEntity::toDomain)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public Optional<Club> findById(Long id) {
-		Optional<ClubEntity> optionalEntity = jpaClubRepository.findById(id);
-		return optionalEntity.map(ClubEntity::toDomain);
+		Optional<ClubJpaEntity> optionalEntity = jpaClubRepository.findById(id);
+		return optionalEntity.map(ClubJpaEntity::toDomain);
 	}
 
 	@Override

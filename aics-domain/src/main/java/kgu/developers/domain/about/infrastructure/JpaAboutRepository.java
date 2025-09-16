@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import kgu.developers.domain.about.domain.Category;
 
-public interface JpaAboutRepository extends JpaRepository<AboutEntity, Long> {
-	Optional<AboutEntity> findByCategory(Category category);
+public interface JpaAboutRepository extends JpaRepository<AboutJpaEntity, Long> {
+	Optional<AboutJpaEntity> findByCategory(Category category);
 }

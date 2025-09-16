@@ -56,7 +56,6 @@ public class Professor {
 		this.officeLoc = officeLoc;
 	}
 
-	public void deleteProfessor() {
-		this.deletedAt = LocalDateTime.now();
-	}
+	public void markDeleted() { this.deletedAt = LocalDateTime.now(); }
+
 }

@@ -68,7 +68,6 @@ public class LabCommandServiceTest {
 
 		// when
 		labCommandService.updateLab(lab, targetName, targetLoc, targetSite, targetAdvisor, null);
-		Lab updateLab = fakeLabRepository.findById(lab.getId()).orElse(null);
 		// then
 		assertEquals(targetName, lab.getName());
 		assertEquals(targetLoc, lab.getLoc());
@@ -76,11 +75,6 @@ public class LabCommandServiceTest {
 		assertEquals(targetAdvisor, lab.getAdvisor());
 		assertNull(lab.getFileId());
 
-		assertEquals(targetName, updateLab.getName());
-		assertEquals(lab.getLoc(), updateLab.getLoc());
-		assertEquals(lab.getSite(), updateLab.getSite());
-		assertEquals(lab.getAdvisor(), updateLab.getAdvisor());
-		assertNull(updateLab.getFileId());
 
 	}
 

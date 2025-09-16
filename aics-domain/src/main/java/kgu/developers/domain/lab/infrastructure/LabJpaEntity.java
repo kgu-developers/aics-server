@@ -3,6 +3,7 @@ package kgu.developers.domain.lab.infrastructure;
 import jakarta.persistence.*;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.lab.domain.Lab;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,12 @@ import static lombok.AccessLevel.PROTECTED;
 
 
 @Entity
-@Table(name = "lab")
+@Table(name = "\"lab\"")
+@Builder
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class LabEntity extends BaseTimeEntity {
+public class LabJpaEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -32,17 +35,8 @@ public class LabEntity extends BaseTimeEntity {
     @Column(nullable = false, length = 16)
     private String advisor;
 
-    @Column(name = "file_id")
     private Long fileId;
 
-    @Builder
-    public LabEntity(String name, String loc, String site, String advisor, Long fileId) {
-        this.name = name;
-        this.loc = loc;
-        this.site = site;
-        this.advisor = advisor;
-        this.fileId = fileId;
-    }
     public Lab toDomain(){
         return Lab.builder()
                 .id(id)
@@ -53,8 +47,9 @@ public class LabEntity extends BaseTimeEntity {
                 .fileId(fileId)
                 .build();
     }
-    public static LabEntity fromDomain(Lab lab) {
-        return LabEntity.builder()
+    public static LabJpaEntity fromDomain(Lab lab) {
+        return LabJpaEntity.builder()
+                .id(lab.getId())
                 .name(lab.getName())
                 .loc(lab.getLoc())
                 .site(lab.getSite())

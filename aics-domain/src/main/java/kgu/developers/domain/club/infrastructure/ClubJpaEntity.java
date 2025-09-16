@@ -3,6 +3,7 @@ package kgu.developers.domain.club.infrastructure;
 import jakarta.persistence.*;
 import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.club.domain.Club;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,12 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "club")
+@Table(name = "\"club\"")
+@Builder
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class ClubEntity extends BaseTimeEntity {
+public class ClubJpaEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -28,16 +31,9 @@ public class ClubEntity extends BaseTimeEntity {
     @Column(length = 50)
     private String site;
 
-    @Column(name = "file_id")
     private Long fileId;
 
-    @Builder
-    public ClubEntity(String name, String description, String site, Long fileId) {
-        this.name = name;
-        this.description = description;
-        this.site = site;
-        this.fileId = fileId;
-    }
+
     public Club toDomain() {
         return Club.builder()
                 .id(id)
@@ -47,12 +43,14 @@ public class ClubEntity extends BaseTimeEntity {
                 .fileId(fileId)
                 .build();
     }
-    public static ClubEntity fromDomain(Club club) {
-        return ClubEntity.builder()
+    public static ClubJpaEntity fromDomain(Club club) {
+        return ClubJpaEntity.builder()
+                .id(club.getId())
                 .name(club.getName())
                 .description(club.getDescription())
                 .site(club.getSite())
                 .fileId(club.getFileId())
                 .build();
     }
+
 }

@@ -2,7 +2,5 @@ package kgu.developers.domain.professor.infrastructure;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kgu.developers.domain.professor.domain.Professor;
-
-public interface JpaProfessorRepository extends JpaRepository<ProfessorEntity, Long> {
+public interface JpaProfessorRepository extends JpaRepository<ProfessorJpaEntity, Long> {
 }

@@ -14,12 +14,12 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "professor")
+@Table(name = "\"professor\"")
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class ProfessorEntity extends BaseTimeEntity {
+public class ProfessorJpaEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -44,8 +44,8 @@ public class ProfessorEntity extends BaseTimeEntity {
     private String officeLoc;
 
 
-    public static ProfessorEntity fromDomain(Professor professor) {
-        return ProfessorEntity.builder()
+    public static ProfessorJpaEntity fromDomain(Professor professor) {
+        ProfessorJpaEntity entity = ProfessorJpaEntity.builder()
                 .id(professor.getId())
                 .name(professor.getName())
                 .role(professor.getRole())
@@ -54,6 +54,8 @@ public class ProfessorEntity extends BaseTimeEntity {
                 .img(professor.getImg())
                 .officeLoc(professor.getOfficeLoc())
                 .build();
+        entity.deletedAt = professor.getDeletedAt();
+        return entity;
     }
     public Professor toDomain(){
         return Professor.builder()
@@ -67,15 +69,6 @@ public class ProfessorEntity extends BaseTimeEntity {
                 .deletedAt(getDeletedAt())
                 .build();
 
-    }
-    public void updateFromDomain(Professor professor) {
-        this.name = professor.getName();
-        this.role = professor.getRole();
-        this.contact = professor.getContact();
-        this.email = professor.getEmail();
-        this.img = professor.getImg();
-        this.officeLoc = professor.getOfficeLoc();
-        this.deletedAt = professor.getDeletedAt();
     }
 
 }

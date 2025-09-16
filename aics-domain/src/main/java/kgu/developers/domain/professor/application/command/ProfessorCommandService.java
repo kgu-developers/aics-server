@@ -1,6 +1,5 @@
 package kgu.developers.domain.professor.application.command;
 
-import kgu.developers.domain.professor.infrastructure.ProfessorEntity;
 import org.springframework.stereotype.Service;
 
 import kgu.developers.domain.professor.domain.Professor;
@@ -30,7 +29,7 @@ public class ProfessorCommandService {
 	}
 
 	public void deleteProfessor(Professor professor) {
-		professor.deleteProfessor();
+		professor.markDeleted();
 		professorRepository.save(professor);
 	}
 }

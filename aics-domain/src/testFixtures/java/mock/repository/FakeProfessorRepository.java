@@ -9,36 +9,34 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import kgu.developers.domain.professor.domain.Professor;
 import kgu.developers.domain.professor.domain.ProfessorRepository;
-import kgu.developers.domain.professor.infrastructure.ProfessorEntity;
+import kgu.developers.domain.professor.infrastructure.ProfessorJpaEntity;
 
 public class FakeProfessorRepository implements ProfessorRepository {
 
-	private final List<ProfessorEntity> data = Collections.synchronizedList(new ArrayList<>());
+	private final List<ProfessorJpaEntity> data = Collections.synchronizedList(new ArrayList<>());
 	private final AtomicLong sequence = new AtomicLong(1);
 
 	@Override
 	public Professor save(Professor professor) {
-		if(professor.getId() == null) {
-			ProfessorEntity newProfessor = ProfessorEntity.builder()
-					.id(sequence.getAndIncrement())
-					.name(professor.getName())
-					.role(professor.getRole())
-					.contact(professor.getContact())
-					.email(professor.getEmail())
-					.officeLoc(professor.getOfficeLoc())
-					.img(professor.getImg())
-					.build();
+		Long id = (professor.getId() == null) ? sequence.getAndIncrement() : professor.getId();
 
-			data.add(newProfessor);
-			return newProfessor.toDomain();
-		}else{
-			ProfessorEntity existing = data.stream()
-					.filter(e -> e.getId().equals(professor.getId()))
-					.findFirst()
-					.orElseThrow(() -> new RuntimeException("Professor not found"));
-			existing.updateFromDomain(professor); // 필드만 덮어쓰기
-			return existing.toDomain();
-		}
+		ProfessorJpaEntity newEntity = ProfessorJpaEntity.fromDomain(
+				Professor.builder()
+						.id(id)
+						.name(professor.getName())
+						.role(professor.getRole())
+						.contact(professor.getContact())
+						.email(professor.getEmail())
+						.img(professor.getImg())
+						.officeLoc(professor.getOfficeLoc())
+						.deletedAt(professor.getDeletedAt())
+						.build()
+		);
+
+		data.removeIf(entity -> entity.getId().equals(id)); // ✅ 중복 방지
+		data.add(newEntity);
+		return newEntity.toDomain();
+
 	}
 
 	@Override
@@ -46,13 +44,13 @@ public class FakeProfessorRepository implements ProfessorRepository {
 		return data.stream()
 			.filter(entity -> entity.getId().equals(id))
 			.findFirst()
-				.map(ProfessorEntity::toDomain);
+				.map(ProfessorJpaEntity::toDomain);
 	}
 
 	@Override
 	public List<Professor> findAllOrderByRoleAndName() {
 		return data.stream()
-				.map(ProfessorEntity::toDomain)
+				.map(ProfessorJpaEntity::toDomain)
 			.sorted(Comparator.comparing(Professor::getRole)
 				.thenComparing(Professor::getName))
 			.toList();
@@ -60,9 +58,6 @@ public class FakeProfessorRepository implements ProfessorRepository {
 
 	@Override
 	public void deleteById(Long id) {
-		data.stream()
-				.filter(entity -> entity.getId().equals(id))
-				.findFirst()
-				.ifPresent(entity -> entity.delete());
+		data.removeIf(professor -> professor.getId().equals(id));
 	}
 }
