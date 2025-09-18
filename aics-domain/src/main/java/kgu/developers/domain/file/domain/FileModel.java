@@ -1,5 +1,7 @@
 package kgu.developers.domain.file.domain;
 
+import java.time.LocalDateTime;
+
 import kgu.developers.globalutils.encryption.AesUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +9,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class FileModel {
-	private Long id;
+	private final Long id;
 	private String logicalName;
 	private String physicalPath;
 	private String fileSize;
 	private String extension;
+	private LocalDateTime createAt;
+	private LocalDateTime updatedAt;
+	private LocalDateTime deletedAt;
 
 	private static final long KB = 1024L;
 	private static final long MB = KB * 1024;
@@ -21,7 +26,16 @@ public class FileModel {
 		String readableFileSize = convertToReadableFileSize(sizeInBytes);
 		String encryptedLogicalName = AesUtil.encrypt(logicalName);
 		String encryptedPhysicalPath = AesUtil.encrypt(physicalPath);
-		return new FileModel(null, encryptedLogicalName, encryptedPhysicalPath, readableFileSize, extension);
+		return new FileModel(
+			null,
+			encryptedLogicalName,
+			encryptedPhysicalPath,
+			readableFileSize,
+			extension,
+			LocalDateTime.now(),
+			LocalDateTime.now(),
+			null
+		);
 	}
 
 	private static String convertToReadableFileSize(long sizeInBytes) {

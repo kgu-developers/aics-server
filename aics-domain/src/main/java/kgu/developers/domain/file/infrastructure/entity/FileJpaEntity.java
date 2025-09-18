@@ -51,7 +51,10 @@ public class FileJpaEntity extends BaseTimeEntity {
 			this.logicalName,
 			this.physicalPath,
 			this.fileSize,
-			this.extension
+			this.extension,
+			this.getCreatedAt(),
+			this.getUpdatedAt(),
+			this.getDeletedAt()
 		);
 	}
 }
