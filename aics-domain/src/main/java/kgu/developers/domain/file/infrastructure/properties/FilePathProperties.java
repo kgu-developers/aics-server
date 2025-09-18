@@ -1,4 +1,4 @@
-package kgu.developers.domain.file.infrastructure;
+package kgu.developers.domain.file.infrastructure.properties;
 
 import java.util.Set;
 

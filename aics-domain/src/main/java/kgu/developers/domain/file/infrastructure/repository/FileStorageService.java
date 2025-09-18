@@ -1,4 +1,4 @@
-package kgu.developers.domain.file.infrastructure;
+package kgu.developers.domain.file.infrastructure.repository;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

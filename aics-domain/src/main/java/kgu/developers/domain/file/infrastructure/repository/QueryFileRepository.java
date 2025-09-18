@@ -1,4 +1,4 @@
-package kgu.developers.domain.file.infrastructure;
+package kgu.developers.domain.file.infrastructure.repository;
 
 import static kgu.developers.domain.file.infrastructure.entity.QFileJpaEntity.fileJpaEntity;
 

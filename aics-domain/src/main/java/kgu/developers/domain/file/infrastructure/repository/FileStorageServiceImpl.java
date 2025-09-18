@@ -1,4 +1,4 @@
-package kgu.developers.domain.file.infrastructure;
+package kgu.developers.domain.file.infrastructure.repository;
 
 import static java.nio.file.StandardCopyOption.*;
 
@@ -25,6 +25,8 @@ import kgu.developers.domain.file.exception.FileNotFoundException;
 import kgu.developers.domain.file.exception.FilePathInvalidException;
 import kgu.developers.domain.file.exception.FileStoreFailedException;
 import kgu.developers.domain.file.exception.NotSupportedFileExtensionException;
+import kgu.developers.domain.file.infrastructure.properties.FilePathProperties;
+import kgu.developers.domain.file.infrastructure.ImageResizingService;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {

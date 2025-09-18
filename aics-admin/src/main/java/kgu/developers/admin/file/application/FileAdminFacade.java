@@ -7,7 +7,7 @@ import kgu.developers.domain.file.application.response.FilePathResponse;
 import kgu.developers.domain.file.application.command.FileCommandService;
 import kgu.developers.domain.file.domain.FileDomain;
 import kgu.developers.domain.file.domain.FileModel;
-import kgu.developers.domain.file.infrastructure.FileStorageService;
+import kgu.developers.domain.file.infrastructure.repository.FileStorageService;
 import lombok.RequiredArgsConstructor;
 
 @Component
