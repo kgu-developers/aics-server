@@ -62,7 +62,11 @@ public class CarouselCommandServiceTest {
 	@Test
 	@DisplayName("upateCarousel은 캐러셀을 수정한다.")
 	public void updateCarousel_success() {
-		Carousel carousel = Carousel.builder().build();
+		Carousel carousel = Carousel.create(
+			"oldText",
+			"https://www.old.kgu.ac.kr/",
+			TEST_FILE_ID
+		);
 
 		String link = "https://www.new.kgu.ac.kr/";
 		String text = "newText";

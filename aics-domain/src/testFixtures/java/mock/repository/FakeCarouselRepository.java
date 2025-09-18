@@ -17,14 +17,15 @@ public class FakeCarouselRepository implements CarouselRepository {
 
 	@Override
 	public Carousel save(Carousel carousel) {
-		Carousel savedCarousel = Carousel.builder()
-			.id(sequence.getAndIncrement())
-			.text(carousel.getText())
-			.link(carousel.getLink())
-			.fileId(carousel.getFileId())
-			.build();
-
-		TestEntityUtils.setCreatedAt(savedCarousel, LocalDateTime.now());
+		Carousel savedCarousel = new Carousel(
+			sequence.getAndIncrement(),
+			carousel.getText(),
+			carousel.getLink(),
+			carousel.getFileId(),
+			LocalDateTime.now(),
+			LocalDateTime.now(),
+			null
+		);
 
 		data.add(savedCarousel);
 		return savedCarousel;

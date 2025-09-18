@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.carousel.domain.CarouselRepository;
+import kgu.developers.domain.carousel.infrastructure.entity.CarouselJpaEntity;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -16,7 +17,9 @@ public class CarouselRepositoryImpl implements CarouselRepository {
 
 	@Override
 	public Carousel save(Carousel carousel) {
-		return jpaCarouselRepository.save(carousel);
+		return jpaCarouselRepository.save(
+			CarouselJpaEntity.toEntity(carousel)
+		).toDomain();
 	}
 
 	@Override
@@ -26,11 +29,15 @@ public class CarouselRepositoryImpl implements CarouselRepository {
 
 	@Override
 	public List<Carousel> findAllByFileIsNotNullOrderByCreatedAtDesc() {
-		return jpaCarouselRepository.findAllByFileIdIsNotNullOrderByCreatedAtDesc();
+		return jpaCarouselRepository.findAllByFileIdIsNotNullOrderByCreatedAtDesc()
+			.stream()
+			.map(CarouselJpaEntity::toDomain)
+			.toList();
 	}
 
 	@Override
 	public Optional<Carousel> findById(Long id) {
-		return jpaCarouselRepository.findById(id);
+		return jpaCarouselRepository.findById(id)
+			.map(CarouselJpaEntity::toDomain);
 	}
 }

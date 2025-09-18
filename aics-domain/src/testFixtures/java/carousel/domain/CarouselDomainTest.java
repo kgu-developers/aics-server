@@ -18,7 +18,11 @@ public class CarouselDomainTest {
 	public void createCarousel_success() {
 		//given
 		//when
-		Carousel createdCarousel = Carousel.create(TARGET_CAROUSEL_TEXT, TARGET_CAROUSEL_LINK, FAKE_FILE_ID);
+		Carousel createdCarousel = Carousel.create(
+			TARGET_CAROUSEL_TEXT,
+			TARGET_CAROUSEL_LINK,
+			FAKE_FILE_ID
+		);
 
 		//then
 		assertNotNull(createdCarousel);
@@ -30,7 +34,11 @@ public class CarouselDomainTest {
 	@DisplayName("updateText는 text를 수정한다.")
 	public void updateText_success() {
 		// given
-		Carousel carousel = Carousel.builder().build();
+		Carousel carousel = Carousel.create(
+			TARGET_CAROUSEL_TEXT,
+			TARGET_CAROUSEL_LINK,
+			FAKE_FILE_ID
+		);
 		String text = "text";
 
 		// when
@@ -44,7 +52,11 @@ public class CarouselDomainTest {
 	@DisplayName("updateLink는 link를 수정한다.")
 	public void updateLink_success() {
 		// given
-		Carousel carousel = Carousel.builder().build();
+		Carousel carousel = Carousel.create(
+			TARGET_CAROUSEL_TEXT,
+			TARGET_CAROUSEL_LINK,
+			FAKE_FILE_ID
+		);
 		String link = "link";
 
 		// when
