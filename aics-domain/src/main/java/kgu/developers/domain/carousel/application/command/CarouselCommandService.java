@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.carousel.domain.CarouselRepository;
 import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
+import kgu.developers.domain.file.domain.FileModel;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -16,7 +16,7 @@ public class CarouselCommandService {
 	private final CarouselRepository carouselRepository;
 
 	public Long createCarousel(Long fileId, String text, String link) {
-		FileEntity file = fileQueryService.getFileById(fileId);
+		FileModel file = fileQueryService.getFileById(fileId);
 		Carousel carousel = Carousel.create(text, link, file.getId());
 		return carouselRepository.save(carousel).getId();
 	}

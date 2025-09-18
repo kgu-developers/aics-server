@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
 import mock.repository.FakeFileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +29,6 @@ public class LabFacadeTest {
 		labFacade = new LabFacade(
 			new LabQueryService(fakeLabRepository),new FileQueryService(fakeFileRepository)
 		);
-
-		fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).build());
 
 		fakeLabRepository.save(
 			Lab.create(

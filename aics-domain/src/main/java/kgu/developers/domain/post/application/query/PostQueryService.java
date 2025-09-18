@@ -3,7 +3,7 @@ package kgu.developers.domain.post.application.query;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import kgu.developers.domain.file.domain.FileEntity;
+import kgu.developers.domain.file.domain.FileModel;
 import kgu.developers.domain.file.domain.FileRepository;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.domain.UserRepository;
@@ -41,7 +41,7 @@ public class PostQueryService {
 		Post prevPost = postRepository.findByPrevPost(postId, timestamp, category).orElse(null);
 		Post nextPost = postRepository.findByNextPost(postId, timestamp, category).orElse(null);
 
-		FileEntity file = fileRepository.findById(post.getFileId()).orElse(null);
+		FileModel file = fileRepository.findById(post.getFileId()).orElse(null);
 		User author = userRepository.findById(post.getAuthorId()).orElse(null);
 		PostTitleResponse prevPostResponse = PostTitleResponse.from(prevPost);
 		PostTitleResponse nextPostResponse = PostTitleResponse.from(nextPost);

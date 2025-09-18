@@ -9,10 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.domain.Lab;
-import mock.repository.FakeFileRepository;
 import mock.repository.FakeLabRepository;
 
 public class LabCommandServiceTest {
@@ -28,10 +26,8 @@ public class LabCommandServiceTest {
 	}
 
 	private void initializeLabCommandService() {
-		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
 		labCommandService = new LabCommandService(fakeLabRepository);
-		fakeFileRepository.save(FileEntity.builder().id(1L).build());
 		fakeLabRepository.save(saveTestLab());
 	}
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.carousel.domain.Carousel;
-import kgu.developers.domain.file.domain.FileEntity;
 
 public class CarouselDomainTest {
 	private static final String TARGET_CAROUSEL_TEXT = "컴퓨터공학부 대표 이미지";
@@ -53,19 +52,5 @@ public class CarouselDomainTest {
 
 		// then
 		assertEquals(link, carousel.getLink());
-	}
-
-	@Test
-	@DisplayName("updateFile은 file를 수정한다.")
-	public void updateFile_success() {
-		// given
-		Carousel carousel = Carousel.builder().build();
-		FileEntity file = FileEntity.builder().build();
-
-		// when
-		carousel.updateFileId(file.getId());
-
-		// then
-		assertEquals(file.getId(), carousel.getFileId());
 	}
 }

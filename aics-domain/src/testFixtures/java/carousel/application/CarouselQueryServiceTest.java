@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.carousel.application.query.CarouselQueryService;
 import kgu.developers.domain.carousel.domain.Carousel;
-import kgu.developers.domain.file.domain.FileEntity;
 import mock.repository.FakeCarouselRepository;
 
 public class CarouselQueryServiceTest {
