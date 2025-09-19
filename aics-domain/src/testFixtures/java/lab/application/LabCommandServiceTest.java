@@ -31,7 +31,7 @@ public class LabCommandServiceTest {
 		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
 		labCommandService = new LabCommandService(fakeLabRepository);
-		fakeFileRepository.save(FileEntity.builder().id(1L).build());
+		fakeFileRepository.save(FileEntity.builder().id(1L).physicalPath("test_path").build());
 		fakeLabRepository.save(saveTestLab());
 	}
 

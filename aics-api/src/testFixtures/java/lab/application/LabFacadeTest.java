@@ -31,7 +31,7 @@ public class LabFacadeTest {
 			new LabQueryService(fakeLabRepository),new FileQueryService(fakeFileRepository)
 		);
 
-		fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).build());
+		fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).physicalPath("test_path").build());
 
 		fakeLabRepository.save(
 			Lab.create(

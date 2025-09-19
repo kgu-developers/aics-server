@@ -36,7 +36,7 @@ public class LabAdminFacadeTest {
 			new LabQueryService(fakeLabRepository)
 		);
 
-		fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).build());
+		fakeFileRepository.save(FileEntity.builder().id(TEST_FILE_ID).physicalPath("test_path").build());
 		fakeLabRepository.save(Lab.builder()
 			.name("Lab A")
 			.loc("8500")
