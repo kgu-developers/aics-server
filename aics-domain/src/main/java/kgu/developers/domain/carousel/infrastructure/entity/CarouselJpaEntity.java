@@ -34,12 +34,12 @@ public class CarouselJpaEntity extends BaseTimeEntity {
 	private Long fileId;
 
 	public static CarouselJpaEntity toEntity(Carousel carousel) {
-		return new CarouselJpaEntity(
-			carousel.getId(),
-			carousel.getText(),
-			carousel.getLink(),
-			carousel.getFileId()
-		);
+		return CarouselJpaEntity.builder()
+			.id(carousel.getId())
+			.text(carousel.getText())
+			.link(carousel.getLink())
+			.fileId(carousel.getFileId())
+			.build();
 	}
 
 	public Carousel toDomain() {
