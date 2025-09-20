@@ -38,6 +38,7 @@ public class FileJpaEntity extends BaseTimeEntity {
 
 	public static FileJpaEntity toEntity(FileModel file) {
 		return FileJpaEntity.builder()
+			.id(file.getId())
 			.logicalName(file.getLogicalName())
 			.physicalPath(file.getPhysicalPath())
 			.fileSize(file.getFileSize())
