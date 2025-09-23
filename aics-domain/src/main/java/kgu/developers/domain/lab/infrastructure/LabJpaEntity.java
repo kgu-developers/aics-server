@@ -47,7 +47,7 @@ public class LabJpaEntity extends BaseTimeEntity {
                 .fileId(fileId)
                 .build();
     }
-    public static LabJpaEntity fromDomain(Lab lab) {
+    public static LabJpaEntity toEntity(Lab lab) {
         return LabJpaEntity.builder()
                 .id(lab.getId())
                 .name(lab.getName())

@@ -17,7 +17,7 @@ public class ClubRepositoryImpl implements ClubRepository {
 
 	@Override
 	public Club save(Club club) {
-		ClubJpaEntity entity = ClubJpaEntity.fromDomain(club);
+		ClubJpaEntity entity = ClubJpaEntity.toEntity(club);
 		ClubJpaEntity savedEntity = jpaClubRepository.save(entity);
 
 		return savedEntity.toDomain();

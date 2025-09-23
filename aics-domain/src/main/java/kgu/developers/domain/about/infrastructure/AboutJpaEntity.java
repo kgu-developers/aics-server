@@ -39,7 +39,7 @@ public class AboutJpaEntity extends BaseTimeEntity {
                 .content(this.content)
                 .build();
     }
-    public static AboutJpaEntity fromDomain(About about){
+    public static AboutJpaEntity toEntity(About about){
         return AboutJpaEntity.builder()
                 .id(about.getId())
                 .category(about.getCategory())

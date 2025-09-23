@@ -16,7 +16,7 @@ public class AboutRepositoryImpl implements AboutRepository {
 
 	@Override
 	public About save(About about) {
-		AboutJpaEntity entity = AboutJpaEntity.fromDomain(about);
+		AboutJpaEntity entity = AboutJpaEntity.toEntity(about);
 		AboutJpaEntity savedEntity = jpaAboutRepository.save(entity);
 		return savedEntity.toDomain();
 

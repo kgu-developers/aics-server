@@ -44,7 +44,7 @@ public class ProfessorJpaEntity extends BaseTimeEntity {
     private String officeLoc;
 
 
-    public static ProfessorJpaEntity fromDomain(Professor professor) {
+    public static ProfessorJpaEntity toEntity(Professor professor) {
         ProfessorJpaEntity entity = ProfessorJpaEntity.builder()
                 .id(professor.getId())
                 .name(professor.getName())

@@ -20,7 +20,7 @@ public class FakeProfessorRepository implements ProfessorRepository {
 	public Professor save(Professor professor) {
 		Long id = (professor.getId() == null) ? sequence.getAndIncrement() : professor.getId();
 
-		ProfessorJpaEntity newEntity = ProfessorJpaEntity.fromDomain(
+		ProfessorJpaEntity newEntity = ProfessorJpaEntity.toEntity(
 				Professor.builder()
 						.id(id)
 						.name(professor.getName())

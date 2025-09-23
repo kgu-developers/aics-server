@@ -43,7 +43,7 @@ public class ClubJpaEntity extends BaseTimeEntity {
                 .fileId(fileId)
                 .build();
     }
-    public static ClubJpaEntity fromDomain(Club club) {
+    public static ClubJpaEntity toEntity(Club club) {
         return ClubJpaEntity.builder()
                 .id(club.getId())
                 .name(club.getName())

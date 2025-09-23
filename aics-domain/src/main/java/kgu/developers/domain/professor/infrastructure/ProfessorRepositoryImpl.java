@@ -17,7 +17,7 @@ public class ProfessorRepositoryImpl implements ProfessorRepository {
 
 	@Override
 	public Professor save(Professor professor) {
-		ProfessorJpaEntity entity = ProfessorJpaEntity.fromDomain(professor);
+		ProfessorJpaEntity entity = ProfessorJpaEntity.toEntity(professor);
 		ProfessorJpaEntity saveEntity = jpaProfessorRepository.save(entity);
 		return saveEntity.toDomain();
 	}
