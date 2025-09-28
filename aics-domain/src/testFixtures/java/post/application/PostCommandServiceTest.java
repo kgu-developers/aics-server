@@ -14,29 +14,27 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.post.application.command.PostCommandService;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
-import mock.repository.FakeFileRepository;
 import mock.repository.FakePostRepository;
 import mock.repository.FakeUserRepository;
 
 public class PostCommandServiceTest {
 	private PostCommandService postCommandService;
+	private final static String title = "test";
+	private final static String content = "test";
 
 	@BeforeEach
 	public void init() {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
-		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
 		postCommandService = new PostCommandService(
 			userQueryService,
-			new FakePostRepository(),
-			new FileQueryService(fakeFileRepository)
+			new FakePostRepository()
 		);
 
 		fakeUserRepository.save(User.builder()
@@ -59,8 +57,6 @@ public class PostCommandServiceTest {
 	@DisplayName("createPost는 게시글을 생성할 수 있다")
 	public void createPost_Success() {
 		// given
-		String title = "test";
-		String content = "test";
 		Category category = NOTIFICATION;
 		Long fileId = 1L;
 
@@ -94,7 +90,11 @@ public class PostCommandServiceTest {
 	@DisplayName("togglePostPinStatus는 게시글의 고정 상태를 토글할 수 있다")
 	public void togglePostPinStatus_Success() {
 		// given
-		Post post = Post.builder().build();
+		Post post = Post.builder()
+				.title(title)
+				.content(content)
+				.build();
+
 
 		boolean initialPinnedStatus = post.isPinned();
 
@@ -115,7 +115,10 @@ public class PostCommandServiceTest {
 	@DisplayName("increaseViews는 게시글의 조회수를 증가시킬 수 있다")
 	public void increaseViews_Success() {
 		// given
-		Post post = Post.builder().build();
+		Post post = Post.builder()
+				.title(title)
+				.content(content)
+				.build();
 
 		int initialViews = post.getViews();
 
@@ -130,7 +133,10 @@ public class PostCommandServiceTest {
 	@DisplayName("deletePost는 게시글을 삭제할 수 있다")
 	public void deletePost_Success() {
 		// given
-		Post post = Post.builder().build();
+		Post post = Post.builder()
+				.title(title)
+				.content(content)
+				.build();
 		assertNull(post.getDeletedAt(), "삭제 전에는 deletedAt이 null이어야 합니다");
 		// when
 		postCommandService.deletePost(post);

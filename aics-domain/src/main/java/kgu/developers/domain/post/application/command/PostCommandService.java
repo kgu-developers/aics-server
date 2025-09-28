@@ -2,7 +2,6 @@ package kgu.developers.domain.post.application.command;
 
 import org.springframework.stereotype.Service;
 
-import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.post.domain.Category;
 import kgu.developers.domain.post.domain.Post;
 import kgu.developers.domain.post.domain.PostRepository;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 public class PostCommandService {
 	private final UserQueryService userQueryService;
 	private final PostRepository postRepository;
-	private final FileQueryService fileQueryService;
 
 	public Long createPost(String title, String content, Category category, Long fileId, boolean isPinned) {
 		User author = userQueryService.me();
@@ -30,17 +28,21 @@ public class PostCommandService {
 		post.updateCategory(category);
 		post.updatePinned(isPinned);
 		post.updateFileId(fileId);
+		postRepository.save(post);
 	}
 
 	public void togglePostPinStatus(Post post) {
 		post.togglePinned();
+		postRepository.save(post);
 	}
 
 	public void increaseViews(Post post) {
 		post.increaseViews();
+		postRepository.save(post);
 	}
 
 	public void deletePost(Post post) {
 		post.delete();
+		postRepository.save(post);
 	}
 }

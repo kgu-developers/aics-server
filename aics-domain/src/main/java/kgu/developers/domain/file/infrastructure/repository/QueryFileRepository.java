@@ -1,6 +1,6 @@
-package kgu.developers.domain.file.infrastructure;
+package kgu.developers.domain.file.infrastructure.repository;
 
-import static kgu.developers.domain.file.domain.QFileEntity.fileEntity;
+import static kgu.developers.domain.file.infrastructure.entity.QFileJpaEntity.fileJpaEntity;
 
 import java.util.Optional;
 
@@ -18,9 +18,9 @@ public class QueryFileRepository {
 	public Optional<String> findPhysicalPathById(Long id) {
 		return Optional.ofNullable(id)
 			.map(i -> queryFactory
-				.select(fileEntity.physicalPath)
-				.from(fileEntity)
-				.where(fileEntity.id.eq(i))
+				.select(fileJpaEntity.physicalPath)
+				.from(fileJpaEntity)
+				.where(fileJpaEntity.id.eq(i))
 				.fetchOne()
 			);
 	}

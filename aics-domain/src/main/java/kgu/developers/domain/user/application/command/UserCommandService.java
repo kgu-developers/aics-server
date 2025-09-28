@@ -23,6 +23,7 @@ public class UserCommandService {
 	public void updateUserDetails(User user, String email, String phone) {
 		user.updateEmail(email);
 		user.updatePhone(phone);
+		userRepository.save(user);
 	}
 
 	private void validateDuplicateId(String id) {
@@ -34,9 +35,11 @@ public class UserCommandService {
 		user.isNewPasswordMatching(newPassword, bCryptPasswordEncoder);
 		user.isPasswordMatching(originalPassword, bCryptPasswordEncoder);
 		user.updatePassword(newPassword,  bCryptPasswordEncoder);
+		userRepository.save(user);
 	}
 
 	public void deleteUser(User user) {
 		user.delete();
+		userRepository.save(user);
 	}
 }

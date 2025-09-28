@@ -26,9 +26,11 @@ public class CommentCommandService {
 
 	public void updateComment(Comment comment, String content) {
 		comment.updateContent(content);
+		commentRepository.save(comment);
 	}
 
 	public void deleteComment(Comment comment) {
 		comment.delete();
+		commentRepository.save(comment);
 	}
 }

@@ -6,7 +6,6 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.club.domain.Club;
 import kgu.developers.domain.file.application.response.FilePathResponse;
-import kgu.developers.domain.file.domain.FileEntity;
 import lombok.Builder;
 
 @Builder

@@ -6,8 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import kgu.developers.domain.file.application.response.FilePathResponse;
 import kgu.developers.domain.file.application.command.FileCommandService;
 import kgu.developers.domain.file.domain.FileDomain;
-import kgu.developers.domain.file.domain.FileEntity;
-import kgu.developers.domain.file.infrastructure.FileStorageService;
+import kgu.developers.domain.file.domain.FileModel;
+import kgu.developers.domain.file.infrastructure.repository.FileStorageService;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -18,7 +18,7 @@ public class FileAdminFacade {
 
 	public FilePathResponse saveFile(MultipartFile file, FileDomain fileDomain) {
 		String storedPath = fileStorageService.store(file, fileDomain);
-		FileEntity savedFile = fileCommandService.saveFile(file, storedPath);
+		FileModel savedFile = fileCommandService.saveFile(file, storedPath);
 		return FilePathResponse.from(savedFile);
 	}
 }

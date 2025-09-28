@@ -78,7 +78,7 @@ public class FakeTestContainer {
 		suppliers.put(PostRepository.class, FakePostRepository::new);
 		suppliers.put(PostQueryService.class, () -> new PostQueryService(get(PostRepository.class), get(FileRepository.class), get(UserRepository.class)));
 		suppliers.put(PostCommandService.class,
-			() -> new PostCommandService(get(UserQueryService.class), get(PostRepository.class), get(FileQueryService.class)));
+			() -> new PostCommandService(get(UserQueryService.class), get(PostRepository.class)));
 
 		suppliers.put(CommentRepository.class, FakeCommentRepository::new);
 		suppliers.put(CommentQueryService.class, () -> new CommentQueryService(get(CommentRepository.class)));

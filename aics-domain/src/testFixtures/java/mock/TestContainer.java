@@ -114,7 +114,7 @@ public class TestContainer {
 
 		this.postRepository = new FakePostRepository();
 		this.postQueryService = new PostQueryService(postRepository, fileRepository, userRepository);
-		this.postCommandService = new PostCommandService(userQueryService, postRepository, fileQueryService);
+		this.postCommandService = new PostCommandService(userQueryService, postRepository);
 
 		this.commentRepository = new FakeCommentRepository();
 		this.commentQueryService = new CommentQueryService(commentRepository);

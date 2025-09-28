@@ -11,7 +11,6 @@ import kgu.developers.api.carousel.presentation.response.CarouselListResponse;
 import kgu.developers.domain.carousel.application.query.CarouselQueryService;
 import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
 import mock.repository.FakeCarouselRepository;
 import mock.repository.FakeFileRepository;
 

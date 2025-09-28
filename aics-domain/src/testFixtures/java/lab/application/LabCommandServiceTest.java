@@ -9,10 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.domain.file.domain.FileEntity;
 import kgu.developers.domain.lab.application.command.LabCommandService;
 import kgu.developers.domain.lab.domain.Lab;
-import mock.repository.FakeFileRepository;
 import mock.repository.FakeLabRepository;
 
 public class LabCommandServiceTest {
@@ -28,10 +26,8 @@ public class LabCommandServiceTest {
 	}
 
 	private void initializeLabCommandService() {
-		FakeFileRepository fakeFileRepository = new FakeFileRepository();
 		fakeLabRepository = new FakeLabRepository();
 		labCommandService = new LabCommandService(fakeLabRepository);
-		fakeFileRepository.save(FileEntity.builder().id(1L).physicalPath("test_path").build());
 		fakeLabRepository.save(saveTestLab());
 	}
 
@@ -60,7 +56,7 @@ public class LabCommandServiceTest {
 	@DisplayName("updateLab은 Lab을 수정할 수 있다")
 	public void updateLab_Success() {
 		// given
-		Lab lab = fakeLabRepository.findById(1L).orElseThrow();
+		Lab lab = saveTestLab();
 		String targetName = "알고리즘 연구실";
 		String targetLoc = "8504";
 		String targetSite = "http://algeo.kyonggi.ac.kr/";
@@ -68,14 +64,13 @@ public class LabCommandServiceTest {
 
 		// when
 		labCommandService.updateLab(lab, targetName, targetLoc, targetSite, targetAdvisor, null);
+
 		// then
 		assertEquals(targetName, lab.getName());
 		assertEquals(targetLoc, lab.getLoc());
 		assertEquals(targetSite, lab.getSite());
 		assertEquals(targetAdvisor, lab.getAdvisor());
 		assertNull(lab.getFileId());
-
-
 	}
 
 	@Test

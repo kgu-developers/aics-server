@@ -63,6 +63,7 @@ public class PostQueryServiceTest {
 			NEWS, author.getId(), null, false
 		));
 		delete.delete();
+		fakePostRepository.save(delete);
 
 		fakePostRepository.save(Post.create(
 			"테스트용 제목4", "테스트용 내용4",

@@ -19,7 +19,9 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public User save(User user) {
-		return jpaUserRepository.save(user);
+		UserJpaEntity entity = UserJpaEntity.toEntity(user);
+		UserJpaEntity savedEntity = jpaUserRepository.save(entity);
+		return UserJpaEntity.toDomain(savedEntity);
 	}
 
 	@Override
@@ -29,7 +31,8 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public Optional<User> findById(String id) {
-		return jpaUserRepository.findById(id);
+		return jpaUserRepository.findById(id)
+			.map(UserJpaEntity::toDomain);
 	}
 
 	@Override
@@ -44,6 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public List<User> findAllById(List<String> ids) {
-		return jpaUserRepository.findAllById(ids);
+		return jpaUserRepository.findAllById(ids).stream()
+			.map(UserJpaEntity::toDomain).toList();
 	}
 }

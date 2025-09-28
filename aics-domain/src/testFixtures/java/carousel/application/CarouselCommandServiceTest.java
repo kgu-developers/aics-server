@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import kgu.developers.domain.carousel.application.command.CarouselCommandService;
 import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.file.application.query.FileQueryService;
-import kgu.developers.domain.file.domain.FileEntity;
+import kgu.developers.domain.file.domain.FileModel;
 import mock.repository.FakeCarouselRepository;
 import mock.repository.FakeFileRepository;
 
@@ -36,7 +36,7 @@ public class CarouselCommandServiceTest {
 
 	private static void saveTestFile(FakeFileRepository fakeFileRepository) {
 		fakeFileRepository.save(
-			FileEntity.create(
+			FileModel.create(
 				"경기대학교 AI컴퓨터공학부 메인 이미지",
 				"/files/carousel/main_image.jpg",
 				1234L,
@@ -62,7 +62,11 @@ public class CarouselCommandServiceTest {
 	@Test
 	@DisplayName("upateCarousel은 캐러셀을 수정한다.")
 	public void updateCarousel_success() {
-		Carousel carousel = Carousel.builder().build();
+		Carousel carousel = Carousel.create(
+			"oldText",
+			"https://www.old.kgu.ac.kr/",
+			TEST_FILE_ID
+		);
 
 		String link = "https://www.new.kgu.ac.kr/";
 		String text = "newText";

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import kgu.developers.domain.carousel.domain.Carousel;
-import kgu.developers.domain.file.domain.FileEntity;
 
 public class CarouselDomainTest {
 	private static final String TARGET_CAROUSEL_TEXT = "컴퓨터공학부 대표 이미지";
@@ -19,7 +18,11 @@ public class CarouselDomainTest {
 	public void createCarousel_success() {
 		//given
 		//when
-		Carousel createdCarousel = Carousel.create(TARGET_CAROUSEL_TEXT, TARGET_CAROUSEL_LINK, FAKE_FILE_ID);
+		Carousel createdCarousel = Carousel.create(
+			TARGET_CAROUSEL_TEXT,
+			TARGET_CAROUSEL_LINK,
+			FAKE_FILE_ID
+		);
 
 		//then
 		assertNotNull(createdCarousel);
@@ -31,7 +34,11 @@ public class CarouselDomainTest {
 	@DisplayName("updateText는 text를 수정한다.")
 	public void updateText_success() {
 		// given
-		Carousel carousel = Carousel.builder().build();
+		Carousel carousel = Carousel.create(
+			TARGET_CAROUSEL_TEXT,
+			TARGET_CAROUSEL_LINK,
+			FAKE_FILE_ID
+		);
 		String text = "text";
 
 		// when
@@ -45,7 +52,11 @@ public class CarouselDomainTest {
 	@DisplayName("updateLink는 link를 수정한다.")
 	public void updateLink_success() {
 		// given
-		Carousel carousel = Carousel.builder().build();
+		Carousel carousel = Carousel.create(
+			TARGET_CAROUSEL_TEXT,
+			TARGET_CAROUSEL_LINK,
+			FAKE_FILE_ID
+		);
 		String link = "link";
 
 		// when
@@ -53,19 +64,5 @@ public class CarouselDomainTest {
 
 		// then
 		assertEquals(link, carousel.getLink());
-	}
-
-	@Test
-	@DisplayName("updateFile은 file를 수정한다.")
-	public void updateFile_success() {
-		// given
-		Carousel carousel = Carousel.builder().build();
-		FileEntity file = FileEntity.builder().build();
-
-		// when
-		carousel.updateFileId(file.getId());
-
-		// then
-		assertEquals(file.getId(), carousel.getFileId());
 	}
 }

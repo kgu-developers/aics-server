@@ -1,35 +1,29 @@
 package kgu.developers.domain.comment.domain;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import kgu.developers.common.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseTimeEntity {
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+public class Comment {
+
 	private Long id;
 
-	@Column(nullable = false)
 	private String content;
 
-	@Column(nullable = false)
 	private Long postId;
 
-	@Column(nullable = false)
 	private String authorId;
+
+	protected LocalDateTime createdAt;
+	protected LocalDateTime updatedAt;
+	protected LocalDateTime deletedAt;
 
 	public static Comment create(String content, String authorId, Long postId) {
 		return Comment.builder()
@@ -41,6 +35,10 @@ public class Comment extends BaseTimeEntity {
 
 	public void updateContent(String content) {
 		this.content = content;
+	}
+
+	public void delete() {
+		this.deletedAt = LocalDateTime.now();
 	}
 
 }

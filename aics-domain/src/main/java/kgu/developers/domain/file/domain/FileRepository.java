@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FileRepository {
-	FileEntity save(FileEntity fileEntity);
-	Optional<FileEntity> findById(Long id);
-	List<FileEntity> findAllByIds(List<Long> ids);
+	FileModel save(FileModel fileEntity);
+	Optional<FileModel> findById(Long id);
+	List<FileModel> findAllByIds(List<Long> ids);
 	Optional<String> findPhysicalPathById(Long id);
 }

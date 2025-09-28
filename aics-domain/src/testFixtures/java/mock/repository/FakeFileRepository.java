@@ -3,38 +3,41 @@ package mock.repository;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
-import kgu.developers.domain.file.domain.FileEntity;
+import kgu.developers.domain.file.domain.FileModel;
 import kgu.developers.domain.file.domain.FileRepository;
+import kgu.developers.domain.file.infrastructure.entity.FileJpaEntity;
 
 public class FakeFileRepository implements FileRepository {
-	private final List<FileEntity> data = Collections.synchronizedList(new ArrayList<>());
+	private final List<FileJpaEntity> data = Collections.synchronizedList(new ArrayList<>());
 	private final AtomicLong sequence = new AtomicLong(1);
 
 	@Override
-	public FileEntity save(FileEntity fileEntity) {
-		FileEntity newFileEntity = FileEntity.builder()
+	public FileModel save(FileModel file) {
+		FileJpaEntity newFileJpaEntity = FileJpaEntity.builder()
 			.id(sequence.getAndIncrement())
-			.logicalName(fileEntity.getLogicalName())
-			.physicalPath(fileEntity.getPhysicalPath())
-			.fileSize(fileEntity.getFileSize())
-			.extension(fileEntity.getExtension())
+			.logicalName(file.getLogicalName())
+			.physicalPath(file.getPhysicalPath())
+			.fileSize(file.getFileSize())
+			.extension(file.getExtension())
 			.build();
 
-		data.add(newFileEntity);
-		return newFileEntity;
+		data.add(newFileJpaEntity);
+		return newFileJpaEntity.toDomain();
 	}
 
 	@Override
-	public Optional<FileEntity> findById(Long id) {
+	public Optional<FileModel> findById(Long id) {
 		return data.stream()
 			.filter(fileEntity -> fileEntity.getId().equals(id))
+			.map(FileJpaEntity::toDomain)
 			.findFirst();
 	}
 
 	@Override
-	public List<FileEntity> findAllByIds(List<Long> ids) {
+	public List<FileModel> findAllByIds(List<Long> ids) {
 		return data.stream()
 				.filter(file -> ids.contains(file.getId()))
+				.map(FileJpaEntity::toDomain)
 				.toList();
 	}
 
@@ -42,7 +45,7 @@ public class FakeFileRepository implements FileRepository {
 	public Optional<String> findPhysicalPathById(Long id) {
 		return data.stream()
 			.filter(fileEntity -> fileEntity.getId().equals(id))
-			.map(FileEntity::getPhysicalPath)
+			.map(FileJpaEntity::getPhysicalPath)
 			.findFirst();
 	}
 }

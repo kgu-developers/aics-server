@@ -17,12 +17,16 @@ public class CommentRepositoryImpl implements CommentRepository {
 
 	@Override
 	public Comment save(Comment comment) {
-		return jpaCommentRepository.save(comment);
+		CommentJpaEntity entity = CommentJpaEntity.toEntity(comment);
+		CommentJpaEntity savedEntity = jpaCommentRepository.save(entity);
+		return CommentJpaEntity.toDomain(savedEntity);
 	}
 
 	@Override
 	public Optional<Comment> findByIdAndDeletedAtIsNull(Long commentId) {
-		return jpaCommentRepository.findByIdAndDeletedAtIsNull(commentId);
+
+		return jpaCommentRepository.findByIdAndDeletedAtIsNull(commentId)
+			.map(CommentJpaEntity::toDomain);
 	}
 
 	@Override
@@ -32,7 +36,9 @@ public class CommentRepositoryImpl implements CommentRepository {
 
 	@Override
 	public List<Comment> findAllByPostIdAndDeletedAtIsNull(Long postId) {
-		return jpaCommentRepository.findAllByPostIdAndDeletedAtIsNull(postId);
+		return jpaCommentRepository.findAllByPostIdAndDeletedAtIsNull(postId).stream()
+			.map(CommentJpaEntity::toDomain)
+			.toList();
 	}
 
 }
