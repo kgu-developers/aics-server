@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -16,6 +17,10 @@ public class Club{
 	private String description;
 	private String site;
 	private Long fileId;
+
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+	private LocalDateTime deletedAt;
 
 	public static Club create(String name, String description, String site, Long fileId) {
 		return Club.builder()

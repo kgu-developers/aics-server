@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -15,6 +17,11 @@ public class Lab{
 	private String site;
 	private String advisor;
 	private Long fileId;
+
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+	private LocalDateTime deletedAt;
+
 
 	public static Lab create(String name, String loc, String site, String advisor, Long fileId) {
 		return Lab.builder()
