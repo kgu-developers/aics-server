@@ -41,6 +41,9 @@ public class ClubJpaEntity extends BaseTimeEntity {
                 .description(description)
                 .site(site)
                 .fileId(fileId)
+                .createdAt(getCreatedAt())
+                .updatedAt(getUpdatedAt())
+                .deletedAt(getDeletedAt())
                 .build();
     }
     public static ClubJpaEntity toEntity(Club club) {

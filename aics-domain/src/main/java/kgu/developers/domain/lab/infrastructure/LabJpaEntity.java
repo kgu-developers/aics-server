@@ -45,6 +45,9 @@ public class LabJpaEntity extends BaseTimeEntity {
                 .site(site)
                 .advisor(advisor)
                 .fileId(fileId)
+                .createdAt(getCreatedAt())
+                .updatedAt(getUpdatedAt())
+                .deletedAt(getDeletedAt())
                 .build();
     }
     public static LabJpaEntity toEntity(Lab lab) {
