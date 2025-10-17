@@ -25,12 +25,12 @@ public class Lab{
 
 	public static Lab create(String name, String loc, String site, String advisor, Long fileId) {
 		return Lab.builder()
-			.name(name)
-			.loc(loc)
-			.site(site)
-			.advisor(advisor)
-			.fileId(fileId)
-			.build();
+				.name(name)
+				.loc(loc)
+				.site(site)
+				.advisor(advisor)
+				.fileId(fileId)
+				.build();
 	}
 
 	public void updateName(String name) {

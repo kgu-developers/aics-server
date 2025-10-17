@@ -24,11 +24,11 @@ public class Club{
 
 	public static Club create(String name, String description, String site, Long fileId) {
 		return Club.builder()
-			.name(name)
-			.description(description)
-			.site(site)
-			.fileId(fileId)
-			.build();
+				.name(name)
+				.description(description)
+				.site(site)
+				.fileId(fileId)
+				.build();
 	}
 
 	public void updateName(String name) {
