@@ -8,4 +8,5 @@ public interface ScheduleManagementRepository {
     void deleteById(Long id);
     Optional<ScheduleManagement> findById(Long id);
     List<ScheduleManagement> findAll();
+    List<ScheduleManagement> findBySubmissionType(SubmissionType submissionType);
 }

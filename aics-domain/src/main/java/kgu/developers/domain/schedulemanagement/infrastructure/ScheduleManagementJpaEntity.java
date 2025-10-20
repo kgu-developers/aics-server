@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -25,6 +26,7 @@ public class ScheduleManagementJpaEntity {
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(STRING)
     private SubmissionType submissionType;
 
     @Column(nullable = false)
@@ -49,16 +51,13 @@ public class ScheduleManagementJpaEntity {
                 .endDate(scheduleManagement.getEndDate())
                 .build();
     }
-    public static ScheduleManagement toDomain(ScheduleManagementJpaEntity entity){
-        if (entity == null) {
-            return null;
-        }
+    public ScheduleManagement toDomain(){
         return ScheduleManagement.builder()
-                .id(entity.getId())
-                .submissionType(entity.getSubmissionType())
-                .title(entity.getTitle())
-                .startDate(entity.getStartDate())
-                .endDate(entity.getEndDate())
+                .id(id)
+                .submissionType(submissionType)
+                .title(title)
+                .startDate(startDate)
+                .endDate(endDate)
                 .build();
     }
 }
