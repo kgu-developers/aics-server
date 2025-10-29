@@ -1,4 +1,4 @@
-package kgu.developers.domain.schedulemanagement.domain;
+package kgu.developers.domain.schedule.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

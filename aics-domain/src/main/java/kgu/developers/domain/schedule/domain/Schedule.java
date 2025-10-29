@@ -1,4 +1,4 @@
-package kgu.developers.domain.schedulemanagement.domain;
+package kgu.developers.domain.schedule.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,16 +11,20 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleManagement {
+public class Schedule {
 
     private long id;
     private SubmissionType submissionType;
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
-    public static ScheduleManagement create(SubmissionType submissionType, String title, LocalDateTime startDate, LocalDateTime endDate) {
-        return ScheduleManagement.builder()
+
+    public static Schedule create(SubmissionType submissionType, String title, LocalDateTime startDate, LocalDateTime endDate) {
+        return Schedule.builder()
                 .submissionType(submissionType)
                 .title(title)
                 .startDate(startDate)
