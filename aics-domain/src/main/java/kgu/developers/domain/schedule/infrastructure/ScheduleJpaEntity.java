@@ -34,6 +34,9 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false, columnDefinition = "text")
+    private String content;
+
     @Column(nullable = false)
     private LocalDateTime startDate;
 
