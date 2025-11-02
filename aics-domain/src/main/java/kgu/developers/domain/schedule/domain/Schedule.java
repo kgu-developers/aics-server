@@ -13,12 +13,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Schedule {
 
-    private long id;
+    private Long id;
     private SubmissionType submissionType;
     private String title;
     private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
@@ -28,7 +29,7 @@ public class Schedule {
         return Schedule.builder()
                 .submissionType(submissionType)
                 .title(title)
-                .content(title)
+                .content(content)
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();

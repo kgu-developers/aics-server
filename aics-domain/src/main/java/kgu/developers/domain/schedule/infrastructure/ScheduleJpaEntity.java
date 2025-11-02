@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@Table(name = "schedul")
+@Table(name = "schedule")
 @NoArgsConstructor
 @AllArgsConstructor(access = PROTECTED)
 public class ScheduleJpaEntity extends BaseTimeEntity {
@@ -52,6 +52,7 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
                 .id(schedule.getId())
                 .submissionType(schedule.getSubmissionType())
                 .title(schedule.getTitle())
+                .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
                 .build();
@@ -62,6 +63,7 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
                 .submissionType(submissionType)
                 .title(title)
                 .startDate(startDate)
+                .content(content)
                 .endDate(endDate)
                 .createdAt(getCreatedAt())
                 .updatedAt(getUpdatedAt())
