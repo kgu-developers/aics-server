@@ -19,8 +19,8 @@ public class ScheduleFacade {
     public List<Schedule> findAll() {
         return scheduleQueryService.getAllScheduleManagements();
     }
-    public List<Schedule> findBySubmissionType(SubmissionType submissionType) {
-        return scheduleQueryService.findBySubmissionType(submissionType);
+    public Schedule findBySubmissionTyp(SubmissionType submissionType) {
+        return scheduleQueryService.getBySubmissionType(submissionType);
     }
 
     public Schedule findById(Long id) {
