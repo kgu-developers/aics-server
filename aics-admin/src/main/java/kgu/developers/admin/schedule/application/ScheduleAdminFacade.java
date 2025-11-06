@@ -1,11 +1,13 @@
 package kgu.developers.admin.schedule.application;
 
+import kgu.developers.admin.schedule.presentation.request.ScheduleContentUpdateRequest;
 import kgu.developers.admin.schedule.presentation.request.ScheduleCreateRequest;
 import kgu.developers.admin.schedule.presentation.request.ScheduleUpdateRequest;
 import kgu.developers.admin.schedule.presentation.response.SchedulePersistResponse;
 import kgu.developers.domain.schedule.application.command.ScheduleService;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +36,14 @@ public class ScheduleAdminFacade {
                 schedule,
                 request.submissionType(),
                 request.title(),
-                request.content(),
                 request.startDate(),
                 request.endDate()
         );
+    }
+    @Transactional
+    public void updateScheduleContent(SubmissionType submissionType, ScheduleContentUpdateRequest request) {
+        Schedule schedule =scheduleQueryService.getBySubmissionType(submissionType);
+        scheduleService.updateScheduleContent(schedule,request.content());
     }
 
     public void deleteSchedule(Long scheduleId) {

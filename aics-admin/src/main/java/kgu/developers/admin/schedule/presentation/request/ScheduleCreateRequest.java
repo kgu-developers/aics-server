@@ -11,7 +11,7 @@ public record ScheduleCreateRequest(
         @NotNull SubmissionType submissionType,
 
         @Schema(description = "일정 제목", example = "중간논문 제출 안내",requiredMode = REQUIRED)
-        @NotBlank @Size(max=50) String title,
+        @NotBlank @Size(max=100,message = "일정 제목은 100자 이내여야 합니다.") String title,
 
         @Schema(description = "일정 내용", example = "매학기 개강 후 2주 이내에 신청서를 작성하여 접수해야합니다.",requiredMode = REQUIRED)
         @NotBlank String content,

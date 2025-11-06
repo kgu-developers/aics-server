@@ -3,9 +3,11 @@ package kgu.developers.admin.schedule.presentation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.schedule.application.ScheduleAdminFacade;
+import kgu.developers.admin.schedule.presentation.request.ScheduleContentUpdateRequest;
 import kgu.developers.admin.schedule.presentation.request.ScheduleCreateRequest;
 import kgu.developers.admin.schedule.presentation.request.ScheduleUpdateRequest;
 import kgu.developers.admin.schedule.presentation.response.SchedulePersistResponse;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +41,15 @@ public class ScheduleAdminControllerImpl implements ScheduleAdminController {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
+    @PatchMapping("/type/{submissionType}/content")
+    public ResponseEntity<Void> updateScheduleContent(
+            @PathVariable SubmissionType submissionType,
+            @Valid @RequestBody ScheduleContentUpdateRequest request
+            ){
+        scheduleAdminFacade.updateScheduleContent(submissionType, request);
+        return ResponseEntity.noContent().build();
+    }
     @Override
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity<Void> deleteSchedule(

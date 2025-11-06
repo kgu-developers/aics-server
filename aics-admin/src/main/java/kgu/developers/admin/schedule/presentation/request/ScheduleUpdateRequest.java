@@ -17,9 +17,6 @@ public record ScheduleUpdateRequest(
         @NotBlank @Size(max=50)
         String title,
 
-        @Schema(description = "일정 내용", example = "매학기 개강 후 2주 이내에 신청서를 작성하여 접수해야합니다.",requiredMode = REQUIRED)
-        @NotBlank
-        String content,
 
         @Schema(description = "시작 일시", example = "2025-04-15T00:00:00", requiredMode = REQUIRED)
         @NotNull @FutureOrPresent
