@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@Table(name = "schedule")
+@Table(name = "schedule", uniqueConstraints = @UniqueConstraint(columnNames = "submission_type"))
 @NoArgsConstructor
 @AllArgsConstructor(access = PROTECTED)
 public class ScheduleJpaEntity extends BaseTimeEntity {
@@ -27,7 +27,7 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "submission_type",nullable = false)
     @Enumerated(STRING)
     private SubmissionType submissionType;
 

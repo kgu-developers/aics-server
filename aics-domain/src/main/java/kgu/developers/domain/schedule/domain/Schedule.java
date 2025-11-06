@@ -34,6 +34,15 @@ public class Schedule {
                 .endDate(endDate)
                 .build();
     }
+    public ScheduleStatus statusAt(LocalDateTime referenceTime) {
+        if (referenceTime.isBefore(startDate)) {
+            return ScheduleStatus.PENDING;
+        }
+        if (referenceTime.isAfter(endDate)) {
+            return ScheduleStatus.CLOSED;
+        }
+        return ScheduleStatus.IN_PROGRESS;
+    }
     public void updateSubmissionType(SubmissionType submissionType) {
         this.submissionType = submissionType;
     }

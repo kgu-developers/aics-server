@@ -40,11 +40,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public List<Schedule> findBySubmissionType(SubmissionType submissionType){
+    public Optional<Schedule> findBySubmissionTyp(SubmissionType submissionType) {
         return jpaScheduleRepository.findBySubmissionType(submissionType)
-                .stream()
-                .map(kgu.developers.domain.schedule.infrastructure.ScheduleJpaEntity::toDomain)
-                .collect(Collectors.toList());
+                .map(ScheduleJpaEntity::toDomain);
     }
 
 }
