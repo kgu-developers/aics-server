@@ -1,4 +1,4 @@
-package kgu.developers.domain.thesis.infrastructure.entity;
+package kgu.developers.domain.certificate.infrastructure.entity;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import kgu.developers.common.domain.BaseTimeEntity;
-import kgu.developers.domain.thesis.domain.Thesis;
+import kgu.developers.domain.certificate.domain.Certificate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(
-	name = "thesis",
+	name = "certificate",
 	indexes = {
-		@Index(name = "idx_thesis_schedule_id", columnList = "schedule_id"),
+		@Index(name = "idx_certificate_schedule_id", columnList = "schedule_id"),
 	})
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PRIVATE)
-public class ThesisJpaEntity extends BaseTimeEntity {
+public class CertificateJpaEntity extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,29 +34,29 @@ public class ThesisJpaEntity extends BaseTimeEntity {
 	private Long scheduleId;
 
 	@Column(nullable = false)
-	private Long thesisFileId;
+	private Long certificateFileId;
 
 	@Column(nullable = false)
 	private boolean approval = false;
 
-	public static ThesisJpaEntity toEntity(Thesis thesis) {
-		return ThesisJpaEntity.builder()
-			.id(thesis.getId())
-			.scheduleId(thesis.getScheduleId())
-			.thesisFileId(thesis.getThesisFileId())
-			.approval(thesis.isApproval())
+	public static CertificateJpaEntity toEntity(Certificate certificate) {
+		return CertificateJpaEntity.builder()
+			.id(certificate.getId())
+			.scheduleId(certificate.getScheduleId())
+			.certificateFileId(certificate.getCertificateFileId())
+			.approval(certificate.isApproval())
 			.build();
 	}
 
-	public static Thesis toDomain(ThesisJpaEntity entity) {
+	public static Certificate toDomain(CertificateJpaEntity entity) {
 		if (entity == null) {
 			return null;
 		}
 
-		return Thesis.of(
+		return Certificate.of(
 			entity.id,
 			entity.scheduleId,
-			entity.thesisFileId,
+			entity.certificateFileId,
 			entity.approval,
 			entity.getCreatedAt(),
 			entity.getUpdatedAt(),
