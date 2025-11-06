@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@Table(name = "schedul")
+@Table(name = "schedule", uniqueConstraints = @UniqueConstraint(columnNames = "submission_type"))
 @NoArgsConstructor
 @AllArgsConstructor(access = PROTECTED)
 public class ScheduleJpaEntity extends BaseTimeEntity {
@@ -27,12 +27,15 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "submission_type",nullable = false)
     @Enumerated(STRING)
     private SubmissionType submissionType;
 
     @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false, columnDefinition = "text")
+    private String content;
 
     @Column(nullable = false)
     private LocalDateTime startDate;
@@ -45,10 +48,11 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
             return null;
         }
 
-        return kgu.developers.domain.schedule.infrastructure.ScheduleJpaEntity.builder()
+        return ScheduleJpaEntity.builder()
                 .id(schedule.getId())
                 .submissionType(schedule.getSubmissionType())
                 .title(schedule.getTitle())
+                .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
                 .build();
@@ -59,6 +63,7 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
                 .submissionType(submissionType)
                 .title(title)
                 .startDate(startDate)
+                .content(content)
                 .endDate(endDate)
                 .createdAt(getCreatedAt())
                 .updatedAt(getUpdatedAt())

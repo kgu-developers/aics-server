@@ -1,5 +1,6 @@
 package kgu.developers.domain.schedule.application.command;
 
+import com.sun.jdi.request.DuplicateRequestException;
 import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.ScheduleRepository;
 import kgu.developers.domain.schedule.domain.SubmissionType;
@@ -14,13 +15,16 @@ import java.time.LocalDateTime;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
-    public Long createScheduleManagement(SubmissionType submissionType, String title, LocalDateTime startDate, LocalDateTime endDate) {
-        Schedule schedule = Schedule.create(submissionType,title,startDate,endDate);
+    public Long createSchedule(SubmissionType submissionType, String title, String content , LocalDateTime startDate, LocalDateTime endDate) {
+        scheduleRepository.findBySubmissionTyp(submissionType).ifPresent(existing -> {
+            throw new DuplicateRequestException();
+        });
+        Schedule schedule = Schedule.create(submissionType,title,content,startDate,endDate);
 
         return scheduleRepository.save(schedule).getId();
     }
     @Transactional
-    public void updateScheduleManagement(Schedule schedule, SubmissionType submissionType , String title, LocalDateTime startDate, LocalDateTime endDate) {
+    public void updateSchedule(Schedule schedule, SubmissionType submissionType , String title, LocalDateTime startDate, LocalDateTime endDate) {
         schedule.updateSubmissionType(submissionType);
         schedule.updateTitle(title);
         schedule.updateStartDate(startDate);
@@ -28,7 +32,12 @@ public class ScheduleService {
 
         scheduleRepository.save(schedule);
     }
-    public void deleteScheduleManagement(Long id) {
+    @Transactional
+    public void updateScheduleContent(Schedule schedule, String content) {
+        schedule.updateContent(content);
+        scheduleRepository.save(schedule);
+    }
+    public void deleteSchedule(Long id) {
         scheduleRepository.deleteById(id);
     }
 

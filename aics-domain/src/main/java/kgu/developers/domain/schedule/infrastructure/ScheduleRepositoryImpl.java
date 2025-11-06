@@ -18,7 +18,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     @Override
     public Schedule save(Schedule schedule){
         return jpaScheduleRepository.save(
-                kgu.developers.domain.schedule.infrastructure.ScheduleJpaEntity.toEntity(schedule)
+                ScheduleJpaEntity.toEntity(schedule)
         ).toDomain();
 
     }
@@ -29,22 +29,20 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     @Override
     public Optional<Schedule> findById(Long id){
         Optional<ScheduleJpaEntity> optionalEntity = jpaScheduleRepository.findById(id);
-        return optionalEntity.map(kgu.developers.domain.schedule.infrastructure.ScheduleJpaEntity::toDomain);
+        return optionalEntity.map(ScheduleJpaEntity::toDomain);
     }
 
     @Override
     public List<Schedule> findAll() {
         return jpaScheduleRepository.findAll().stream()
-                .map(kgu.developers.domain.schedule.infrastructure.ScheduleJpaEntity::toDomain)
+                .map(ScheduleJpaEntity::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Schedule> findBySubmissionType(SubmissionType submissionType){
+    public Optional<Schedule> findBySubmissionTyp(SubmissionType submissionType) {
         return jpaScheduleRepository.findBySubmissionType(submissionType)
-                .stream()
-                .map(kgu.developers.domain.schedule.infrastructure.ScheduleJpaEntity::toDomain)
-                .collect(Collectors.toList());
+                .map(ScheduleJpaEntity::toDomain);
     }
 
 }

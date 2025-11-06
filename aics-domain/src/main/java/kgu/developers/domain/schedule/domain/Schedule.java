@@ -13,23 +13,35 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Schedule {
 
-    private long id;
+    private Long id;
     private SubmissionType submissionType;
     private String title;
+    private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
 
-    public static Schedule create(SubmissionType submissionType, String title, LocalDateTime startDate, LocalDateTime endDate) {
+    public static Schedule create(SubmissionType submissionType, String title,String content, LocalDateTime startDate, LocalDateTime endDate) {
         return Schedule.builder()
                 .submissionType(submissionType)
                 .title(title)
+                .content(content)
                 .startDate(startDate)
                 .endDate(endDate)
                 .build();
+    }
+    public ScheduleStatus statusAt(LocalDateTime referenceTime) {
+        if (referenceTime.isBefore(startDate)) {
+            return ScheduleStatus.PENDING;
+        }
+        if (referenceTime.isAfter(endDate)) {
+            return ScheduleStatus.CLOSED;
+        }
+        return ScheduleStatus.IN_PROGRESS;
     }
     public void updateSubmissionType(SubmissionType submissionType) {
         this.submissionType = submissionType;
@@ -37,6 +49,7 @@ public class Schedule {
     public void updateTitle(String title) {
         this.title = title;
     }
+    public void updateContent(String content) {this.content = content;}
     public void updateStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
