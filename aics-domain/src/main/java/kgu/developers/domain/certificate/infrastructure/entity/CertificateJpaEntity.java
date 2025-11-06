@@ -40,6 +40,10 @@ public class CertificateJpaEntity extends BaseTimeEntity {
 	private boolean approval = false;
 
 	public static CertificateJpaEntity toEntity(Certificate certificate) {
+		if (certificate == null) {
+			return null;
+		}
+
 		return CertificateJpaEntity.builder()
 			.id(certificate.getId())
 			.scheduleId(certificate.getScheduleId())

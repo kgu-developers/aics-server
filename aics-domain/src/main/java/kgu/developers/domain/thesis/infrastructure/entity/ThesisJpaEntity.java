@@ -40,6 +40,10 @@ public class ThesisJpaEntity extends BaseTimeEntity {
 	private boolean approval = false;
 
 	public static ThesisJpaEntity toEntity(Thesis thesis) {
+		if (thesis == null) {
+			return null;
+		}
+
 		return ThesisJpaEntity.builder()
 			.id(thesis.getId())
 			.scheduleId(thesis.getScheduleId())

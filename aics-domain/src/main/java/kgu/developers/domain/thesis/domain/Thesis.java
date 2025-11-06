@@ -2,9 +2,12 @@ package kgu.developers.domain.thesis.domain;
 
 import java.time.LocalDateTime;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Thesis {
 	private Long id;
 	private Long scheduleId;
