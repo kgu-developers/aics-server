@@ -24,7 +24,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@Table(name = "\"user\"")
+@Table(name = "\"graduation_user\"")
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PRIVATE)
 public class GraduationUserJpaEntity extends BaseTimeEntity {
