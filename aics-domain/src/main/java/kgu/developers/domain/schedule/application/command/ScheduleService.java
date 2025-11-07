@@ -1,9 +1,10 @@
 package kgu.developers.domain.schedule.application.command;
 
-import com.sun.jdi.request.DuplicateRequestException;
+
 import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.ScheduleRepository;
 import kgu.developers.domain.schedule.domain.SubmissionType;
+import kgu.developers.domain.schedule.exception.DuplicateScheduleTypeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class ScheduleService {
 
     public Long createSchedule(SubmissionType submissionType, String title, String content , LocalDateTime startDate, LocalDateTime endDate) {
         scheduleRepository.findBySubmissionTyp(submissionType).ifPresent(existing -> {
-            throw new DuplicateRequestException();
+            throw new DuplicateScheduleTypeException();
         });
         Schedule schedule = Schedule.create(submissionType,title,content,startDate,endDate);
 
