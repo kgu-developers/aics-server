@@ -17,7 +17,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     public Long createSchedule(SubmissionType submissionType, String title, String content , LocalDateTime startDate, LocalDateTime endDate) {
-        scheduleRepository.findBySubmissionTyp(submissionType).ifPresent(existing -> {
+        scheduleRepository.findBySubmissionType(submissionType).ifPresent(existing -> {
             throw new DuplicateScheduleTypeException();
         });
         Schedule schedule = Schedule.create(submissionType,title,content,startDate,endDate);

@@ -1,4 +1,4 @@
-package kgu.developers.domain.schedule.infrastructure;
+package kgu.developers.domain.schedule.infrastructure.entity;
 
 import jakarta.persistence.*;
 import kgu.developers.common.domain.BaseTimeEntity;

@@ -34,7 +34,7 @@ public class Schedule {
                 .endDate(endDate)
                 .build();
     }
-    public ScheduleStatus statusAt(LocalDateTime referenceTime) {
+    public ScheduleStatus determineStatusAt(LocalDateTime referenceTime) {
         if (referenceTime.isBefore(startDate)) {
             return ScheduleStatus.PENDING;
         }

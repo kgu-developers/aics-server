@@ -1,8 +1,9 @@
-package kgu.developers.domain.schedule.infrastructure;
+package kgu.developers.domain.schedule.infrastructure.repository;
 
 import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.ScheduleRepository;
 import kgu.developers.domain.schedule.domain.SubmissionType;
+import kgu.developers.domain.schedule.infrastructure.entity.ScheduleJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -40,7 +41,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public Optional<Schedule> findBySubmissionTyp(SubmissionType submissionType) {
+    public Optional<Schedule> findBySubmissionType(SubmissionType submissionType) {
         return jpaScheduleRepository.findBySubmissionType(submissionType)
                 .map(ScheduleJpaEntity::toDomain);
     }
