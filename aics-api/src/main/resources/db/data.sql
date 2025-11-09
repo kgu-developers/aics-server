@@ -131,3 +131,18 @@ VALUES ('참여 신청 방법을 자세히 알고 싶습니다.', '2025-03-03 00
        ('주요 시설 이용 안내도 포함되면 좋겠습니다.', '2025-03-03 06:02:00', '2025-03-03 06:02:00', 7, '202412348'),
        ('프로젝트 자료를 다운로드했습니다. 유익하네요.', '2025-03-03 07:01:00', '2025-03-03 07:01:00', 8, '202412347'),
        ('연구 참여 방법이 있나요?', '2025-03-03 07:02:00', '2025-03-03 07:02:00', 8, '202412346');
+
+-- schedule
+INSERT INTO schedule (submission_type, title, content, start_date, end_date, created_at, updated_at)
+VALUES ('SUBMITTED', '신청 접수', '학부생 졸업 논문 신청을 접수합니다.', '2025-02-24 09:00:00', '2025-03-10 18:00:00',
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('MIDTHESIS', '중간 보고서', '중간 논문 제출 및 심사 기간입니다.', '2025-04-01 09:00:00', '2025-04-12 18:00:00',
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('FINALTHESIS', '최종 보고서', '최종 논문 제출 및 심사 기간입니다.', '2025-05-20 09:00:00', '2025-06-05 18:00:00',
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('CERTIFICATE', '제안서', '취득한 자격증 제출 및 심사 기간입니다.', '2025-03-15 09:00:00', '2025-03-29 18:00:00',
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('APPROVED', '최종 통과', '최종 승인 기간입니다.', '2025-06-10 09:00:00', '2025-06-14 18:00:00',
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('OTHER', '기타 일정 안내', '기타 일정 입니다.', '2025-03-01 09:00:00', '2025-12-31 18:00:00',
+        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
