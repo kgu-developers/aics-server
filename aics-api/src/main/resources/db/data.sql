@@ -131,3 +131,12 @@ VALUES ('참여 신청 방법을 자세히 알고 싶습니다.', '2025-03-03 00
        ('주요 시설 이용 안내도 포함되면 좋겠습니다.', '2025-03-03 06:02:00', '2025-03-03 06:02:00', 7, '202412348'),
        ('프로젝트 자료를 다운로드했습니다. 유익하네요.', '2025-03-03 07:01:00', '2025-03-03 07:01:00', 8, '202412347'),
        ('연구 참여 방법이 있나요?', '2025-03-03 07:02:00', '2025-03-03 07:02:00', 8, '202412346');
+
+INSERT INTO graduation_user (name, email, advisor_professor, graduation_type, graduation_date,
+                             mid_thesis_id, final_thesis_id, certificate_id, user_id, created_at, updated_at)
+VALUES
+    ('김철수', 'chulsoo@kyonggi.ac.kr', '이순신', '논문', '2028-02-28', 1, 2, NULL, '202512345', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)),
+    ('이영희', 'younghee@kyonggi.ac.kr', '홍길동', '자격증', '2028-08-31', NULL, NULL, 1, '202512346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)),
+    ('박민수', 'minsu@kyonggi.ac.kr', '정약용', '논문', '2029-02-28', 3, NULL, NULL, '202512347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)),
+    ('정수진', 'sujin@kyonggi.ac.kr', '김이박', '논문', '2030-02-28', 4, 5, NULL, '202512349', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)),
+    ('최동욱', 'dongwook@kyonggi.ac.kr', '이교수', '자격증', '2027-08-31', NULL, NULL, 2, '202512348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP));
