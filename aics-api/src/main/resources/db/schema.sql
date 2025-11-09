@@ -154,7 +154,7 @@ CREATE TABLE graduation_user
     advisor_professor  VARCHAR(20),
     graduation_type    VARCHAR(20)  NOT NULL
     CONSTRAINT graduaton_type_check
-            CHECK ((graduation_type)::TEXT = ANY (ARRAY ['논문', '자격증'])),
+            CHECK ((graduation_type)::TEXT = ANY (ARRAY ['THESIS', 'CERTIFICATE'])),
     graduation_date    DATE,
     mid_thesis_id      BIGINT,
     final_thesis_id    BIGINT,
