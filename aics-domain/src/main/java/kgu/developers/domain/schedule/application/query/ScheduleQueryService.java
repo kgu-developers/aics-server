@@ -24,7 +24,7 @@ public class ScheduleQueryService {
                 .orElseThrow(ScheduleNotFoundException::new);
     }
     public Schedule getBySubmissionType(SubmissionType submissionType) {
-        return scheduleRepository.findBySubmissionTyp(submissionType)
+        return scheduleRepository.findBySubmissionType(submissionType)
                 .orElseThrow(ScheduleNotFoundException::new);
     }
 }
