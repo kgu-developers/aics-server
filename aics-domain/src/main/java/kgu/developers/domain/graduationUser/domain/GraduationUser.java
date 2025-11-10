@@ -1,5 +1,6 @@
 package kgu.developers.domain.graduationUser.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class GraduationUser {
     private Long id;
     private String name;
@@ -23,6 +25,15 @@ public class GraduationUser {
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
     protected LocalDateTime deletedAt;
+
+    public static GraduationUser create(String studentId, String name, String advisor, Boolean capstoneCompletion, String department, LocalDate graduationDate) {
+        return GraduationUser.builder()
+            .userId(studentId)
+            .name(name)
+            .advisorProfessor(advisor)
+            .graduationDate(graduationDate)
+            .build();
+    }
 
     public void updateGraduationType(GraduationType type) {
         this.graduationType = type;
