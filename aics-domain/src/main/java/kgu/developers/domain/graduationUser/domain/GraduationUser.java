@@ -23,4 +23,8 @@ public class GraduationUser {
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
     protected LocalDateTime deletedAt;
+
+    public void updateGraduationType(GraduationType type) {
+        this.graduationType = type;
+    }
 }
