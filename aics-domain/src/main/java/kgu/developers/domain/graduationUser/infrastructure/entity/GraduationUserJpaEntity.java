@@ -48,6 +48,10 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
 
     private LocalDate graduationDate;
 
+    private Boolean capstoneCompletion;
+
+    private String department;
+
     private Long midThesisId;
 
     private Long finalThesisId;
@@ -68,6 +72,8 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
             .advisorProfessor(graduationUser.getAdvisorProfessor())
             .graduationType(graduationUser.getGraduationType())
             .graduationDate(graduationUser.getGraduationDate())
+            .capstoneCompletion(graduationUser.getCapstoneCompletion())
+            .department(graduationUser.getDepartment())
             .midThesisId(graduationUser.getMidThesisId())
             .finalThesisId(graduationUser.getFinalThesisId())
             .certificateId(graduationUser.getCertificateId())
@@ -87,6 +93,8 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
             .advisorProfessor(entity.getAdvisorProfessor())
             .graduationType(entity.getGraduationType())
             .graduationDate(entity.getGraduationDate())
+            .capstoneCompletion(entity.getCapstoneCompletion())
+            .department(entity.getDepartment())
             .midThesisId(entity.getMidThesisId())
             .finalThesisId(entity.getFinalThesisId())
             .certificateId(entity.getCertificateId())

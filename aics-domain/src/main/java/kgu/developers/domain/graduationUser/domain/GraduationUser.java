@@ -17,6 +17,8 @@ public class GraduationUser {
     private String advisorProfessor;
     private GraduationType graduationType;
     private LocalDate graduationDate;
+    private Boolean capstoneCompletion;
+    private String department;
     private Long midThesisId;
     private Long finalThesisId;
     private Long certificateId;
@@ -31,6 +33,8 @@ public class GraduationUser {
             .userId(studentId)
             .name(name)
             .advisorProfessor(advisor)
+            .capstoneCompletion(capstoneCompletion)
+            .department(department)
             .graduationDate(graduationDate)
             .build();
     }
