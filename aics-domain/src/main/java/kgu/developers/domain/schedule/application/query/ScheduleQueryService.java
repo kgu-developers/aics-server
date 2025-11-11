@@ -1,0 +1,30 @@
+package kgu.developers.domain.schedule.application.query;
+
+import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.ScheduleRepository;
+import kgu.developers.domain.schedule.domain.SubmissionType;
+import kgu.developers.domain.schedule.exception.ScheduleNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class ScheduleQueryService {
+    private final ScheduleRepository scheduleRepository;
+
+    public List<Schedule> getAllScheduleManagements() {
+        return scheduleRepository.findAll();
+    }
+
+    public Schedule getScheduleManagement(Long id) {
+        return scheduleRepository
+                .findById(id)
+                .orElseThrow(ScheduleNotFoundException::new);
+    }
+    public Schedule getBySubmissionType(SubmissionType submissionType) {
+        return scheduleRepository.findBySubmissionType(submissionType)
+                .orElseThrow(ScheduleNotFoundException::new);
+    }
+}
