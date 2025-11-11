@@ -172,7 +172,7 @@ CREATE TABLE graduation_user
     CONSTRAINT fk_graduation_user_final_thesis FOREIGN KEY (final_thesis_id) REFERENCES "thesis" (id)
         ON DELETE CASCADE,
     CONSTRAINT fk_graduation_user_certificate FOREIGN KEY (certificate_id) REFERENCES "certificate" (id)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
 );
 
 -- schedule

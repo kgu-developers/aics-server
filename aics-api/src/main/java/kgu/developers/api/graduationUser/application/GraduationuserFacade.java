@@ -4,6 +4,8 @@ import kgu.developers.domain.graduationUser.application.command.GraduationUserCo
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
+import kgu.developers.domain.user.application.query.UserQueryService;
+import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class GraduationuserFacade {
     private final GraduationUserQueryService graduationUserQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
+    private final UserQueryService userQueryService;
 
     public void selectGraduationType(Long graduationUserId, GraduationType type) {
-        //TODO: 어떤 계정으로 로그인 중인지 알아야 함
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        System.out.println(graduationUser.getUserId());
+        //graduationUser.validateAccessPermission(userQueryService.me().getId());
         graduationUserCommandService.selectGraduationType(graduationUser,type);
-
     }
 }

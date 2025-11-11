@@ -1,5 +1,6 @@
 package kgu.developers.domain.graduationUser.domain;
 
+import kgu.developers.domain.graduationUser.exception.GraduationUserMismatchException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +38,12 @@ public class GraduationUser {
             .department(department)
             .graduationDate(graduationDate)
             .build();
+    }
+
+    public void validateAccessPermission(String id) {
+        if(!(this.userId.equals(id))) {
+            throw new GraduationUserMismatchException();
+        }
     }
 
     public void updateGraduationType(GraduationType type) {
