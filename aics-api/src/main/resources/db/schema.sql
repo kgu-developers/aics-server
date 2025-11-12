@@ -153,7 +153,7 @@ CREATE TABLE graduation_user
     email              VARCHAR(50)  UNIQUE,
     advisor_professor  VARCHAR(20),
     graduation_type    VARCHAR(20)
-    CONSTRAINT graduaton_type_check
+    CONSTRAINT graduation_type_check
             CHECK ((graduation_type)::TEXT = ANY (ARRAY ['THESIS', 'CERTIFICATE'])),
     graduation_date    DATE,
     mid_thesis_id      BIGINT,
@@ -162,7 +162,7 @@ CREATE TABLE graduation_user
     user_id            VARCHAR(10)  NOT NULL,
     created_at         TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at         TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted_at         TIMESTAMP(6)          DEFAULT NULL,
+    deleted_at         TIMESTAMP(6)          DEFAULT NULL
 );
 
 -- schedule
