@@ -7,11 +7,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "GraduationUser", description = "졸업 대상자 관리자 API")
 public interface GraduationUserAdminController {
@@ -29,4 +34,33 @@ public interface GraduationUserAdminController {
             required = true
         ) @Valid @RequestBody GraduationUserCreateRequest request
     );
+
+    @Operation(summary = "졸업 대상자 페이징 조회 API", description = """
+		    - Description : 이 API는 졸업 대상자를 페이징 조회하며, 선택적으로 이름으로 필터링할 수 있습니다.
+		    - Assignee : 장영후
+		""")
+    @ApiResponse(
+        responseCode = "200",
+        content = @Content(schema = @Schema(implementation = GraduationUserSummaryPageResponse.class)))
+    ResponseEntity<GraduationUserSummaryPageResponse> getGraduationUsersByName(
+        @Parameter(
+            description = "페이지 인덱스",
+            example = "0",
+            required = true
+        ) @PositiveOrZero @RequestParam(defaultValue = "0") int page,
+        @Parameter(
+            description = "응답 개수",
+            example = "10",
+            required = true
+        ) @Positive @RequestParam(defaultValue = "10") int size,
+        @Parameter(
+            description = "유저 이름",
+            example = "홍길동"
+        ) @RequestParam(required = false) String name,
+        @Parameter(
+            description = "졸업 방식 카테고리입니다. 미 지정 시 전체 졸업 대상자를 조회합니다.",
+            example = "THESIS"
+        ) @RequestParam(required = false) GraduationType graduationType
+    );
+
 }

@@ -1,9 +1,12 @@
 package kgu.developers.domain.graduationUser.infrastructure.repository;
 
+import kgu.developers.common.response.PaginatedListResponse;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.infrastructure.entity.GraduationUserJpaEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,6 +16,7 @@ import java.util.Optional;
 public class GraduationUserRepositoryImpl implements GraduationUserRepository {
 
     private final JpaGraduationUserRepository jpaGraduationUserRepository;
+    private final QueryGraduationUserRepository queryGraduationUserRepository;
 
     @Override
     public GraduationUser save(GraduationUser graduationUser) {
@@ -25,5 +29,10 @@ public class GraduationUserRepositoryImpl implements GraduationUserRepository {
     public Optional<GraduationUser> findByIdAndDeletedAtIsNull(Long graduationUserId) {
         return jpaGraduationUserRepository.findByIdAndDeletedAtIsNull(graduationUserId)
             .map(GraduationUserJpaEntity::toDomain);
+    }
+
+    @Override
+    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdDesc(PageRequest pageable, String name, GraduationType graduationType) {
+        return queryGraduationUserRepository.findAllByNameAndGraduationTypeOrderByIdDesc(pageable,name,graduationType);
     }
 }
