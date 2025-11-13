@@ -65,7 +65,7 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
             return null;
         }
 
-        return GraduationUserJpaEntity.builder()
+        GraduationUserJpaEntity entity = GraduationUserJpaEntity.builder()
             .id(graduationUser.getId())
             .name(graduationUser.getName())
             .email(graduationUser.getEmail())
@@ -79,6 +79,10 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
             .certificateId(graduationUser.getCertificateId())
             .userId(graduationUser.getUserId())
             .build();
+
+        entity.setDeletedAt(graduationUser.getDeletedAt());
+
+        return entity;
     }
 
     public static GraduationUser toDomain(GraduationUserJpaEntity entity) {

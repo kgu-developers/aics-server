@@ -15,6 +15,7 @@ import kgu.developers.admin.graduationUser.presentation.response.GraduationUserS
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -63,4 +64,16 @@ public interface GraduationUserAdminController {
         ) @RequestParam(required = false) GraduationType graduationType
     );
 
+    @Operation(summary = "졸업 대상자 삭제 API", description = """
+			- Description : 이 API는 해당 졸업 대상자를 삭제합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(responseCode = "204")
+    ResponseEntity<Void> deleteGraduationUser(
+        @Parameter(
+            description = "졸업 대상자 ID는 URL 경로 변수 입니다.",
+            example = "1",
+            required = true
+        ) @Positive @PathVariable Long id
+    );
 }

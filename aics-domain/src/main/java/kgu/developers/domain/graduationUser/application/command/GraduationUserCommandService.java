@@ -22,4 +22,9 @@ public class GraduationUserCommandService {
         GraduationUser graduationUser = GraduationUser.create(studentId,name,advisor,capstoneCompletion,department,graduationDate);
         return graduationUserRepository.save(graduationUser).getId();
     }
+
+    public void deleteGraduationUser(GraduationUser graduationUser) {
+        graduationUser.delete();
+        graduationUserRepository.save(graduationUser);
+    }
 }

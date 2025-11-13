@@ -18,7 +18,7 @@ public record GraduationUserSummaryPageResponse<T>(
             + "\"name\": \"홍길동\", "
             + "\"graduaionDate\": \"2028-08-01\", "
             + "\"graduationType\": \"자격증\", "
-            + "\"status\": \"미제출\", ",
+            + "\"status\": \"미제출\"}]",
         requiredMode = REQUIRED)
     List<GraduationUserSummaryResponse> contents,
 

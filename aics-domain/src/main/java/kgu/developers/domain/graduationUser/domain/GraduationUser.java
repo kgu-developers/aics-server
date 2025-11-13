@@ -41,12 +41,16 @@ public class GraduationUser {
     }
 
     public void validateAccessPermission(String id) {
-        if(!(this.userId.equals(id))) {
+        if(!this.userId.equals(id)) {
             throw new GraduationUserMismatchException();
         }
     }
 
     public void updateGraduationType(GraduationType type) {
         this.graduationType = type;
+    }
+
+    public void delete() {
+        deletedAt = LocalDateTime.now();
     }
 }

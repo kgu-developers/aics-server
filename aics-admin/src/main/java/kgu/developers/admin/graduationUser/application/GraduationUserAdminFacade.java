@@ -30,4 +30,9 @@ public class GraduationUserAdminFacade {
         PaginatedListResponse<GraduationUser> response = graduationUserQueryService.getUsersByNameAndGraduationType(pageable,name,graduationType);
         return GraduationUserSummaryPageResponse.of(response.contents(), response.pageable());
     }
+
+    public void deleteGraduationUser(Long id) {
+        GraduationUser graduationUser = graduationUserQueryService.getById(id);
+        graduationUserCommandService.deleteGraduationUser(graduationUser);
+    }
 }

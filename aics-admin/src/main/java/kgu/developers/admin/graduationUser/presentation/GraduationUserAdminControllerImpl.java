@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,5 +50,14 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
         GraduationUserSummaryPageResponse response = graduationUserAdminFacade.getUsersByNameAndGraduationType(PageRequest.of(page,size), name,
             graduationType);
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGraduationUser(
+        @Positive @PathVariable Long id
+    ) {
+        graduationUserAdminFacade.deleteGraduationUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
