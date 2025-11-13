@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
@@ -25,19 +26,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/admin/graduation-user")
+@RequestMapping("/api/v1/admin/graduation-users")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class GraduationUserAdminControllerImpl implements GraduationUserAdminController {
     private final GraduationUserAdminFacade graduationUserAdminFacade;
-
-    @Override
-    @PostMapping
-    public ResponseEntity<GraduationUserPersistResponse> createGraduationUser(
-        @Valid @RequestBody GraduationUserCreateRequest request
-    ) {
-        GraduationUserPersistResponse response = graduationUserAdminFacade.createGraduationUser(request);
-        return ResponseEntity.status(CREATED).body(response);
-    }
 
     @Override
     @GetMapping
@@ -47,9 +39,27 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
         @RequestParam (required = false) String name,
         @RequestParam (required = false) GraduationType graduationType
         ) {
-        GraduationUserSummaryPageResponse response = graduationUserAdminFacade.getUsersByNameAndGraduationType(PageRequest.of(page,size), name,
+        GraduationUserSummaryPageResponse response = graduationUserAdminFacade.getGraduationUsersByNameAndGraduationType(PageRequest.of(page,size), name,
             graduationType);
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @GetMapping("/{graduationUserId}")
+    public ResponseEntity<GraduationUserDetailResponse> getGraduationUserById(
+        @PathVariable @Positive Long graduationUserId
+    ) {
+        GraduationUserDetailResponse response = graduationUserAdminFacade.getGrduationUserById(graduationUserId);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<GraduationUserPersistResponse> createGraduationUser(
+        @Valid @RequestBody GraduationUserCreateRequest request
+    ) {
+        GraduationUserPersistResponse response = graduationUserAdminFacade.createGraduationUser(request);
+        return ResponseEntity.status(CREATED).body(response);
     }
 
     @Override

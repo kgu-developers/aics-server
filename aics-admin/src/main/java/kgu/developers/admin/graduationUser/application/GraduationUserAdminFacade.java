@@ -1,6 +1,8 @@
 package kgu.developers.admin.graduationUser.application;
 
+import jakarta.validation.constraints.Positive;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.common.response.PaginatedListResponse;
@@ -26,7 +28,7 @@ public class GraduationUserAdminFacade {
         return GraduationUserPersistResponse.of(id);
     }
 
-    public GraduationUserSummaryPageResponse getUsersByNameAndGraduationType(PageRequest pageable, String name, GraduationType graduationType) {
+    public GraduationUserSummaryPageResponse getGraduationUsersByNameAndGraduationType(PageRequest pageable, String name, GraduationType graduationType) {
         PaginatedListResponse<GraduationUser> response = graduationUserQueryService.getUsersByNameAndGraduationType(pageable,name,graduationType);
         return GraduationUserSummaryPageResponse.of(response.contents(), response.pageable());
     }
@@ -34,5 +36,9 @@ public class GraduationUserAdminFacade {
     public void deleteGraduationUser(Long id) {
         GraduationUser graduationUser = graduationUserQueryService.getById(id);
         graduationUserCommandService.deleteGraduationUser(graduationUser);
+    }
+
+    public GraduationUserDetailResponse getGrduationUserById(@Positive Long graduationUserId) {
+        return GraduationUserDetailResponse.from(graduationUserQueryService.getById(graduationUserId));
     }
 }

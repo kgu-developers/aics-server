@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
@@ -21,20 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "GraduationUser", description = "졸업 대상자 관리자 API")
 public interface GraduationUserAdminController {
-
-    @Operation(summary = "졸업 대상자 단일 생성 API", description = """
-			- Description : 이 API는 단일 졸업 대상자를 생성합니다.
-			- Assignee : 장영후
-		""")
-    @ApiResponse(
-        responseCode = "201",
-        content = @Content(schema = @Schema(implementation = LabPersistResponse.class)))
-    ResponseEntity<GraduationUserPersistResponse> createGraduationUser(
-        @Parameter(
-            description = "졸업 대상자 단일 생성 request 객체 입니다.",
-            required = true
-        ) @Valid @RequestBody GraduationUserCreateRequest request
-    );
 
     @Operation(summary = "졸업 대상자 페이징 조회 API", description = """
 		    - Description : 이 API는 졸업 대상자를 페이징 조회하며, 선택적으로 이름으로 필터링할 수 있습니다.
@@ -64,7 +51,36 @@ public interface GraduationUserAdminController {
         ) @RequestParam(required = false) GraduationType graduationType
     );
 
-    @Operation(summary = "졸업 대상자 삭제 API", description = """
+    @Operation(summary = "졸업 대상자 상세 조회 API", description = """
+		    - Description : 이 API는 게시글의 상세 정보를 조회합니다.
+		    - Assignee : 장영후
+		""")
+    @ApiResponse(
+        responseCode = "200",
+        content = @Content(schema = @Schema(implementation = GraduationUserDetailResponse.class)))
+    ResponseEntity<GraduationUserDetailResponse> getGraduationUserById(
+        @Parameter(
+            description = "게시글 ID는 URL 경로 변수 입니다.",
+            example = "1",
+            required = true
+        ) @Positive @PathVariable Long graduationUserId
+    );
+
+    @Operation(summary = "졸업 대상자 단일 생성 API", description = """
+			- Description : 이 API는 단일 졸업 대상자를 생성합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(
+        responseCode = "201",
+        content = @Content(schema = @Schema(implementation = LabPersistResponse.class)))
+    ResponseEntity<GraduationUserPersistResponse> createGraduationUser(
+        @Parameter(
+            description = "졸업 대상자 단일 생성 request 객체 입니다.",
+            required = true
+        ) @Valid @RequestBody GraduationUserCreateRequest request
+    );
+
+    @Operation(summary = "졸업 대상자 단일 삭제 API", description = """
 			- Description : 이 API는 해당 졸업 대상자를 삭제합니다.
 			- Assignee : 장영후
 		""")

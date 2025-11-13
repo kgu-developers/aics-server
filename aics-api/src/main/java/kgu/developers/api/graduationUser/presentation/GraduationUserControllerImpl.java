@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/graduation-user")
+@RequestMapping("/api/v1/graduation-users")
 public class GraduationUserControllerImpl implements GraduationUserController {
 
     private final GraduationuserFacade graduationuserFacade;
