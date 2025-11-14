@@ -23,8 +23,8 @@ public class GraduationUserCommandService {
         return graduationUserRepository.save(graduationUser).getId();
     }
 
-    public void deleteGraduationUser(GraduationUser graduationUser) {
+    public Long deleteGraduationUser(GraduationUser graduationUser) {
         graduationUser.delete();
-        graduationUserRepository.save(graduationUser);
+        return graduationUserRepository.save(graduationUser).getId();
     }
 }

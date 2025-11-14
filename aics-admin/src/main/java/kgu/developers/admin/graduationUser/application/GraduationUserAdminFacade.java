@@ -1,7 +1,8 @@
 package kgu.developers.admin.graduationUser.application;
 
-import jakarta.validation.constraints.Positive;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Component
 @Transactional
@@ -38,7 +41,19 @@ public class GraduationUserAdminFacade {
         graduationUserCommandService.deleteGraduationUser(graduationUser);
     }
 
-    public GraduationUserDetailResponse getGrduationUserById(@Positive Long graduationUserId) {
+    public GraduationUserDetailResponse getGrduationUserById(Long graduationUserId) {
         return GraduationUserDetailResponse.from(graduationUserQueryService.getById(graduationUserId));
+    }
+
+    public GraduationUserBulkDeleteResponse deleteGraduationUsers(GraduationUserBulkDeleteRequest request) {
+        List<GraduationUser> users = request.ids().stream()
+            .map(graduationUserQueryService::getById)
+            .toList();
+
+        List<Long> deletedUsers = users.stream()
+            .map(graduationUserCommandService::deleteGraduationUser)
+            .toList();
+
+        return GraduationUserBulkDeleteResponse.from(deletedUsers);
     }
 }

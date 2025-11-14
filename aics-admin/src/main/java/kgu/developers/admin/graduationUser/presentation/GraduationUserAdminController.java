@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -91,5 +93,17 @@ public interface GraduationUserAdminController {
             example = "1",
             required = true
         ) @Positive @PathVariable Long id
+    );
+
+    @Operation(summary = "졸업 대상자 일괄 삭제 API", description = """
+			- Description : 이 API는 선택한 여러 졸업 대상자를 일괄 삭제합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(responseCode = "200")
+    ResponseEntity<GraduationUserBulkDeleteResponse> deleteGraduationUsers(
+        @Parameter(
+            description = "삭제할 졸업 대상자 ID 목록",
+            required = true
+        ) @Valid @RequestBody GraduationUserBulkDeleteRequest request
     );
 }

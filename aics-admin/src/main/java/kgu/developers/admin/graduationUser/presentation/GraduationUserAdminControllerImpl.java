@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -69,5 +71,14 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
     ) {
         graduationUserAdminFacade.deleteGraduationUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @DeleteMapping
+    public ResponseEntity<GraduationUserBulkDeleteResponse> deleteGraduationUsers(
+        GraduationUserBulkDeleteRequest request
+    ) {
+        GraduationUserBulkDeleteResponse response = graduationUserAdminFacade.deleteGraduationUsers(request);
+        return ResponseEntity.ok(response);
     }
 }
