@@ -3,6 +3,7 @@ package kgu.developers.domain.graduationUser.domain;
 import kgu.developers.common.response.PaginatedListResponse;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GraduationUserRepository {
@@ -10,5 +11,7 @@ public interface GraduationUserRepository {
 
     Optional<GraduationUser> findByIdAndDeletedAtIsNull(Long graduationUserId);
 
-    PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdDesc(PageRequest pageable, String name, GraduationType graduationType);
+    PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdAsc(PageRequest pageable, String name, GraduationType graduationType);
+
+    List<GraduationUser> findAllByGraduationTypeOrderByIdAsc(GraduationType graduationType);
 }

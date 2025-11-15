@@ -19,7 +19,7 @@ import java.util.List;
 public class QueryGraduationUserRepository {
     private final JPAQueryFactory queryFactory;
 
-    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdDesc(PageRequest pageable, String name, GraduationType graduationType) {
+    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdAsc(PageRequest pageable, String name, GraduationType graduationType) {
         QGraduationUserJpaEntity graduationUser = QGraduationUserJpaEntity.graduationUserJpaEntity;
 
         BooleanExpression whereClause = graduationUser.deletedAt.isNull()
@@ -29,7 +29,7 @@ public class QueryGraduationUserRepository {
         List<GraduationUserJpaEntity> graduationUserEntities = queryFactory.select(graduationUser)
             .from(graduationUser)
             .where(whereClause)
-            .orderBy(graduationUser.id.desc())
+            .orderBy(graduationUser.id.asc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -46,5 +46,22 @@ public class QueryGraduationUserRepository {
 
         return PaginatedListResponse.of(graduationUsers, PageableResponse.of(pageable, graduationUsersIds));
 
+    }
+
+    public List<GraduationUser> findAllByGraduationTypeOrderByIdAsc(GraduationType graduationType) {
+        QGraduationUserJpaEntity graduationUser = QGraduationUserJpaEntity.graduationUserJpaEntity;
+
+        BooleanExpression whereClause = graduationUser.deletedAt.isNull()
+            .and(graduationType != null ? graduationUser.graduationType.eq(graduationType) : null);
+
+        List<GraduationUserJpaEntity> graduationUserEntities = queryFactory.select(graduationUser)
+            .from(graduationUser)
+            .where(whereClause)
+            .orderBy(graduationUser.id.asc())
+            .fetch();
+
+        return graduationUserEntities.stream()
+            .map(GraduationUserJpaEntity::toDomain)
+            .toList();
     }
 }

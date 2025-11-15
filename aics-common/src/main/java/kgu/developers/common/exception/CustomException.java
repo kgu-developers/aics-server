@@ -1,8 +1,8 @@
 package kgu.developers.common.exception;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-
 import lombok.Getter;
+
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Getter
 public class CustomException extends RuntimeException {
@@ -10,6 +10,11 @@ public class CustomException extends RuntimeException {
 
 	public CustomException(ExceptionCode code) {
 		super(code.getMessage());
+		this.code = code;
+	}
+
+	public CustomException(ExceptionCode code, Throwable cause) {
+		super(code.getMessage(), cause);
 		this.code = code;
 	}
 

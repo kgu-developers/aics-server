@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,7 +33,12 @@ public class GraduationUserRepositoryImpl implements GraduationUserRepository {
     }
 
     @Override
-    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdDesc(PageRequest pageable, String name, GraduationType graduationType) {
-        return queryGraduationUserRepository.findAllByNameAndGraduationTypeOrderByIdDesc(pageable,name,graduationType);
+    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdAsc(PageRequest pageable, String name, GraduationType graduationType) {
+        return queryGraduationUserRepository.findAllByNameAndGraduationTypeOrderByIdAsc(pageable,name,graduationType);
+    }
+
+    @Override
+    public List<GraduationUser> findAllByGraduationTypeOrderByIdAsc(GraduationType graduationType) {
+        return queryGraduationUserRepository.findAllByGraduationTypeOrderByIdAsc(graduationType);
     }
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
+import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserExcelFileDto;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
@@ -12,7 +13,11 @@ import kgu.developers.admin.graduationUser.presentation.response.GraduationUserP
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +49,20 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
         GraduationUserSummaryPageResponse response = graduationUserAdminFacade.getGraduationUsersByNameAndGraduationType(PageRequest.of(page,size), name,
             graduationType);
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @GetMapping("/excel")
+    public ResponseEntity<Resource> getGraduateUsersExcel(
+        @RequestParam(required = false) GraduationType graduationType) {
+
+        GraduationUserExcelFileDto excelFileDto = graduationUserAdminFacade.getGraduateUsersExcelByGraduationType(graduationType);
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=" + excelFileDto.filename())
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(new ByteArrayResource(excelFileDto.content()));
     }
 
     @Override

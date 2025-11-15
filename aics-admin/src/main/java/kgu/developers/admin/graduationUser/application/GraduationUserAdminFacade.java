@@ -1,5 +1,6 @@
 package kgu.developers.admin.graduationUser.application;
 
+import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserExcelFileDto;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -32,7 +35,7 @@ public class GraduationUserAdminFacade {
     }
 
     public GraduationUserSummaryPageResponse getGraduationUsersByNameAndGraduationType(PageRequest pageable, String name, GraduationType graduationType) {
-        PaginatedListResponse<GraduationUser> response = graduationUserQueryService.getUsersByNameAndGraduationType(pageable,name,graduationType);
+        PaginatedListResponse<GraduationUser> response = graduationUserQueryService.getGraduationUsersByNameAndGraduationType(pageable,name,graduationType);
         return GraduationUserSummaryPageResponse.of(response.contents(), response.pageable());
     }
 
@@ -55,5 +58,16 @@ public class GraduationUserAdminFacade {
             .toList();
 
         return GraduationUserBulkDeleteResponse.from(deletedUsers);
+    }
+
+    public GraduationUserExcelFileDto getGraduateUsersExcelByGraduationType(GraduationType graduationType) {
+
+        byte[] content = graduationUserQueryService.getGraduationUsersExcelByGraduationType(graduationType);
+
+        String filename = String.format("graduate_users_%s_%s.xlsx",
+            graduationType != null ? graduationType.name().toLowerCase() : "all",
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")));
+
+        return GraduationUserExcelFileDto.from(content, filename);
     }
 }
