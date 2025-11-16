@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.util.List;
 
-public record GraduationUserBulkDeleteRequest(
+public record GraduationUserBatchDeleteRequest(
     @Schema(description = "삭제할 졸업 대상자 ID 목록", example = "[1, 2, 3]")
     @NotEmpty(message = "삭제할 대상자를 최소 1명 이상 선택해야 합니다.")
     List<@Positive(message = "ID는 양수여야 합니다.") Long> ids

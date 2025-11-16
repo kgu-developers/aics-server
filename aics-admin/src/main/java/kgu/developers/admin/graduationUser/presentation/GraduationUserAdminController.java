@@ -9,9 +9,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -110,15 +112,27 @@ public interface GraduationUserAdminController {
         ) @Positive @PathVariable Long id
     );
 
+    @Operation(summary = "졸업 대상자 일괄 생성 API", description = """
+			- Description : 이 API는 입력한 여러 졸업 대상자를 일괄 생성합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(responseCode = "200")
+    ResponseEntity<GraduationUserBatchCreateResponse> createGraduationUsers(
+        @Parameter(
+            description = "생성 졸업 대상자 단체 생성 request 객체입니다.",
+            required = true
+        ) @Valid @RequestBody GraduationUserBatchCreateRequest request
+    );
+
     @Operation(summary = "졸업 대상자 일괄 삭제 API", description = """
 			- Description : 이 API는 선택한 여러 졸업 대상자를 일괄 삭제합니다.
 			- Assignee : 장영후
 		""")
     @ApiResponse(responseCode = "200")
-    ResponseEntity<GraduationUserBulkDeleteResponse> deleteGraduationUsers(
+    ResponseEntity<GraduationUserBatchDeleteResponse> deleteGraduationUsers(
         @Parameter(
             description = "삭제할 졸업 대상자 ID 목록",
             required = true
-        ) @Valid @RequestBody GraduationUserBulkDeleteRequest request
+        ) @Valid @RequestBody GraduationUserBatchDeleteRequest request
     );
 }

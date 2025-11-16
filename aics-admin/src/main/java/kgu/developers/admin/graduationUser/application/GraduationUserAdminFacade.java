@@ -1,9 +1,11 @@
 package kgu.developers.admin.graduationUser.application;
 
 import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserExcelFileDto;
-import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -34,6 +36,24 @@ public class GraduationUserAdminFacade {
         return GraduationUserPersistResponse.of(id);
     }
 
+    public GraduationUserBatchCreateResponse createGraduationUsers(GraduationUserBatchCreateRequest request) {
+
+        List<Long> ids = request.graduationUsers().stream()
+            .map(graduationUser -> graduationUserCommandService.createGraduationUser(
+                graduationUser.studentId(),
+                graduationUser.name(),
+                graduationUser.advisorProfessor(),
+                graduationUser.capstoneCompletion(),
+                graduationUser.department(),
+                graduationUser.graduationDate()
+            ))
+            .toList();
+
+        System.out.println(ids.size());
+
+        return GraduationUserBatchCreateResponse.from(ids);
+    }
+
     public GraduationUserSummaryPageResponse getGraduationUsersByNameAndGraduationType(PageRequest pageable, String name, GraduationType graduationType) {
         PaginatedListResponse<GraduationUser> response = graduationUserQueryService.getGraduationUsersByNameAndGraduationType(pageable,name,graduationType);
         return GraduationUserSummaryPageResponse.of(response.contents(), response.pageable());
@@ -48,16 +68,16 @@ public class GraduationUserAdminFacade {
         return GraduationUserDetailResponse.from(graduationUserQueryService.getById(graduationUserId));
     }
 
-    public GraduationUserBulkDeleteResponse deleteGraduationUsers(GraduationUserBulkDeleteRequest request) {
+    public GraduationUserBatchDeleteResponse deleteGraduationUsers(GraduationUserBatchDeleteRequest request) {
         List<GraduationUser> users = request.ids().stream()
             .map(graduationUserQueryService::getById)
             .toList();
 
-        List<Long> deletedUsers = users.stream()
+        List<Long> deletedUsersIds = users.stream()
             .map(graduationUserCommandService::deleteGraduationUser)
             .toList();
 
-        return GraduationUserBulkDeleteResponse.from(deletedUsers);
+        return GraduationUserBatchDeleteResponse.from(deletedUsersIds);
     }
 
     public GraduationUserExcelFileDto getGraduateUsersExcelByGraduationType(GraduationType graduationType) {

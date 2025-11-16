@@ -5,9 +5,11 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
 import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserExcelFileDto;
-import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBulkDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBulkDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -83,21 +85,29 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
         return ResponseEntity.status(CREATED).body(response);
     }
 
+
     @Override
-    @DeleteMapping("/{id}")
+    @PostMapping("/batch")
+    public ResponseEntity<GraduationUserBatchCreateResponse> createGraduationUsers(GraduationUserBatchCreateRequest request) {
+        GraduationUserBatchCreateResponse response = graduationUserAdminFacade.createGraduationUsers(request);
+        return ResponseEntity.status(CREATED).body(response);
+    }
+
+    @Override
+    @DeleteMapping("/{graduationUserId}")
     public ResponseEntity<Void> deleteGraduationUser(
-        @Positive @PathVariable Long id
+        @Positive @PathVariable Long graduationUserId
     ) {
-        graduationUserAdminFacade.deleteGraduationUser(id);
+        graduationUserAdminFacade.deleteGraduationUser(graduationUserId);
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    @DeleteMapping
-    public ResponseEntity<GraduationUserBulkDeleteResponse> deleteGraduationUsers(
-        GraduationUserBulkDeleteRequest request
+    @DeleteMapping("/batch")
+    public ResponseEntity<GraduationUserBatchDeleteResponse> deleteGraduationUsers(
+        GraduationUserBatchDeleteRequest request
     ) {
-        GraduationUserBulkDeleteResponse response = graduationUserAdminFacade.deleteGraduationUsers(request);
+        GraduationUserBatchDeleteResponse response = graduationUserAdminFacade.deleteGraduationUsers(request);
         return ResponseEntity.ok(response);
     }
 }
