@@ -41,7 +41,7 @@ public record ScheduleSummaryResponse(
                 .title(schedule.getTitle())
                 .startDate(schedule.getStartDate().format(DATE_FORMATTER))
                 .endDate(schedule.getEndDate().format(DATE_FORMATTER))
-                .status(schedule.statusAt(referenceTime).name())
+                .status(schedule.determineStatusAt(referenceTime).name())
                 .build();
     }
 }
