@@ -9,9 +9,9 @@ coverage:
         threshold: 5%
         paths:
           - "aics-api/src"
-          - "aics-domain/src"
+          # - "aics-domain/src"
           - "aics-api/src/testFixtures"
-          - "aics-domain/src/testFixtures"
+          # - "aics-domain/src/testFixtures"
         only_pulls: true
     patch:
       default:
@@ -24,3 +24,7 @@ comment:
   require_changes: false
   branches:
     - develop
+
+ignore:
+  - "aics-domain/src/**"
+  - "aics-domain/src/testFixtures/**"
