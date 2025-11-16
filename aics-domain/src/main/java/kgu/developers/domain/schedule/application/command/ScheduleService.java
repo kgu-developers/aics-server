@@ -5,6 +5,7 @@ import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.ScheduleRepository;
 import kgu.developers.domain.schedule.domain.SubmissionType;
 import kgu.developers.domain.schedule.exception.DuplicateScheduleTypeException;
+import kgu.developers.domain.schedule.exception.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,12 @@ public class ScheduleService {
     }
     @Transactional
     public void updateSchedule(Schedule schedule, SubmissionType submissionType , String title, LocalDateTime startDate, LocalDateTime endDate) {
+        if(!schedule.getSubmissionType().equals(submissionType)) {
+            scheduleRepository.findBySubmissionType(submissionType)
+                    .filter(other -> !other.getId().equals(schedule.getId()))
+                    .ifPresent(existing -> {
+                        throw new DuplicateScheduleTypeException();});
+        }
         schedule.updateSubmissionType(submissionType);
         schedule.updateTitle(title);
         schedule.updateStartDate(startDate);
@@ -39,6 +46,8 @@ public class ScheduleService {
         scheduleRepository.save(schedule);
     }
     public void deleteSchedule(Long id) {
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(ScheduleNotFoundException::new);
         scheduleRepository.deleteById(id);
     }
 
