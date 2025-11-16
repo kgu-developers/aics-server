@@ -17,10 +17,10 @@ public record ScheduleCreateRequest(
         @NotBlank String content,
 
         @Schema(description = "시작 일시", example = "2025-04-15T00:00:00", requiredMode = REQUIRED)
-        @NotNull @FutureOrPresent LocalDateTime startDate,
+        @NotNull LocalDateTime startDate,
 
         @Schema(description = "종료 일시", example = "2025-12-31T23:59:59", requiredMode = REQUIRED)
-        @NotNull @FutureOrPresent LocalDateTime endDate
+        @NotNull LocalDateTime endDate
 ) {
         @AssertTrue(message = "종료 일시는 시작 일시 이후여야 합니다.")
         public boolean isValidDateRange() {
