@@ -14,8 +14,10 @@ import kgu.developers.common.domain.BaseTimeEntity;
 import kgu.developers.domain.certificate.domain.Certificate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Builder
 @Entity
 @Table(

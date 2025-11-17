@@ -11,7 +11,8 @@ public enum FileDomain {
 	POST("게시글"),
 	LAB("연구실"),
 	CLUB("동아리"),
-	THESIS("논문")
+	THESIS("논문"),
+	CERTIFICATE("수료증")
 	;
 
 	private final String description;
