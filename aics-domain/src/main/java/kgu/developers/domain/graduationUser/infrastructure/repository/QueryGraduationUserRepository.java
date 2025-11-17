@@ -9,7 +9,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.infrastructure.entity.GraduationUserJpaEntity;
 import kgu.developers.domain.graduationUser.infrastructure.entity.QGraduationUserJpaEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class QueryGraduationUserRepository {
     private final JPAQueryFactory queryFactory;
 
-    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdAsc(PageRequest pageable, String name, GraduationType graduationType) {
+    public PaginatedListResponse<GraduationUser> findAllByNameAndGraduationTypeOrderByIdAsc(Pageable pageable, String name, GraduationType graduationType) {
         QGraduationUserJpaEntity graduationUser = QGraduationUserJpaEntity.graduationUserJpaEntity;
 
         BooleanExpression whereClause = graduationUser.deletedAt.isNull()

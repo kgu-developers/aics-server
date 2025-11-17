@@ -15,7 +15,7 @@ import kgu.developers.domain.graduationUser.application.query.GraduationUserQuer
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +54,7 @@ public class GraduationUserAdminFacade {
         return GraduationUserBatchCreateResponse.from(ids);
     }
 
-    public GraduationUserSummaryPageResponse getGraduationUsersByNameAndGraduationType(PageRequest pageable, String name, GraduationType graduationType) {
+    public GraduationUserSummaryPageResponse getGraduationUsersByNameAndGraduationType(Pageable pageable, String name, GraduationType graduationType) {
         PaginatedListResponse<GraduationUser> response = graduationUserQueryService.getGraduationUsersByNameAndGraduationType(pageable,name,graduationType);
         return GraduationUserSummaryPageResponse.of(response.contents(), response.pageable());
     }

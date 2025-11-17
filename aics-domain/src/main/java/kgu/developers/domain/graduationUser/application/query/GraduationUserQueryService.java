@@ -3,11 +3,11 @@ package kgu.developers.domain.graduationUser.application.query;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
+import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.exception.GraduationUserNotFoundException;
-import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class GraduationUserQueryService {
             .orElseThrow(GraduationUserNotFoundException::new);
     }
 
-    public PaginatedListResponse<GraduationUser> getGraduationUsersByNameAndGraduationType(PageRequest pageable, String name, GraduationType graduationType) {
+    public PaginatedListResponse<GraduationUser> getGraduationUsersByNameAndGraduationType(Pageable pageable, String name, GraduationType graduationType) {
         return graduationUserRepository.findAllByNameAndGraduationTypeOrderByIdAsc(pageable,name, graduationType);
     }
 
