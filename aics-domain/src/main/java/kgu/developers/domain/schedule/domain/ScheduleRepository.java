@@ -9,4 +9,5 @@ public interface ScheduleRepository {
     Optional<Schedule> findById(Long id);
     List<Schedule> findAll();
     Optional<Schedule> findBySubmissionType(SubmissionType submissionType);
+    boolean existsById(Long id);
 }

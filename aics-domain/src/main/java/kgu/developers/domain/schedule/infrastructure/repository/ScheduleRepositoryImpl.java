@@ -46,4 +46,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
                 .map(ScheduleJpaEntity::toDomain);
     }
 
+    @Override
+    public boolean existsById(Long id) {
+        return jpaScheduleRepository.existsById(id);
+    }
 }
