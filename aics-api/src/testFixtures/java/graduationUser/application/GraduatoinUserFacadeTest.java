@@ -63,17 +63,33 @@ public class GraduatoinUserFacadeTest {
     }
 
     @Test
-    @DisplayName("selectGraduationType은 Grduation User의 졸업 방식을 선택한다.")
-    public void Success() {
+    @DisplayName("updateGraduationType은 Grduation User의 졸업 방식을 선택한다.")
+    public void updateGraduationType_Success() {
         //given
         Long graduatoinUserId = 1L;
         GraduationType graduationType = GraduationType.CERTIFICATE;
 
         //when
-        graduationuserFacade.selectGraduationType(graduatoinUserId, graduationType);
+        graduationuserFacade.updateGraduationType(graduatoinUserId, graduationType);
 
         //then
         GraduationUser savedGraduationUser = fakeGraduatoinUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
         assertEquals(graduationType, savedGraduationUser.getGraduationType());
+    }
+
+    @Test
+    @DisplayName("updateGraduationUserEmail는 GraduationUser의 이메일 속성을 수정하다.")
+    public void updateGraduationUserEmail_Success() {
+        //given
+        Long graduatoinUserId = 1L;
+        String email = "soojung@kyonggi.ac.kr";
+
+        //when
+        graduationuserFacade.updateGraduationUserEmail(graduatoinUserId, email);
+
+        //then
+        GraduationUser savedGraduationUser = fakeGraduatoinUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
+        assertEquals(savedGraduationUser.getEmail(), email);
+
     }
 }

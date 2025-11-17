@@ -53,4 +53,8 @@ public class GraduationUser {
     public void delete() {
         deletedAt = LocalDateTime.now();
     }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
 }

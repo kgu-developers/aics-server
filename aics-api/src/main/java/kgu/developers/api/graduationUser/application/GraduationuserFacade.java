@@ -17,9 +17,15 @@ public class GraduationuserFacade {
     private final GraduationUserCommandService graduationUserCommandService;
     private final UserQueryService userQueryService;
 
-    public void selectGraduationType(Long graduationUserId, GraduationType type) {
+    public void updateGraduationType(Long graduationUserId, GraduationType type) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
         graduationUser.validateAccessPermission(userQueryService.me().getId());
-        graduationUserCommandService.selectGraduationType(graduationUser,type);
+        graduationUserCommandService.updateGraduationType(graduationUser,type);
+    }
+
+    public void updateGraduationUserEmail(Long graduationUserId, String email) {
+        GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        graduationUser.validateAccessPermission(userQueryService.me().getId());
+        graduationUserCommandService.updateGraduationUserEmail(graduationUser,email);
     }
 }

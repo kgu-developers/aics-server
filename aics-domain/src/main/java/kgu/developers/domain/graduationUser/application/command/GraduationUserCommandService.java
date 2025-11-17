@@ -25,7 +25,7 @@ public class GraduationUserCommandService {
             throw new GraduationUserIdDuplicateException();
     }
 
-    public void selectGraduationType(GraduationUser graduationUser, GraduationType type) {
+    public void updateGraduationType(GraduationUser graduationUser, GraduationType type) {
         graduationUser.updateGraduationType(type);
         graduationUserRepository.save(graduationUser);
     }
@@ -33,5 +33,10 @@ public class GraduationUserCommandService {
     public Long deleteGraduationUser(GraduationUser graduationUser) {
         graduationUser.delete();
         return graduationUserRepository.save(graduationUser).getId();
+    }
+
+    public void updateGraduationUserEmail(GraduationUser graduationUser, String email) {
+        graduationUser.updateEmail(email);
+        graduationUserRepository.save(graduationUser);
     }
 }

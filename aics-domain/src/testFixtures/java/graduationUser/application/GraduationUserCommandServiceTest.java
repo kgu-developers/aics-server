@@ -72,13 +72,13 @@ public class GraduationUserCommandServiceTest {
     }
 
     @Test
-    @DisplayName("selectGraduationType는 Graduation User의 졸업 방식을 선택할 수 있다.")
-    public void selectGraduationType_Success() {
+    @DisplayName("updateGraduationType는 Graduation User의 졸업 방식을 선택할 수 있다.")
+    public void updateGraduationType_Success() {
         //given
         GraduationUser graduationUser = GraduationUser.builder().build();
         GraduationType selectedType = GraduationType.CERTIFICATE;
         //when
-        graduationUserCommandService.selectGraduationType(graduationUser, selectedType);
+        graduationUserCommandService.updateGraduationType(graduationUser, selectedType);
         //then
         assertEquals(selectedType, graduationUser.getGraduationType());
     }
