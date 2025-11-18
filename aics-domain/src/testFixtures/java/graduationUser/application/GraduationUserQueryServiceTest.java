@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraduationUserQueryServiceTest {
     private GraduationUserQueryService graduationUserQueryService;
-    private static final Long TARGET_GRADUATION_USER_ID = 2L;
+    private static final Long TARGET_GRADUATION_USER_ID = 1L;
 
     @BeforeEach
     public void init() {
