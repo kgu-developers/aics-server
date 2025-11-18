@@ -3,9 +3,10 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import kgu.developers.domain.schedule.domain.SubmissionType;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
-
+@Builder
 public record ScheduleCreateRequest(
         @Schema(description = "제출 유형", example = "SUBMITTED", requiredMode = REQUIRED)
         @NotNull SubmissionType submissionType,
@@ -23,6 +24,7 @@ public record ScheduleCreateRequest(
         @NotNull LocalDateTime endDate
 ) {
         @AssertTrue(message = "종료 일시는 시작 일시 이후여야 합니다.")
+        @Schema(hidden = true)
         public boolean isValidDateRange() {
                 if (startDate ==null || endDate == null) {
                         return true;

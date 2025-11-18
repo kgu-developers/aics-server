@@ -3,11 +3,12 @@ package kgu.developers.admin.schedule.presentation.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import kgu.developers.domain.schedule.domain.SubmissionType;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
-
+@Builder
 public record ScheduleUpdateRequest(
         @Schema(description = "제출 유형", example = "SUBMITTED", requiredMode = REQUIRED)
         @NotNull
@@ -27,6 +28,7 @@ public record ScheduleUpdateRequest(
         LocalDateTime endDate
 ) {
         @AssertTrue(message = "종료 일시는 시작 일시 이후여야 합니다.")
+        @Schema(hidden = true)
         public boolean isValidDateRange() {
                 if (startDate ==null || endDate == null) {
                         return true;
