@@ -62,7 +62,7 @@ public interface GraduationUserAdminController {
 		""")
     @ApiResponse(
         responseCode = "200",
-        content = @Content(schema = @Schema(implementation = GraduationUserSummaryPageResponse.class)))
+        content = @Content(mediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
     ResponseEntity<Resource> getGraduateUsersExcel(
         @Parameter(
             description = "졸업 방식 카테고리입니다. 미 지정 시 전체 졸업 대상자를 조회합니다.",
@@ -79,7 +79,7 @@ public interface GraduationUserAdminController {
         content = @Content(schema = @Schema(implementation = GraduationUserDetailResponse.class)))
     ResponseEntity<GraduationUserDetailResponse> getGraduationUserById(
         @Parameter(
-            description = "게시글 ID는 URL 경로 변수 입니다.",
+            description = "졸업 대상자 ID는 URL 경로 변수 입니다.",
             example = "1",
             required = true
         ) @Positive @PathVariable Long graduationUserId
@@ -91,7 +91,7 @@ public interface GraduationUserAdminController {
 		""")
     @ApiResponse(
         responseCode = "201",
-        content = @Content(schema = @Schema(implementation = LabPersistResponse.class)))
+        content = @Content(schema = @Schema(implementation = GraduationUserPersistResponse.class)))
     ResponseEntity<GraduationUserPersistResponse> createGraduationUser(
         @Parameter(
             description = "졸업 대상자 단일 생성 request 객체 입니다.",

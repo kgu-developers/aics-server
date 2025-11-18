@@ -49,8 +49,6 @@ public class GraduationUserAdminFacade {
             ))
             .toList();
 
-        System.out.println(ids.size());
-
         return GraduationUserBatchCreateResponse.from(ids);
     }
 
@@ -64,7 +62,7 @@ public class GraduationUserAdminFacade {
         graduationUserCommandService.deleteGraduationUser(graduationUser);
     }
 
-    public GraduationUserDetailResponse getGrduationUserById(Long graduationUserId) {
+    public GraduationUserDetailResponse getGraduationUserById(Long graduationUserId) {
         return GraduationUserDetailResponse.from(graduationUserQueryService.getById(graduationUserId));
     }
 

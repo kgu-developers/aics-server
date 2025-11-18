@@ -72,7 +72,7 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
     public ResponseEntity<GraduationUserDetailResponse> getGraduationUserById(
         @PathVariable @Positive Long graduationUserId
     ) {
-        GraduationUserDetailResponse response = graduationUserAdminFacade.getGrduationUserById(graduationUserId);
+        GraduationUserDetailResponse response = graduationUserAdminFacade.getGraduationUserById(graduationUserId);
         return ResponseEntity.ok(response);
     }
 

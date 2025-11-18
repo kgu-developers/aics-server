@@ -133,7 +133,7 @@ public class GraduationUserAdminFacadeTest {
         Long graduationUserId = 1L;
 
         //when
-        GraduationUserDetailResponse result = graduationUserAdminFacade.getGrduationUserById(graduationUserId);
+        GraduationUserDetailResponse result = graduationUserAdminFacade.getGraduationUserById(graduationUserId);
 
         //then
         assertEquals(result.studentId(),graduationUser1.getUserId());
