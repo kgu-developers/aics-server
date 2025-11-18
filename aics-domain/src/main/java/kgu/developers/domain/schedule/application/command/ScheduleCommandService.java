@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class ScheduleService {
+public class ScheduleCommandService {
     private final ScheduleRepository scheduleRepository;
 
     public Long createSchedule(SubmissionType submissionType, String title, String content , LocalDateTime startDate, LocalDateTime endDate) {
@@ -45,6 +45,7 @@ public class ScheduleService {
         schedule.updateContent(content);
         scheduleRepository.save(schedule);
     }
+    @Transactional
     public void deleteSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(ScheduleNotFoundException::new);

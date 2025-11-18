@@ -4,7 +4,7 @@ import kgu.developers.admin.schedule.presentation.request.ScheduleContentUpdateR
 import kgu.developers.admin.schedule.presentation.request.ScheduleCreateRequest;
 import kgu.developers.admin.schedule.presentation.request.ScheduleUpdateRequest;
 import kgu.developers.admin.schedule.presentation.response.SchedulePersistResponse;
-import kgu.developers.domain.schedule.application.command.ScheduleService;
+import kgu.developers.domain.schedule.application.command.ScheduleCommandService;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.SubmissionType;
@@ -16,11 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class ScheduleAdminFacade {
-    private final ScheduleService scheduleService;
+    private final ScheduleCommandService scheduleCommandService;
     private final ScheduleQueryService scheduleQueryService;
 
     public SchedulePersistResponse createSchedule(ScheduleCreateRequest request) {
-        Long id = scheduleService.createSchedule(
+        Long id = scheduleCommandService.createSchedule(
                 request.submissionType(),
                 request.title(),
                 request.content(),
@@ -32,7 +32,7 @@ public class ScheduleAdminFacade {
 
     public void updateSchedule(Long scheduleId, ScheduleUpdateRequest request) {
         Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
-        scheduleService.updateSchedule(
+        scheduleCommandService.updateSchedule(
                 schedule,
                 request.submissionType(),
                 request.title(),
@@ -43,10 +43,10 @@ public class ScheduleAdminFacade {
 
     public void updateScheduleContent(SubmissionType submissionType, ScheduleContentUpdateRequest request) {
         Schedule schedule =scheduleQueryService.getBySubmissionType(submissionType);
-        scheduleService.updateScheduleContent(schedule,request.content());
+        scheduleCommandService.updateScheduleContent(schedule,request.content());
     }
 
     public void deleteSchedule(Long scheduleId) {
-        scheduleService.deleteSchedule(scheduleId);
+        scheduleCommandService.deleteSchedule(scheduleId);
     }
 }

@@ -1,6 +1,5 @@
 package kgu.developers.api.schedule.application;
 
-import kgu.developers.domain.schedule.application.command.ScheduleService;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.SubmissionType;
