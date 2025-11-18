@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.graduationUser.presentation.request.GraduationTypeUpdateRequest;
-import kgu.developers.api.graduationUser.presentation.request.GraduationUseEmailUpdateRequest;
+import kgu.developers.api.graduationUser.presentation.request.GraduationUserEmailUpdateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +45,6 @@ public interface GraduationUserController {
         @Parameter(
             description = "졸업 대상자 request 객체 입니다.",
             required = true
-        ) @Valid @RequestBody GraduationUseEmailUpdateRequest request
+        ) @Valid @RequestBody GraduationUserEmailUpdateRequest request
     );
 }

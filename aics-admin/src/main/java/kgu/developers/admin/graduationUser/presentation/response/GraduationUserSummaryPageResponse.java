@@ -16,7 +16,7 @@ public record GraduationUserSummaryPageResponse<T>(
             + "\"id\": 3, "
             + "\"studentId\": \"202211456\", "
             + "\"name\": \"홍길동\", "
-            + "\"graduaionDate\": \"2028-08-01\", "
+            + "\"graduationDate\": \"2028-08-01\", "
             + "\"graduationType\": \"자격증\", "
             + "\"status\": \"미제출\"}]",
         requiredMode = REQUIRED)

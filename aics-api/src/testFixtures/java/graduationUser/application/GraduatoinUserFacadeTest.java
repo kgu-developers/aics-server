@@ -1,6 +1,6 @@
 package graduationUser.application;
 
-import kgu.developers.api.graduationUser.application.GraduationuserFacade;
+import kgu.developers.api.graduationUser.application.GraduationUserFacade;
 import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
@@ -9,7 +9,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
-import mock.repository.FakeGraduatoinUserRepository;
+import mock.repository.FakeGraduationUserRepository;
 import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,22 +23,22 @@ import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GraduatoinUserFacadeTest {
-    private GraduationuserFacade graduationuserFacade;
-    private FakeGraduatoinUserRepository fakeGraduatoinUserRepository;
+    private GraduationUserFacade graduationuserFacade;
+    private FakeGraduationUserRepository fakeGraduationUserRepository;
     private GraduationUser graduationUser;
 
     @BeforeEach
     public void init() {
-        fakeGraduatoinUserRepository = new FakeGraduatoinUserRepository();
+        fakeGraduationUserRepository = new FakeGraduationUserRepository();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
 
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
-        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduatoinUserRepository,graduationUserExcel);
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduatoinUserRepository);
+        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,graduationUserExcel);
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
 
         UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        graduationuserFacade = new GraduationuserFacade(graduationUserQueryService,graduationUserCommandService,userQueryService);
+        graduationuserFacade = new GraduationUserFacade(graduationUserQueryService,graduationUserCommandService,userQueryService);
 
         User user = fakeUserRepository.save(User.builder()
             .id("202411345")
@@ -49,7 +49,7 @@ public class GraduatoinUserFacadeTest {
             .major(CSE)
             .build());
 
-        graduationUser = fakeGraduatoinUserRepository.save(GraduationUser.builder()
+        graduationUser = fakeGraduationUserRepository.save(GraduationUser.builder()
                 .id(1L)
                 .name("홍길동")
                 .userId("202411345")
@@ -73,7 +73,7 @@ public class GraduatoinUserFacadeTest {
         graduationuserFacade.updateGraduationType(graduatoinUserId, graduationType);
 
         //then
-        GraduationUser savedGraduationUser = fakeGraduatoinUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
+        GraduationUser savedGraduationUser = fakeGraduationUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
         assertEquals(graduationType, savedGraduationUser.getGraduationType());
     }
 
@@ -88,7 +88,7 @@ public class GraduatoinUserFacadeTest {
         graduationuserFacade.updateGraduationUserEmail(graduatoinUserId, email);
 
         //then
-        GraduationUser savedGraduationUser = fakeGraduatoinUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
+        GraduationUser savedGraduationUser = fakeGraduationUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
         assertEquals(savedGraduationUser.getEmail(), email);
 
     }

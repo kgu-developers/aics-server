@@ -5,7 +5,7 @@ import kgu.developers.domain.graduationUser.application.query.GraduationUserQuer
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
-import mock.repository.FakeGraduatoinUserRepository;
+import mock.repository.FakeGraduationUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,28 +21,28 @@ public class GraduationUserQueryServiceTest {
 
     @BeforeEach
     public void init() {
-        FakeGraduatoinUserRepository fakeGraduatoinUserRepository = new FakeGraduatoinUserRepository();
+        FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
 
-        graduationUserQueryService = new GraduationUserQueryService(fakeGraduatoinUserRepository, graduationUserExcel);
+        graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository, graduationUserExcel);
 
-        fakeGraduatoinUserRepository.save(GraduationUser.create(
+        fakeGraduationUserRepository.save(GraduationUser.create(
             "202211444", "홍길동", "김교수", true, "컴퓨터공학과", LocalDate.of(2024, 2, 20)
         ));
 
-        fakeGraduatoinUserRepository.save(GraduationUser.create(
+        fakeGraduationUserRepository.save(GraduationUser.create(
             "202213678", "박민수", "최교수", false, "컴퓨터공학과", LocalDate.of(2024, 8, 15)
         ));
 
-        fakeGraduatoinUserRepository.save(GraduationUser.create(
+        fakeGraduationUserRepository.save(GraduationUser.create(
             "202112345", "이영희", "박교수", true, "컴퓨터공학과", LocalDate.of(2024, 2, 20)
         ));
 
-        fakeGraduatoinUserRepository.save(GraduationUser.create(
+        fakeGraduationUserRepository.save(GraduationUser.create(
             "202111223", "김철수", "정교수", true, "정보보안학과", LocalDate.of(2023, 8, 20)
         ));
 
-        fakeGraduatoinUserRepository.save(GraduationUser.create(
+        fakeGraduationUserRepository.save(GraduationUser.create(
             "202214567", "정수진", "이교수", false, "인공지능학과", LocalDate.of(2024, 2, 20)
         ));
     }
@@ -62,7 +62,7 @@ public class GraduationUserQueryServiceTest {
 
     @Test
     @DisplayName("getGraduationUsersByNameAndGraduationType은 졸업 대상자를 페이징 조회 할 수 있다.")
-    public void getGraduationUsersByNameAndGraduationTypee_Success() {
+    public void getGraduationUsersByNameAndGraduationType_Success() {
         //given
         String name = "정수진";
         int page = 0;

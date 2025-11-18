@@ -4,7 +4,7 @@ import kgu.developers.domain.graduationUser.application.command.GraduationUserCo
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
-import mock.repository.FakeGraduatoinUserRepository;
+import mock.repository.FakeGraduationUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GraduationUserCommandServiceTest {
     private GraduationUserCommandService graduationUserCommandService;
-    private FakeGraduatoinUserRepository fakeGraduatoinUserRepository;
+    private FakeGraduationUserRepository fakeGraduationUserRepository;
     private GraduationUser graduationUser;
 
     private static final Long TARGET_GRADUATION_USER_ID = 2L;
@@ -29,9 +29,9 @@ public class GraduationUserCommandServiceTest {
     }
 
     private void initializeGraduationUserCommandService() {
-        fakeGraduatoinUserRepository = new FakeGraduatoinUserRepository();
-        graduationUserCommandService = new GraduationUserCommandService(fakeGraduatoinUserRepository);
-        graduationUser = fakeGraduatoinUserRepository.save(saveTestGraduatoinuser());
+        fakeGraduationUserRepository = new FakeGraduationUserRepository();
+        graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+        graduationUser = fakeGraduationUserRepository.save(saveTestGraduatoinuser());
     }
 
     private GraduationUser saveTestGraduatoinuser() {
@@ -75,7 +75,6 @@ public class GraduationUserCommandServiceTest {
     @DisplayName("updateGraduationType는 Graduation User의 졸업 방식을 선택할 수 있다.")
     public void updateGraduationType_Success() {
         //given
-        GraduationUser graduationUser = GraduationUser.builder().build();
         GraduationType selectedType = GraduationType.CERTIFICATE;
         //when
         graduationUserCommandService.updateGraduationType(graduationUser, selectedType);

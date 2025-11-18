@@ -28,18 +28,19 @@ public class GraduationUserExcelImpl implements GraduationUserExcel {
 
     @Override
     public byte[] generate(List<GraduationUser> graduationUsers) {
-        try (Workbook workbook = new SXSSFWorkbook(SXSSFWorkbook.DEFAULT_WINDOW_SIZE)) {
+        try (Workbook workbook = new SXSSFWorkbook(SXSSFWorkbook.DEFAULT_WINDOW_SIZE);
+             ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ) {
             Sheet sheet = workbook.createSheet(SHEET_NAME);
 
             CellStyle headerStyle = createHeaderStyle(workbook);
             createHeaderRow(sheet, headerStyle);
             populateDataRows(sheet, graduationUsers);
 
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
             workbook.write(out);
             return out.toByteArray();
         } catch (IOException e) {
-            throw new GraduationUserExcelGenerationFailed("엑셀 생성 실패", e);
+            throw new GraduationUserExcelGenerationFailed(e);
         }
     }
 

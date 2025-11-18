@@ -22,7 +22,7 @@ public record GraduationUserSummaryResponse(
 
     @Schema(description = "졸업 날짜", example = "2028-08-01", requiredMode = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    String graduaionDate,
+    String graduationDate,
 
     @Schema(description = "졸업 유형", example = "자격증", requiredMode = REQUIRED)
     String graduationType,
@@ -37,7 +37,7 @@ public record GraduationUserSummaryResponse(
             .id(graduationUser.getId())
             .studentId(graduationUser.getUserId())
             .name(graduationUser.getName())
-            .graduaionDate(graduationUser.getGraduationDate().format(formatter))
+            .graduationDate(graduationUser.getGraduationDate().format(formatter))
             .graduationType(graduationUser.getGraduationType() != null ? graduationUser.getGraduationType().getDescription() : "미정")
             .status("") //TODO: Thesis, Certificate관련 로직이 추가되면 변경하여야 합니다.
             .build();

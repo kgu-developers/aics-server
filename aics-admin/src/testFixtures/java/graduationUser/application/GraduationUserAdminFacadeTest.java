@@ -14,7 +14,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
-import mock.repository.FakeGraduatoinUserRepository;
+import mock.repository.FakeGraduationUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,18 +35,18 @@ public class GraduationUserAdminFacadeTest {
 
     @BeforeEach
     public void init() {
-        FakeGraduatoinUserRepository fakeGraduatoinUserRepository = new FakeGraduatoinUserRepository();
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduatoinUserRepository);
+        FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
 
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
-        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduatoinUserRepository,graduationUserExcel);
+        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,graduationUserExcel);
 
         graduationUserAdminFacade = new GraduationUserAdminFacade(
             graduationUserCommandService,
             graduationUserQueryService
         );
 
-        graduationUser1 = fakeGraduatoinUserRepository.save(GraduationUser.builder()
+        graduationUser1 = fakeGraduationUserRepository.save(GraduationUser.builder()
             .id(1L)
             .name("홍길동")
             .userId("202411001")
@@ -55,7 +55,7 @@ public class GraduationUserAdminFacadeTest {
             .graduationDate(LocalDate.of(2021, 12, 31))
             .build());
 
-        graduationUser2 = fakeGraduatoinUserRepository.save(GraduationUser.builder()
+        graduationUser2 = fakeGraduationUserRepository.save(GraduationUser.builder()
             .id(2L)
             .name("이영희")
             .userId("202411002")
@@ -64,7 +64,7 @@ public class GraduationUserAdminFacadeTest {
             .graduationDate(LocalDate.of(2021, 12, 31))
             .build());
 
-        fakeGraduatoinUserRepository.save(GraduationUser.builder()
+        fakeGraduationUserRepository.save(GraduationUser.builder()
             .id(3L)
             .name("이지민")
             .userId("202411003")

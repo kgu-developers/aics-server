@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Transactional
 @RequiredArgsConstructor
-public class GraduationuserFacade {
+public class GraduationUserFacade {
     private final GraduationUserQueryService graduationUserQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
     private final UserQueryService userQueryService;

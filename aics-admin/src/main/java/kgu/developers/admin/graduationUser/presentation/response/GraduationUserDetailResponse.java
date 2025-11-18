@@ -22,7 +22,7 @@ public record GraduationUserDetailResponse(
 
     @Schema(description = "졸업 날짜", example = "2028-08-01", requiredMode = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    String graduaionDate,
+    String graduationDate,
 
     @Schema(description = "지도교수", example = "김교수", requiredMode = REQUIRED)
     String advisor,
@@ -41,7 +41,7 @@ public record GraduationUserDetailResponse(
             .graduationUserId(graduationUser.getId())
             .name(graduationUser.getName())
             .studentId(graduationUser.getUserId())
-            .graduaionDate(graduationUser.getGraduationDate().format(formatter))
+            .graduationDate(graduationUser.getGraduationDate().format(formatter))
             .advisor(graduationUser.getAdvisorProfessor())
             .major(graduationUser.getDepartment())
             .capstoneCompletion(graduationUser.getCapstoneCompletion())

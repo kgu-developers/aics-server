@@ -88,7 +88,9 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
 
     @Override
     @PostMapping("/batch")
-    public ResponseEntity<GraduationUserBatchCreateResponse> createGraduationUsers(GraduationUserBatchCreateRequest request) {
+    public ResponseEntity<GraduationUserBatchCreateResponse> createGraduationUsers(
+            @Valid @RequestBody GraduationUserBatchCreateRequest request
+    ) {
         GraduationUserBatchCreateResponse response = graduationUserAdminFacade.createGraduationUsers(request);
         return ResponseEntity.status(CREATED).body(response);
     }

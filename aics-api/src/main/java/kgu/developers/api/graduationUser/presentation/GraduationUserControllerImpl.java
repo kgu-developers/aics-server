@@ -2,9 +2,9 @@ package kgu.developers.api.graduationUser.presentation;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import kgu.developers.api.graduationUser.application.GraduationuserFacade;
+import kgu.developers.api.graduationUser.application.GraduationUserFacade;
 import kgu.developers.api.graduationUser.presentation.request.GraduationTypeUpdateRequest;
-import kgu.developers.api.graduationUser.presentation.request.GraduationUseEmailUpdateRequest;
+import kgu.developers.api.graduationUser.presentation.request.GraduationUserEmailUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/graduation-users")
 public class GraduationUserControllerImpl implements GraduationUserController {
 
-    private final GraduationuserFacade graduationuserFacade;
+    private final GraduationUserFacade graduationuserFacade;
 
     @Override
     @PatchMapping("/{graduationUserId}/graduation-type")
@@ -35,7 +35,7 @@ public class GraduationUserControllerImpl implements GraduationUserController {
     @PatchMapping("/{graduationUserId}/email")
     public ResponseEntity<Void> updateGraduationUserEmail(
         @Positive @PathVariable Long graduationUserId,
-        @Valid @RequestBody GraduationUseEmailUpdateRequest request) {
+        @Valid @RequestBody GraduationUserEmailUpdateRequest request) {
         graduationuserFacade.updateGraduationUserEmail(graduationUserId,request.email());
         return ResponseEntity.noContent().build();
     }

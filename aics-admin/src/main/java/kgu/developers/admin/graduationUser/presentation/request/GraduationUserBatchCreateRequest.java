@@ -10,7 +10,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
 public record GraduationUserBatchCreateRequest(
-    @Schema(description = "게시글 정보 리스트",
+    @Schema(description = "졸업 대상자 생성 리스트",
         example = "[{"
             + "\"studentId\": \"202211461\", "
             + "\"name\": \"홍길동\", "

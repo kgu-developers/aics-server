@@ -12,8 +12,4 @@ public class GraduationUserExcelGenerationFailed extends CustomException {
     public GraduationUserExcelGenerationFailed(Throwable cause) {
         super(GRADUATION_USER_EXCEL_GENERATION_FAILED, cause);
     }
-
-    public GraduationUserExcelGenerationFailed(String message, Throwable cause) {
-        super(GRADUATION_USER_EXCEL_GENERATION_FAILED, cause);
-    }
 }
