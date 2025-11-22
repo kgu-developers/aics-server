@@ -79,11 +79,13 @@ public class SecurityConfig {
 		"/api/v1/abouts",
 		"/api/v1/clubs",
 		"/api/v1/posts/**",
+		"/api/v1/graduation-users/**",
 		"/api/v1/labs",
 		"/api/v1/comments",
 		"/api/v1/carousels",
 		"/api/v1/thesis",
 		"/api/v1/certificate",
+		"/api/v1/schedules",
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {

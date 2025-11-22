@@ -1,6 +1,5 @@
 package kgu.developers.domain.user.domain;
 
-import jakarta.persistence.Table;
 import kgu.developers.common.domain.BaseRole;
 import kgu.developers.domain.user.exception.AlreadyDeletedUserException;
 import kgu.developers.domain.user.exception.DeptCodeNotValidException;

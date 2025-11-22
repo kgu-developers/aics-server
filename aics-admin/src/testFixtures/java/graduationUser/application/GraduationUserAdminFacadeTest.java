@@ -1,0 +1,161 @@
+package graduationUser.application;
+
+import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryResponse;
+import kgu.developers.common.response.PageableResponse;
+import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
+import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
+import kgu.developers.domain.graduationUser.domain.GraduationUser;
+import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
+import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
+import mock.repository.FakeGraduationUserRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+public class GraduationUserAdminFacadeTest {
+    private GraduationUserAdminFacade graduationUserAdminFacade;
+    private GraduationUser graduationUser1;
+    private GraduationUser graduationUser2;
+
+    @BeforeEach
+    public void init() {
+        FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+
+        GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
+        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,graduationUserExcel);
+
+        graduationUserAdminFacade = new GraduationUserAdminFacade(
+            graduationUserCommandService,
+            graduationUserQueryService
+        );
+
+        graduationUser1 = fakeGraduationUserRepository.save(GraduationUser.builder()
+            .id(1L)
+            .name("홍길동")
+            .userId("202411001")
+            .email("hong1@kyonggi.ac.kr")
+            .graduationType(GraduationType.CERTIFICATE)
+            .graduationDate(LocalDate.of(2021, 12, 31))
+            .build());
+
+        graduationUser2 = fakeGraduationUserRepository.save(GraduationUser.builder()
+            .id(2L)
+            .name("이영희")
+            .userId("202411002")
+            .email("young1@kyonggi.ac.kr")
+            .graduationType(GraduationType.THESIS)
+            .graduationDate(LocalDate.of(2021, 12, 31))
+            .build());
+
+        fakeGraduationUserRepository.save(GraduationUser.builder()
+            .id(3L)
+            .name("이지민")
+            .userId("202411003")
+            .email("jiim1@kyonggi.ac.kr")
+            .graduationDate(LocalDate.of(2021, 12, 31))
+            .build());
+    }
+
+
+    @Test
+    @DisplayName("createGraduationUsers는 Graduation User를 생성한다.")
+    public void createGraduationUsers_Success() {
+        //given
+        GraduationUserCreateRequest request = GraduationUserCreateRequest.builder()
+            .studentId("202411346")
+            .name("홍길순")
+            .advisorProfessor("김교수")
+            .capstoneCompletion(false)
+            .graduationDate(LocalDate.of(2021, 12, 31))
+            .build();
+
+        //when
+        GraduationUserPersistResponse result = graduationUserAdminFacade.createGraduationUser(request);
+
+        //then
+        assertEquals(1L,result.id());
+
+    }
+
+    @Test
+    @DisplayName("getGraduationUsersByNameAndGraduationType는 Graduation User를 페이징해서 조회한다.")
+    public void getGraduationUsersByNameAndGraduationType_Success() {
+        //given
+        Pageable pageable = PageRequest.of(0, 10);
+
+        //when
+        GraduationUserSummaryPageResponse result = graduationUserAdminFacade.getGraduationUsersByNameAndGraduationType(pageable,null,null);
+
+        //then
+        List<GraduationUserSummaryResponse> resultData = result.contents();
+        PageableResponse pageableResult = result.pageable();
+
+        assertEquals(10,pageableResult.size());
+        assertEquals(3, resultData.size());
+        assertEquals(graduationUser1.getName(),resultData.get(0).name());
+        assertEquals(graduationUser2.getName(),resultData.get(1).name());
+    }
+
+    @Test
+    @DisplayName("deleteGraduationUser는 주어진 GraduationUser를 삭제한다.")
+    public void deleteGraduationUser_Success() {
+        //given
+        Long deletedGraduationUserId = 1L;
+
+        //when
+        graduationUserAdminFacade.deleteGraduationUser(deletedGraduationUserId);
+
+        //then
+        assertNotNull(graduationUser1.getDeletedAt());
+    }
+
+    @Test
+    @DisplayName("getGrduationUserById는 GraduatoinUser를 id를 통해 조회한다.")
+    public void getGrduationUserById_Success() {
+        //given
+        Long graduationUserId = 1L;
+
+        //when
+        GraduationUserDetailResponse result = graduationUserAdminFacade.getGraduationUserById(graduationUserId);
+
+        //then
+        assertEquals(result.studentId(),graduationUser1.getUserId());
+    }
+
+    @Test
+    @DisplayName("deleteGraduationUsers는 여러 GraduationUser를 삭제한다.")
+    public void deleteGraduationUsers_Success() {
+        //given
+        List<Long> graduationUserIds = Arrays.asList(1L, 2L);
+
+        GraduationUserBatchDeleteRequest graduationUserBatchDeleteRequest = GraduationUserBatchDeleteRequest.builder()
+            .ids(graduationUserIds)
+            .build();
+
+        //when
+        graduationUserAdminFacade.deleteGraduationUsers(graduationUserBatchDeleteRequest);
+
+        //then
+        assertNotNull(graduationUser1.getDeletedAt());
+        assertNotNull(graduationUser2.getDeletedAt());
+
+    }
+
+}
