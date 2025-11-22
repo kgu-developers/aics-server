@@ -25,7 +25,7 @@ public interface CertificateController {
 		"""
 	)
 	@ApiResponse(
-		responseCode = "201", content = @Content(schema = @Schema(implementation = CertificatePersistResponse.class))
+		responseCode = "200", content = @Content(schema = @Schema(implementation = CertificatePersistResponse.class))
 	)
 	ResponseEntity<CertificatePersistResponse> submitCertificateAndSaveFile(
 		@Parameter(
