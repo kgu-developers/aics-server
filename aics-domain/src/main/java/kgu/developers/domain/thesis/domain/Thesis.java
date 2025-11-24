@@ -47,4 +47,12 @@ public class Thesis {
 		thesis.deletedAt = deletedAt;
 		return thesis;
 	}
+
+    public boolean isApproved() {
+		return this.approval;
+    }
+
+	public void approve() {
+		this.approval = true;
+	}
 }

@@ -1,5 +1,6 @@
 package kgu.developers.domain.certificate.application.command;
 
+import kgu.developers.domain.certificate.exception.CertificateNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,4 +29,13 @@ public class CertificateCommandService {
 		return certificateRepository.save(certificate);
 	}
 
+    public boolean approve(Long certificateId) {
+		Certificate certificate = certificateRepository.findByIdAndDeletedIsNull(certificateId)
+				.orElseThrow(CertificateNotFoundException::new);
+
+		if (certificate.isApproved()) return false;
+		certificate.approve();
+		certificateRepository.save(certificate);
+		return true;
+    }
 }

@@ -50,4 +50,12 @@ public class Certificate {
 		certificate.deletedAt = deletedAt;
 		return certificate;
 	}
+
+    public boolean isApproved() {
+		return this.approval;
+    }
+
+	public void approve() {
+		this.approval = true;
+	}
 }

@@ -9,14 +9,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchApproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
+import kgu.developers.admin.graduationUser.presentation.response.*;
 import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import org.springframework.core.io.Resource;
@@ -134,5 +131,17 @@ public interface GraduationUserAdminController {
             description = "삭제할 졸업 대상자 ID 목록",
             required = true
         ) @Valid @RequestBody GraduationUserBatchDeleteRequest request
+    );
+
+    @Operation(summary = "졸업 대상자 일괄 승인 API", description = """
+			- Description : 이 API는 선택한 여러 졸업 대상자의 제출을 일괄 승인합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(responseCode = "200")
+    ResponseEntity<GraduationUserBatchApproveResponse> approveGraduationUsers(
+            @Parameter(
+                    description = "승인할 졸업 대상자 ID 목록",
+                    required = true
+            ) @Valid @RequestBody GraduationUserBatchApproveRequest request
     );
 }

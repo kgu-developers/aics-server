@@ -7,6 +7,8 @@ import kgu.developers.domain.thesis.domain.ThesisRepository;
 import kgu.developers.domain.thesis.infrastructure.entity.ThesisJpaEntity;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class ThesisRepositoryImpl implements ThesisRepository {
@@ -15,5 +17,10 @@ public class ThesisRepositoryImpl implements ThesisRepository {
 	@Override
 	public Long save(Thesis thesis) {
 		return jpaThesisRepository.save(ThesisJpaEntity.toEntity(thesis)).getId();
+	}
+
+	@Override
+	public Optional<Thesis> findByIdAndDeletedAtIsNull(Long thesisId) {
+		return jpaThesisRepository.findByIdAndDeletedAtIsNull(thesisId);
 	}
 }
