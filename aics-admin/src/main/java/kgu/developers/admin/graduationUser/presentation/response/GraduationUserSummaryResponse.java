@@ -27,10 +27,24 @@ public record GraduationUserSummaryResponse(
     @Schema(description = "졸업 유형", example = "자격증", requiredMode = REQUIRED)
     String graduationType,
 
-    @Schema(description = "상태", example = "미제출", requiredMode = REQUIRED)
-    String status
+    @Schema(
+            description = "졸업 요건 제출 및 승인 상태 (자격증 또는 논문)",
+            example = "{"
+                    + "\"type\": \"THESIS\", "
+                    + "\"midThesis\": {"
+                        + "\"submitted\": true, "
+                        + "\"approval\": true"
+                    + "}, "
+                    + "\"finalThesis\": {"
+                        + "\"submitted\": false, "
+                        + "\"approval\": false"
+                    + "}"
+                    + "}",
+            requiredMode = REQUIRED
+    )
+    GraduationUserStatusResponse status
 ) {
-    public static GraduationUserSummaryResponse from(GraduationUser graduationUser) {
+    public static GraduationUserSummaryResponse of(GraduationUser graduationUser, GraduationUserStatusResponse status) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return GraduationUserSummaryResponse.builder()
@@ -39,7 +53,7 @@ public record GraduationUserSummaryResponse(
             .name(graduationUser.getName())
             .graduationDate(graduationUser.getGraduationDate().format(formatter))
             .graduationType(graduationUser.getGraduationType() != null ? graduationUser.getGraduationType().getDescription() : "미정")
-            .status("") //TODO: Thesis, Certificate관련 로직이 추가되면 변경하여야 합니다.
+            .status(status)
             .build();
     }
 }

@@ -6,4 +6,6 @@ public interface CertificateRepository {
 	Long save(Certificate certificate);
 
 	Optional<Certificate> findByIdAndDeletedIsNull(Long id);
+
+    Optional<Boolean> findApprovalById(Long id);
 }

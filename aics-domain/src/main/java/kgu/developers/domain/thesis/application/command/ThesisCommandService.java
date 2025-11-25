@@ -1,8 +1,6 @@
 package kgu.developers.domain.thesis.application.command;
 
-import kgu.developers.domain.certificate.domain.Certificate;
-import kgu.developers.domain.certificate.exception.CertificateNotFoundException;
-import kgu.developers.domain.thesis.exception.ThessiNotFoundException;
+import kgu.developers.domain.thesis.exception.ThesisNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +31,7 @@ public class ThesisCommandService {
 
     public boolean approve(Long thesisId) {
 		Thesis thesis = thesisRepository.findByIdAndDeletedAtIsNull(thesisId)
-				.orElseThrow(ThessiNotFoundException::new);
+				.orElseThrow(ThesisNotFoundException::new);
 
 		if (thesis.isApproved()) return false;
 		thesis.approve();

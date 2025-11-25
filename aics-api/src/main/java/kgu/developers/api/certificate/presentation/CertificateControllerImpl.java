@@ -2,6 +2,7 @@ package kgu.developers.api.certificate.presentation;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
+import kgu.developers.api.certificate.application.CertificateFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/certificate")
 @RequiredArgsConstructor
 public class CertificateControllerImpl implements CertificateController {
-	private final CertificateCommandService certificateCommandService;
+	private final CertificateFacade certificateFacade;
 
 	@Override
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
@@ -26,7 +27,7 @@ public class CertificateControllerImpl implements CertificateController {
 		@RequestPart(value = "file") MultipartFile file,
 		@RequestPart CertificateSubmitRequest request
 	) {
-		Long id = certificateCommandService.submitCertificate(file, request.scheduleId());
+		Long id = certificateFacade.submitCertificate(file, request.scheduleId());
 		return ResponseEntity.ok(
 			CertificatePersistResponse.of(id)
 		);

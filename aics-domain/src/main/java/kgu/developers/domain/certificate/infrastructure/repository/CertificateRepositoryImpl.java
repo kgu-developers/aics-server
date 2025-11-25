@@ -23,4 +23,9 @@ public class CertificateRepositoryImpl implements CertificateRepository {
 	public Optional<Certificate> findByIdAndDeletedIsNull(Long id) {
 		return jpaCertificateRepository.findByIdAndDeletedAtIsNull(id);
 	}
+
+	@Override
+	public Optional<Boolean> findApprovalById(Long id) {
+		return jpaCertificateRepository.findApprovalById(id);
+	}
 }

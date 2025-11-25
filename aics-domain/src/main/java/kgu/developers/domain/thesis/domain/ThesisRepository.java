@@ -6,4 +6,6 @@ public interface ThesisRepository {
 	Long save(Thesis thesis);
 
     Optional<Thesis> findByIdAndDeletedAtIsNull(Long thesisId);
+
+    Optional<Boolean> findApprovalByIdAndDeletedAtIsNull(Long id);
 }

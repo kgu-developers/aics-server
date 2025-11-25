@@ -33,4 +33,9 @@ public class GraduationUserQueryService {
         List<GraduationUser> graduationUsers = graduationUserRepository.findAllByGraduationTypeOrderByIdAsc(graduationType);
         return graduationUserExcel.generate(graduationUsers); //TODO: 추후 Approval 여부를 함께 넘겨주어야 함
     }
+
+    public GraduationUser getByStudentId(String studentId) {
+        return graduationUserRepository.findByUserIdAndDeletedAtIsNull(studentId)
+                .orElseThrow(GraduationUserNotFoundException::new);
+    }
 }

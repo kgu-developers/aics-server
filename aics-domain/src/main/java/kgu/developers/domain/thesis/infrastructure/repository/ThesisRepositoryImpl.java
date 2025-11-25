@@ -23,4 +23,9 @@ public class ThesisRepositoryImpl implements ThesisRepository {
 	public Optional<Thesis> findByIdAndDeletedAtIsNull(Long thesisId) {
 		return jpaThesisRepository.findByIdAndDeletedAtIsNull(thesisId);
 	}
+
+	@Override
+	public Optional<Boolean> findApprovalByIdAndDeletedAtIsNull(Long id) {
+		return jpaThesisRepository.findApprovalByIdAndDeletedAtIsNull(id);
+	}
 }

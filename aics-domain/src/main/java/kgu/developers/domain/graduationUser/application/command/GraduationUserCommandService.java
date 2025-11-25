@@ -4,6 +4,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
+import kgu.developers.domain.thesis.domain.ThesisType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,17 @@ public class GraduationUserCommandService {
     public void updateGraduationUserEmail(GraduationUser graduationUser, String email) {
         graduationUser.updateEmail(email);
         graduationUserRepository.save(graduationUser);
+    }
+
+    public void updateCertificate(GraduationUser graduationUser, Long certificateId) {
+        graduationUser.updateCertificate(certificateId);
+        graduationUserRepository.save(graduationUser);
+    }
+
+    public void updateThesis(GraduationUser graduationUser, Long thesisId, ThesisType thesisType) {
+        switch (thesisType) {
+            case MID_THESIS -> graduationUser.updateMidThesisId(thesisId);
+            case FINAL_THESIS -> graduationUser.updateFinalThesisId(thesisId);
+        }
     }
 }

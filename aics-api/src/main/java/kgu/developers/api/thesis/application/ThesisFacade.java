@@ -1,0 +1,32 @@
+package kgu.developers.api.thesis.application;
+
+import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
+import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.domain.GraduationUser;
+import kgu.developers.domain.thesis.application.command.ThesisCommandService;
+import kgu.developers.domain.thesis.domain.ThesisType;
+import kgu.developers.domain.user.application.query.UserQueryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+@Component
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class ThesisFacade {
+
+    private final ThesisCommandService thesisCommandService;
+    private final UserQueryService userQueryService;
+    private final GraduationUserQueryService graduationUserQueryService;
+    private final GraduationUserCommandService graduationUserCommandService;
+
+    @Transactional
+    public Long submitThesis(MultipartFile file, Long scheduleId, ThesisType thesisType) {
+        Long thesisId = thesisCommandService.submitThesis(file,scheduleId);
+        String userId = userQueryService.getMyId();
+        GraduationUser graduationUser = graduationUserQueryService.getByStudentId(userId);
+        graduationUserCommandService.updateThesis(graduationUser, thesisId, thesisType);
+        return thesisId;
+    }
+}

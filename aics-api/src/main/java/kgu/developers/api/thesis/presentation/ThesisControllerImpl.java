@@ -2,6 +2,7 @@ package kgu.developers.api.thesis.presentation;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
+import kgu.developers.api.thesis.application.ThesisFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/thesis")
 @RequiredArgsConstructor
 public class ThesisControllerImpl implements ThesisController {
-	private final ThesisCommandService thesisCommandService;
+	private final ThesisFacade thesisFacade;
 
 	@Override
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
@@ -26,7 +27,7 @@ public class ThesisControllerImpl implements ThesisController {
 		@RequestPart(value = "file") MultipartFile file,
 		@RequestPart ThesisSubmitRequest request
 	) {
-		Long id = thesisCommandService.submitThesis(file, request.scheduleId());
+		Long id = thesisFacade.submitThesis(file, request.scheduleId(), request.thesisType());
 		return ResponseEntity.ok(
 			ThesisPersistResponse.of(id)
 		);

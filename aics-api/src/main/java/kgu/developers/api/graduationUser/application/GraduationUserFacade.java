@@ -19,13 +19,13 @@ public class GraduationUserFacade {
 
     public void updateGraduationType(Long graduationUserId, GraduationType type) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
-        graduationUser.validateAccessPermission(userQueryService.me().getId());
+        graduationUser.validateAccessPermission(userQueryService.getMyId());
         graduationUserCommandService.updateGraduationType(graduationUser,type);
     }
 
     public void updateGraduationUserEmail(Long graduationUserId, String email) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
-        graduationUser.validateAccessPermission(userQueryService.me().getId());
+        graduationUser.validateAccessPermission(userQueryService.getMyId());
         graduationUserCommandService.updateGraduationUserEmail(graduationUser,email);
     }
 }

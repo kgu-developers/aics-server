@@ -38,14 +38,18 @@ public class UserQueryService {
 		return UserDetailResponse.from(user);
 	}
 
-	public User me() {
+	public String getMyId() {
 		try {
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String userId = ((UserDetails)principal).getUsername();
-			return getUserById(userId);
+			return userId;
 		} catch (Exception e) {
 			throw new UserNotAuthenticatedException();
 		}
+	}
+
+	public User me() {
+		return getUserById(getMyId());
 	}
 
 	public List<User> getAllUsersByIds(List<String> ids) {

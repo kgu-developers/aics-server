@@ -57,4 +57,16 @@ public class GraduationUser {
     public void updateEmail(String email) {
         this.email = email;
     }
+
+    public void updateCertificate(Long certificateId) {
+        this.certificateId = certificateId;
+    }
+
+    public void updateMidThesisId(Long thesisId) {
+        this.midThesisId = thesisId;
+    }
+
+    public void updateFinalThesisId(Long thesisId) {
+        this.finalThesisId = thesisId;
+    }
 }
