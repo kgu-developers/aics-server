@@ -56,5 +56,6 @@ public class GraduationUserCommandService {
             case MID_THESIS -> graduationUser.updateMidThesisId(thesisId);
             case FINAL_THESIS -> graduationUser.updateFinalThesisId(thesisId);
         }
+        graduationUserRepository.save(graduationUser);
     }
 }
