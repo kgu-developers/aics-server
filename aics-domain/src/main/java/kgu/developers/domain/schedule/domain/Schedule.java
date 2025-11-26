@@ -15,7 +15,6 @@ public class Schedule {
 
     private Long id;
     private SubmissionType submissionType;
-    private String title;
     private String content;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -25,10 +24,9 @@ public class Schedule {
     private LocalDateTime deletedAt;
 
 
-    public static Schedule create(SubmissionType submissionType, String title,String content, LocalDateTime startDate, LocalDateTime endDate) {
+    public static Schedule create(SubmissionType submissionType,String content, LocalDateTime startDate, LocalDateTime endDate) {
         return Schedule.builder()
                 .submissionType(submissionType)
-                .title(title)
                 .content(content)
                 .startDate(startDate)
                 .endDate(endDate)
@@ -45,9 +43,6 @@ public class Schedule {
     }
     public void updateSubmissionType(SubmissionType submissionType) {
         this.submissionType = submissionType;
-    }
-    public void updateTitle(String title) {
-        this.title = title;
     }
     public void updateContent(String content) {this.content = content;}
     public void updateStartDate(LocalDateTime startDate) {

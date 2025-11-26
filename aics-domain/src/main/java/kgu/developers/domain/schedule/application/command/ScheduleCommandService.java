@@ -17,24 +17,16 @@ import java.time.LocalDateTime;
 public class ScheduleCommandService {
     private final ScheduleRepository scheduleRepository;
 
-    public Long createSchedule(SubmissionType submissionType, String title, String content , LocalDateTime startDate, LocalDateTime endDate) {
+    public Long createSchedule(SubmissionType submissionType,String content , LocalDateTime startDate, LocalDateTime endDate) {
         scheduleRepository.findBySubmissionType(submissionType).ifPresent(existing -> {
             throw new DuplicateScheduleTypeException();
         });
-        Schedule schedule = Schedule.create(submissionType,title,content,startDate,endDate);
+        Schedule schedule = Schedule.create(submissionType,content,startDate,endDate);
 
         return scheduleRepository.save(schedule).getId();
     }
     @Transactional
-    public void updateSchedule(Schedule schedule, SubmissionType submissionType , String title, LocalDateTime startDate, LocalDateTime endDate) {
-        if(!schedule.getSubmissionType().equals(submissionType)) {
-            scheduleRepository.findBySubmissionType(submissionType)
-                    .filter(other -> !other.getId().equals(schedule.getId()))
-                    .ifPresent(existing -> {
-                        throw new DuplicateScheduleTypeException();});
-        }
-        schedule.updateSubmissionType(submissionType);
-        schedule.updateTitle(title);
+    public void updateSchedule(Schedule schedule,  LocalDateTime startDate, LocalDateTime endDate) {
         schedule.updateStartDate(startDate);
         schedule.updateEndDate(endDate);
 

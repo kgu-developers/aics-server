@@ -173,7 +173,6 @@ CREATE TABLE schedule
         CONSTRAINT schedule_submission_type_check
             CHECK ((submission_type)::TEXT = ANY
         (ARRAY ['SUBMITTED', 'MIDTHESIS', 'FINALTHESIS', 'CERTIFICATE', 'APPROVED', 'OTHER'])),
-    title            VARCHAR(100) NOT NULL,
     content          TEXT         NOT NULL,
     start_date       TIMESTAMP(6) NOT NULL,
     end_date         TIMESTAMP(6) NOT NULL,

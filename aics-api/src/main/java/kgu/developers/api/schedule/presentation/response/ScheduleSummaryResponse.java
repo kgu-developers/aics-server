@@ -18,9 +18,6 @@ public record ScheduleSummaryResponse(
     @Schema(description = "제출 유형", example = "MIDTHESIS", requiredMode = REQUIRED)
     String submissionType,
 
-    @Schema(description = "일정 제목", example = "중간논문 제출 안내", requiredMode = REQUIRED)
-    String title,
-
     @Schema(description = "시작일", example = "2025-05-01", requiredMode = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     String startDate,
@@ -38,7 +35,6 @@ public record ScheduleSummaryResponse(
         return ScheduleSummaryResponse.builder()
                 .id(schedule.getId())
                 .submissionType(schedule.getSubmissionType().name())
-                .title(schedule.getTitle())
                 .startDate(schedule.getStartDate().format(DATE_FORMATTER))
                 .endDate(schedule.getEndDate().format(DATE_FORMATTER))
                 .status(schedule.determineStatusAt(referenceTime).name())

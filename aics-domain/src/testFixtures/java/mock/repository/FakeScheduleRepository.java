@@ -22,7 +22,6 @@ public class FakeScheduleRepository implements ScheduleRepository {
 		ScheduleJpaEntity entity = ScheduleJpaEntity.builder()
 			.id(id)
 			.submissionType(schedule.getSubmissionType())
-			.title(schedule.getTitle())
 			.content(schedule.getContent())
 			.startDate(schedule.getStartDate())
 			.endDate(schedule.getEndDate())
@@ -59,5 +58,10 @@ public class FakeScheduleRepository implements ScheduleRepository {
 				.filter(schedule -> schedule.getSubmissionType()== submissionType)
 				.findFirst()
 				.map(ScheduleJpaEntity :: toDomain);
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		return data.stream().anyMatch(schedule -> schedule.getId().equals(id));
 	}
 }

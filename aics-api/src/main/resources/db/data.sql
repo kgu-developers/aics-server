@@ -142,16 +142,16 @@ VALUES
     ('최동욱', 'dongwook@kyonggi.ac.kr', '이교수', '자격증', '2027-08-31', NULL, NULL, 2, '202512348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- schedule
-INSERT INTO schedule (submission_type, title, content, start_date, end_date, created_at, updated_at)
-VALUES ('SUBMITTED', '신청 접수', '학부생 졸업 논문 신청을 접수합니다.', '2025-02-24 09:00:00', '2025-03-10 18:00:00',
+INSERT INTO schedule (submission_type,  content, start_date, end_date, created_at, updated_at)
+VALUES ('SUBMITTED',  '학부생 졸업 논문 신청을 접수합니다.', '2025-02-24 09:00:00', '2025-03-10 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('MIDTHESIS', '중간 보고서', '중간 논문 제출 및 심사 기간입니다.', '2025-04-01 09:00:00', '2025-04-12 18:00:00',
+       ('MIDTHESIS',  '중간 논문 제출 및 심사 기간입니다.', '2025-04-01 09:00:00', '2025-04-12 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('FINALTHESIS', '최종 보고서', '최종 논문 제출 및 심사 기간입니다.', '2025-05-20 09:00:00', '2025-06-05 18:00:00',
+       ('FINALTHESIS',  '최종 논문 제출 및 심사 기간입니다.', '2025-05-20 09:00:00', '2025-06-05 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('CERTIFICATE', '제안서', '취득한 자격증 제출 및 심사 기간입니다.', '2025-03-15 09:00:00', '2025-03-29 18:00:00',
+       ('CERTIFICATE',  '취득한 자격증 제출 및 심사 기간입니다.', '2025-03-15 09:00:00', '2025-03-29 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('APPROVED', '최종 통과', '최종 승인 기간입니다.', '2025-06-10 09:00:00', '2025-06-14 18:00:00',
+       ('APPROVED',  '최종 승인 기간입니다.', '2025-06-10 09:00:00', '2025-06-14 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('OTHER', '기타 일정 안내', '기타 일정 입니다.', '2025-03-01 09:00:00', '2025-12-31 18:00:00',
+       ('OTHER',  '기타 일정 입니다.', '2025-03-01 09:00:00', '2025-12-31 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

@@ -46,7 +46,6 @@ public class ScheduleAdminFacadeTest {
 		Schedule savedSchedule = fakeScheduleRepository.save(
 			Schedule.create(
 				SUBMITTED,
-				"신청 접수",
 				"본문",
 				DEFAULT_START_DATE,
 				DEFAULT_END_DATE
@@ -61,7 +60,6 @@ public class ScheduleAdminFacadeTest {
 		// given
 		ScheduleCreateRequest request = ScheduleCreateRequest.builder()
 			.submissionType(MIDTHESIS)
-			.title("중간 논문 일정")
 			.content("중간 논문 본문")
 			.startDate(DEFAULT_START_DATE.plusMonths(1))
 			.endDate(DEFAULT_END_DATE.plusMonths(1))
@@ -81,7 +79,6 @@ public class ScheduleAdminFacadeTest {
 		// given
 		ScheduleCreateRequest request = ScheduleCreateRequest.builder()
 			.submissionType(SUBMITTED)
-			.title("중복 일정")
 			.content("본문")
 			.startDate(DEFAULT_START_DATE)
 			.endDate(DEFAULT_END_DATE)
@@ -97,8 +94,6 @@ public class ScheduleAdminFacadeTest {
 	void updateSchedule_Success() {
 		// given
 		ScheduleUpdateRequest request = ScheduleUpdateRequest.builder()
-			.submissionType(CERTIFICATE)
-			.title("수정 일정")
 			.startDate(DEFAULT_START_DATE.plusDays(3))
 			.endDate(DEFAULT_END_DATE.plusDays(5))
 			.build();
@@ -108,36 +103,8 @@ public class ScheduleAdminFacadeTest {
 
 		// then
 		Schedule updated = fakeScheduleRepository.findById(savedScheduleId).orElseThrow();
-		assertEquals(CERTIFICATE, updated.getSubmissionType());
-		assertEquals("수정 일정", updated.getTitle());
 		assertEquals(DEFAULT_START_DATE.plusDays(3), updated.getStartDate());
 		assertEquals(DEFAULT_END_DATE.plusDays(5), updated.getEndDate());
-	}
-
-	@Test
-	@DisplayName("다른 일정의 제출 유형으로 수정 시 DuplicateScheduleTypeException을 발생시킨다")
-	void updateSchedule_DuplicatedSubmissionType_ThrowsException() {
-		// given
-		fakeScheduleRepository.save(
-			Schedule.create(
-				MIDTHESIS,
-				"다른 일정",
-				"본문",
-				DEFAULT_START_DATE.plusMonths(2),
-				DEFAULT_END_DATE.plusMonths(2)
-			)
-		);
-
-		ScheduleUpdateRequest request = ScheduleUpdateRequest.builder()
-			.submissionType(MIDTHESIS)
-			.title("중복 수정")
-			.startDate(DEFAULT_START_DATE)
-			.endDate(DEFAULT_END_DATE)
-			.build();
-
-		// when & then
-		assertThatThrownBy(() -> scheduleAdminFacade.updateSchedule(savedScheduleId, request))
-			.isInstanceOf(DuplicateScheduleTypeException.class);
 	}
 
 	@Test
@@ -145,8 +112,6 @@ public class ScheduleAdminFacadeTest {
 	void updateSchedule_NotFound_ThrowsException() {
 		// given
 		ScheduleUpdateRequest request = ScheduleUpdateRequest.builder()
-			.submissionType(SUBMITTED)
-			.title("수정 실패")
 			.startDate(DEFAULT_START_DATE)
 			.endDate(DEFAULT_END_DATE)
 			.build();

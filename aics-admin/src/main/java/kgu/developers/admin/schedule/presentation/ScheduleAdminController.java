@@ -43,7 +43,7 @@ public interface ScheduleAdminController {
 	@ApiResponse(responseCode = "204")
 	ResponseEntity<Void> updateSchedule(
 			@Parameter(
-					description = "이 API는 제출 유형/제목/기간을 수정합니다.",
+					description = "이 API는 일정 별 기간을 수정합니다.",
 					example = "1",
 					required = true
 			)@Positive @PathVariable Long scheduleId,

@@ -33,7 +33,6 @@ public class ScheduleCommandServiceTest {
         //given
         Long id = scheduleCommandService.createSchedule(
                 SubmissionType.SUBMITTED,
-                "신청 일정",
                 "신청 일정 본문",
                 startDate,
                 endDate
@@ -43,7 +42,6 @@ public class ScheduleCommandServiceTest {
 
         //then
         assertEquals(1L,id);
-        assertEquals("신청 일정", saved.getTitle());
         assertEquals("신청 일정 본문", saved.getContent());
     }
 
@@ -52,13 +50,12 @@ public class ScheduleCommandServiceTest {
     void createSchedule_DuplicateSubmissionType(){
         //given
         fakeScheduleRepository.save(
-                Schedule.create(SubmissionType.SUBMITTED,"기존 일정","내용",startDate,endDate)
+                Schedule.create(SubmissionType.SUBMITTED,"내용",startDate,endDate)
         );
         //when & then
         assertThrows(DuplicateScheduleTypeException.class, () ->
                 scheduleCommandService.createSchedule(
                         SubmissionType.SUBMITTED,
-                        "중복 일정",
                         "다른 내용",
                         startDate.plusDays(1),
                         endDate.plusDays(1)
@@ -67,16 +64,14 @@ public class ScheduleCommandServiceTest {
     }
 
     @Test
-    @DisplayName("updateSchedule은 제출타입과 기간, 제목을 갱신한다.")
+    @DisplayName("updateSchedule은 기간을 갱신한다.")
     void updateSchedule_Success(){
         //given
         Schedule schedule = fakeScheduleRepository.save(
-                Schedule.create(SubmissionType.SUBMITTED, "접수", "내용", startDate, endDate)
+                Schedule.create(SubmissionType.SUBMITTED, "접수",  startDate, endDate)
         );
         scheduleCommandService.updateSchedule(
                 schedule,
-                SubmissionType.MIDTHESIS,
-                "중간 점검",
                 startDate.plusWeeks(1),
                 endDate.plusWeeks(1)
         );
@@ -84,40 +79,17 @@ public class ScheduleCommandServiceTest {
         Schedule updated = fakeScheduleRepository.findById(schedule.getId()).orElseThrow();
 
         //then
-        assertEquals(SubmissionType.MIDTHESIS, updated.getSubmissionType());
-        assertEquals("중간 점검", updated.getTitle());
         assertEquals(startDate.plusWeeks(1), updated.getStartDate());
 
     }
-    @Test
-    @DisplayName("이미 사용 중인 제출타입으로 updateSchedule을 호출하면 예외를 던진다")
-    void updateSchedule_DuplicateSubmissionTypeThrows() {
-        //given
-        Schedule first = fakeScheduleRepository.save(
-                Schedule.create(SubmissionType.SUBMITTED, "접수", "내용", startDate, endDate)
-        );
-        fakeScheduleRepository.save(
-                Schedule.create(SubmissionType.MIDTHESIS, "중간", "내용", startDate.plusDays(10), endDate.plusDays(10))
-        );
 
-        //when & then
-        assertThrows(DuplicateScheduleTypeException.class, () ->
-                scheduleCommandService.updateSchedule(
-                        first,
-                        SubmissionType.MIDTHESIS,
-                        "중간으로 변경",
-                        startDate.plusDays(1),
-                        endDate.plusDays(1)
-                )
-        );
-    }
 
     @Test
     @DisplayName("updateScheduleContent는 내용을 수정한다")
     void updateScheduleContent_Success() {
         //given
         Schedule schedule = fakeScheduleRepository.save(
-                Schedule.create(SubmissionType.SUBMITTED, "접수", "내용", startDate, endDate)
+                Schedule.create(SubmissionType.SUBMITTED, "내용", startDate, endDate)
         );
         //when
         scheduleCommandService.updateScheduleContent(schedule, "콘텐츠 업데이트");
@@ -131,7 +103,7 @@ public class ScheduleCommandServiceTest {
     void deleteSchedule_Success() {
         //given
         Schedule schedule = fakeScheduleRepository.save(
-                Schedule.create(SubmissionType.SUBMITTED, "접수", "내용", startDate, endDate)
+                Schedule.create(SubmissionType.SUBMITTED,  "내용", startDate, endDate)
         );
         //when
         scheduleCommandService.deleteSchedule(schedule.getId());

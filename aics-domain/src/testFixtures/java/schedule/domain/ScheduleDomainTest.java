@@ -22,7 +22,6 @@ public class ScheduleDomainTest {
     void init(){
         schedule  = Schedule.create(
                 SubmissionType.SUBMITTED,
-                "신청 일정",
                 "신청 관련 설명",
                 startDate,
                 endDate
@@ -33,7 +32,6 @@ public class ScheduleDomainTest {
     @DisplayName("Schedule 객체를 올바르게 생성할 수 있다.")
     void createSchedule_Success(){
         assertEquals(SubmissionType.SUBMITTED, schedule.getSubmissionType());
-        assertEquals("신청 일정",schedule.getTitle());
         assertEquals("신청 관련 설명", schedule.getContent());
         assertEquals(startDate,schedule.getStartDate());
         assertEquals(endDate,schedule.getEndDate());
@@ -54,12 +52,10 @@ public class ScheduleDomainTest {
         LocalDateTime newEnd = newStart.plusDays(3);
 
         schedule.updateSubmissionType(SubmissionType.MIDTHESIS);
-        schedule.updateTitle("중간 점검");
         schedule.updateStartDate(newStart);
         schedule.updateEndDate(newEnd);
 
         assertEquals(SubmissionType.MIDTHESIS, schedule.getSubmissionType());
-        assertEquals("중간 점검", schedule.getTitle());
         assertEquals(newStart, schedule.getStartDate());
         assertEquals(newEnd, schedule.getEndDate());
 

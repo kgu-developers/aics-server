@@ -31,9 +31,6 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
     @Enumerated(STRING)
     private SubmissionType submissionType;
 
-    @Column(nullable = false)
-    private String title;
-
     @Column(nullable = false, columnDefinition = "text")
     private String content;
 
@@ -51,7 +48,6 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
         return ScheduleJpaEntity.builder()
                 .id(schedule.getId())
                 .submissionType(schedule.getSubmissionType())
-                .title(schedule.getTitle())
                 .content(schedule.getContent())
                 .startDate(schedule.getStartDate())
                 .endDate(schedule.getEndDate())
@@ -61,7 +57,6 @@ public class ScheduleJpaEntity extends BaseTimeEntity {
         return Schedule.builder()
                 .id(id)
                 .submissionType(submissionType)
-                .title(title)
                 .startDate(startDate)
                 .content(content)
                 .endDate(endDate)
