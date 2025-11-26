@@ -5,7 +5,7 @@ import java.util.Optional;
 public interface CertificateRepository {
 	Long save(Certificate certificate);
 
-	Optional<Certificate> findByIdAndDeletedIsNull(Long id);
+	Optional<Certificate> findByIdAndDeletedAtIsNull(Long id);
 
-    Optional<Boolean> findApprovalById(Long id);
+    Optional<Boolean> findApprovalByIdAndDeletedAtIsNull(Long id);
 }

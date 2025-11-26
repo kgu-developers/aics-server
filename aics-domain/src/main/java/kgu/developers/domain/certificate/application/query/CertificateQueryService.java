@@ -11,7 +11,7 @@ public class CertificateQueryService {
     private final CertificateRepository certificateRepository;
 
     public boolean isApproved(Long id) {
-        return certificateRepository.findApprovalById(id)
+        return certificateRepository.findApprovalByIdAndDeletedAtIsNull(id)
                 .orElseThrow(CertificateNotFoundException::new);
     }
 }

@@ -20,12 +20,12 @@ public class CertificateRepositoryImpl implements CertificateRepository {
 	}
 
 	@Override
-	public Optional<Certificate> findByIdAndDeletedIsNull(Long id) {
+	public Optional<Certificate> findByIdAndDeletedAtIsNull(Long id) {
 		return jpaCertificateRepository.findByIdAndDeletedAtIsNull(id);
 	}
 
 	@Override
-	public Optional<Boolean> findApprovalById(Long id) {
+	public Optional<Boolean> findApprovalByIdAndDeletedAtIsNull(Long id) {
 		return jpaCertificateRepository.findApprovalById(id);
 	}
 }

@@ -5,7 +5,14 @@ import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBa
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.*;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchApproveResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserStatusResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryResponse;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.certificate.application.command.CertificateCommandService;
 import kgu.developers.domain.certificate.application.query.CertificateQueryService;
@@ -22,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -75,6 +83,10 @@ public class GraduationUserAdminFacade {
     }
 
     private GraduationUserStatusResponse buildSubmissionStatus(GraduationUser user) {
+        if (user.getGraduationType() == null) {
+            return null; // 또는 빈 객체
+        }
+
         return switch (user.getGraduationType()) {
             case CERTIFICATE -> buildCertificateStatus(user.getCertificateId());
             case THESIS -> buildThesisStatus(user.getMidThesisId(), user.getFinalThesisId());
@@ -154,7 +166,7 @@ public class GraduationUserAdminFacade {
                 .map(graduationUserQueryService::getById)
                 .toList();
 
-        List<Long> approvedUserIds = null;
+        List<Long> approvedUserIds = new ArrayList<>();
 
         for(GraduationUser user: users) {
             if(user.getGraduationType() == GraduationType.CERTIFICATE) {

@@ -38,4 +38,9 @@ public class GraduationUserQueryService {
         return graduationUserRepository.findByUserIdAndDeletedAtIsNull(studentId)
                 .orElseThrow(GraduationUserNotFoundException::new);
     }
+
+    public GraduationUser getByUserId(String userId) {
+        return graduationUserRepository.findByUserIdAndDeletedAtIsNull(userId)
+            .orElseThrow(GraduationUserNotFoundException::new);
+    }
 }

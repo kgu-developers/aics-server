@@ -5,9 +5,11 @@ import jakarta.validation.constraints.Positive;
 import kgu.developers.api.graduationUser.application.GraduationUserFacade;
 import kgu.developers.api.graduationUser.presentation.request.GraduationTypeUpdateRequest;
 import kgu.developers.api.graduationUser.presentation.request.GraduationUserEmailUpdateRequest;
+import kgu.developers.api.graduationUser.presentation.response.MyGraduationUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,5 +40,12 @@ public class GraduationUserControllerImpl implements GraduationUserController {
         @Valid @RequestBody GraduationUserEmailUpdateRequest request) {
         graduationuserFacade.updateGraduationUserEmail(graduationUserId,request.email());
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @GetMapping("/my")
+    public ResponseEntity<MyGraduationUserResponse> getMyGraduationUser() {
+        MyGraduationUserResponse response = graduationuserFacade.getMyGraduationUser();
+        return ResponseEntity.ok(response);
     }
 }

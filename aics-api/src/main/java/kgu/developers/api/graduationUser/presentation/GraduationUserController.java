@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import kgu.developers.api.graduationUser.presentation.request.GraduationTypeUpdateRequest;
 import kgu.developers.api.graduationUser.presentation.request.GraduationUserEmailUpdateRequest;
+import kgu.developers.api.graduationUser.presentation.response.MyGraduationUserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,4 +48,11 @@ public interface GraduationUserController {
             required = true
         ) @Valid @RequestBody GraduationUserEmailUpdateRequest request
     );
+
+    @Operation(summary = "내 졸업 상태 확인 API", description = """
+			- Description : 이 API는 로그인한 졸업 대상자의 제출 상태를 확인하는 API입니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(responseCode = "204")
+    ResponseEntity<MyGraduationUserResponse> getMyGraduationUser();
 }

@@ -5,6 +5,8 @@ import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
 import kgu.developers.domain.thesis.domain.ThesisType;
+import kgu.developers.domain.user.domain.UserRepository;
+import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +16,19 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class GraduationUserCommandService {
     private final GraduationUserRepository graduationUserRepository;
+    private final UserRepository userRepository;
 
     public Long createGraduationUser(String studentId, String name, String advisor, Boolean capstoneCompletion, String department, LocalDate graduationDate) {
-        validateDuplicateId(studentId);
+        validateId(studentId);
         GraduationUser graduationUser = GraduationUser.create(studentId,name,advisor,capstoneCompletion,department,graduationDate);
         return graduationUserRepository.save(graduationUser).getId();
     }
 
-    private void validateDuplicateId(String id) {
+    private void validateId(String id) {
         if (graduationUserRepository.findByUserIdAndDeletedAtIsNull(id).isPresent())
             throw new GraduationUserIdDuplicateException();
+        if(userRepository.findById(id).isEmpty())
+            throw new UserNotFoundException();
     }
 
     public void updateGraduationType(GraduationUser graduationUser, GraduationType type) {

@@ -8,13 +8,27 @@ import kgu.developers.admin.graduationUser.presentation.response.GraduationUserP
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryResponse;
 import kgu.developers.common.response.PageableResponse;
+import kgu.developers.domain.certificate.application.command.CertificateCommandService;
+import kgu.developers.domain.certificate.application.query.CertificateQueryService;
+import kgu.developers.domain.file.application.command.FileCommandService;
+import kgu.developers.domain.file.infrastructure.ImageResizingServiceImpl;
+import kgu.developers.domain.file.infrastructure.properties.FilePathProperties;
+import kgu.developers.domain.file.infrastructure.repository.FileStorageServiceImpl;
 import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
+import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
+import kgu.developers.domain.thesis.application.command.ThesisCommandService;
+import kgu.developers.domain.thesis.application.query.ThesisQueryService;
+import mock.repository.FakeCertificateRepository;
+import mock.repository.FakeFileRepository;
 import mock.repository.FakeGraduationUserRepository;
+import mock.repository.FakeScheduleRepository;
+import mock.repository.FakeThesisRepository;
+import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,14 +50,44 @@ public class GraduationUserAdminFacadeTest {
     @BeforeEach
     public void init() {
         FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+        FakeUserRepository fakeUserRepository = new FakeUserRepository();
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
 
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
         GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,graduationUserExcel);
 
+        FakeThesisRepository fakeThesisRepository = new FakeThesisRepository();
+        FakeFileRepository fakeFileRepository = new FakeFileRepository();
+        FakeScheduleRepository fakeScheduleRepository = new FakeScheduleRepository();
+        FakeCertificateRepository fakeCertificateRepository = new FakeCertificateRepository();
+
+        FileStorageServiceImpl fileStorageService = new FileStorageServiceImpl(new FilePathProperties(), new ImageResizingServiceImpl());
+        FileCommandService fileCommandService = new FileCommandService(fakeFileRepository);
+        ScheduleQueryService scheduleQueryService = new ScheduleQueryService(fakeScheduleRepository);
+
+        ThesisCommandService thesisCommandService = new ThesisCommandService(
+            fakeThesisRepository,
+            fileStorageService,
+            fileCommandService,
+            scheduleQueryService
+        );
+
+        CertificateCommandService certificateCommandService = new CertificateCommandService(
+            fakeCertificateRepository,
+            fileStorageService,
+            fileCommandService,
+            scheduleQueryService
+        );
+
+
+
         graduationUserAdminFacade = new GraduationUserAdminFacade(
             graduationUserCommandService,
-            graduationUserQueryService
+            graduationUserQueryService,
+            thesisCommandService,
+            new ThesisQueryService(fakeThesisRepository),
+            certificateCommandService,
+            new CertificateQueryService(fakeCertificateRepository)
         );
 
         graduationUser1 = fakeGraduationUserRepository.save(GraduationUser.builder()

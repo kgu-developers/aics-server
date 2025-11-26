@@ -13,8 +13,12 @@ import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBa
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.*;
-import kgu.developers.admin.lab.presentation.response.LabPersistResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchApproveResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;

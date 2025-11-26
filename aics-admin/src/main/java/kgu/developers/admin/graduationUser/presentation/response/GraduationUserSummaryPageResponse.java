@@ -1,9 +1,7 @@
 package kgu.developers.admin.graduationUser.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserSummaryDto;
 import kgu.developers.common.response.PageableResponse;
-import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import lombok.Builder;
 
 import java.util.List;

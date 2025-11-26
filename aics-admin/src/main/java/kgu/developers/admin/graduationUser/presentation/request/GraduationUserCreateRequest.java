@@ -23,7 +23,6 @@ public record GraduationUserCreateRequest(
     String name,
 
     @Schema(description = "담당교수 이름", example = "김교수", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank
     @Size(max = 10)
     String advisorProfessor,
 

@@ -32,7 +32,7 @@ public class CertificateCommandService {
 	}
 
     public boolean approve(Long certificateId) {
-		Certificate certificate = certificateRepository.findByIdAndDeletedIsNull(certificateId)
+		Certificate certificate = certificateRepository.findByIdAndDeletedAtIsNull(certificateId)
 				.orElseThrow(CertificateNotFoundException::new);
 
 		if (certificate.isApproved()) return false;
