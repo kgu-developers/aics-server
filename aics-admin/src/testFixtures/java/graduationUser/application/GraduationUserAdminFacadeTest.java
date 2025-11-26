@@ -53,13 +53,14 @@ public class GraduationUserAdminFacadeTest {
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
         GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
 
-        GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
-        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,graduationUserExcel);
-
         FakeThesisRepository fakeThesisRepository = new FakeThesisRepository();
+        FakeCertificateRepository fakeCertificateRepository = new FakeCertificateRepository();
+
+        GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
+        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository, fakeThesisRepository, fakeCertificateRepository, graduationUserExcel);
+
         FakeFileRepository fakeFileRepository = new FakeFileRepository();
         FakeScheduleRepository fakeScheduleRepository = new FakeScheduleRepository();
-        FakeCertificateRepository fakeCertificateRepository = new FakeCertificateRepository();
 
         FileStorageServiceImpl fileStorageService = new FileStorageServiceImpl(new FilePathProperties(), new ImageResizingServiceImpl());
         FileCommandService fileCommandService = new FileCommandService(fakeFileRepository);
