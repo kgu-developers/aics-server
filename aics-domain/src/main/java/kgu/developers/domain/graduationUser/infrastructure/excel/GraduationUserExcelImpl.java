@@ -1,13 +1,9 @@
 package kgu.developers.domain.graduationUser.infrastructure.excel;
 
-import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.exception.GraduationUserExcelGenerationFailed;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,14 +23,13 @@ public class GraduationUserExcelImpl implements GraduationUserExcel {
     private static final String SHEET_NAME = "졸업 대상자";
 
     @Override
-    public byte[] generate(List<GraduationUser> graduationUsers) {
+    public byte[] generate(List<GraduationUserExcelRow> graduationUsers) {
         try (Workbook workbook = new SXSSFWorkbook(SXSSFWorkbook.DEFAULT_WINDOW_SIZE);
-             ByteArrayOutputStream out = new ByteArrayOutputStream();
+             ByteArrayOutputStream out = new ByteArrayOutputStream()
         ) {
             Sheet sheet = workbook.createSheet(SHEET_NAME);
 
-            CellStyle headerStyle = createHeaderStyle(workbook);
-            createHeaderRow(sheet, headerStyle);
+            createHeaderRow(sheet);
             populateDataRows(sheet, graduationUsers);
 
             workbook.write(out);
@@ -44,31 +39,22 @@ public class GraduationUserExcelImpl implements GraduationUserExcel {
         }
     }
 
-    private CellStyle createHeaderStyle(Workbook workbook) {
-        CellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        return headerStyle;
-    }
-
-    private void createHeaderRow(Sheet sheet, CellStyle style) {
+    private void createHeaderRow(Sheet sheet) {
         Row header = sheet.createRow(HEADER_ROW_INDEX);
         GraduationUserExcelColumn[] columns = GraduationUserExcelColumn.values();
 
         for (int i = 0; i < columns.length; i++) {
             Cell cell = header.createCell(i);
             cell.setCellValue(columns[i].getHeaderName());
-            cell.setCellStyle(style);
             sheet.setColumnWidth(i, columns[i].getWidth());
         }
     }
 
-    private void populateDataRows(Sheet sheet, List<GraduationUser> users) {
+    private void populateDataRows(Sheet sheet, List<GraduationUserExcelRow> users) {
         GraduationUserExcelColumn[] columns = GraduationUserExcelColumn.values();
         int rowNum = DATA_START_ROW_INDEX;
 
-        for (GraduationUser user : users) {
+        for (GraduationUserExcelRow user : users) {
             Row row = sheet.createRow(rowNum++);
             for (int i = 0; i < columns.length; i++) {
                 Object value = columns[i].getValueExtractor().apply(user);
