@@ -34,7 +34,7 @@ public class GraduatoinUserFacadeTest {
 
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
         GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,graduationUserExcel);
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
 
         UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -70,7 +70,7 @@ public class GraduatoinUserFacadeTest {
         GraduationType graduationType = GraduationType.CERTIFICATE;
 
         //when
-        graduationuserFacade.updateGraduationType(graduatoinUserId, graduationType);
+        graduationuserFacade.updateGraduationType(graduationType);
 
         //then
         GraduationUser savedGraduationUser = fakeGraduationUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
@@ -85,7 +85,7 @@ public class GraduatoinUserFacadeTest {
         String email = "soojung@kyonggi.ac.kr";
 
         //when
-        graduationuserFacade.updateGraduationUserEmail(graduatoinUserId, email);
+        graduationuserFacade.updateGraduationUserEmail(email);
 
         //then
         GraduationUser savedGraduationUser = fakeGraduationUserRepository.findByIdAndDeletedAtIsNull(graduatoinUserId).get();
