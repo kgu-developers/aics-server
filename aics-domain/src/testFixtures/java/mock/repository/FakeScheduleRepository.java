@@ -60,4 +60,12 @@ public class FakeScheduleRepository implements ScheduleRepository {
 				.findFirst()
 				.map(ScheduleJpaEntity :: toDomain);
 	}
+
+	@Override
+	public boolean existsById(Long id) {
+		return data.stream()
+				.filter(schedule -> schedule.getId() == id)
+				.findFirst()
+				.isPresent();
+	}
 }

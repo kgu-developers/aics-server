@@ -1,12 +1,10 @@
 package graduationUser.application;
 
 import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
-import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryResponse;
+import kgu.developers.admin.graduationUser.presentation.response.*;
 import kgu.developers.common.response.PageableResponse;
 import kgu.developers.domain.certificate.application.command.CertificateCommandService;
 import kgu.developers.domain.certificate.application.query.CertificateQueryService;
@@ -16,13 +14,13 @@ import kgu.developers.domain.file.infrastructure.properties.FilePathProperties;
 import kgu.developers.domain.file.infrastructure.repository.FileStorageServiceImpl;
 import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
-import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.thesis.application.query.ThesisQueryService;
+import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCertificateRepository;
 import mock.repository.FakeFileRepository;
 import mock.repository.FakeGraduationUserRepository;
@@ -36,21 +34,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class GraduationUserAdminFacadeTest {
     private GraduationUserAdminFacade graduationUserAdminFacade;
+
+    private FakeUserRepository fakeUserRepository;
     private GraduationUser graduationUser1;
     private GraduationUser graduationUser2;
 
     @BeforeEach
     public void init() {
         FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
-        FakeUserRepository fakeUserRepository = new FakeUserRepository();
+        fakeUserRepository = new FakeUserRepository();
         GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
 
         FakeThesisRepository fakeThesisRepository = new FakeThesisRepository();
@@ -61,8 +60,12 @@ public class GraduationUserAdminFacadeTest {
 
         FakeFileRepository fakeFileRepository = new FakeFileRepository();
         FakeScheduleRepository fakeScheduleRepository = new FakeScheduleRepository();
+        FilePathProperties filePathProperties = new FilePathProperties();
+        filePathProperties.setUploadPath("/cloud");
+        filePathProperties.setUrl("/dir/cloud");
+        filePathProperties.setDisallowedExtensions(new HashSet<>());
 
-        FileStorageServiceImpl fileStorageService = new FileStorageServiceImpl(new FilePathProperties(), new ImageResizingServiceImpl());
+        FileStorageServiceImpl fileStorageService = new FileStorageServiceImpl(filePathProperties, new ImageResizingServiceImpl());
         FileCommandService fileCommandService = new FileCommandService(fakeFileRepository);
         ScheduleQueryService scheduleQueryService = new ScheduleQueryService(fakeScheduleRepository);
 
@@ -96,7 +99,6 @@ public class GraduationUserAdminFacadeTest {
             .name("홍길동")
             .userId("202411001")
             .email("hong1@kyonggi.ac.kr")
-            .graduationType(GraduationType.CERTIFICATE)
             .graduationDate(LocalDate.of(2021, 12, 31))
             .build());
 
@@ -105,7 +107,6 @@ public class GraduationUserAdminFacadeTest {
             .name("이영희")
             .userId("202411002")
             .email("young1@kyonggi.ac.kr")
-            .graduationType(GraduationType.THESIS)
             .graduationDate(LocalDate.of(2021, 12, 31))
             .build());
 
@@ -120,9 +121,10 @@ public class GraduationUserAdminFacadeTest {
 
 
     @Test
-    @DisplayName("createGraduationUsers는 Graduation User를 생성한다.")
-    public void createGraduationUsers_Success() {
+    @DisplayName("createGraduationUser는 GraduationUser를 생성한다.")
+    public void createGraduationUser_Success() {
         //given
+        fakeUserRepository.save(User.builder().id("202411346").build());
         GraduationUserCreateRequest request = GraduationUserCreateRequest.builder()
             .studentId("202411346")
             .name("홍길순")
@@ -136,11 +138,46 @@ public class GraduationUserAdminFacadeTest {
 
         //then
         assertEquals(1L,result.id());
+    }
+
+    @Test
+    @DisplayName("createGraduationUsers은 여러 GraduationUser를 생성한다.")
+    public void createGraduationUsers_Success() {
+        //given
+        fakeUserRepository.save(User.builder().id("202411346").build());
+        fakeUserRepository.save(User.builder().id("202411347").build());
+        List<GraduationUserCreateRequest> requestList = new ArrayList<>();
+        GraduationUserCreateRequest requestUser1 = GraduationUserCreateRequest.builder()
+                .studentId("202411346")
+                .name("홍길순")
+                .capstoneCompletion(false)
+                .graduationDate(LocalDate.of(2021, 12, 31))
+                .build();
+        requestList.add(requestUser1);
+
+        GraduationUserCreateRequest requestUser2 = GraduationUserCreateRequest.builder()
+                .studentId("202411347")
+                .name("홍길동")
+                .capstoneCompletion(true)
+                .graduationDate(LocalDate.of(2028, 12, 31))
+                .build();
+        requestList.add(requestUser2);
+
+        GraduationUserBatchCreateRequest request = GraduationUserBatchCreateRequest.builder()
+                .graduationUsers(requestList)
+                .build();
+
+        //when
+        GraduationUserBatchCreateResponse response = graduationUserAdminFacade.createGraduationUsers(request);
+
+        //then
+        assertEquals(response.createdIds().get(0),1L);
+        assertEquals(response.createdIds().get(1),2L);
 
     }
 
     @Test
-    @DisplayName("getGraduationUsersByNameAndGraduationType는 Graduation User를 페이징해서 조회한다.")
+    @DisplayName("getGraduationUsersByNameAndGraduationType는 GraduationUser를 페이징해서 조회한다.")
     public void getGraduationUsersByNameAndGraduationType_Success() {
         //given
         Pageable pageable = PageRequest.of(0, 10);
@@ -200,7 +237,6 @@ public class GraduationUserAdminFacadeTest {
         //then
         assertNotNull(graduationUser1.getDeletedAt());
         assertNotNull(graduationUser2.getDeletedAt());
-
     }
 
 }

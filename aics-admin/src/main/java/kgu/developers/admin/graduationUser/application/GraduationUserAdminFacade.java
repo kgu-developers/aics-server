@@ -84,7 +84,7 @@ public class GraduationUserAdminFacade {
 
     private GraduationUserStatusResponse buildSubmissionStatus(GraduationUser user) {
         if (user.getGraduationType() == null) {
-            return null; // 또는 빈 객체
+            return null;
         }
 
         return switch (user.getGraduationType()) {
