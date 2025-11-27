@@ -25,7 +25,7 @@ public class ThesisFacade {
     public Long submitThesis(MultipartFile file, Long scheduleId, ThesisType thesisType) {
         Long thesisId = thesisCommandService.submitThesis(file,scheduleId);
         String userId = userQueryService.getMyId();
-        GraduationUser graduationUser = graduationUserQueryService.getByStudentId(userId);
+        GraduationUser graduationUser = graduationUserQueryService.getByUserId(userId);
         graduationUserCommandService.updateThesis(graduationUser, thesisId, thesisType);
         return thesisId;
     }

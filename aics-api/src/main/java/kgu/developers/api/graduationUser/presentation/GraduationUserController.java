@@ -41,6 +41,6 @@ public interface GraduationUserController {
 			- Description : 이 API는 로그인한 졸업 대상자의 제출 상태를 확인하는 API입니다.
 			- Assignee : 장영후
 		""")
-    @ApiResponse(responseCode = "204")
+    @ApiResponse(responseCode = "200")
     ResponseEntity<MyGraduationUserResponse> getMyGraduationUser();
 }

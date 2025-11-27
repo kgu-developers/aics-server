@@ -39,7 +39,8 @@ public class FakeThesisRepository implements ThesisRepository {
     @Override
     public Optional<Boolean> findApprovalByIdAndDeletedAtIsNull(Long id) {
         return data.stream()
-            .filter(certificate -> certificate.getId().equals(id))
+            .filter(thesis -> thesis.getId().equals(id))
+            .filter(thesis -> thesis.getDeletedAt() == null)
             .findFirst()
             .map(Thesis::isApproval);
     }

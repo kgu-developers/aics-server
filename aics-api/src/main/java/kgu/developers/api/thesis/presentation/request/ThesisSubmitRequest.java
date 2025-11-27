@@ -9,6 +9,7 @@ public record ThesisSubmitRequest(
 	Long scheduleId,
 
 	@Schema(description = "논문 타입", example = "MID_THESIS")
+	@NotNull(message = "논문 타입은 필수입니다.")
 	ThesisType thesisType
 ) {
 }

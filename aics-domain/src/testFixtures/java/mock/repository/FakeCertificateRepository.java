@@ -18,7 +18,7 @@ public class FakeCertificateRepository implements CertificateRepository {
     public Long save(Certificate certificate) {
         Certificate savedCertificate = Certificate.builder()
             .id(sequence.getAndIncrement())
-            .certificateFileId(certificate.getScheduleId())
+            .certificateFileId(certificate.getCertificateFileId())
             .approval(certificate.isApproval())
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
@@ -41,6 +41,7 @@ public class FakeCertificateRepository implements CertificateRepository {
     public Optional<Boolean> findApprovalByIdAndDeletedAtIsNull(Long id) {
         return data.stream()
             .filter(certificate -> certificate.getId().equals(id))
+            .filter(certificate -> certificate.getDeletedAt() == null)
             .findFirst()
             .map(Certificate::isApproved);
     }

@@ -1,5 +1,7 @@
 package kgu.developers.domain.certificate.domain;
 
+import kgu.developers.domain.certificate.infrastructure.entity.CertificateJpaEntity;
+
 import java.util.Optional;
 
 public interface CertificateRepository {

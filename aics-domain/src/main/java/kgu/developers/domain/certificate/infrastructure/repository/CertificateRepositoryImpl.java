@@ -21,7 +21,8 @@ public class CertificateRepositoryImpl implements CertificateRepository {
 
 	@Override
 	public Optional<Certificate> findByIdAndDeletedAtIsNull(Long id) {
-		return jpaCertificateRepository.findByIdAndDeletedAtIsNull(id);
+		return jpaCertificateRepository.findByIdAndDeletedAtIsNull(id)
+				.map(CertificateJpaEntity::toDomain);
 	}
 
 	@Override

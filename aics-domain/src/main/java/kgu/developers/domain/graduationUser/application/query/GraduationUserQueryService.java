@@ -100,11 +100,6 @@ public class GraduationUserQueryService {
         return "대기";
     }
 
-    public GraduationUser getByStudentId(String studentId) {
-        return graduationUserRepository.findByUserIdAndDeletedAtIsNull(studentId)
-                .orElseThrow(GraduationUserNotFoundException::new);
-    }
-
     public GraduationUser getByUserId(String userId) {
         return graduationUserRepository.findByUserIdAndDeletedAtIsNull(userId)
             .orElseThrow(GraduationUserNotFoundException::new);

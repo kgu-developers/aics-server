@@ -22,7 +22,7 @@ public record MyGraduationUserResponse(
         }
 
         if (graduationUser.getAdvisorProfessor() == null) {
-            return GraduationUserStatus.PROFFESSOR_NOT_ASSIGNED;
+            return GraduationUserStatus.PROFESSOR_NOT_ASSIGNED;
         }
 
         if (graduationUser.getGraduationType() == GraduationType.THESIS) {

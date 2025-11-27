@@ -23,6 +23,7 @@ public record GraduationUserExcelRow(
             .department(graduationUser.getDepartment())
             .graduationDate(graduationUser.getGraduationDate())
             .graduationType(graduationUser.getGraduationType().getDescription())
+            .advisorProfessor(graduationUser.getAdvisorProfessor())
             .currentStage(stage)
             .approvalStatus(status)
             .build();
