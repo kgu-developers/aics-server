@@ -61,8 +61,8 @@ public class GraduationUserAdminFacadeTest {
         FakeFileRepository fakeFileRepository = new FakeFileRepository();
         FakeScheduleRepository fakeScheduleRepository = new FakeScheduleRepository();
         FilePathProperties filePathProperties = new FilePathProperties();
-        filePathProperties.setUploadPath("/cloud");
-        filePathProperties.setUrl("/dir/cloud");
+        filePathProperties.setUploadPath("src/test/resources/uploads");
+        filePathProperties.setUrl("http://test-url.com");
         filePathProperties.setDisallowedExtensions(new HashSet<>());
 
         FileStorageServiceImpl fileStorageService = new FileStorageServiceImpl(filePathProperties, new ImageResizingServiceImpl());
