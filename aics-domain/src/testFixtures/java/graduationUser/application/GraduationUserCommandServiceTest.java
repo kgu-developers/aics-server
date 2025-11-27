@@ -4,7 +4,8 @@ import kgu.developers.domain.graduationUser.application.command.GraduationUserCo
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
-import kgu.developers.domain.thesis.domain.ThesisType;
+import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeGraduationUserRepository;
 import mock.repository.FakeUserRepository;
@@ -136,10 +137,13 @@ public class GraduationUserCommandServiceTest {
     public void updateThesis_Success() {
         //given
         Long thesisId = 1L;
-        ThesisType thesisType = ThesisType.FINAL_THESIS;
+        Schedule schedule = Schedule.builder()
+            .id(1L)
+            .submissionType(SubmissionType.FINALTHESIS)
+            .build();
 
         //when
-        graduationUserCommandService.updateThesis(graduationUser, thesisId, thesisType);
+        graduationUserCommandService.updateThesis(graduationUser, thesisId, schedule);
 
         //then
         assertEquals(graduationUser.getFinalThesisId(),thesisId);

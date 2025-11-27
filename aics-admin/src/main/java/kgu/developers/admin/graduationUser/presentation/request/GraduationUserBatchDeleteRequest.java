@@ -1,6 +1,5 @@
 package kgu.developers.admin.graduationUser.presentation.request;
 
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
@@ -14,5 +13,4 @@ public record GraduationUserBatchDeleteRequest(
     @NotEmpty(message = "삭제할 대상자를 최소 1명 이상 선택해야 합니다.")
     List<@Positive(message = "ID는 양수여야 합니다.") Long> ids
 ) {
-
 }

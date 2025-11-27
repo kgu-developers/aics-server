@@ -1,6 +1,7 @@
 package graduationUser.application;
 
 import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchApproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
@@ -8,18 +9,21 @@ import kgu.developers.admin.graduationUser.presentation.response.*;
 import kgu.developers.common.response.PageableResponse;
 import kgu.developers.domain.certificate.application.command.CertificateCommandService;
 import kgu.developers.domain.certificate.application.query.CertificateQueryService;
+import kgu.developers.domain.certificate.domain.Certificate;
 import kgu.developers.domain.file.application.command.FileCommandService;
 import kgu.developers.domain.file.infrastructure.ImageResizingServiceImpl;
 import kgu.developers.domain.file.infrastructure.properties.FilePathProperties;
 import kgu.developers.domain.file.infrastructure.repository.FileStorageServiceImpl;
 import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.thesis.application.query.ThesisQueryService;
+import kgu.developers.domain.thesis.domain.Thesis;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCertificateRepository;
 import mock.repository.FakeFileRepository;
@@ -43,6 +47,10 @@ public class GraduationUserAdminFacadeTest {
     private GraduationUserAdminFacade graduationUserAdminFacade;
 
     private FakeUserRepository fakeUserRepository;
+    private FakeThesisRepository fakeThesisRepository;
+    private FakeCertificateRepository fakeCertificateRepository;
+
+
     private GraduationUser graduationUser1;
     private GraduationUser graduationUser2;
 
@@ -52,8 +60,8 @@ public class GraduationUserAdminFacadeTest {
         fakeUserRepository = new FakeUserRepository();
         GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
 
-        FakeThesisRepository fakeThesisRepository = new FakeThesisRepository();
-        FakeCertificateRepository fakeCertificateRepository = new FakeCertificateRepository();
+        fakeThesisRepository = new FakeThesisRepository();
+        fakeCertificateRepository = new FakeCertificateRepository();
 
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
         GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository, fakeThesisRepository, fakeCertificateRepository, graduationUserExcel);
@@ -83,6 +91,30 @@ public class GraduationUserAdminFacadeTest {
             scheduleQueryService
         );
 
+        fakeThesisRepository.save(
+            Thesis.builder()
+                .id(1L)
+                .thesisFileId(1L)
+                .approval(false)
+                .build()
+        );
+
+        fakeThesisRepository.save(
+            Thesis.builder()
+                .id(2L)
+                .thesisFileId(2L)
+                .approval(false)
+                .build()
+        );
+
+        fakeCertificateRepository.save(
+            Certificate.builder()
+                .id(1L)
+                .certificateFileId(1L)
+                .approval(false)
+                .build()
+        );
+
 
 
         graduationUserAdminFacade = new GraduationUserAdminFacade(
@@ -99,6 +131,8 @@ public class GraduationUserAdminFacadeTest {
             .name("홍길동")
             .userId("202411001")
             .email("hong1@kyonggi.ac.kr")
+            .graduationType(GraduationType.CERTIFICATE)
+            .certificateId(1L)
             .graduationDate(LocalDate.of(2021, 12, 31))
             .build());
 
@@ -107,6 +141,9 @@ public class GraduationUserAdminFacadeTest {
             .name("이영희")
             .userId("202411002")
             .email("young1@kyonggi.ac.kr")
+            .graduationType(GraduationType.THESIS)
+            .midThesisId(1L)
+            .finalThesisId(2L)
             .graduationDate(LocalDate.of(2021, 12, 31))
             .build());
 
@@ -227,16 +264,36 @@ public class GraduationUserAdminFacadeTest {
         //given
         List<Long> graduationUserIds = Arrays.asList(1L, 2L);
 
-        GraduationUserBatchDeleteRequest graduationUserBatchDeleteRequest = GraduationUserBatchDeleteRequest.builder()
+        GraduationUserBatchDeleteRequest request = GraduationUserBatchDeleteRequest.builder()
             .ids(graduationUserIds)
             .build();
 
         //when
-        graduationUserAdminFacade.deleteGraduationUsers(graduationUserBatchDeleteRequest);
+        graduationUserAdminFacade.deleteGraduationUsers(request);
 
         //then
         assertNotNull(graduationUser1.getDeletedAt());
         assertNotNull(graduationUser2.getDeletedAt());
+    }
+
+
+    @Test
+    @DisplayName("approveGraduationUsers는 여러 GraduatoinUser의 제출을 승인한다.")
+    public void approveGraduationUsers_Success() {
+        //given
+        List<Long> graduationUserIds = Arrays.asList(1L, 2L);
+
+        GraduationUserBatchApproveRequest request = GraduationUserBatchApproveRequest.builder()
+            .ids(graduationUserIds)
+            .build();
+
+        //when
+        graduationUserAdminFacade.approveGraduationUsers(request);
+
+        //then
+        assertEquals(true,fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
+        assertEquals(true,fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(2L).get());
+        assertEquals(true,fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
     }
 
 }

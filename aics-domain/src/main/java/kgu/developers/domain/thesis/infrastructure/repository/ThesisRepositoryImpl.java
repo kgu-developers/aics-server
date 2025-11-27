@@ -21,7 +21,8 @@ public class ThesisRepositoryImpl implements ThesisRepository {
 
 	@Override
 	public Optional<Thesis> findByIdAndDeletedAtIsNull(Long thesisId) {
-		return jpaThesisRepository.findByIdAndDeletedAtIsNull(thesisId);
+		return jpaThesisRepository.findByIdAndDeletedAtIsNull(thesisId)
+			.map(ThesisJpaEntity::toDomain);
 	}
 
 	@Override
