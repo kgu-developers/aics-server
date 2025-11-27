@@ -4,7 +4,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
-import kgu.developers.domain.thesis.domain.ThesisType;
+import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.user.domain.UserRepository;
 import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -51,10 +51,10 @@ public class GraduationUserCommandService {
         graduationUserRepository.save(graduationUser);
     }
 
-    public void updateThesis(GraduationUser graduationUser, Long thesisId, ThesisType thesisType) {
-        switch (thesisType) {
-            case MID_THESIS -> graduationUser.updateMidThesisId(thesisId);
-            case FINAL_THESIS -> graduationUser.updateFinalThesisId(thesisId);
+    public void updateThesis(GraduationUser graduationUser, Long thesisId, Schedule schedule) {
+        switch (schedule.getSubmissionType()) {
+            case MIDTHESIS -> graduationUser.updateMidThesisId(thesisId);
+            case FINALTHESIS -> graduationUser.updateFinalThesisId(thesisId);
         }
         graduationUserRepository.save(graduationUser);
     }
