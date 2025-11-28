@@ -44,7 +44,7 @@ public class ScheduleAdminControllerImpl implements ScheduleAdminController {
     @Override
     @PatchMapping("/type/{submissionType}/content")
     public ResponseEntity<Void> updateScheduleContent(
-            @Positive @PathVariable SubmissionType submissionType,
+            @PathVariable SubmissionType submissionType,
             @Valid @RequestBody ScheduleContentUpdateRequest request
             ){
         scheduleAdminFacade.updateScheduleContent(submissionType, request);
