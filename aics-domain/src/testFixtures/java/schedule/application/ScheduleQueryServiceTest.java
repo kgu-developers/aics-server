@@ -29,7 +29,6 @@ public class ScheduleQueryServiceTest {
                 Schedule.create(
                         SubmissionType.SUBMITTED,
                         "신청 일정",
-                        "신청 일정 본문",
                         baseStart,
                         baseStart.plusDays(3)
                 )
@@ -39,7 +38,6 @@ public class ScheduleQueryServiceTest {
                 Schedule.create(
                         SubmissionType.MIDTHESIS,
                         "중간 논문",
-                        "중간 논문 설명",
                         baseStart.plusDays(7),
                         baseStart.plusDays(10)
                 )
@@ -62,8 +60,6 @@ public class ScheduleQueryServiceTest {
     @DisplayName("getScheduleManagement는 ID로 일정을 조회한다")
     void getScheduleManagement_Success(){
         Schedule schedule = scheduleQueryService.getScheduleManagement(1L);
-
-        assertEquals("신청 일정",schedule.getTitle());
         assertEquals(SubmissionType.SUBMITTED, schedule.getSubmissionType());
     }
 
@@ -73,12 +69,6 @@ public class ScheduleQueryServiceTest {
         assertThrows(ScheduleNotFoundException.class, () -> scheduleQueryService.getScheduleManagement(99L));
     }
 
-    @Test
-    @DisplayName("getBySubmissionType은 제출타입으로 일정을 찾는다")
-    void getBySubmissionType_Success() {
-        Schedule schedule = scheduleQueryService.getBySubmissionType(SubmissionType.MIDTHESIS);
 
-        assertEquals("중간 논문", schedule.getTitle());
-    }
 
 }

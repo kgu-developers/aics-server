@@ -16,7 +16,6 @@ public record ScheduleListResponse(
         [{
             "id": 1,
             "submissionType": "MIDTHESIS",
-            "title": "중간논문 제출 안내",
             "startDate": "2025-05-01",
             "endDate": "2025-12-31",
             "status": "IN_PROGRESS"

@@ -22,7 +22,6 @@ public class ScheduleAdminFacade {
     public SchedulePersistResponse createSchedule(ScheduleCreateRequest request) {
         Long id = scheduleCommandService.createSchedule(
                 request.submissionType(),
-                request.title(),
                 request.content(),
                 request.startDate(),
                 request.endDate()
@@ -34,8 +33,6 @@ public class ScheduleAdminFacade {
         Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
         scheduleCommandService.updateSchedule(
                 schedule,
-                request.submissionType(),
-                request.title(),
                 request.startDate(),
                 request.endDate()
         );
