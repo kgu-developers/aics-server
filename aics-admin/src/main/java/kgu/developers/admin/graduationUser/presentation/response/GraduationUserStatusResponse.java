@@ -2,6 +2,11 @@ package kgu.developers.admin.graduationUser.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * 졸업 대상자 상태 응답 인터페이스
+ * 다른 클래스에서 대상자 상태 응답을 추가로 구현하는 것을 방지하고자 sealed 키워드를 사용하였습니다.
+ * 만약 졸업 방식이 추가된다면 해당 클래스에서 추가로 구현하여 작성해주세요.
+ */
 public sealed interface GraduationUserStatusResponse
         permits GraduationUserStatusResponse.Certificate,
         GraduationUserStatusResponse.Thesis {

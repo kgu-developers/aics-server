@@ -64,13 +64,13 @@ public class GraduationUserQueryService {
             if (user.getFinalThesisId() == null) {
                 return "최종 논문 미제출";
             }
-            return "최종 논문 제출 완료";
+            return "최종 논문 제출";
         }
         else if (user.getGraduationType() == GraduationType.CERTIFICATE) {
             if (user.getCertificateId() == null) {
                 return "자격증 미제출";
             }
-            return "자격증 제출 완료";
+            return "자격증 제출";
         }
 
         return "졸업 요건 충족";
