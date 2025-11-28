@@ -9,12 +9,10 @@ import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class ThesisFacade {
 
     private final ThesisCommandService thesisCommandService;
@@ -23,7 +21,6 @@ public class ThesisFacade {
     private final ScheduleQueryService scheduleQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
 
-    @Transactional
     public Long submitThesis(MultipartFile file, Long scheduleId) {
         Long thesisId = thesisCommandService.submitThesis(file,scheduleId);
         String userId = userQueryService.getMyId();

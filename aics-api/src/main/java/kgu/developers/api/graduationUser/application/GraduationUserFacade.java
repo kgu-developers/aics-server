@@ -8,10 +8,8 @@ import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@Transactional
 @RequiredArgsConstructor
 public class GraduationUserFacade {
     private final GraduationUserQueryService graduationUserQueryService;

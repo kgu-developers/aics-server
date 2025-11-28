@@ -25,7 +25,6 @@ import kgu.developers.domain.thesis.application.query.ThesisQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class GraduationUserAdminFacade {
 
@@ -44,13 +42,11 @@ public class GraduationUserAdminFacade {
     private final CertificateCommandService certificateCommandService;
     private final CertificateQueryService certificateQueryService;
 
-    @Transactional
     public GraduationUserPersistResponse createGraduationUser(GraduationUserCreateRequest request) {
         Long id = graduationUserCommandService.createGraduationUser(request.studentId(), request.name(), request.advisorProfessor(), request.capstoneCompletion(), request.department(), request.graduationDate());
         return GraduationUserPersistResponse.of(id);
     }
 
-    @Transactional
     public GraduationUserBatchCreateResponse createGraduationUsers(GraduationUserBatchCreateRequest request) {
 
         List<Long> ids = request.graduationUsers().stream()
@@ -126,7 +122,6 @@ public class GraduationUserAdminFacade {
         return new GraduationUserStatusResponse.Thesis("THESIS", midStatus, finalStatus);
     }
 
-    @Transactional
     public void deleteGraduationUser(Long id) {
         GraduationUser graduationUser = graduationUserQueryService.getById(id);
         graduationUserCommandService.deleteGraduationUser(graduationUser);
@@ -136,7 +131,6 @@ public class GraduationUserAdminFacade {
         return GraduationUserDetailResponse.from(graduationUserQueryService.getById(graduationUserId));
     }
 
-    @Transactional
     public GraduationUserBatchDeleteResponse deleteGraduationUsers(GraduationUserBatchDeleteRequest request) {
         List<GraduationUser> users = request.ids().stream()
             .map(graduationUserQueryService::getById)
@@ -160,7 +154,6 @@ public class GraduationUserAdminFacade {
         return GraduationUserExcelFileDto.from(content, filename);
     }
 
-    @Transactional
     public GraduationUserBatchApproveResponse approveGraduationUsers(GraduationUserBatchApproveRequest request) {
         List<GraduationUser> users = request.ids().stream()
                 .map(graduationUserQueryService::getById)

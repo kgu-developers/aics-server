@@ -1,18 +1,19 @@
 package kgu.developers.domain.thesis.application.command;
 
-import kgu.developers.domain.thesis.exception.ThesisNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
+import jakarta.transaction.Transactional;
 import kgu.developers.domain.file.application.command.FileCommandService;
 import kgu.developers.domain.file.domain.FileDomain;
 import kgu.developers.domain.file.infrastructure.repository.FileStorageService;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.thesis.domain.Thesis;
 import kgu.developers.domain.thesis.domain.ThesisRepository;
+import kgu.developers.domain.thesis.exception.ThesisNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ThesisCommandService {
 	private final ThesisRepository thesisRepository;
