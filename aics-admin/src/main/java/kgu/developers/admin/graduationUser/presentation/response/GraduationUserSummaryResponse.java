@@ -20,8 +20,8 @@ public record GraduationUserSummaryResponse(
     @Schema(description = "졸업 대상자 이름", example = "홍길동", requiredMode = REQUIRED)
     String name,
 
-    @Schema(description = "졸업 날짜", example = "2028-08-01", requiredMode = REQUIRED)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Schema(description = "졸업 날짜", example = "2028-08", requiredMode = REQUIRED)
+    @DateTimeFormat(pattern = "yyyy-MM")
     String graduationDate,
 
     @Schema(description = "졸업 유형", example = "자격증", requiredMode = REQUIRED)
@@ -45,7 +45,7 @@ public record GraduationUserSummaryResponse(
     GraduationUserStatusResponse status
 ) {
     public static GraduationUserSummaryResponse of(GraduationUser graduationUser, GraduationUserStatusResponse status) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 
         return GraduationUserSummaryResponse.builder()
             .id(graduationUser.getId())

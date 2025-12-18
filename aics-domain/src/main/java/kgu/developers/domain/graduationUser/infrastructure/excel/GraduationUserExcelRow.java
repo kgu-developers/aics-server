@@ -3,14 +3,14 @@ package kgu.developers.domain.graduationUser.infrastructure.excel;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import lombok.Builder;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 @Builder
 public record GraduationUserExcelRow(
     String userId,
     String name,
     String department,
-    LocalDate graduationDate,
+    YearMonth graduationDate,
     String graduationType,
     String advisorProfessor,
     String currentStage,
@@ -21,8 +21,8 @@ public record GraduationUserExcelRow(
             .userId(graduationUser.getUserId())
             .name(graduationUser.getName())
             .department(graduationUser.getDepartment())
-            .graduationDate(graduationUser.getGraduationDate())
-            .graduationType(graduationUser.getGraduationType().getDescription())
+            .graduationDate(YearMonth.from(graduationUser.getGraduationDate()))
+            .graduationType(graduationUser.getGraduationType()!=null ? graduationUser.getGraduationType().getDescription(): null)
             .advisorProfessor(graduationUser.getAdvisorProfessor())
             .currentStage(stage)
             .approvalStatus(status)

@@ -17,7 +17,7 @@ public record GraduationUserBatchCreateRequest(
             + "\"advisorProfessor\": \"김교수\", "
             + "\"capstoneCompletion\": \"true\", "
             + "\"department\": \"컴퓨터공학전공\", "
-            + "\"graduationDate\": \"2028-02-01\"}]",
+            + "\"graduationDate\": \"2028-02\"}]",
         requiredMode = REQUIRED)
     @NotEmpty
     List<GraduationUserCreateRequest> graduationUsers
