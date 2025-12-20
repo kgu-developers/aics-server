@@ -20,8 +20,8 @@ public class ScheduleQueryService {
             SUBMITTED,
             MIDTHESIS,
             FINALTHESIS,
-            APPROVED,
             CERTIFICATE,
+            APPROVED,
             OTHER
     );
     public List<Schedule> getAllScheduleManagements() {
