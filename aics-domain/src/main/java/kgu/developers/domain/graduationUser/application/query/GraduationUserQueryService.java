@@ -29,7 +29,11 @@ public class GraduationUserQueryService {
         return graduationUserRepository.findByIdAndDeletedAtIsNull(graduationUserId)
             .orElseThrow(GraduationUserNotFoundException::new);
     }
-
+    public GraduationType getGraduationTypeByUserId(String graduationUserId) {
+        return graduationUserRepository.findByUserIdAndDeletedAtIsNull(graduationUserId)
+                .map(GraduationUser::getGraduationType)
+                .orElse(null);
+    }
     public PaginatedListResponse<GraduationUser> getGraduationUsersByNameAndGraduationType(Pageable pageable, String name, GraduationType graduationType) {
         return graduationUserRepository.findAllByNameAndGraduationTypeOrderByIdAsc(pageable,name, graduationType);
     }
