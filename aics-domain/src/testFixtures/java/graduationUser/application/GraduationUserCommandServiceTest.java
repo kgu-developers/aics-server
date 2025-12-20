@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -59,7 +60,7 @@ public class GraduationUserCommandServiceTest {
         String advisor = "김교수";
         Boolean capstoneCompletion = true;
         String department = "컴퓨터공학과";
-        LocalDate graduationDate = LocalDate.of(2024, 2, 20);
+        YearMonth graduationDate = YearMonth.of(2024, 2);
         //when
         Long createdGraduatoinUserId = graduationUserCommandService.createGraduationUser(TARGET_STUDENT_ID, name, advisor, capstoneCompletion, department, graduationDate);
 
@@ -76,7 +77,7 @@ public class GraduationUserCommandServiceTest {
         String advisor = "김교수";
         Boolean capstoneCompletion = true;
         String department = "컴퓨터공학과";
-        LocalDate graduationDate = LocalDate.of(2024, 2, 20);
+        YearMonth graduationDate = YearMonth.of(2024, 2);
         //when
         //then
         assertThatThrownBy(() -> graduationUserCommandService.createGraduationUser(studentId, name, advisor, capstoneCompletion, department, graduationDate))

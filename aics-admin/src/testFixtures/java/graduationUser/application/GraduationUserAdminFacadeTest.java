@@ -42,6 +42,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -140,7 +141,7 @@ public class GraduationUserAdminFacadeTest {
             .email("hong1@kyonggi.ac.kr")
             .graduationType(GraduationType.CERTIFICATE)
             .certificateId(1L)
-            .graduationDate(LocalDate.of(2021, 12, 31))
+            .graduationDate(LocalDate.of(2021, 12, 1))
             .build());
 
         graduationUser2 = fakeGraduationUserRepository.save(GraduationUser.builder()
@@ -151,7 +152,7 @@ public class GraduationUserAdminFacadeTest {
             .graduationType(GraduationType.THESIS)
             .midThesisId(1L)
             .finalThesisId(2L)
-            .graduationDate(LocalDate.of(2021, 12, 31))
+            .graduationDate(LocalDate.of(2021, 12, 1))
             .build());
 
         fakeGraduationUserRepository.save(GraduationUser.builder()
@@ -159,7 +160,7 @@ public class GraduationUserAdminFacadeTest {
             .name("이지민")
             .userId("202411003")
             .email("jiim1@kyonggi.ac.kr")
-            .graduationDate(LocalDate.of(2021, 12, 31))
+            .graduationDate(LocalDate.of(2021, 12, 1))
             .build());
     }
 
@@ -174,7 +175,7 @@ public class GraduationUserAdminFacadeTest {
             .name("홍길순")
             .advisorProfessor("김교수")
             .capstoneCompletion(false)
-            .graduationDate(LocalDate.of(2021, 12, 31))
+            .graduationDate(YearMonth.of(2021, 12))
             .build();
 
         //when
@@ -195,7 +196,7 @@ public class GraduationUserAdminFacadeTest {
                 .studentId("202411346")
                 .name("홍길순")
                 .capstoneCompletion(false)
-                .graduationDate(LocalDate.of(2021, 12, 31))
+                .graduationDate(YearMonth.of(2021, 12))
                 .build();
         requestList.add(requestUser1);
 
@@ -203,7 +204,7 @@ public class GraduationUserAdminFacadeTest {
                 .studentId("202411347")
                 .name("홍길동")
                 .capstoneCompletion(true)
-                .graduationDate(LocalDate.of(2028, 12, 31))
+                .graduationDate(YearMonth.of(2028, 12))
                 .build();
         requestList.add(requestUser2);
 

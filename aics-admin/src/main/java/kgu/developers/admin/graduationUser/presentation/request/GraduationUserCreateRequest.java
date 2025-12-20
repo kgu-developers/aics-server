@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
@@ -35,8 +35,8 @@ public record GraduationUserCreateRequest(
     @Size(max = 10)
     String department,
 
-    @Schema(description = "졸업일", example = "2028-02-01", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "졸업일", example = "2028-02", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull
-    LocalDate graduationDate
+    YearMonth graduationDate
 ) {
 }

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 @Service
 @Transactional
@@ -20,9 +20,9 @@ public class GraduationUserCommandService {
     private final GraduationUserRepository graduationUserRepository;
     private final UserRepository userRepository;
 
-    public Long createGraduationUser(String studentId, String name, String advisor, Boolean capstoneCompletion, String department, LocalDate graduationDate) {
+    public Long createGraduationUser(String studentId, String name, String advisor, Boolean capstoneCompletion, String department, YearMonth graduationDate) {
         validateId(studentId);
-        GraduationUser graduationUser = GraduationUser.create(studentId,name,advisor,capstoneCompletion,department,graduationDate);
+        GraduationUser graduationUser = GraduationUser.create(studentId,name,advisor,capstoneCompletion,department,graduationDate.atDay(1));
         return graduationUserRepository.save(graduationUser).getId();
     }
 
