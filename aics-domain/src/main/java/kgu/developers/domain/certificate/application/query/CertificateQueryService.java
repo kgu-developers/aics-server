@@ -1,5 +1,6 @@
 package kgu.developers.domain.certificate.application.query;
 
+import kgu.developers.domain.certificate.domain.Certificate;
 import kgu.developers.domain.certificate.domain.CertificateRepository;
 import kgu.developers.domain.certificate.exception.CertificateNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,10 @@ public class CertificateQueryService {
 
     public boolean isApproved(Long id) {
         return certificateRepository.findApprovalByIdAndDeletedAtIsNull(id)
+                .orElseThrow(CertificateNotFoundException::new);
+    }
+    public Certificate getById(Long id) {
+        return  certificateRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(CertificateNotFoundException::new);
     }
 }

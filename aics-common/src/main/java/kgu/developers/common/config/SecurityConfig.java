@@ -86,6 +86,8 @@ public class SecurityConfig {
 		"/api/v1/thesis",
 		"/api/v1/certificate",
 		"/api/v1/schedules",
+		"/api/v1/thesis/**",
+		"/api/v1/certificate/**",
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {

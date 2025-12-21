@@ -2,7 +2,9 @@ package kgu.developers.api.thesis.presentation;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
+import kgu.developers.api.thesis.presentation.response.ThesisDetailResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,4 +36,15 @@ public interface ThesisController {
 		) @RequestPart(value = "file") MultipartFile file,
 		@RequestPart ThesisSubmitRequest request
 		);
+	@Operation(summary = "졸업 논문 개별 조회 API", description = """
+        - Description :논문 id로 조회합니다.
+        - Assignee : 주윤빈
+    """)
+	@ApiResponse(
+			responseCode = "200",
+			content = @Content(schema = @Schema(implementation = ThesisDetailResponse.class)))
+	ResponseEntity<ThesisDetailResponse> getThesis(
+			@Parameter(description = "논문 id",required = true) @PathVariable Long id
+	);
+
 }

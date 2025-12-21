@@ -3,11 +3,9 @@ package kgu.developers.api.certificate.presentation;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 import kgu.developers.api.certificate.application.CertificateFacade;
+import kgu.developers.api.certificate.presentation.response.CertificateDetailResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import kgu.developers.api.certificate.presentation.request.CertificateSubmitRequest;
@@ -31,6 +29,11 @@ public class CertificateControllerImpl implements CertificateController {
 		return ResponseEntity.ok(
 			CertificatePersistResponse.of(id)
 		);
+	}
+	@Override
+	@GetMapping("/{id}")
+	public ResponseEntity<CertificateDetailResponse> getCertificate(@PathVariable Long id) {
+		return ResponseEntity.ok(certificateFacade.getById(id));
 	}
 
 
