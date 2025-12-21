@@ -156,6 +156,7 @@ CREATE TABLE graduation_user
     CONSTRAINT graduation_type_check
             CHECK ((graduation_type)::TEXT = ANY (ARRAY ['THESIS', 'CERTIFICATE'])),
     graduation_date    DATE,
+    capstone_completion BOOLEAN,
     mid_thesis_id      BIGINT,
     final_thesis_id    BIGINT,
     certificate_id     BIGINT,
