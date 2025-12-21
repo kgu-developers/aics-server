@@ -31,10 +31,28 @@ public record GraduationUserDetailResponse(
     String major,
 
     @Schema(description = "캡스톤 이수 여부", example = "true", requiredMode = REQUIRED)
-    Boolean capstoneCompletion
+    Boolean capstoneCompletion,
+
+    @Schema(
+        description = "졸업 요건 제출 및 승인 상태 (자격증 또는 논문)",
+        example = "{"
+                + "\"type\": \"THESIS\", "
+                + "\"midThesis\": {"
+                    + "\"submitted\": true, "
+                    + "\"approval\": true"
+                + "}, "
+                + "\"finalThesis\": {"
+                    + "\"submitted\": false, "
+                    + "\"approval\": false"
+                + "}"
+                + "}",
+        requiredMode = REQUIRED
+    )
+    GraduationUserStatusResponse status
 ) {
     public static GraduationUserDetailResponse from(
-        GraduationUser graduationUser
+        GraduationUser graduationUser,
+        GraduationUserStatusResponse status
     ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
         return GraduationUserDetailResponse.builder()
@@ -45,6 +63,7 @@ public record GraduationUserDetailResponse(
             .advisor(graduationUser.getAdvisorProfessor())
             .major(graduationUser.getDepartment())
             .capstoneCompletion(graduationUser.getCapstoneCompletion())
+            .status(status)
             .build();
     }
 }

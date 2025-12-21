@@ -44,7 +44,10 @@ public record GraduationUserSummaryResponse(
     )
     GraduationUserStatusResponse status
 ) {
-    public static GraduationUserSummaryResponse of(GraduationUser graduationUser, GraduationUserStatusResponse status) {
+    public static GraduationUserSummaryResponse of(
+        GraduationUser graduationUser,
+        GraduationUserStatusResponse status
+    ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 
         return GraduationUserSummaryResponse.builder()

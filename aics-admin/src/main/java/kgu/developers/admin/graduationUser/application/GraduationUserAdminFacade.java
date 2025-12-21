@@ -128,7 +128,9 @@ public class GraduationUserAdminFacade {
     }
 
     public GraduationUserDetailResponse getGraduationUserById(Long graduationUserId) {
-        return GraduationUserDetailResponse.from(graduationUserQueryService.getById(graduationUserId));
+        GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        GraduationUserStatusResponse status = buildSubmissionStatus(graduationUser);
+        return GraduationUserDetailResponse.from(graduationUser, status);
     }
 
     public GraduationUserBatchDeleteResponse deleteGraduationUsers(GraduationUserBatchDeleteRequest request) {
