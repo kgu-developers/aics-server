@@ -29,7 +29,7 @@ public record CertificateDetailResponse(
             return CertificateDetailResponse.builder()
                     .id(certificate.getId())
                     .scheduleId(certificate.getScheduleId())
-                    .approval(certificate.isApproval())
+                    .approval(certificate.isApproved())
                     .certificateFile(certificate.getCertificateFileId() != null
                             ? FilePathResponse.of(certificate.getCertificateFileId(),physicalPath)
                             : null

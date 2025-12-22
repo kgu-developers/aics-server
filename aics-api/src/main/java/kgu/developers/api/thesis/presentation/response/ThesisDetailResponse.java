@@ -27,8 +27,8 @@ public record ThesisDetailResponse(
         public static ThesisDetailResponse from(Thesis thesis,String physicalPath) {
                 return ThesisDetailResponse.builder()
                         .id(thesis.getId())
-                        .scheduleId(thesis.getId())
-                        .approval(thesis.isApproval())
+                        .scheduleId(thesis.getScheduleId())
+                        .approval(thesis.isApproved())
                         .thesisFile(thesis.getThesisFileId() != null
                                 ? FilePathResponse.of(thesis.getThesisFileId(),physicalPath): null)
                         .build();
