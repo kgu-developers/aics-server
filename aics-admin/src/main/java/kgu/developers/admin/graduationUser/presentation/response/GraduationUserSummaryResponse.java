@@ -33,11 +33,13 @@ public record GraduationUserSummaryResponse(
                     + "\"type\": \"THESIS\", "
                     + "\"midThesis\": {"
                         + "\"submitted\": true, "
-                        + "\"approval\": true"
+                        + "\"approval\": true, "
+                        + "\"createdAt\": \"2024-08-01\" "
                     + "}, "
                     + "\"finalThesis\": {"
                         + "\"submitted\": false, "
-                        + "\"approval\": false"
+                        + "\"approval\": false, "
+                        + "\"createdAt\": \"null\" "
                     + "}"
                     + "}",
             requiredMode = REQUIRED

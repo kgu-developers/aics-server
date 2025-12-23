@@ -16,12 +16,14 @@ import kgu.developers.admin.graduationUser.presentation.response.GraduationUserS
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.certificate.application.command.CertificateCommandService;
 import kgu.developers.domain.certificate.application.query.CertificateQueryService;
+import kgu.developers.domain.certificate.domain.Certificate;
 import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.thesis.application.query.ThesisQueryService;
+import kgu.developers.domain.thesis.domain.Thesis;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -90,36 +92,37 @@ public class GraduationUserAdminFacade {
     }
 
     private GraduationUserStatusResponse.Certificate buildCertificateStatus(Long certificateId) {
-        boolean submitted = certificateId != null;
-        boolean approval = false;
-        if(submitted) {
-            approval = certificateQueryService.isApproved(certificateId);
+        if (certificateId == null) {
+            return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE,false,false,null);
         }
 
-        return new GraduationUserStatusResponse.Certificate("CERTIFICATE", submitted, approval);
+        Certificate certificate = certificateQueryService.getById(certificateId);
+
+        return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE, true, certificate.isApproved(), certificate.getCreatedAt());
     }
 
     private GraduationUserStatusResponse.Thesis buildThesisStatus(Long middleThesisId, Long finalThesisId) {
 
-        boolean midThesisSubmitted = middleThesisId != null;
-        boolean midThesisapproval = false;
-        if(midThesisSubmitted) {
-            midThesisapproval = thesisQueryService.isApproved(middleThesisId);
+        GraduationUserStatusResponse.Thesis.Middle midThesisStatus;
+        GraduationUserStatusResponse.Thesis.Final finalThesisStatus;
+
+        if(middleThesisId == null) {
+            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(false, false, null);
+        } else {
+            Thesis midThesis = thesisQueryService.getById(middleThesisId);
+
+            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(true, midThesis.isApproved(), midThesis.getCreatedAt());
         }
 
-        GraduationUserStatusResponse.Thesis.Middle midStatus =
-                new GraduationUserStatusResponse.Thesis.Middle(midThesisSubmitted,midThesisapproval);
+        if(finalThesisId == null) {
+            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(false, false, null);
+        } else {
+            Thesis midThesis = thesisQueryService.getById(middleThesisId);
 
-        boolean finalThesisSubmitted = finalThesisId != null;
-        boolean finalThesisapproval = false;
-        if(finalThesisSubmitted) {
-            finalThesisapproval = thesisQueryService.isApproved(finalThesisId);
+            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(true, midThesis.isApproved(), midThesis.getCreatedAt());
         }
 
-        GraduationUserStatusResponse.Thesis.Final finalStatus =
-                new GraduationUserStatusResponse.Thesis.Final(finalThesisSubmitted,finalThesisapproval);
-
-        return new GraduationUserStatusResponse.Thesis("THESIS", midStatus, finalStatus);
+        return GraduationUserStatusResponse.Thesis.of(GraduationType.THESIS, midThesisStatus, finalThesisStatus);
     }
 
     public void deleteGraduationUser(Long id) {
