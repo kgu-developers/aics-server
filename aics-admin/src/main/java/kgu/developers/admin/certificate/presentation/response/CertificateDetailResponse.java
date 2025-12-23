@@ -1,4 +1,4 @@
-package kgu.developers.api.certificate.presentation.response;
+package kgu.developers.admin.certificate.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.certificate.domain.Certificate;

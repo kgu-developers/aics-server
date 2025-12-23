@@ -1,4 +1,4 @@
-package kgu.developers.api.thesis.presentation.response;
+package kgu.developers.admin.thesis.presentation.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kgu.developers.domain.file.application.response.FilePathResponse;

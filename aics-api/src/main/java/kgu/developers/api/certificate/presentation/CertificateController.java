@@ -2,9 +2,7 @@ package kgu.developers.api.certificate.presentation;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
-import kgu.developers.api.certificate.presentation.response.CertificateDetailResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,15 +34,5 @@ public interface CertificateController {
 			required = true
 		) @RequestPart(value = "file") MultipartFile file,
 		@RequestPart CertificateSubmitRequest request
-	);
-	@Operation(summary = "자격증 개별 조회 API", description = """
-        - Description : 자격증 id로 조회합니다.
-        - Assignee : 주윤빈
-    """)
-	@ApiResponse(
-			responseCode = "200",
-			content = @Content(schema = @Schema(implementation = CertificateDetailResponse.class)))
-	ResponseEntity<CertificateDetailResponse> getCertificate(
-			@Parameter(description = "자격증 id",required = true) @PathVariable Long id
 	);
 }

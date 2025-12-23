@@ -2,7 +2,6 @@ package kgu.developers.api.thesis.presentation;
 
 import kgu.developers.api.thesis.application.ThesisFacade;
 import kgu.developers.api.thesis.presentation.request.ThesisSubmitRequest;
-import kgu.developers.api.thesis.presentation.response.ThesisDetailResponse;
 import kgu.developers.api.thesis.presentation.response.ThesisPersistResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +26,5 @@ public class ThesisControllerImpl implements ThesisController {
 		return ResponseEntity.ok(
 			ThesisPersistResponse.of(id)
 		);
-	}
-	@Override
-	@GetMapping("/{id}")
-	public ResponseEntity<ThesisDetailResponse> getThesis(@PathVariable Long id) {
-		return ResponseEntity.ok(thesisFacade.getById(id));
 	}
 }
