@@ -31,4 +31,5 @@ public class ThesisFacade {
         graduationUserCommandService.updateThesis(graduationUser, thesisId, schedule);
         return thesisId;
     }
+
 }

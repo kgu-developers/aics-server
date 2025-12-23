@@ -15,4 +15,8 @@ public class CertificateQueryService {
         return certificateRepository.findByIdAndDeletedAtIsNull(id)
             .orElseThrow(CertificateNotFoundException::new);
     }
+    public Certificate getById(Long id) {
+        return  certificateRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(CertificateNotFoundException::new);
+    }
 }

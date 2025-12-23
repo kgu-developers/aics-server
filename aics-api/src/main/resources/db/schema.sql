@@ -117,7 +117,7 @@ CREATE TABLE post
     category   VARCHAR(50)
         CONSTRAINT post_category_check
             CHECK ((category)::TEXT = ANY
-                   (ARRAY ['NOTIFICATION', 'NEWS'])),
+                   (ARRAY ['NOTIFICATION', 'NEWS','GRADUATION'])),
     created_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP(6)          DEFAULT NULL,

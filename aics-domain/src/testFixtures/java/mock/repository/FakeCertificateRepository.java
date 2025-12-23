@@ -19,6 +19,7 @@ public class FakeCertificateRepository implements CertificateRepository {
         Certificate savedCertificate = Certificate.builder()
             .id(sequence.getAndIncrement())
             .certificateFileId(certificate.getCertificateFileId())
+            .scheduleId(certificate.getScheduleId())
             .approval(certificate.isApproval())
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())

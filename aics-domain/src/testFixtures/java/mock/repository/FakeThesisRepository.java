@@ -17,7 +17,8 @@ public class FakeThesisRepository implements ThesisRepository {
     public Long save(Thesis thesis) {
         Thesis savedCertificate = Thesis.builder()
             .id(sequence.getAndIncrement())
-            .thesisFileId(thesis.getScheduleId())
+            .thesisFileId(thesis.getThesisFileId())
+            .scheduleId(thesis.getScheduleId())
             .approval(thesis.isApproval())
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())

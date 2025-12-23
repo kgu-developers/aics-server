@@ -7,15 +7,28 @@ import kgu.developers.domain.schedule.exception.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+
+import static kgu.developers.domain.schedule.domain.SubmissionType.*;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleQueryService {
     private final ScheduleRepository scheduleRepository;
-
+    private static final List<SubmissionType> ORDER = List.of(
+            SUBMITTED,
+            MIDTHESIS,
+            FINALTHESIS,
+            CERTIFICATE,
+            APPROVED,
+            OTHER
+    );
     public List<Schedule> getAllScheduleManagements() {
-        return scheduleRepository.findAll();
+
+        return scheduleRepository.findAll().stream()
+                .sorted(Comparator.comparing(s -> ORDER.indexOf(s.getSubmissionType())))
+                .toList();
     }
 
     public Schedule getScheduleManagement(Long id) {

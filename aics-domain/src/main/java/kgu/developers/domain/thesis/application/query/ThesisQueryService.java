@@ -15,4 +15,8 @@ public class ThesisQueryService {
         return thesisRepository.findByIdAndDeletedAtIsNull(id)
             .orElseThrow(ThesisNotFoundException::new);
     }
+    public Thesis getById(Long id) {
+        return thesisRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(ThesisNotFoundException::new);
+    }
 }

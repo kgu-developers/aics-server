@@ -34,4 +34,6 @@ public interface ThesisController {
 		) @RequestPart(value = "file") MultipartFile file,
 		@RequestPart ThesisSubmitRequest request
 		);
+
+
 }

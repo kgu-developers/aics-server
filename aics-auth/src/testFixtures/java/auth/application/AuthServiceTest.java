@@ -1,6 +1,8 @@
 package auth.application;
 
 import kgu.developers.auth.api.application.AuthService;
+import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
 import kgu.developers.domain.user.exception.AlreadyDeletedUserException;
 import kgu.developers.auth.api.presentation.exception.TokenNotFoundException;
 import kgu.developers.auth.api.presentation.request.LoginRequest;
@@ -11,8 +13,7 @@ import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import kgu.developers.domain.user.exception.InvalidPasswordException;
-import mock.repository.FakeRefreshTokenRepository;
-import mock.repository.FakeUserRepository;
+import mock.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,12 @@ public class AuthServiceTest {
 			TokenProvider.builder()
 				.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
 				.build(),
-			fakeRefreshTokenRepository
+			fakeRefreshTokenRepository,
+			new GraduationUserQueryService(
+					new FakeGraduationUserRepository(),
+					new FakeThesisRepository(),
+					new FakeCertificateRepository(),
+					new GraduationUserExcelImpl())
 		);
 
 		user = fakeUserRepository.save(User.builder()

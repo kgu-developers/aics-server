@@ -25,4 +25,5 @@ public class CertificateFacade {
         graduationUserCommandService.updateCertificate(graduationUser, certificateId);
         return certificateId;
     }
+
 }

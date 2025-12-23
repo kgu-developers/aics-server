@@ -5,6 +5,8 @@ import kgu.developers.auth.api.presentation.request.LoginRequest;
 import kgu.developers.auth.api.presentation.request.RefreshTokenRequest;
 import kgu.developers.auth.api.presentation.response.TokenResponse;
 import kgu.developers.common.auth.jwt.TokenProvider;
+import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.refreshtoken.domain.RefreshToken;
 import kgu.developers.domain.refreshtoken.domain.RefreshTokenRepository;
 import kgu.developers.domain.user.application.query.UserQueryService;
@@ -23,7 +25,7 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
 	private final RefreshTokenRepository refreshTokenRepository;
-
+	private final GraduationUserQueryService graduationUserQueryService;
 	@Transactional(readOnly = true)
 	public TokenResponse login(LoginRequest request) {
 		String userId = request.userId();
@@ -37,8 +39,9 @@ public class AuthService {
 		String refreshToken = tokenProvider.generateToken(user.getId(), Duration.ofDays(1), role);
 		String accessToken = tokenProvider.generateToken(user.getId(), Duration.ofHours(1), role);
 
+		GraduationType graduationType = graduationUserQueryService.getGraduationTypeByUserId(userId);
 		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
-		return TokenResponse.of(accessToken, refreshToken);
+		return TokenResponse.of(accessToken, refreshToken,role,graduationType);
 	}
 
 	public TokenResponse reissue(RefreshTokenRequest request) {
@@ -54,6 +57,7 @@ public class AuthService {
 		String refreshToken = tokenProvider.generateToken(userId, Duration.ofDays(1), role);
 		String accessToken = tokenProvider.generateToken(userId, Duration.ofHours(1), role);
 		refreshTokenRepository.save(RefreshToken.of(userId, refreshToken));
-		return TokenResponse.of(accessToken, refreshToken);
+		GraduationType graduationType = graduationUserQueryService.getGraduationTypeByUserId(userId);
+		return TokenResponse.of(accessToken, refreshToken,role,graduationType);
 	}
 }

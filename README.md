@@ -14,10 +14,17 @@
 
 ## 👨🏻‍💻 Contributors
 
-|**Server**|                                                  **Server**                                                  |                                           **Server(Lead)**                                           |
-|:--------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
-| [<img src="https://github.com/minjo-on.png" alt="박민준" width="150" />](https://github.com/minjo-on) |  [<img src="https://github.com/LeeShinHaeng.png" alt="이신행" width="150" />](https://github.com/LeeShinHaeng)  | [<img src="https://github.com/LeeHanEum.png" alt="이한음" width="150" />](https://github.com/LeeHanEum) |
-|                               [**박민준**](https://github.com/minjo-on)                               |                                  [**이신행**](https://github.com/LeeShinHaeng)                                  |                               [**이한음**](https://github.com/LeeHanEum)                                |
+### 2nd Developers <sub><sup>(2025.07 - present)</sup></sub>
+| ![](https://github.com/JangYeongHu.png?size=100) | <img src="https://github.com/dkdltm221.png" width="100" height="100" /> | ![](https://github.com/LeeHanEum.png?size=100) |
+|:------------------------------------------------:|:----------------------------------------------:|:-------------------------------------------------:|
+|                    **장영후 👑**                    |                    **주윤빈**                     |                      **이한음**                      |
+
+
+### 1st Developers <sub><sup>(2024.10 - 2025.06)</sup></sub>
+| ![](https://github.com/LeeHanEum.png?size=100) | ![](https://github.com/minjo-on.png?size=100) | ![](https://github.com/LeeShinHaeng.png?size=100) |
+|:----------------------------------------------:|:---------------------------------------------:|:-------------------------------------------------:|
+|                   **이한음 👑**                   |                    **박민준**                    |                      **이신행**                      |
+
 
 ## 🏗️ System Architecture
 ![system_architecture.png](images/system_architecture.png)
