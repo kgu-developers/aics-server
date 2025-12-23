@@ -38,7 +38,7 @@ public class GraduationUserCommandServiceTest {
     private void initializeGraduationUserCommandService() {
         fakeUserRepository = new FakeUserRepository();
         fakeGraduationUserRepository = new FakeGraduationUserRepository();
-        graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
+        graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
         saveTestUser();
         graduationUser = fakeGraduationUserRepository.save(saveTestGraduationuser());
     }

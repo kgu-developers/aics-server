@@ -35,7 +35,7 @@ public class GraduationUserFacadeTest {
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
 
         GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,new FakeThesisRepository(), new FakeCertificateRepository(), new GraduationUserExcelImpl());
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
 
         UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -66,7 +66,7 @@ public class GraduationUserAdminFacadeTest {
     public void init() {
         FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
         fakeUserRepository = new FakeUserRepository();
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, fakeUserRepository);
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
 
         fakeThesisRepository = new FakeThesisRepository();
         fakeCertificateRepository = new FakeCertificateRepository();
