@@ -41,7 +41,9 @@ public class PostQueryService {
 		Post prevPost = postRepository.findByPrevPost(postId, timestamp, category).orElse(null);
 		Post nextPost = postRepository.findByNextPost(postId, timestamp, category).orElse(null);
 
-		FileModel file = fileRepository.findById(post.getFileId()).orElse(null);
+		Long fileId = post.getFileId();
+		FileModel file = fileId != null ? fileRepository.findById(fileId).orElse(null) : null;
+
 		User author = userRepository.findById(post.getAuthorId()).orElse(null);
 		PostTitleResponse prevPostResponse = PostTitleResponse.from(prevPost);
 		PostTitleResponse nextPostResponse = PostTitleResponse.from(nextPost);
