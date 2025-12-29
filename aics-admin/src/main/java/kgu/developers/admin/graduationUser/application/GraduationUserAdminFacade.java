@@ -98,7 +98,7 @@ public class GraduationUserAdminFacade {
 
         Certificate certificate = certificateQueryService.getById(certificateId);
 
-        return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE, true, certificate.getCertificateFileId(), certificate.isApproved(), certificate.getCreatedAt());
+        return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE, true, certificate.getId(), certificate.isApproved(), certificate.getCreatedAt());
     }
 
     private GraduationUserStatusResponse.Thesis buildThesisStatus(Long middleThesisId, Long finalThesisId) {
@@ -111,7 +111,7 @@ public class GraduationUserAdminFacade {
         } else {
             Thesis midThesis = thesisQueryService.getById(middleThesisId);
 
-            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(true, midThesis.getThesisFileId(), midThesis.isApproved(), midThesis.getCreatedAt());
+            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(true, midThesis.getId(), midThesis.isApproved(), midThesis.getCreatedAt());
         }
 
         if(finalThesisId == null) {
@@ -119,7 +119,7 @@ public class GraduationUserAdminFacade {
         } else {
             Thesis finalThesis = thesisQueryService.getById(finalThesisId);
 
-            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(true, finalThesis.getThesisFileId(), finalThesis.isApproved(), finalThesis.getCreatedAt());
+            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(true, finalThesis.getId(), finalThesis.isApproved(), finalThesis.getCreatedAt());
         }
 
         return GraduationUserStatusResponse.Thesis.of(GraduationType.THESIS, midThesisStatus, finalThesisStatus);
