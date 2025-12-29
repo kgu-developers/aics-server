@@ -157,6 +157,7 @@ CREATE TABLE graduation_user
             CHECK ((graduation_type)::TEXT = ANY (ARRAY ['THESIS', 'CERTIFICATE'])),
     graduation_date    DATE,
     capstone_completion BOOLEAN,
+    department         VARCHAR(255),
     mid_thesis_id      BIGINT,
     final_thesis_id    BIGINT,
     certificate_id     BIGINT,
