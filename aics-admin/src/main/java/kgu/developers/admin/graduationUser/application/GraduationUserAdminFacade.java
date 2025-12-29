@@ -93,12 +93,12 @@ public class GraduationUserAdminFacade {
 
     private GraduationUserStatusResponse.Certificate buildCertificateStatus(Long certificateId) {
         if (certificateId == null) {
-            return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE,false,false,null);
+            return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE,false, null,false,null);
         }
 
         Certificate certificate = certificateQueryService.getById(certificateId);
 
-        return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE, true, certificate.isApproved(), certificate.getCreatedAt());
+        return GraduationUserStatusResponse.Certificate.of(GraduationType.CERTIFICATE, true, certificate.getCertificateFileId(), certificate.isApproved(), certificate.getCreatedAt());
     }
 
     private GraduationUserStatusResponse.Thesis buildThesisStatus(Long middleThesisId, Long finalThesisId) {
@@ -107,19 +107,19 @@ public class GraduationUserAdminFacade {
         GraduationUserStatusResponse.Thesis.Final finalThesisStatus;
 
         if(middleThesisId == null) {
-            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(false, false, null);
+            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(false, null, false, null);
         } else {
             Thesis midThesis = thesisQueryService.getById(middleThesisId);
 
-            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(true, midThesis.isApproved(), midThesis.getCreatedAt());
+            midThesisStatus = GraduationUserStatusResponse.Thesis.Middle.of(true, midThesis.getThesisFileId(), midThesis.isApproved(), midThesis.getCreatedAt());
         }
 
         if(finalThesisId == null) {
-            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(false, false, null);
+            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(false, null, false, null);
         } else {
-            Thesis midThesis = thesisQueryService.getById(middleThesisId);
+            Thesis finalThesis = thesisQueryService.getById(finalThesisId);
 
-            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(true, midThesis.isApproved(), midThesis.getCreatedAt());
+            finalThesisStatus = GraduationUserStatusResponse.Thesis.Final.of(true, finalThesis.getThesisFileId(), finalThesis.isApproved(), finalThesis.getCreatedAt());
         }
 
         return GraduationUserStatusResponse.Thesis.of(GraduationType.THESIS, midThesisStatus, finalThesisStatus);

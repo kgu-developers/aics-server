@@ -25,6 +25,9 @@ public sealed interface GraduationUserStatusResponse
             @Schema(description = "졸업 타입", example = "CERTIFICATE")
             String type,
 
+            @Schema(description = "파일 id", example = "1")
+            Long id,
+
             @Schema(description = "파일 제출 여부", example = "true")
             boolean submitted,
 
@@ -36,13 +39,14 @@ public sealed interface GraduationUserStatusResponse
             String createdAt
 
     ) implements GraduationUserStatusResponse {
-        public static Certificate of(GraduationType type, boolean submitted, boolean approval, LocalDateTime createdAt) {
+        public static Certificate of(GraduationType type, boolean submitted,Long fileId, boolean approval, LocalDateTime createdAt) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return Certificate.builder()
                 .type(type.name())
+                .id(fileId)
                 .submitted(submitted)
                 .approval(approval)
-                .createdAt(createdAt.format(formatter))
+                .createdAt(createdAt != null ? createdAt.format(formatter) : null)
                 .build();
         }
     }
@@ -73,6 +77,9 @@ public sealed interface GraduationUserStatusResponse
                 @Schema(description = "파일 제출 여부", example = "true")
                 boolean submitted,
 
+                @Schema(description = "파일 id", example = "1")
+                Long id,
+
                 @Schema(description = "승인 여부", example = "true")
                 boolean approval,
 
@@ -80,12 +87,13 @@ public sealed interface GraduationUserStatusResponse
                 @DateTimeFormat(pattern = "yyyy-MM-dd")
                 String createdAt
         ) {
-            public static Middle of(boolean submitted, boolean approval, LocalDateTime createdAt) {
+            public static Middle of(boolean submitted, Long fileId, boolean approval, LocalDateTime createdAt) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 return Middle.builder()
+                    .id(fileId)
                     .submitted(submitted)
                     .approval(approval)
-                    .createdAt(createdAt.format(formatter))
+                    .createdAt(createdAt != null ? createdAt.format(formatter) : null)
                     .build();
             }
         }
@@ -96,6 +104,9 @@ public sealed interface GraduationUserStatusResponse
                 @Schema(description = "파일 제출 여부", example = "false")
                 boolean submitted,
 
+                @Schema(description = "파일 id", example = "2")
+                Long id,
+
                 @Schema(description = "승인 여부", example = "false")
                 boolean approval,
 
@@ -103,12 +114,13 @@ public sealed interface GraduationUserStatusResponse
                 @DateTimeFormat(pattern = "yyyy-MM-dd")
                 String createdAt
         ) {
-            public static Final of(boolean submitted, boolean approval, LocalDateTime createdAt) {
+            public static Final of(boolean submitted, Long fileId, boolean approval, LocalDateTime createdAt) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 return Final.builder()
+                    .id(fileId)
                     .submitted(submitted)
                     .approval(approval)
-                    .createdAt(createdAt.format(formatter))
+                    .createdAt(createdAt != null ? createdAt.format(formatter) : null)
                     .build();
             }
         }
