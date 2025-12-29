@@ -10,7 +10,7 @@ on:
 jobs:
   build-docker-image:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: cloud-dev
 
     steps:
       - name: get repo from github
@@ -75,7 +75,7 @@ jobs:
   deploy-to-dev:
     runs-on: ubuntu-latest
     needs: build-docker-image
-    environment: dev
+    environment: cloud-dev
 
     steps:
       - name: scp docker-compose.yml to server
