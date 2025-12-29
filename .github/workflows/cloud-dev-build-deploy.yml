@@ -1,9 +1,7 @@
 name: Build and Deploy to Development Server on Cloud
 
 on:
-  push:
-    branches:
-      - develop
+
   workflow_dispatch:
 
 jobs:
@@ -13,7 +11,7 @@ jobs:
 
     steps:
       - name: get repo from github
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # JDK setting
       - name: Set up JDK 17
@@ -34,7 +32,7 @@ jobs:
 
       # DockerHub 로그인
       - name: Docker login
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
