@@ -78,6 +78,9 @@ jobs:
     environment: cloud-dev
 
     steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
       - name: scp docker-compose.yml to server
         uses: appleboy/scp-action@master
         with:
