@@ -39,11 +39,11 @@ public sealed interface GraduationUserStatusResponse
             String createdAt
 
     ) implements GraduationUserStatusResponse {
-        public static Certificate of(GraduationType type, boolean submitted,Long fileId, boolean approval, LocalDateTime createdAt) {
+        public static Certificate of(GraduationType type, boolean submitted,Long certificateId, boolean approval, LocalDateTime createdAt) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return Certificate.builder()
                 .type(type.name())
-                .id(fileId)
+                .id(certificateId)
                 .submitted(submitted)
                 .approval(approval)
                 .createdAt(createdAt != null ? createdAt.format(formatter) : null)
@@ -87,10 +87,10 @@ public sealed interface GraduationUserStatusResponse
                 @DateTimeFormat(pattern = "yyyy-MM-dd")
                 String createdAt
         ) {
-            public static Middle of(boolean submitted, Long fileId, boolean approval, LocalDateTime createdAt) {
+            public static Middle of(boolean submitted, Long thesisId, boolean approval, LocalDateTime createdAt) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 return Middle.builder()
-                    .id(fileId)
+                    .id(thesisId)
                     .submitted(submitted)
                     .approval(approval)
                     .createdAt(createdAt != null ? createdAt.format(formatter) : null)
@@ -114,10 +114,10 @@ public sealed interface GraduationUserStatusResponse
                 @DateTimeFormat(pattern = "yyyy-MM-dd")
                 String createdAt
         ) {
-            public static Final of(boolean submitted, Long fileId, boolean approval, LocalDateTime createdAt) {
+            public static Final of(boolean submitted, Long thesisId, boolean approval, LocalDateTime createdAt) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 return Final.builder()
-                    .id(fileId)
+                    .id(thesisId)
                     .submitted(submitted)
                     .approval(approval)
                     .createdAt(createdAt != null ? createdAt.format(formatter) : null)
