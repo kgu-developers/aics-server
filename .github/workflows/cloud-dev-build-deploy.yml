@@ -1,4 +1,4 @@
-name: Build and Deploy to Development Server
+name: Build and Deploy to Development Server on Cloud
 
 on:
   push:
@@ -77,9 +77,6 @@ jobs:
     environment: dev
 
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v3
-
       - name: scp docker-compose.yml to server
         uses: appleboy/scp-action@master
         with:
@@ -99,10 +96,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-api
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-admin
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml pull aics-auth
+            set -euo pipefail
+            cd ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}
 
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-api
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-admin
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" | sudo -S docker-compose -f ${{ secrets.DOCKER_COMPOSE_YAML_PATH }}/docker-compose.yml --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-auth
+            docker compose pull aics-api aics-admin aics-auth
+            docker compose --env-file ${{ secrets.ENVIRONMENT_PATH }} up -d aics-api aics-admin aics-auth
