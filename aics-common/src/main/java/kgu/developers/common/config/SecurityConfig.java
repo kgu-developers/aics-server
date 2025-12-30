@@ -1,8 +1,8 @@
 package kgu.developers.common.config;
 
-import java.util.Arrays;
-import java.util.Collections;
-
+import kgu.developers.common.auth.filter.TokenAuthenticationFilter;
+import kgu.developers.common.auth.jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import kgu.developers.common.auth.filter.TokenAuthenticationFilter;
-import kgu.developers.common.auth.jwt.TokenProvider;
-import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -105,7 +104,8 @@ public class SecurityConfig {
 				"https://aics-client-dev.vercel.app/",
 				"http://175.45.195.63",
 				"http://203.249.22.207",
-				"http://13.125.230.147"
+				"http://13.125.230.147",
+				"http://52.79.164.36"
 			));
 			config.setAllowCredentials(true);
 			return config;
