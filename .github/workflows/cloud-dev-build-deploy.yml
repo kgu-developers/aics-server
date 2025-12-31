@@ -1,9 +1,6 @@
 name: Build and Deploy to Development Server on Cloud
 
 on:
-  push:
-    branches:
-      - develop
   workflow_dispatch:
 
 jobs:
