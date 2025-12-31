@@ -71,9 +71,25 @@ services:
     networks:
       - aics-network
 
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - aics-network
+
 networks:
   aics-network:
     driver: bridge
 
 volumes:
   postgres-data:
+  caddy_data:
+  caddy_config:

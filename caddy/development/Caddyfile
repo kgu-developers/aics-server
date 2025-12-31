@@ -1,0 +1,19 @@
+{
+    email kgudevelopers@gmail.com
+}
+
+aics-api.kgudevelopers.monster {
+    reverse_proxy aics-api:8080
+}
+
+aics-admin.kgudevelopers.monster {
+    reverse_proxy aics-admin:8081
+}
+
+aics-auth.kgudevelopers.monster {
+    reverse_proxy aics-auth:8082
+}
+
+kgudevelopers.monster {
+    reverse_proxy aics-app:3000
+}

@@ -33,7 +33,7 @@ public class SwaggerConfig {
 	private final Environment environment;
 
 	private static final Map<String, String> PROFILE_SERVER_URL_MAP = Map.of(
-		"dev", "http://52.79.164.36:8080",
+		"dev", "https://aics-api.kgudevelopers.monster",
 		"local", "http://localhost:8080"
 	);
 
