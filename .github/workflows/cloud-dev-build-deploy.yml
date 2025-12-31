@@ -3,7 +3,6 @@ name: Build and Deploy to Development Server on Cloud
 on:
   push:
     branches:
-      - "chore/KD-58"
       - develop
   workflow_dispatch:
 
