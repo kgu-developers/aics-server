@@ -80,7 +80,7 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v3
 
-      - name: scp ocker-compose and Caddyfile to server
+      - name: scp docker-compose and Caddyfile to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
