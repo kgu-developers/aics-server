@@ -102,6 +102,7 @@ public class SecurityConfig {
 				"https://aics-admin.kgudevelopers.monster",
 				"https://aics-auth.kgudevelopers.monster",
 				"https://aics-client-dev.vercel.app/",
+				"https://aics-client-graduate.vercel.app/",
 				"http://175.45.195.63",
 				"http://203.249.22.207",
 				"http://13.125.230.147"
