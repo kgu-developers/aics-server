@@ -15,10 +15,10 @@ public record ScheduleListResponse(
                 example = """
         [{
             "id": 1,
-            "submissionType": "MIDTHESIS",
+            "submissionType": "중간논문",
             "startDate": "2025-05-01",
             "endDate": "2025-12-31",
-            "status": "IN_PROGRESS"
+            "status": "진행 중"
         }]
         """,
                 requiredMode = REQUIRED)

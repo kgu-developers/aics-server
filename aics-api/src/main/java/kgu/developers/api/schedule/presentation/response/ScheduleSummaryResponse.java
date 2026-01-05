@@ -26,7 +26,7 @@ public record ScheduleSummaryResponse(
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     String endDate,
 
-    @Schema(description = "상태(대기/진행/마감)", example = "IN_PROGRESS", requiredMode = REQUIRED)
+    @Schema(description = "상태(대기/진행/마감)", example = "진행 중", requiredMode = REQUIRED)
     String status
 ) {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -37,7 +37,7 @@ public record ScheduleSummaryResponse(
                 .submissionType(schedule.getSubmissionType().getLabel())
                 .startDate(schedule.getStartDate().format(DATE_FORMATTER))
                 .endDate(schedule.getEndDate().format(DATE_FORMATTER))
-                .status(schedule.determineStatusAt(referenceTime).name())
+                .status(schedule.determineStatusAt(referenceTime).getLabel())
                 .build();
     }
 }
