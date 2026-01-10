@@ -1,17 +1,24 @@
 package kgu.developers.domain.certificate.application.command;
 
+import kgu.developers.domain.certificate.domain.Certificate;
+import kgu.developers.domain.certificate.domain.CertificateRepository;
+import kgu.developers.domain.certificate.exception.CertificateInvalidGraduationTypeException;
 import kgu.developers.domain.certificate.exception.CertificateNotFoundException;
+import kgu.developers.domain.certificate.exception.CertificateNotInSubmissionPeriodException;
+import kgu.developers.domain.file.application.command.FileCommandService;
+import kgu.developers.domain.file.domain.FileDomain;
+import kgu.developers.domain.file.infrastructure.repository.FileStorageService;
+import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
+import kgu.developers.domain.graduationUser.domain.GraduationUser;
+import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
+import kgu.developers.domain.schedule.domain.Schedule;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import kgu.developers.domain.certificate.domain.Certificate;
-import kgu.developers.domain.certificate.domain.CertificateRepository;
-import kgu.developers.domain.file.application.command.FileCommandService;
-import kgu.developers.domain.file.domain.FileDomain;
-import kgu.developers.domain.file.infrastructure.repository.FileStorageService;
-import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -21,11 +28,25 @@ public class CertificateCommandService {
 	private final FileStorageService fileStorageService;
 	private final FileCommandService fileCommandService;
 	private final ScheduleQueryService scheduleQueryService;
+	private final GraduationUserQueryService graduationUserQueryService;
 
 	public Long submitCertificate(MultipartFile file, Long scheduleId) {
+		Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
+		LocalDateTime referenceTime = LocalDateTime.now();
+
+
+		if(!schedule.isInProgress(referenceTime)) {
+			throw new CertificateNotInSubmissionPeriodException();
+		}
+
+		GraduationUser graduationUser = graduationUserQueryService.me();
+
+		if(graduationUser.getGraduationType() != GraduationType.CERTIFICATE) {
+			throw new CertificateInvalidGraduationTypeException();
+		}
+
 		String storedPath = fileStorageService.store(file, FileDomain.CERTIFICATE);
 		Long fileId = fileCommandService.saveFile(file, storedPath).getId();
-		scheduleQueryService.checkExistsOrThrow(scheduleId);
 
 		Certificate certificate = Certificate.create(scheduleId, fileId);
 		return certificateRepository.save(certificate);

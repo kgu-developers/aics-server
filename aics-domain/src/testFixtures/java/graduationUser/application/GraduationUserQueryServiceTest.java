@@ -3,11 +3,12 @@ package graduationUser.application;
 import kgu.developers.common.response.PaginatedListResponse;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
-import kgu.developers.domain.graduationUser.domain.GraduationUserExcel;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import mock.repository.FakeCertificateRepository;
 import mock.repository.FakeGraduationUserRepository;
 import mock.repository.FakeThesisRepository;
+import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,11 +27,14 @@ public class GraduationUserQueryServiceTest {
     public void init() {
         FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
 
+        UserQueryService userQueryService = new UserQueryService(new FakeUserRepository());
+
         graduationUserQueryService = new GraduationUserQueryService(
-                fakeGraduationUserRepository,
-                new FakeThesisRepository(),
-                new FakeCertificateRepository(),
-                new GraduationUserExcelImpl());
+            userQueryService,
+            fakeGraduationUserRepository,
+            new FakeThesisRepository(),
+            new FakeCertificateRepository(),
+            new GraduationUserExcelImpl());
 
         fakeGraduationUserRepository.save(GraduationUser.create(
             "202211444", "홍길동", "김교수", true, "컴퓨터공학과", LocalDate.of(2024, 2, 20)

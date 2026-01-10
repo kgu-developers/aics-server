@@ -1,13 +1,7 @@
 package kgu.developers.common.exception;
 
-import static kgu.developers.common.exception.AdminExceptionCode.NOT_ADMIN;
-import static kgu.developers.common.exception.GlobalExceptionCode.INVALID_INPUT;
-import static kgu.developers.common.exception.GlobalExceptionCode.SERVER_ERROR;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSourceResolvable;
@@ -23,8 +17,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static kgu.developers.common.exception.AdminExceptionCode.NOT_ADMIN;
+import static kgu.developers.common.exception.GlobalExceptionCode.INVALID_INPUT;
+import static kgu.developers.common.exception.GlobalExceptionCode.SERVER_ERROR;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Slf4j
 @RestControllerAdvice
@@ -40,6 +39,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(CustomException.class)
 	protected ResponseEntity<ExceptionResponse> handleCustomException(CustomException exception) {
+		System.out.println(exception.getCode());
 		if (exception.isServerError())
 			eventPublisher.publishEvent(exception);
 		ExceptionResponse response = ExceptionResponse.from(exception);

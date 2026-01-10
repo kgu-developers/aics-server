@@ -4,13 +4,21 @@ import jakarta.transaction.Transactional;
 import kgu.developers.domain.file.application.command.FileCommandService;
 import kgu.developers.domain.file.domain.FileDomain;
 import kgu.developers.domain.file.infrastructure.repository.FileStorageService;
+import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
+import kgu.developers.domain.graduationUser.domain.GraduationType;
+import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
+import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.thesis.domain.Thesis;
 import kgu.developers.domain.thesis.domain.ThesisRepository;
+import kgu.developers.domain.thesis.exception.ThesisInvalidGraduationTypeException;
+import kgu.developers.domain.thesis.exception.ThesisNotInSubmissionPeriodException;
 import kgu.developers.domain.thesis.exception.ThesisNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -20,11 +28,24 @@ public class ThesisCommandService {
 	private final FileStorageService fileStorageService;
 	private final FileCommandService fileCommandService;
 	private final ScheduleQueryService scheduleQueryService;
+	private final GraduationUserQueryService graduationUserQueryService;
 
 	public Long submitThesis(MultipartFile file, Long scheduleId) {
+		Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
+		LocalDateTime referenceTime = LocalDateTime.now();
+
+		if(!schedule.isInProgress(referenceTime)) {
+			throw new ThesisNotInSubmissionPeriodException();
+		}
+
+		GraduationUser graduationUser = graduationUserQueryService.me();
+
+		if(graduationUser.getGraduationType() != GraduationType.THESIS) {
+			throw new ThesisInvalidGraduationTypeException();
+		}
+
 		String storedPath = fileStorageService.store(file, FileDomain.THESIS);
 		Long fileId = fileCommandService.saveFile(file, storedPath).getId();
-		scheduleQueryService.checkExistsOrThrow(scheduleId);
 
 		Thesis thesis = Thesis.create(scheduleId, fileId);
 		return thesisRepository.save(thesis);

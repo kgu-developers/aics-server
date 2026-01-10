@@ -33,13 +33,18 @@ public class GraduationUserFacadeTest {
     public void init() {
         fakeGraduationUserRepository = new FakeGraduationUserRepository();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
+        UserQueryService userQueryService = new UserQueryService(new FakeUserRepository());
 
-        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository,new FakeThesisRepository(), new FakeCertificateRepository(), new GraduationUserExcelImpl());
+        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(
+            userQueryService,
+            fakeGraduationUserRepository,
+            new FakeThesisRepository(),
+            new FakeCertificateRepository(),
+            new GraduationUserExcelImpl());
+
         GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
-
-        UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        graduationuserFacade = new GraduationUserFacade(graduationUserQueryService,graduationUserCommandService,userQueryService);
+        graduationuserFacade = new GraduationUserFacade(graduationUserQueryService,graduationUserCommandService);
 
         User user = fakeUserRepository.save(User.builder()
             .id("202411345")

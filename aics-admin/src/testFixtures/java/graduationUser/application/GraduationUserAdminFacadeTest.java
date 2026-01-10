@@ -28,6 +28,7 @@ import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.thesis.application.query.ThesisQueryService;
 import kgu.developers.domain.thesis.domain.Thesis;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCertificateRepository;
 import mock.repository.FakeFileRepository;
@@ -71,8 +72,10 @@ public class GraduationUserAdminFacadeTest {
         fakeThesisRepository = new FakeThesisRepository();
         fakeCertificateRepository = new FakeCertificateRepository();
 
+        UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+
         GraduationUserExcel graduationUserExcel = new GraduationUserExcelImpl();
-        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(fakeGraduationUserRepository, fakeThesisRepository, fakeCertificateRepository, graduationUserExcel);
+        GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(userQueryService, fakeGraduationUserRepository, fakeThesisRepository, fakeCertificateRepository, graduationUserExcel);
 
         FakeFileRepository fakeFileRepository = new FakeFileRepository();
         FakeScheduleRepository fakeScheduleRepository = new FakeScheduleRepository();
@@ -89,14 +92,16 @@ public class GraduationUserAdminFacadeTest {
             fakeThesisRepository,
             fileStorageService,
             fileCommandService,
-            scheduleQueryService
+            scheduleQueryService,
+            graduationUserQueryService
         );
 
         CertificateCommandService certificateCommandService = new CertificateCommandService(
             fakeCertificateRepository,
             fileStorageService,
             fileCommandService,
-            scheduleQueryService
+            scheduleQueryService,
+            graduationUserQueryService
         );
 
         fakeThesisRepository.save(

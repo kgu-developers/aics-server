@@ -40,10 +40,4 @@ public class ScheduleQueryService {
         return scheduleRepository.findBySubmissionType(submissionType)
                 .orElseThrow(ScheduleNotFoundException::new);
     }
-
-    public void checkExistsOrThrow(Long id) {
-        if (!scheduleRepository.existsById(id)) {
-            throw new ScheduleNotFoundException();
-        }
-    }
 }

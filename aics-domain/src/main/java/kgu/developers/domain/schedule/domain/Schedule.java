@@ -41,6 +41,11 @@ public class Schedule {
         }
         return ScheduleStatus.IN_PROGRESS;
     }
+
+    public boolean isInProgress(LocalDateTime referenceTime) {
+        return determineStatusAt(referenceTime) == ScheduleStatus.IN_PROGRESS;
+    }
+
     public void updateSubmissionType(SubmissionType submissionType) {
         this.submissionType = submissionType;
     }
