@@ -9,6 +9,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.exception.GraduationUserNotFoundException;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelRow;
 import kgu.developers.domain.thesis.domain.ThesisRepository;
+import kgu.developers.domain.user.application.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GraduationUserQueryService {
+    private final UserQueryService userQueryService;
     private final GraduationUserRepository graduationUserRepository;
     private final ThesisRepository thesisRepository;
     private final CertificateRepository certificateRepository;
@@ -105,6 +107,12 @@ public class GraduationUserQueryService {
     }
 
     public GraduationUser getByUserId(String userId) {
+        return graduationUserRepository.findByUserIdAndDeletedAtIsNull(userId)
+            .orElseThrow(GraduationUserNotFoundException::new);
+    }
+
+    public GraduationUser me() {
+        String userId = userQueryService.getMyId();
         return graduationUserRepository.findByUserIdAndDeletedAtIsNull(userId)
             .orElseThrow(GraduationUserNotFoundException::new);
     }

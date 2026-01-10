@@ -5,7 +5,6 @@ import kgu.developers.domain.graduationUser.application.command.GraduationUserCo
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
-import kgu.developers.domain.user.application.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,25 +13,19 @@ import org.springframework.stereotype.Component;
 public class GraduationUserFacade {
     private final GraduationUserQueryService graduationUserQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
-    private final UserQueryService userQueryService;
 
     public void updateGraduationType(GraduationType type) {
-        String userId = userQueryService.getMyId();
-        GraduationUser graduationUser = graduationUserQueryService.getByUserId(userId);
-        graduationUser.validateAccessPermission(userQueryService.getMyId());
+        GraduationUser graduationUser = graduationUserQueryService.me();
         graduationUserCommandService.updateGraduationType(graduationUser,type);
     }
 
     public void updateGraduationUserEmail(String email) {
-        String userId = userQueryService.getMyId();
-        GraduationUser graduationUser = graduationUserQueryService.getByUserId(userId);
-        graduationUser.validateAccessPermission(userQueryService.getMyId());
+        GraduationUser graduationUser = graduationUserQueryService.me();
         graduationUserCommandService.updateGraduationUserEmail(graduationUser,email);
     }
 
     public MyGraduationUserResponse getMyGraduationUser() {
-        String userId = userQueryService.getMyId();
-        GraduationUser graduationUser = graduationUserQueryService.getByUserId(userId);
+        GraduationUser graduationUser = graduationUserQueryService.me();
         return MyGraduationUserResponse.from(graduationUser);
     }
 }
