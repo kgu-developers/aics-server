@@ -33,18 +33,24 @@ public class AuthServiceTest {
 		FakeUserRepository fakeUserRepository = new FakeUserRepository();
 		FakeRefreshTokenRepository fakeRefreshTokenRepository = new FakeRefreshTokenRepository();
 
+		UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
+
+		GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(
+			userQueryService,
+			new FakeGraduationUserRepository(),
+			new FakeThesisRepository(),
+			new FakeCertificateRepository(),
+			new GraduationUserExcelImpl()
+		);
+
 		authService = new AuthService(
-			new UserQueryService(fakeUserRepository),
+			userQueryService,
 			new BCryptPasswordEncoder(),
 			TokenProvider.builder()
 				.jwtProperties(new JwtProperties("testIssuer", "testSecretKey"))
 				.build(),
 			fakeRefreshTokenRepository,
-			new GraduationUserQueryService(
-					new FakeGraduationUserRepository(),
-					new FakeThesisRepository(),
-					new FakeCertificateRepository(),
-					new GraduationUserExcelImpl())
+			graduationUserQueryService
 		);
 
 		user = fakeUserRepository.save(User.builder()
