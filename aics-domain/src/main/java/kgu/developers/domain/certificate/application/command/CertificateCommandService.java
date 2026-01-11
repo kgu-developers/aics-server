@@ -32,17 +32,17 @@ public class CertificateCommandService {
 
 	public Long submitCertificate(MultipartFile file, Long scheduleId) {
 		Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
-		LocalDateTime referenceTime = LocalDateTime.now();
-
-
-		if(!schedule.isInProgress(referenceTime)) {
-			throw new CertificateNotInSubmissionPeriodException();
-		}
 
 		GraduationUser graduationUser = graduationUserQueryService.me();
 
 		if(graduationUser.getGraduationType() != GraduationType.CERTIFICATE) {
 			throw new CertificateInvalidGraduationTypeException();
+		}
+
+		LocalDateTime referenceTime = LocalDateTime.now();
+
+		if(!schedule.isInProgress(referenceTime)) {
+			throw new CertificateNotInSubmissionPeriodException();
 		}
 
 		String storedPath = fileStorageService.store(file, FileDomain.CERTIFICATE);

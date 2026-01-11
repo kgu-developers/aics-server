@@ -39,7 +39,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(CustomException.class)
 	protected ResponseEntity<ExceptionResponse> handleCustomException(CustomException exception) {
-		System.out.println(exception.getCode());
 		if (exception.isServerError())
 			eventPublisher.publishEvent(exception);
 		ExceptionResponse response = ExceptionResponse.from(exception);

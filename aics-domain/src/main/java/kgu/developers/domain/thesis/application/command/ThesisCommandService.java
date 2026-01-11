@@ -12,8 +12,8 @@ import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.thesis.domain.Thesis;
 import kgu.developers.domain.thesis.domain.ThesisRepository;
 import kgu.developers.domain.thesis.exception.ThesisInvalidGraduationTypeException;
-import kgu.developers.domain.thesis.exception.ThesisNotInSubmissionPeriodException;
 import kgu.developers.domain.thesis.exception.ThesisNotFoundException;
+import kgu.developers.domain.thesis.exception.ThesisNotInSubmissionPeriodException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,14 +34,14 @@ public class ThesisCommandService {
 		Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
 		LocalDateTime referenceTime = LocalDateTime.now();
 
-		if(!schedule.isInProgress(referenceTime)) {
-			throw new ThesisNotInSubmissionPeriodException();
-		}
-
 		GraduationUser graduationUser = graduationUserQueryService.me();
 
 		if(graduationUser.getGraduationType() != GraduationType.THESIS) {
 			throw new ThesisInvalidGraduationTypeException();
+		}
+
+		if(!schedule.isInProgress(referenceTime)) {
+			throw new ThesisNotInSubmissionPeriodException();
 		}
 
 		String storedPath = fileStorageService.store(file, FileDomain.THESIS);
