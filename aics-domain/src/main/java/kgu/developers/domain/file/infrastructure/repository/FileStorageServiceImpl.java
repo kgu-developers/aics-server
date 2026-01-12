@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -55,7 +56,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public String store(MultipartFile file, FileDomain fileDomain) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        String path = getFullPath(fileDomain, fileName);
+        String fileNameWithUuid = UUID.randomUUID() + "_" + fileName;
+        String path = getFullPath(fileDomain, fileNameWithUuid);
         validateAttributes(path, fileName);
         try {
             Path targetLocation = this.rootLocation.resolve(path);
