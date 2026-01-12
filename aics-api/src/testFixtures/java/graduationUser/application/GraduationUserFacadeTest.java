@@ -33,7 +33,7 @@ public class GraduationUserFacadeTest {
     public void init() {
         fakeGraduationUserRepository = new FakeGraduationUserRepository();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
-        UserQueryService userQueryService = new UserQueryService(new FakeUserRepository());
+        UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
         GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(
             userQueryService,

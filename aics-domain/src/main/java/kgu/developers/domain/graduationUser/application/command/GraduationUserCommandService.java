@@ -29,8 +29,6 @@ public class GraduationUserCommandService {
     }
 
     public void updateGraduationType(GraduationUser graduationUser, GraduationType type) {
-        graduationUser.validateAccessPermission(graduationUser.getUserId());
-
         graduationUser.updateGraduationType(type);
         graduationUserRepository.save(graduationUser);
     }
@@ -41,8 +39,6 @@ public class GraduationUserCommandService {
     }
 
     public void updateGraduationUserEmail(GraduationUser graduationUser, String email) {
-        graduationUser.validateAccessPermission(graduationUser.getUserId());
-
         graduationUser.updateEmail(email);
         graduationUserRepository.save(graduationUser);
     }
