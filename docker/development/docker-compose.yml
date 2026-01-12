@@ -13,6 +13,8 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - upload-data:/app/cloud
     networks:
       - aics-network
 
@@ -28,6 +30,8 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - upload-data:/app/cloud
     networks:
       - aics-network
 
@@ -43,6 +47,8 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - upload-data:/app/cloud
     networks:
       - aics-network
 
@@ -93,3 +99,4 @@ volumes:
   postgres-data:
   caddy_data:
   caddy_config:
+  upload-data:
