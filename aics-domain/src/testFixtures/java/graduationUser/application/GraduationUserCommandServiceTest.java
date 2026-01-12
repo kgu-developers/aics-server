@@ -134,20 +134,28 @@ public class GraduationUserCommandServiceTest {
     }
 
     @Test
-    @DisplayName("updateMidThesis은 주어진 타입에 따라 GraduationUser의 논문ID를 저장한다.")
+    @DisplayName("updateThesis은 주어진 타입에 따라 GraduationUser의 논문ID를 저장한다.")
     public void updateThesis_Success() {
         //given
-        Long thesisId = 1L;
-        Schedule schedule = Schedule.builder()
+        Long midThesisId = 1L;
+        Long finalThesisId = 2L;
+        Schedule midSchedule = Schedule.builder()
+            .id(1L)
+            .submissionType(SubmissionType.MIDTHESIS)
+            .build();
+
+        Schedule finalSchedule = Schedule.builder()
             .id(1L)
             .submissionType(SubmissionType.FINALTHESIS)
             .build();
 
         //when
-        graduationUserCommandService.updateThesis(graduationUser, thesisId, schedule);
+        graduationUserCommandService.updateThesis(graduationUser, midThesisId, midSchedule);
+        graduationUserCommandService.updateThesis(graduationUser, finalThesisId, finalSchedule);
 
         //then
-        assertEquals(graduationUser.getFinalThesisId(),thesisId);
+        assertEquals(graduationUser.getMidThesisId(), midThesisId);
+        assertEquals(graduationUser.getFinalThesisId(), finalThesisId);
     }
 
 }

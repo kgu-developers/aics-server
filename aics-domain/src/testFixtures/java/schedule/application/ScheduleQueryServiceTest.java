@@ -9,11 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ScheduleQueryServiceTest {
     private ScheduleQueryService scheduleQueryService;
@@ -64,11 +64,21 @@ public class ScheduleQueryServiceTest {
     }
 
     @Test
-    @DisplayName("getScheduleManagement는 존재하지 않는 ID면 예외를 던집니다.")
+    @DisplayName("getScheduleManagement는 존재하지 않는 ID면 예외를 던진다.")
     void getScheduleManagement_NotFound() {
         assertThrows(ScheduleNotFoundException.class, () -> scheduleQueryService.getScheduleManagement(99L));
     }
 
+    @Test
+    @DisplayName("getBySubmissionType은 제출 방식을 가지고 일정을 조회한다.")
+    public void Success() {
+        //given
 
+        //when
+        Schedule schedule = scheduleQueryService.getBySubmissionType(SubmissionType.SUBMITTED);
+
+        //then
+        assertEquals(SubmissionType.SUBMITTED, schedule.getSubmissionType());
+    }
 
 }
