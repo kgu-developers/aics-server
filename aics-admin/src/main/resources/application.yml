@@ -35,7 +35,7 @@ spring:
 
 file:
    url: /cloud
-   upload-path: ${user.dir}/cloud
+   upload-path: /app/cloud
    secret-key: ${FILE_SECRET_KEY}
    disallowed-extensions: exe, bat, sh, cmd, js, html, jsp, php, asp, aspx, dll, so, ps1, vbs, msi, htaccess, phtml, jar, war
 
