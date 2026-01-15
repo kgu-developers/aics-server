@@ -5,6 +5,7 @@ import kgu.developers.domain.graduationUser.application.query.GraduationUserQuer
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,13 +20,11 @@ public class ThesisFacade {
     private final ScheduleQueryService scheduleQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
 
-    public Long submitThesis(MultipartFile file, Long scheduleId) {
-        Long thesisId = thesisCommandService.submitThesis(file,scheduleId);
+    public Long submitThesis(MultipartFile file, SubmissionType thesisType) {
+        Long thesisId = thesisCommandService.submitThesis(file,thesisType);
         GraduationUser graduationUser = graduationUserQueryService.me();
 
-        Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
-
-        graduationUserCommandService.updateThesis(graduationUser, thesisId, schedule);
+        graduationUserCommandService.updateThesis(graduationUser, thesisId, thesisType);
         return thesisId;
     }
 

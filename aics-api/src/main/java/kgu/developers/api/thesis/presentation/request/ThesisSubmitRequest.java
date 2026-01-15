@@ -1,9 +1,10 @@
 package kgu.developers.api.thesis.presentation.request;
 
 import jakarta.validation.constraints.NotNull;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 
 public record ThesisSubmitRequest(
-	@NotNull(message = "졸업 논문 일정 id는 필수입니다.")
-	Long scheduleId
+	@NotNull(message = "졸업 논문 유형은 필수입니다.")
+	SubmissionType type
 ) {
 }

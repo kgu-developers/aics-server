@@ -4,7 +4,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
-import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,8 +48,8 @@ public class GraduationUserCommandService {
         graduationUserRepository.save(graduationUser);
     }
 
-    public void updateThesis(GraduationUser graduationUser, Long thesisId, Schedule schedule) {
-        switch (schedule.getSubmissionType()) {
+    public void updateThesis(GraduationUser graduationUser, Long thesisId, SubmissionType thesisType) {
+        switch (thesisType) {
             case MIDTHESIS -> graduationUser.updateMidThesisId(thesisId);
             case FINALTHESIS -> graduationUser.updateFinalThesisId(thesisId);
         }

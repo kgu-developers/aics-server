@@ -150,8 +150,8 @@ public class GraduationUserCommandServiceTest {
             .build();
 
         //when
-        graduationUserCommandService.updateThesis(graduationUser, midThesisId, midSchedule);
-        graduationUserCommandService.updateThesis(graduationUser, finalThesisId, finalSchedule);
+        graduationUserCommandService.updateThesis(graduationUser, midThesisId, SubmissionType.MIDTHESIS);
+        graduationUserCommandService.updateThesis(graduationUser, finalThesisId, SubmissionType.FINALTHESIS);
 
         //then
         assertEquals(graduationUser.getMidThesisId(), midThesisId);

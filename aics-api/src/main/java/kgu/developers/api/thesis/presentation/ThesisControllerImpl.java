@@ -22,7 +22,7 @@ public class ThesisControllerImpl implements ThesisController {
 		@RequestPart(value = "file") MultipartFile file,
 		@RequestPart ThesisSubmitRequest request
 	) {
-		Long id = thesisFacade.submitThesis(file, request.scheduleId());
+		Long id = thesisFacade.submitThesis(file, request.type());
 		return ResponseEntity.ok(
 			ThesisPersistResponse.of(id)
 		);
