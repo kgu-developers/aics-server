@@ -13,6 +13,7 @@ import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +31,8 @@ public class CertificateCommandService {
 	private final ScheduleQueryService scheduleQueryService;
 	private final GraduationUserQueryService graduationUserQueryService;
 
-	public Long submitCertificate(MultipartFile file, Long scheduleId) {
-		Schedule schedule = scheduleQueryService.getScheduleManagement(scheduleId);
+	public Long submitCertificate(MultipartFile file) {
+		Schedule schedule = scheduleQueryService.getBySubmissionType(SubmissionType.CERTIFICATE);
 
 		GraduationUser graduationUser = graduationUserQueryService.me();
 
@@ -48,7 +49,7 @@ public class CertificateCommandService {
 		String storedPath = fileStorageService.store(file, FileDomain.CERTIFICATE);
 		Long fileId = fileCommandService.saveFile(file, storedPath).getId();
 
-		Certificate certificate = Certificate.create(scheduleId, fileId);
+		Certificate certificate = Certificate.create(schedule.getId(), fileId);
 		return certificateRepository.save(certificate);
 	}
 

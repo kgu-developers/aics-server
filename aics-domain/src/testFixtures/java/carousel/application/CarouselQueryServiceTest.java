@@ -1,16 +1,15 @@
 package carousel.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
+import kgu.developers.domain.carousel.application.query.CarouselQueryService;
+import kgu.developers.domain.carousel.domain.Carousel;
+import mock.repository.FakeCarouselRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import kgu.developers.domain.carousel.application.query.CarouselQueryService;
-import kgu.developers.domain.carousel.domain.Carousel;
-import mock.repository.FakeCarouselRepository;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarouselQueryServiceTest {
 	private CarouselQueryService carouselQueryService;

@@ -16,8 +16,8 @@ public class CertificateFacade {
     private final GraduationUserQueryService graduationUserQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
 
-    public Long submitCertificate(MultipartFile file, Long scheduleId) {
-        Long certificateId = certificateCommandService.submitCertificate(file,scheduleId);
+    public Long submitCertificate(MultipartFile file) {
+        Long certificateId = certificateCommandService.submitCertificate(file);
         GraduationUser graduationUser = graduationUserQueryService.me();
         graduationUserCommandService.updateCertificate(graduationUser, certificateId);
         return certificateId;

@@ -1,18 +1,17 @@
 package carousel.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import kgu.developers.domain.carousel.application.command.CarouselCommandService;
 import kgu.developers.domain.carousel.domain.Carousel;
 import kgu.developers.domain.file.application.query.FileQueryService;
 import kgu.developers.domain.file.domain.FileModel;
 import mock.repository.FakeCarouselRepository;
 import mock.repository.FakeFileRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CarouselCommandServiceTest {
 	private CarouselCommandService carouselCommandService;

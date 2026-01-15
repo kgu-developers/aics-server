@@ -1,19 +1,17 @@
 package kgu.developers.api.certificate.presentation;
 
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kgu.developers.api.certificate.presentation.request.CertificateSubmitRequest;
 import kgu.developers.api.certificate.presentation.response.CertificatePersistResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @Tag(name = "Certificate", description = "자격증 관련 API")
 public interface CertificateController {
@@ -32,7 +30,6 @@ public interface CertificateController {
 			description = "자격증 첨부 파일",
 			content = @Content(mediaType = MULTIPART_FORM_DATA_VALUE),
 			required = true
-		) @RequestPart(value = "file") MultipartFile file,
-		@RequestPart CertificateSubmitRequest request
+		) @RequestPart(value = "file") MultipartFile file
 	);
 }
