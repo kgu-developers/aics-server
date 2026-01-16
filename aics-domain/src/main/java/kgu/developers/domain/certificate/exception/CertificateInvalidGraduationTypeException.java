@@ -2,10 +2,10 @@ package kgu.developers.domain.certificate.exception;
 
 import kgu.developers.common.exception.CustomException;
 
-import static kgu.developers.domain.certificate.exception.CertificateDomainExceptionCode.CERTIFICATE_INVALID_GRADUATION_TYPE_EXCEPTION;
+import static kgu.developers.domain.certificate.exception.CertificateDomainExceptionCode.CERTIFICATE_INVALID_GRADUATION_TYPE;
 
 public class CertificateInvalidGraduationTypeException extends CustomException {
     public CertificateInvalidGraduationTypeException() {
-        super(CERTIFICATE_INVALID_GRADUATION_TYPE_EXCEPTION);
+        super(CERTIFICATE_INVALID_GRADUATION_TYPE);
     }
 }

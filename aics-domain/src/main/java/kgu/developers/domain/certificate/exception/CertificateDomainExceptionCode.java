@@ -12,8 +12,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @AllArgsConstructor
 public enum CertificateDomainExceptionCode implements ExceptionCode {
     CERTIFICATE_NOT_FOUND(NOT_FOUND, "해당 자격증을 찾을 수 없습니다."),
-    CERTIFICATE_NOT_IN_SUBMISSION_PERIOD_EXCEPTION(BAD_REQUEST, "현재 자격증 제출 기간이 아닙니다."),
-    CERTIFICATE_INVALID_GRADUATION_TYPE_EXCEPTION(BAD_REQUEST, "선택하신 제출 방식이 자격증이 아닙니다."),
+    CERTIFICATE_SUBMISSION_PERIOD_CLOSED(BAD_REQUEST, "현재 자격증 제출 기간이 아닙니다."),
+    CERTIFICATE_INVALID_GRADUATION_TYPE(BAD_REQUEST, "선택하신 제출 방식이 자격증이 아닙니다."),
     ;
 
     private final HttpStatus status;
