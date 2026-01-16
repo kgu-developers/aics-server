@@ -16,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,12 +45,22 @@ public class GraduationUserCommandServiceTest {
         fakeGraduationUserRepository = new FakeGraduationUserRepository();
         graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, new ScheduleQueryService(fakeScheduleRepository));
         saveTestUser();
+        saveTestSchedule();
         graduationUser = fakeGraduationUserRepository.save(saveTestGraduationuser());
     }
 
     private void saveTestUser() {
         fakeUserRepository.save(User.builder().id(TARGET_STUDENT_ID).build());
         fakeUserRepository.save(User.builder().id("202211444").build());
+    }
+
+    private void saveTestSchedule() {
+        fakeScheduleRepository.save(Schedule.create(
+            SubmissionType.SUBMITTED,
+            "졸업 방식 제출 일정",
+            LocalDateTime.of(2000, 1, 1,0,0),
+            LocalDateTime.of(3000, 1, 1,0,0)
+        ));
     }
 
     private GraduationUser saveTestGraduationuser() {
