@@ -7,10 +7,14 @@ import kgu.developers.domain.graduationUser.application.query.GraduationUserQuer
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.infrastructure.excel.GraduationUserExcelImpl;
+import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
+import kgu.developers.domain.schedule.domain.Schedule;
+import kgu.developers.domain.schedule.domain.SubmissionType;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeCertificateRepository;
 import mock.repository.FakeGraduationUserRepository;
+import mock.repository.FakeScheduleRepository;
 import mock.repository.FakeThesisRepository;
 import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +24,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.time.LocalDateTime;
 
 import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,6 +39,7 @@ public class GraduationUserFacadeTest {
     public void init() {
         fakeGraduationUserRepository = new FakeGraduationUserRepository();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
+        FakeScheduleRepository fakeScheduleRepository = new FakeScheduleRepository();
         UserQueryService userQueryService = new UserQueryService(fakeUserRepository);
 
         GraduationUserQueryService graduationUserQueryService = new GraduationUserQueryService(
@@ -40,9 +47,21 @@ public class GraduationUserFacadeTest {
             fakeGraduationUserRepository,
             new FakeThesisRepository(),
             new FakeCertificateRepository(),
-            new GraduationUserExcelImpl());
+            new GraduationUserExcelImpl()
+        );
 
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+        fakeScheduleRepository.save(Schedule.create(
+            SubmissionType.SUBMITTED,
+            "졸업 방식 제출 일정",
+            LocalDateTime.of(2000, 1, 1,0,0),
+            LocalDateTime.of(3000, 1, 1,0,0)
+        ));
+
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(
+            fakeGraduationUserRepository,
+            new ScheduleQueryService(fakeScheduleRepository)
+        );
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         graduationuserFacade = new GraduationUserFacade(graduationUserQueryService,graduationUserCommandService);
 

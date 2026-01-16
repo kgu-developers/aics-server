@@ -3,12 +3,16 @@ package kgu.developers.domain.graduationUser.application.command;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.domain.GraduationUserRepository;
+import kgu.developers.domain.graduationUser.exception.GraduationTypeSubmissionPeriodClosedException;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
+import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
+import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.SubmissionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 
 @Service
@@ -16,6 +20,7 @@ import java.time.YearMonth;
 @RequiredArgsConstructor
 public class GraduationUserCommandService {
     private final GraduationUserRepository graduationUserRepository;
+    private final ScheduleQueryService scheduleQueryService;
 
     public Long createGraduationUser(String studentId, String name, String advisor, Boolean capstoneCompletion, String department, YearMonth graduationDate) {
         validateId(studentId);
@@ -29,6 +34,12 @@ public class GraduationUserCommandService {
     }
 
     public void updateGraduationType(GraduationUser graduationUser, GraduationType type) {
+        Schedule schedule = scheduleQueryService.getBySubmissionType(SubmissionType.SUBMITTED);
+        LocalDateTime referenceTime = LocalDateTime.now();
+        if(!schedule.isInProgress(referenceTime)) {
+            throw new GraduationTypeSubmissionPeriodClosedException();
+        }
+
         graduationUser.updateGraduationType(type);
         graduationUserRepository.save(graduationUser);
     }

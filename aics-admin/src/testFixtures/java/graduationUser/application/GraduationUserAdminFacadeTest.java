@@ -58,7 +58,7 @@ public class GraduationUserAdminFacadeTest {
     private FakeUserRepository fakeUserRepository;
     private FakeThesisRepository fakeThesisRepository;
     private FakeCertificateRepository fakeCertificateRepository;
-
+    private FakeScheduleRepository fakeScheduleRepository;
 
     private GraduationUser graduationUser1;
     private GraduationUser graduationUser2;
@@ -67,7 +67,11 @@ public class GraduationUserAdminFacadeTest {
     public void init() {
         FakeGraduationUserRepository fakeGraduationUserRepository = new FakeGraduationUserRepository();
         fakeUserRepository = new FakeUserRepository();
-        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+        fakeScheduleRepository = new FakeScheduleRepository();
+        GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(
+            fakeGraduationUserRepository,
+            new ScheduleQueryService(fakeScheduleRepository)
+        );
 
         fakeThesisRepository = new FakeThesisRepository();
         fakeCertificateRepository = new FakeCertificateRepository();

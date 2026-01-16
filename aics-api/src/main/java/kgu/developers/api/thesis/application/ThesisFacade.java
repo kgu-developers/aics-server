@@ -3,8 +3,6 @@ package kgu.developers.api.thesis.application;
 import kgu.developers.domain.graduationUser.application.command.GraduationUserCommandService;
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
-import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
-import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.SubmissionType;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ public class ThesisFacade {
 
     private final ThesisCommandService thesisCommandService;
     private final GraduationUserQueryService graduationUserQueryService;
-    private final ScheduleQueryService scheduleQueryService;
     private final GraduationUserCommandService graduationUserCommandService;
 
     public Long submitThesis(MultipartFile file, SubmissionType thesisType) {

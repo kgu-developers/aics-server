@@ -4,10 +4,12 @@ import kgu.developers.domain.graduationUser.application.command.GraduationUserCo
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
 import kgu.developers.domain.graduationUser.exception.GraduationUserIdDuplicateException;
+import kgu.developers.domain.schedule.application.query.ScheduleQueryService;
 import kgu.developers.domain.schedule.domain.Schedule;
 import kgu.developers.domain.schedule.domain.SubmissionType;
 import kgu.developers.domain.user.domain.User;
 import mock.repository.FakeGraduationUserRepository;
+import mock.repository.FakeScheduleRepository;
 import mock.repository.FakeUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class GraduationUserCommandServiceTest {
     private GraduationUserCommandService graduationUserCommandService;
     private FakeGraduationUserRepository fakeGraduationUserRepository;
+    private FakeScheduleRepository fakeScheduleRepository;
     private FakeUserRepository fakeUserRepository;
     private GraduationUser graduationUser;
 
@@ -37,8 +40,9 @@ public class GraduationUserCommandServiceTest {
 
     private void initializeGraduationUserCommandService() {
         fakeUserRepository = new FakeUserRepository();
+        fakeScheduleRepository = new FakeScheduleRepository();
         fakeGraduationUserRepository = new FakeGraduationUserRepository();
-        graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository);
+        graduationUserCommandService = new GraduationUserCommandService(fakeGraduationUserRepository, new ScheduleQueryService(fakeScheduleRepository));
         saveTestUser();
         graduationUser = fakeGraduationUserRepository.save(saveTestGraduationuser());
     }
