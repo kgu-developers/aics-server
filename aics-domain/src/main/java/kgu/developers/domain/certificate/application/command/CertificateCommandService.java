@@ -2,7 +2,7 @@ package kgu.developers.domain.certificate.application.command;
 
 import kgu.developers.domain.certificate.domain.Certificate;
 import kgu.developers.domain.certificate.domain.CertificateRepository;
-import kgu.developers.domain.certificate.exception.CertificateInvalidGraduationTypeException;
+import kgu.developers.domain.certificate.exception.CertificateSubmissionTypeMismatchException;
 import kgu.developers.domain.certificate.exception.CertificateNotFoundException;
 import kgu.developers.domain.certificate.exception.CertificateNotInSubmissionPeriodException;
 import kgu.developers.domain.file.application.command.FileCommandService;
@@ -37,7 +37,7 @@ public class CertificateCommandService {
 		GraduationUser graduationUser = graduationUserQueryService.me();
 
 		if(graduationUser.getGraduationType() != GraduationType.CERTIFICATE) {
-			throw new CertificateInvalidGraduationTypeException();
+			throw new CertificateSubmissionTypeMismatchException();
 		}
 
 		LocalDateTime referenceTime = LocalDateTime.now();

@@ -2,10 +2,10 @@ package kgu.developers.domain.thesis.exception;
 
 import kgu.developers.common.exception.CustomException;
 
-import static kgu.developers.domain.thesis.exception.ThesisDomainExceptionCode.THESIS_INVALID_GRADUATION_TYPE;
+import static kgu.developers.domain.thesis.exception.ThesisDomainExceptionCode.THESIS_SUBMISSION_TYPE_MISMATCH;
 
 public class ThesisInvalidGraduationTypeException extends CustomException {
     public ThesisInvalidGraduationTypeException() {
-        super(THESIS_INVALID_GRADUATION_TYPE);
+        super(THESIS_SUBMISSION_TYPE_MISMATCH);
     }
 }
