@@ -145,9 +145,9 @@ VALUES
 INSERT INTO schedule (submission_type,  content, start_date, end_date, created_at, updated_at)
 VALUES ('SUBMITTED',  '학부생 졸업 논문 신청을 접수합니다.', '2025-02-24 09:00:00', '2025-03-10 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('MIDTHESIS',  '중간 논문 제출 및 심사 기간입니다.', '2025-04-01 09:00:00', '2025-04-12 18:00:00',
+       ('MIDTHESIS',  '중간 보고서 제출 및 심사 기간입니다.', '2025-04-01 09:00:00', '2025-04-12 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('FINALTHESIS',  '최종 논문 제출 및 심사 기간입니다.', '2025-05-20 09:00:00', '2025-06-05 18:00:00',
+       ('FINALTHESIS',  '최종 보고서 제출 및 심사 기간입니다.', '2025-05-20 09:00:00', '2025-06-05 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('CERTIFICATE',  '취득한 자격증 제출 및 심사 기간입니다.', '2025-03-15 09:00:00', '2025-03-29 18:00:00',
         CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum GraduationType {
-        THESIS("보고서"),
+        THESIS("논문"),
         CERTIFICATE("자격증"),
         ;
 

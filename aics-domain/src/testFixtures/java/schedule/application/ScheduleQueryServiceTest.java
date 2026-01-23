@@ -37,7 +37,7 @@ public class ScheduleQueryServiceTest {
         fakeScheduleRepository.save(
                 Schedule.create(
                         SubmissionType.MIDTHESIS,
-                        "중간 논문",
+                        "중간보고서",
                         baseStart.plusDays(7),
                         baseStart.plusDays(10)
                 )

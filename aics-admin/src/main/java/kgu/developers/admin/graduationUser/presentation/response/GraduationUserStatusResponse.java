@@ -57,10 +57,10 @@ public sealed interface GraduationUserStatusResponse
             @Schema(description = "졸업 타입", example = "THESIS")
             String type,
 
-            @Schema(description = "중간 논문 상태")
+            @Schema(description = "중간 보고서 상태")
             Middle midThesis,
 
-            @Schema(description = "최종 논문 상태")
+            @Schema(description = "최종 보고서 상태")
             Final finalThesis
     ) implements GraduationUserStatusResponse {
         public static Thesis of(GraduationType type, Middle midThesis, Final finalThesis) {
@@ -72,7 +72,7 @@ public sealed interface GraduationUserStatusResponse
         }
 
         @Builder
-        @Schema(description = "중간 논문 제출 상태")
+        @Schema(description = "중간 보고서 제출 상태")
         public record Middle(
                 @Schema(description = "파일 제출 여부", example = "true")
                 boolean submitted,
@@ -99,7 +99,7 @@ public sealed interface GraduationUserStatusResponse
         }
 
         @Builder
-        @Schema(description = "최종 논문 제출 상태")
+        @Schema(description = "최종 보고서 제출 상태")
         public record Final(
                 @Schema(description = "파일 제출 여부", example = "false")
                 boolean submitted,

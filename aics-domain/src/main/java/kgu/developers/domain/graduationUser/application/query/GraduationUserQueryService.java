@@ -65,12 +65,12 @@ public class GraduationUserQueryService {
 
         if (user.getGraduationType() == GraduationType.THESIS) {
             if (user.getMidThesisId() == null) {
-                return "중간 논문 미제출";
+                return "중간 보고서 미제출";
             }
             if (user.getFinalThesisId() == null) {
-                return "최종 논문 미제출";
+                return "최종 보고서 미제출";
             }
-            return "최종 논문 제출";
+            return "최종 보고서 제출";
         }
         else if (user.getGraduationType() == GraduationType.CERTIFICATE) {
             if (user.getCertificateId() == null) {

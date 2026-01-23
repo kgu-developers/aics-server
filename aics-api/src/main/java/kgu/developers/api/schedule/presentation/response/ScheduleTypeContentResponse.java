@@ -8,7 +8,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 @Builder
 public record ScheduleTypeContentResponse(
-    @Schema(description = "제출 유형", example = "중간논문", requiredMode = REQUIRED)
+    @Schema(description = "제출 유형", example = "중간보고서", requiredMode = REQUIRED)
     String submissionType,
 
     @Schema(description = "일정 본문 내용", example = "매학기 개강 후 2주 이내에 신청서를 작성하여 접수해야 합니다.",requiredMode = REQUIRED)

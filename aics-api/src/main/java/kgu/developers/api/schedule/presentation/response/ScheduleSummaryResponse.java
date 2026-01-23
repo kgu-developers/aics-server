@@ -15,7 +15,7 @@ public record ScheduleSummaryResponse(
     @Schema(description = "일정 id", example = "1", requiredMode = REQUIRED)
     Long id,
 
-    @Schema(description = "제출 유형", example = "중간논문", requiredMode = REQUIRED)
+    @Schema(description = "제출 유형", example = "중간보고서", requiredMode = REQUIRED)
     String submissionType,
 
     @Schema(description = "시작일", example = "2025-05-01", requiredMode = REQUIRED)

@@ -60,7 +60,7 @@ public class ScheduleAdminFacadeTest {
 		// given
 		ScheduleCreateRequest request = ScheduleCreateRequest.builder()
 			.submissionType(MIDTHESIS)
-			.content("중간 논문 본문")
+			.content("중간보고서 본문")
 			.startDate(DEFAULT_START_DATE.plusMonths(1))
 			.endDate(DEFAULT_END_DATE.plusMonths(1))
 			.build();
