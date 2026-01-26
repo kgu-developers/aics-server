@@ -27,6 +27,9 @@ public record GraduationUserSummaryResponse(
     @Schema(description = "졸업 유형", example = "자격증", requiredMode = REQUIRED)
     String graduationType,
 
+    @Schema(description = "지도교수", example = "김교수", requiredMode = REQUIRED)
+    String advisor,
+
     @Schema(
             description = "졸업 요건 제출 및 승인 상태 (자격증 또는 논문)",
             example = "{"
@@ -59,6 +62,7 @@ public record GraduationUserSummaryResponse(
             .graduationDate(graduationUser.getGraduationDate().format(formatter))
             .graduationType(graduationUser.getGraduationType() != null ? graduationUser.getGraduationType().getDescription() : "미정")
             .status(status)
+            .advisor(graduationUser.getAdvisorProfessor())
             .build();
     }
 }
