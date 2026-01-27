@@ -27,8 +27,8 @@ public record MyGraduationUserResponse(
         String title = switch (status) {
             case GRADUATION_TYPE_NOT_SUBMITTED -> "졸업 유형을 아직 선택하지 않았어요.";
             case PROFESSOR_NOT_ASSIGNED -> "지도교수가 아직 배정되지 않았어요.";
-            case MID_THESIS_NOT_SUBMITTED -> "중간 논문을 제출하지 않았어요.";
-            case FINAL_THESIS_NOT_SUBMITTED -> "최종 논문을 제출하지 않았어요.";
+            case MID_THESIS_NOT_SUBMITTED -> "중간 보고서를 제출하지 않았어요.";
+            case FINAL_THESIS_NOT_SUBMITTED -> "최종 보고서를 제출하지 않았어요.";
             case CERTIFICATE_NOT_SUBMITTED -> "자격증을 제출하지 않았어요.";
             case GRADUATION_REQUIREMENTS_MET -> "졸업 요건을 충족했어요.";
         };
@@ -39,7 +39,7 @@ public record MyGraduationUserResponse(
             case CERTIFICATE_NOT_SUBMITTED -> deadlineMessage("자격증", schedule);
 
             case GRADUATION_TYPE_NOT_SUBMITTED ->
-                    "졸업 유형(논문/자격증)을 먼저 선택해주세요.";
+                    "졸업 유형(보고서/자격증)을 먼저 선택해주세요.";
             case PROFESSOR_NOT_ASSIGNED ->
                     "지도교수 배정을 완료해야 다음 절차를 진행할 수 있어요.";
             case GRADUATION_REQUIREMENTS_MET ->
