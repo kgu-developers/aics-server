@@ -57,13 +57,18 @@ public class GraduationUserFacadeTest {
             LocalDateTime.of(3000, 1, 1,0,0)
         ));
 
+        ScheduleQueryService scheduleQueryService = new ScheduleQueryService(fakeScheduleRepository);
         GraduationUserCommandService graduationUserCommandService = new GraduationUserCommandService(
             fakeGraduationUserRepository,
-            new ScheduleQueryService(fakeScheduleRepository)
+            scheduleQueryService
         );
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        graduationuserFacade = new GraduationUserFacade(graduationUserQueryService,graduationUserCommandService);
+        graduationuserFacade = new GraduationUserFacade(
+            graduationUserQueryService,
+            graduationUserCommandService,
+            scheduleQueryService
+        );
 
         User user = fakeUserRepository.save(User.builder()
             .id("202411345")
@@ -125,6 +130,6 @@ public class GraduationUserFacadeTest {
         MyGraduationUserResponse response = graduationuserFacade.getMyGraduationUser();
 
         //then
-        assertEquals(response.status().name(),"GRADUATION_TYPE_NOT_SUBMITTED");
+        assertEquals("졸업 유형을 아직 선택하지 않았어요.", response.title());
     }
 }
