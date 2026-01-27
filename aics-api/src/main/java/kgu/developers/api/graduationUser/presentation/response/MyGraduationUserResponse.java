@@ -12,11 +12,14 @@ import java.time.format.DateTimeFormatter;
 
 @Builder
 public record MyGraduationUserResponse(
-        @Schema(description = "제목", example = "최종 보고서를 제출하지 않았어요.")
-        String title,
+    @Schema(description = "현재 상태", example = "FINAL_THESIS_NOT_SUBMITTED")
+    GraduationUserStatus status,
 
-        @Schema(description = "내용", example = "최종 보고서 마감 기한은 2025년 10월 30일이에요.")
-        String description
+    @Schema(description = "제목", example = "최종 보고서를 제출하지 않았어요.")
+    String title,
+
+    @Schema(description = "내용", example = "최종 보고서 마감 기한은 2025년 10월 30일이에요.")
+    String description
 ) {
     private static final DateTimeFormatter KOREAN_DATE = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
 
@@ -47,14 +50,12 @@ public record MyGraduationUserResponse(
         };
 
         return MyGraduationUserResponse.builder()
-                .title(title)
-                .description(description)
-                .build();
+            .status(status)
+            .title(title)
+            .description(description)
+            .build();
     }
 
-    /**
-     * 서비스에서 schedule 조회할 때 쓰라고 status -> SubmissionType 매핑도 제공
-     */
     public static SubmissionType requiredSubmissionType(GraduationUser graduationUser) {
         GraduationUserStatus status = determineStatus(graduationUser);
 
@@ -62,7 +63,7 @@ public record MyGraduationUserResponse(
             case MID_THESIS_NOT_SUBMITTED -> SubmissionType.MIDTHESIS;
             case FINAL_THESIS_NOT_SUBMITTED -> SubmissionType.FINALTHESIS;
             case CERTIFICATE_NOT_SUBMITTED -> SubmissionType.CERTIFICATE;
-            default -> null; // schedule 필요 없는 상태들
+            default -> null;
         };
     }
 
