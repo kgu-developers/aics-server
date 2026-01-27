@@ -39,7 +39,7 @@ public record MyGraduationUserResponse(
             case CERTIFICATE_NOT_SUBMITTED -> deadlineMessage("자격증", schedule);
 
             case GRADUATION_TYPE_NOT_SUBMITTED ->
-                    "졸업 유형(보고서/자격증)을 먼저 선택해주세요.";
+                    "졸업 유형(논문/자격증)을 먼저 선택해주세요.";
             case PROFESSOR_NOT_ASSIGNED ->
                     "지도교수 배정을 완료해야 다음 절차를 진행할 수 있어요.";
             case GRADUATION_REQUIREMENTS_MET ->
