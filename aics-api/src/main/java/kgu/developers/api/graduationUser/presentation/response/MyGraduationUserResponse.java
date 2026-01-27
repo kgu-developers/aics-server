@@ -34,8 +34,8 @@ public record MyGraduationUserResponse(
         };
 
         String description = switch (status) {
-            case MID_THESIS_NOT_SUBMITTED -> deadlineMessage("중간 논문", schedule);
-            case FINAL_THESIS_NOT_SUBMITTED -> deadlineMessage("최종 논문", schedule);
+            case MID_THESIS_NOT_SUBMITTED -> deadlineMessage("중간 보고서", schedule);
+            case FINAL_THESIS_NOT_SUBMITTED -> deadlineMessage("최종 보고서", schedule);
             case CERTIFICATE_NOT_SUBMITTED -> deadlineMessage("자격증", schedule);
 
             case GRADUATION_TYPE_NOT_SUBMITTED ->
