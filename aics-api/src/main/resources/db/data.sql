@@ -135,11 +135,11 @@ VALUES ('참여 신청 방법을 자세히 알고 싶습니다.', '2025-03-03 00
 INSERT INTO graduation_user (name, email, advisor_professor, graduation_type, graduation_date, capstone_completion,
                              department, mid_thesis_id, final_thesis_id, certificate_id, user_id, created_at, updated_at)
 VALUES
-    ('김철수', 'chulsoo@kyonggi.ac.kr', '이순신', 'THESIS', '2028-02-01', true,"컴퓨터공학전공", 1, 2, NULL, '202512345', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('이영희', 'younghee@kyonggi.ac.kr', '홍길동', 'CERTIFICATE', '2028-08-01',true, "인공지능전공", NULL, NULL, 1, '202512346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('박민수', 'minsu@kyonggi.ac.kr', '정약용', 'THESIS', '2029-02-01', true, "컴퓨터공학전공", 3, NULL, NULL, '202512347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('정수진', 'sujin@kyonggi.ac.kr', '김이박', 'THESIS', '2030-02-01', false,"컴퓨터공학전공", 4, 5, NULL, '202512349', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('최동욱', 'dongwook@kyonggi.ac.kr', '이교수', 'CERTIFICATE', '2027-08-01', false,"SW안전보안전공", NULL, NULL, 2, '202512348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    ('김철수', 'chulsoo@kyonggi.ac.kr', '이순신', 'THESIS', '2028-02-01', true,'컴퓨터공학전공', 1, 2, NULL, '202512345', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('이영희', 'younghee@kyonggi.ac.kr', '홍길동', 'CERTIFICATE', '2028-08-01',true, '인공지능전공', NULL, NULL, 1, '202512346', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('박민수', 'minsu@kyonggi.ac.kr', '정약용', 'THESIS', '2029-02-01', true, '컴퓨터공학전공', 3, NULL, NULL, '202512347', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('정수진', 'sujin@kyonggi.ac.kr', '김이박', 'THESIS', '2030-02-01', false,'컴퓨터공학전공', 4, 5, NULL, '202512349', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('최동욱', 'dongwook@kyonggi.ac.kr', '이교수', 'CERTIFICATE', '2027-08-01', false,'SW안전보안전공', NULL, NULL, 2, '202512348', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- schedule
 INSERT INTO schedule (submission_type,  content, start_date, end_date, created_at, updated_at)
