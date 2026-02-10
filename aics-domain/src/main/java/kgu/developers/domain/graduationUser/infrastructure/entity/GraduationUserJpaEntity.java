@@ -36,14 +36,14 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
     @Column(nullable = false, length = 10)
     private String name;
 
-    @Column(unique = true, nullable = false, length = 50)
+    @Column(length = 50, unique = true)
     private String email;
 
-    @Column(nullable = true, length = 20)
+    @Column(length = 20)
     private String advisorProfessor;
 
-    @Column(nullable = false)
     @Enumerated(STRING)
+    @Column(length = 20)
     private GraduationType graduationType;
 
     private LocalDate graduationDate;
@@ -58,6 +58,7 @@ public class GraduationUserJpaEntity extends BaseTimeEntity {
 
     private Long certificateId;
 
+    @Column(length = 10)
     private String userId;
 
     public static GraduationUserJpaEntity toEntity(GraduationUser graduationUser) {

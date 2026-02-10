@@ -1,13 +1,13 @@
 package kgu.developers.domain.post.domain;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+
+import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Builder
@@ -16,19 +16,12 @@ import java.time.LocalDateTime;
 public class Post {
 
 	private Long id;
-
 	private String title;
-
 	private String content;
-
 	private int views;
-
 	private Category category;
-
 	private String authorId;
-
 	private boolean isPinned;
-
 	private Long fileId;
 
 	protected LocalDateTime createdAt;
