@@ -4,10 +4,12 @@ import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserExcelF
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchApproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDisapproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchApproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDisapproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserStatusResponse;
@@ -189,5 +191,37 @@ public class GraduationUserAdminFacade {
         }
 
         return GraduationUserBatchApproveResponse.from(approvedUserIds);
+    }
+
+    public GraduationUserBatchDisapproveResponse disapproveGraduationUsers(GraduationUserBatchDisapproveRequest request) {
+        List<GraduationUser> users = request.ids().stream()
+                .map(graduationUserQueryService::getById)
+                .toList();
+
+        List<Long> disapprovedUserIds = new ArrayList<>();
+
+        for(GraduationUser user: users) {
+            if(user.getGraduationType() == GraduationType.CERTIFICATE) {
+                if(user.getCertificateId() == null) continue;
+                boolean disapproved = certificateCommandService.disapprove(user.getCertificateId());
+                if(disapproved) disapprovedUserIds.add(user.getId());
+            } else if(user.getGraduationType() == GraduationType.THESIS) {
+                boolean midThesisdisapproved = false;
+                boolean finalThesisdisapproved = false;
+
+                if(user.getMidThesisId() != null) {
+                    midThesisdisapproved = thesisCommandService.disapprove(user.getMidThesisId());
+                }
+
+                if(user.getFinalThesisId() != null) {
+                    finalThesisdisapproved = thesisCommandService.disapprove(user.getFinalThesisId());
+                }
+
+                if(midThesisdisapproved || finalThesisdisapproved)
+                    disapprovedUserIds.add(user.getId());
+            }
+        }
+
+        return GraduationUserBatchDisapproveResponse.from(disapprovedUserIds);
     }
 }

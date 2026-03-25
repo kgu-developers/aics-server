@@ -8,10 +8,12 @@ import kgu.developers.admin.graduationUser.presentation.dto.GraduationUserExcelF
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchApproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDisapproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchApproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDisapproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -122,6 +124,15 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
             @Valid @RequestBody GraduationUserBatchApproveRequest request
     ) {
         GraduationUserBatchApproveResponse response = graduationUserAdminFacade.approveGraduationUsers(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @PatchMapping("/batch/disapprove")
+    public ResponseEntity<GraduationUserBatchDisapproveResponse> disapproveGraduationUsers(
+            @Valid @RequestBody GraduationUserBatchDisapproveRequest request
+    ) {
+        GraduationUserBatchDisapproveResponse response = graduationUserAdminFacade.disapproveGraduationUsers(request);
         return ResponseEntity.ok(response);
     }
 }

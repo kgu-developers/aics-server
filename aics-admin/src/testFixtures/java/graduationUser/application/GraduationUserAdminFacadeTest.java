@@ -4,8 +4,10 @@ import kgu.developers.admin.graduationUser.application.GraduationUserAdminFacade
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchApproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDisapproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDisapproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -311,6 +313,29 @@ public class GraduationUserAdminFacadeTest {
         assertEquals(true,fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
         assertEquals(true,fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(2L).get());
         assertEquals(true,fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
+    }
+
+    @Test
+    @DisplayName("disapproveGraduationUsers는 여러 GraduationUser의 제출 승인을 취소한다.")
+    public void disapproveGraduationUsers_Success() {
+        // given
+        // 먼저 승인된 상태로 만듦
+        fakeThesisRepository.save(Thesis.of(1L, 1L, 1L, true, null, null, null));
+        fakeThesisRepository.save(Thesis.of(2L, 1L, 2L, true, null, null, null));
+        fakeCertificateRepository.save(Certificate.of(1L, 1L, 1L, true, null, null, null));
+
+        List<Long> graduationUserIds = Arrays.asList(1L, 2L);
+        GraduationUserBatchDisapproveRequest request = GraduationUserBatchDisapproveRequest.builder()
+                .ids(graduationUserIds)
+                .build();
+
+        // when
+        graduationUserAdminFacade.disapproveGraduationUsers(request);
+
+        // then
+        assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
+        assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(2L).get());
+        assertEquals(false, fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
     }
 
 }

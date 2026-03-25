@@ -55,4 +55,8 @@ public class Thesis {
 	public void approve() {
 		this.approval = true;
 	}
+
+	public void disapprove() {
+		this.approval = false;
+	}
 }

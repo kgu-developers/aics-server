@@ -12,10 +12,12 @@ import jakarta.validation.constraints.PositiveOrZero;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchApproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDeleteRequest;
+import kgu.developers.admin.graduationUser.presentation.request.GraduationUserBatchDisapproveRequest;
 import kgu.developers.admin.graduationUser.presentation.request.GraduationUserCreateRequest;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchApproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchCreateResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDeleteResponse;
+import kgu.developers.admin.graduationUser.presentation.response.GraduationUserBatchDisapproveResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserDetailResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserPersistResponse;
 import kgu.developers.admin.graduationUser.presentation.response.GraduationUserSummaryPageResponse;
@@ -147,5 +149,17 @@ public interface GraduationUserAdminController {
                     description = "승인할 졸업 대상자 ID 목록",
                     required = true
             ) @Valid @RequestBody GraduationUserBatchApproveRequest request
+    );
+
+    @Operation(summary = "졸업 대상자 일괄 승인 취소 API", description = """
+			- Description : 이 API는 선택한 여러 졸업 대상자의 제출을 일괄 승인 취소합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(responseCode = "200")
+    ResponseEntity<GraduationUserBatchDisapproveResponse> disapproveGraduationUsers(
+            @Parameter(
+                    description = "승인 취소할 졸업 대상자 ID 목록",
+                    required = true
+            ) @Valid @RequestBody GraduationUserBatchDisapproveRequest request
     );
 }
