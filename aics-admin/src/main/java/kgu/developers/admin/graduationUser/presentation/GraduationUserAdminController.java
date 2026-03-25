@@ -153,7 +153,7 @@ public interface GraduationUserAdminController {
 
     @Operation(summary = "졸업 대상자 일괄 승인 취소 API", description = """
 			- Description : 이 API는 선택한 여러 졸업 대상자의 제출을 일괄 승인 취소합니다.
-			- Assignee : 장영후
+			- Assignee : 황호찬
 		""")
     @ApiResponse(responseCode = "200")
     ResponseEntity<GraduationUserBatchDisapproveResponse> disapproveGraduationUsers(
