@@ -162,4 +162,45 @@ public interface GraduationUserAdminController {
                     required = true
             ) @Valid @RequestBody GraduationUserBatchDisapproveRequest request
     );
+
+    @Operation(summary = "제출 단일 승인 API", description = """
+			- Description : 이 API는 선택한 졸업 대상자의 특정 논문/자격증을 승인합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(
+        responseCode = "200",
+        content = @Content(schema = @Schema(implementation = GraduationUserPersistResponse.class))
+    )
+    ResponseEntity<GraduationUserPersistResponse> approveSubmission(
+        @Parameter(
+            description = "졸업 대상자 ID는 URL 경로 변수 입니다.",
+            example = "1",
+            required = true
+        ) @Positive @PathVariable Long graduationUserId,
+        @Parameter(
+            description = "논문/자격증 ID는 URL 경로 변수 입니다.",
+            example = "1",
+            required = true
+        ) @Positive @PathVariable Long submissionId
+    );
+
+    @Operation(summary = "제출 승인 취소 API", description = """
+			- Description : 이 API는 선택한 졸업 대상자의 특정 논문/자격증을 승인 취소합니다.
+			- Assignee : 장영후
+		""")
+    @ApiResponse(
+        responseCode = "200",
+        content = @Content(schema = @Schema(implementation = GraduationUserPersistResponse.class)))
+    ResponseEntity<GraduationUserPersistResponse> disapproveSubmission(
+        @Parameter(
+            description = "졸업 대상자 ID는 URL 경로 변수 입니다.",
+            example = "1",
+            required = true
+        ) @Positive @PathVariable Long graduationUserId,
+        @Parameter(
+            description = "논문/자격증 ID는 URL 경로 변수 입니다.",
+            example = "1",
+            required = true
+        ) @Positive @PathVariable Long submissionId
+    );
 }

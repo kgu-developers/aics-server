@@ -135,4 +135,24 @@ public class GraduationUserAdminControllerImpl implements GraduationUserAdminCon
         GraduationUserBatchDisapproveResponse response = graduationUserAdminFacade.disapproveGraduationUsers(request);
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    @PatchMapping("/approve/{graduationUserId}/{submissionId}")
+    public ResponseEntity<GraduationUserPersistResponse> approveSubmission(
+        @Positive @PathVariable Long graduationUserId,
+        @Positive @PathVariable Long submissionId
+    ) {
+        Long approvedGraduationuserId = graduationUserAdminFacade.approveSubmission(graduationUserId,submissionId);
+        return ResponseEntity.ok(GraduationUserPersistResponse.of(approvedGraduationuserId));
+    }
+
+    @Override
+    @PatchMapping("/disapprove/{graduationUserId}/{submissionId}")
+    public ResponseEntity<GraduationUserPersistResponse> disapproveSubmission(
+        @Positive @PathVariable Long graduationUserId,
+        @Positive @PathVariable Long submissionId
+    ) {
+        Long disapprovedGraduationuserId = graduationUserAdminFacade.disapproveSubmission(graduationUserId,submissionId);
+        return ResponseEntity.ok(GraduationUserPersistResponse.of(disapprovedGraduationuserId));
+    }
 }

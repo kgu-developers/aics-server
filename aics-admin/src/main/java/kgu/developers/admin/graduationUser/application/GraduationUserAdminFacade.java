@@ -224,4 +224,24 @@ public class GraduationUserAdminFacade {
 
         return GraduationUserBatchDisapproveResponse.from(disapprovedUserIds);
     }
+
+    public Long approveSubmission(Long graduationUserId, Long submissionId) {
+        GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        if(graduationUser.getGraduationType() == GraduationType.CERTIFICATE) {
+            certificateCommandService.approve(submissionId);
+        } else if(graduationUser.getGraduationType() == GraduationType.THESIS) {
+            thesisCommandService.approve(submissionId);
+        }
+        return graduationUserId;
+    }
+
+    public Long disapproveSubmission(Long graduationUserId, Long submissionId) {
+        GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        if(graduationUser.getGraduationType() == GraduationType.CERTIFICATE) {
+            certificateCommandService.disapprove(submissionId);
+        } else if(graduationUser.getGraduationType() == GraduationType.THESIS) {
+            thesisCommandService.disapprove(submissionId);
+        }
+        return graduationUserId;
+    }
 }
