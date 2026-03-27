@@ -46,4 +46,6 @@ public class FakeCertificateRepository implements CertificateRepository {
             .findFirst()
             .map(Certificate::isApproved);
     }
+
+
 }

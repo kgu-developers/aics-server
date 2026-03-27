@@ -320,9 +320,9 @@ public class GraduationUserAdminFacadeTest {
     public void disapproveGraduationUsers_Success() {
         // given
         // 먼저 승인된 상태로 만듦
+        fakeCertificateRepository.save(Certificate.of(1L, 1L, 1L, true, null, null, null));
         fakeThesisRepository.save(Thesis.of(1L, 1L, 1L, true, null, null, null));
         fakeThesisRepository.save(Thesis.of(2L, 1L, 2L, true, null, null, null));
-        fakeCertificateRepository.save(Certificate.of(1L, 1L, 1L, true, null, null, null));
 
         List<Long> graduationUserIds = Arrays.asList(1L, 2L);
         GraduationUserBatchDisapproveRequest request = GraduationUserBatchDisapproveRequest.builder()
@@ -330,12 +330,49 @@ public class GraduationUserAdminFacadeTest {
                 .build();
 
         // when
-        graduationUserAdminFacade.disapproveGraduationUsers(request);
+        GraduationUserBatchDisapproveResponse response = graduationUserAdminFacade.disapproveGraduationUsers(request);
 
         // then
+        assertEquals(2, response.disapprovedIds().size());
+        assertEquals(false, fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
         assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
         assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(2L).get());
+    }
+
+    @Test
+    @DisplayName("disapproveGraduationUsers는 이미 승인이 취소된 유저는 결과 목록에 포함하지 않는다.")
+    public void disapproveGraduationUsers_AlreadyDisapproved() {
+        // given
+        // 이미 승인 취소 상태로 만듦
+        fakeCertificateRepository.save(Certificate.of(1L, 1L, 1L, false, null, null, null));
+
+        List<Long> graduationUserIds = List.of(1L);
+        GraduationUserBatchDisapproveRequest request = GraduationUserBatchDisapproveRequest.builder()
+                .ids(graduationUserIds)
+                .build();
+
+        // when
+        GraduationUserBatchDisapproveResponse response = graduationUserAdminFacade.disapproveGraduationUsers(request);
+
+        // then
+        assertEquals(0, response.disapprovedIds().size());
         assertEquals(false, fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
     }
 
+    @Test
+    @DisplayName("disapproveGraduationUsers는 제출물이 없는 유저는 무시한다.")
+    public void disapproveGraduationUsers_NoSubmission() {
+        // given
+        // graduationUser3은 자격증이나 논문 ID가 없는 상태
+        List<Long> graduationUserIds = List.of(3L);
+        GraduationUserBatchDisapproveRequest request = GraduationUserBatchDisapproveRequest.builder()
+                .ids(graduationUserIds)
+                .build();
+
+        // when
+        GraduationUserBatchDisapproveResponse response = graduationUserAdminFacade.disapproveGraduationUsers(request);
+
+        // then
+        assertEquals(0, response.disapprovedIds().size());
+    }
 }
