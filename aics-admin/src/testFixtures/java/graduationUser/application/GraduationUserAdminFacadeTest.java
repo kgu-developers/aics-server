@@ -421,7 +421,7 @@ public class GraduationUserAdminFacadeTest {
     }
 
     @Test
-    @DisplayName("disapproveSubmission은 논문 타입 GraduationUser의 논문 제출 승인을 단일aics 취소한다.")
+    @DisplayName("disapproveSubmission은 논문 타입 GraduationUser의 논문 제출 승인을 단일 취소한다.")
     public void disapproveSubmission_ThesisType_Success() {
         // given
         Long graduationUserId = 2L;
