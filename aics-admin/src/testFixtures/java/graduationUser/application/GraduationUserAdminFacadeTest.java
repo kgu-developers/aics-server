@@ -319,10 +319,10 @@ public class GraduationUserAdminFacadeTest {
     @DisplayName("disapproveGraduationUsers는 여러 GraduationUser의 제출 승인을 취소한다.")
     public void disapproveGraduationUsers_Success() {
         // given
-        // 먼저 승인된 상태로 만듦
-        fakeCertificateRepository.save(Certificate.of(1L, 1L, 1L, true, null, null, null));
-        fakeThesisRepository.save(Thesis.of(1L, 1L, 1L, true, null, null, null));
-        fakeThesisRepository.save(Thesis.of(2L, 1L, 2L, true, null, null, null));
+        GraduationUserBatchApproveRequest approveRequest = GraduationUserBatchApproveRequest.builder()
+                .ids(Arrays.asList(1L, 2L))
+                .build();
+        graduationUserAdminFacade.approveGraduationUsers(approveRequest);
 
         List<Long> graduationUserIds = Arrays.asList(1L, 2L);
         GraduationUserBatchDisapproveRequest request = GraduationUserBatchDisapproveRequest.builder()
@@ -343,9 +343,6 @@ public class GraduationUserAdminFacadeTest {
     @DisplayName("disapproveGraduationUsers는 이미 승인이 취소된 유저는 결과 목록에 포함하지 않는다.")
     public void disapproveGraduationUsers_AlreadyDisapproved() {
         // given
-        // 이미 승인 취소 상태로 만듦
-        fakeCertificateRepository.save(Certificate.of(1L, 1L, 1L, false, null, null, null));
-
         List<Long> graduationUserIds = List.of(1L);
         GraduationUserBatchDisapproveRequest request = GraduationUserBatchDisapproveRequest.builder()
                 .ids(graduationUserIds)
@@ -374,5 +371,69 @@ public class GraduationUserAdminFacadeTest {
 
         // then
         assertEquals(0, response.disapprovedIds().size());
+    }
+
+    @Test
+    @DisplayName("approveSubmission은 자격증 타입 GraduationUser의 자격증 제출을 단일 승인한다.")
+    public void approveSubmission_CertificateType_Success() {
+        // given
+        Long graduationUserId = 1L;
+        Long submissionId = 1L; // certificateId
+
+        // when
+        Long result = graduationUserAdminFacade.approveSubmission(graduationUserId, submissionId);
+
+        // then
+        assertEquals(graduationUserId, result);
+        assertEquals(true, fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
+    }
+
+    @Test
+    @DisplayName("approveSubmission은 논문 타입 GraduationUser의 논문 제출을 단일 승인한다.")
+    public void approveSubmission_ThesisType_Success() {
+        // given
+        Long graduationUserId = 2L;
+        Long submissionId = 1L; // midThesisId
+
+        // when
+        Long result = graduationUserAdminFacade.approveSubmission(graduationUserId, submissionId);
+
+        // then
+        assertEquals(graduationUserId, result);
+        assertEquals(true, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
+        assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(2L).get());
+    }
+
+    @Test
+    @DisplayName("disapproveSubmission은 자격증 타입 GraduationUser의 자격증 제출 승인을 단일 취소한다.")
+    public void disapproveSubmission_CertificateType_Success() {
+        // given
+        Long graduationUserId = 1L;
+        Long submissionId = 1L; // certificateId
+        graduationUserAdminFacade.approveSubmission(graduationUserId, submissionId);
+
+        // when
+        Long result = graduationUserAdminFacade.disapproveSubmission(graduationUserId, submissionId);
+
+        // then
+        assertEquals(graduationUserId, result);
+        assertEquals(false, fakeCertificateRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
+    }
+
+    @Test
+    @DisplayName("disapproveSubmission은 논문 타입 GraduationUser의 논문 제출 승인을 단일aics 취소한다.")
+    public void disapproveSubmission_ThesisType_Success() {
+        // given
+        Long graduationUserId = 2L;
+        Long submissionId = 2L; // finalThesisId
+        graduationUserAdminFacade.approveSubmission(graduationUserId, submissionId);
+
+        // when
+        Long result = graduationUserAdminFacade.disapproveSubmission(graduationUserId, submissionId);
+
+        // then
+        assertEquals(graduationUserId, result);
+        assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(2L).get());
+        assertEquals(false, fakeThesisRepository.findApprovalByIdAndDeletedAtIsNull(1L).get());
     }
 }
