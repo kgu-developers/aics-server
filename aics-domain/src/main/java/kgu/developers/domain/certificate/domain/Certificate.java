@@ -58,4 +58,8 @@ public class Certificate {
 	public void approve() {
 		this.approval = true;
 	}
+
+	public void disapprove() {
+		this.approval = false;
+	}
 }

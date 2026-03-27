@@ -62,4 +62,14 @@ public class CertificateCommandService {
 		certificateRepository.save(certificate);
 		return true;
     }
+
+	public boolean disapprove(Long certificateId) {
+		Certificate certificate = certificateRepository.findByIdAndDeletedAtIsNull(certificateId)
+				.orElseThrow(CertificateNotFoundException::new);
+
+		if (!certificate.isApproved()) return false;
+		certificate.disapprove();
+		certificateRepository.save(certificate);
+		return true;
+	}
 }

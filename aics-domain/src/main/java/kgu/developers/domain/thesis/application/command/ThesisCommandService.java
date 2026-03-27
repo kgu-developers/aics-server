@@ -67,4 +67,14 @@ public class ThesisCommandService {
 		thesisRepository.save(thesis);
 		return true;
     }
+
+	public boolean disapprove(Long thesisId) {
+		Thesis thesis = thesisRepository.findByIdAndDeletedAtIsNull(thesisId)
+				.orElseThrow(ThesisNotFoundException::new);
+
+		if (!thesis.isApproved()) return false;
+		thesis.disapprove();
+		thesisRepository.save(thesis);
+		return true;
+	}
 }
