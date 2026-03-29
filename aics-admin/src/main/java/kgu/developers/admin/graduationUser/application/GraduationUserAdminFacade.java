@@ -23,6 +23,8 @@ import kgu.developers.domain.graduationUser.application.command.GraduationUserCo
 import kgu.developers.domain.graduationUser.application.query.GraduationUserQueryService;
 import kgu.developers.domain.graduationUser.domain.GraduationType;
 import kgu.developers.domain.graduationUser.domain.GraduationUser;
+import kgu.developers.domain.graduationUser.exception.GraduationTypeNotSelectedException;
+import kgu.developers.domain.graduationUser.exception.GraudationUserSubmissionMismatchException;
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.thesis.application.query.ThesisQueryService;
 import kgu.developers.domain.thesis.domain.Thesis;
@@ -227,6 +229,7 @@ public class GraduationUserAdminFacade {
 
     public Long approveSubmission(Long graduationUserId, Long submissionId) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        validateSubmissionOwner(graduationUser, submissionId);
         if(graduationUser.getGraduationType() == GraduationType.CERTIFICATE) {
             certificateCommandService.approve(submissionId);
         } else if(graduationUser.getGraduationType() == GraduationType.THESIS) {
@@ -237,11 +240,22 @@ public class GraduationUserAdminFacade {
 
     public Long disapproveSubmission(Long graduationUserId, Long submissionId) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        validateSubmissionOwner(graduationUser, submissionId);
         if(graduationUser.getGraduationType() == GraduationType.CERTIFICATE) {
             certificateCommandService.disapprove(submissionId);
         } else if(graduationUser.getGraduationType() == GraduationType.THESIS) {
             thesisCommandService.disapprove(submissionId);
         }
         return graduationUserId;
+    }
+
+    private void validateSubmissionOwner(GraduationUser graduationUser, Long submissionId) {
+        if(graduationUser.getGraduationType() == GraduationType.CERTIFICATE) {
+            if(graduationUser.getCertificateId() != submissionId) throw new GraudationUserSubmissionMismatchException();
+        } else if(graduationUser.getGraduationType() == GraduationType.THESIS) {
+            if(graduationUser.getMidThesisId() != submissionId && graduationUser.getFinalThesisId() != submissionId) throw new GraudationUserSubmissionMismatchException();
+        } else {
+            throw new GraduationTypeNotSelectedException();
+        }
     }
 }
