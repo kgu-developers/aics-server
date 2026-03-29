@@ -19,6 +19,8 @@ public enum GraduationUserDomainExceptionCode implements ExceptionCode {
     GRADUATION_USER_ID_DUPLICATED(CONFLICT, "이미 동일한 학번의 졸업 대상자 정보가 존재합니다."),
     GRADUATION_USER_EXCEL_GENERATION_FAILED(INTERNAL_SERVER_ERROR, "졸업 대상자 엑셀 파일의 생성 중 오류가 발생했습니다."),
     GRADUATION_TYPE_SUBMISSION_PERIOD_CLOSED(BAD_REQUEST, "현재 졸업 방식을 제출하는 기간이 아닙니다."),
+    GRADUATION_TYPE_NOT_SELECTED(NOT_FOUND, "해당 졸업 대상자는 졸업 방식을 선택하지 않았습니다."),
+    GRADUATION_USER_SUBMISSION_MISMATCH(BAD_REQUEST, "해당 제출물은 해당 졸업 대상자가 제출하지 않았습니다."),
     ;
 
     private final HttpStatus status;
