@@ -287,6 +287,20 @@ public class GraduationUserAdminFacadeTest {
     }
 
     @Test
+    @DisplayName("getGrduationUserById는 가입하지 않은 사용자의 전화번호를 빈 값으로 반환한다.")
+    public void getGrduationUserById_ReturnsEmptyPhoneWhenUserDoesNotExist() {
+        //given
+        Long graduationUserId = 2L;
+
+        //when
+        GraduationUserDetailResponse result = graduationUserAdminFacade.getGraduationUserById(graduationUserId);
+
+        //then
+        assertEquals(graduationUser2.getUserId(), result.studentId());
+        assertEquals("", result.phone());
+    }
+
+    @Test
     @DisplayName("deleteGraduationUsers는 여러 GraduationUser를 삭제한다.")
     public void deleteGraduationUsers_Success() {
         //given
