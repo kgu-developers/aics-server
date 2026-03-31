@@ -20,6 +20,9 @@ public record GraduationUserDetailResponse(
     @Schema(description = "학번(교번)", example = "202412345", requiredMode = REQUIRED)
     String studentId,
 
+    @Schema(description = "전화번호", example = "010-1234-5678", requiredMode = REQUIRED)
+    String phone,
+
     @Schema(description = "졸업 날짜", example = "2028-08", requiredMode = REQUIRED)
     @DateTimeFormat(pattern = "yyyy-MM")
     String graduationDate,
@@ -54,6 +57,7 @@ public record GraduationUserDetailResponse(
 ) {
     public static GraduationUserDetailResponse from(
         GraduationUser graduationUser,
+        String phone,
         GraduationUserStatusResponse status
     ) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
@@ -61,6 +65,7 @@ public record GraduationUserDetailResponse(
             .graduationUserId(graduationUser.getId())
             .name(graduationUser.getName())
             .studentId(graduationUser.getUserId())
+            .phone(phone)
             .graduationDate(graduationUser.getGraduationDate().format(formatter))
             .advisor(graduationUser.getAdvisorProfessor())
             .major(graduationUser.getDepartment())

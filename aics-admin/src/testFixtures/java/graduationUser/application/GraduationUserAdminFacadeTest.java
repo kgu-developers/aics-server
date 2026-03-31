@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import static kgu.developers.domain.user.domain.Major.CSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -133,7 +134,13 @@ public class GraduationUserAdminFacadeTest {
                 .approval(false)
                 .build()
         );
-
+        fakeUserRepository.save(User.builder()
+                .id("202411001")
+                .name("홍길동")
+                .phone("010-1111-2222")
+                .email("hong1@kyonggi.ac.kr")
+                .major(CSE)
+                .build());
 
 
         graduationUserAdminFacade = new GraduationUserAdminFacade(
@@ -142,7 +149,8 @@ public class GraduationUserAdminFacadeTest {
             thesisCommandService,
             new ThesisQueryService(fakeThesisRepository),
             certificateCommandService,
-            new CertificateQueryService(fakeCertificateRepository)
+            new CertificateQueryService(fakeCertificateRepository),
+            userQueryService
         );
 
         graduationUser1 = fakeGraduationUserRepository.save(GraduationUser.builder()
@@ -275,6 +283,7 @@ public class GraduationUserAdminFacadeTest {
 
         //then
         assertEquals(result.studentId(),graduationUser1.getUserId());
+        assertEquals("010-1111-2222", result.phone());
     }
 
     @Test

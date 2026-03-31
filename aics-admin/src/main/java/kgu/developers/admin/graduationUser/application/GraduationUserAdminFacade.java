@@ -28,6 +28,8 @@ import kgu.developers.domain.graduationUser.exception.GraudationUserSubmissionMi
 import kgu.developers.domain.thesis.application.command.ThesisCommandService;
 import kgu.developers.domain.thesis.application.query.ThesisQueryService;
 import kgu.developers.domain.thesis.domain.Thesis;
+import kgu.developers.domain.user.application.query.UserQueryService;
+import kgu.developers.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -47,6 +49,7 @@ public class GraduationUserAdminFacade {
     private final ThesisQueryService thesisQueryService;
     private final CertificateCommandService certificateCommandService;
     private final CertificateQueryService certificateQueryService;
+    private final UserQueryService userQueryService;
 
     public GraduationUserPersistResponse createGraduationUser(GraduationUserCreateRequest request) {
         Long id = graduationUserCommandService.createGraduationUser(request.studentId(), request.name(), request.advisorProfessor(), request.capstoneCompletion(), request.department(), request.graduationDate());
@@ -136,8 +139,9 @@ public class GraduationUserAdminFacade {
 
     public GraduationUserDetailResponse getGraduationUserById(Long graduationUserId) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
+        User user = userQueryService.getUserById(graduationUser.getUserId());
         GraduationUserStatusResponse status = buildSubmissionStatus(graduationUser);
-        return GraduationUserDetailResponse.from(graduationUser, status);
+        return GraduationUserDetailResponse.from(graduationUser,user.getPhone() ,status);
     }
 
     public GraduationUserBatchDeleteResponse deleteGraduationUsers(GraduationUserBatchDeleteRequest request) {
