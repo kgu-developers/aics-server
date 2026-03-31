@@ -30,6 +30,7 @@ import kgu.developers.domain.thesis.application.query.ThesisQueryService;
 import kgu.developers.domain.thesis.domain.Thesis;
 import kgu.developers.domain.user.application.query.UserQueryService;
 import kgu.developers.domain.user.domain.User;
+import kgu.developers.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -139,9 +140,15 @@ public class GraduationUserAdminFacade {
 
     public GraduationUserDetailResponse getGraduationUserById(Long graduationUserId) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
-        User user = userQueryService.getUserById(graduationUser.getUserId());
+        String phone = "";
+        try {
+            User user = userQueryService.getUserById(graduationUser.getUserId());
+            phone = user.getPhone() != null ? user.getPhone() : "";
+        } catch (UserNotFoundException ignored) {
+        }
         GraduationUserStatusResponse status = buildSubmissionStatus(graduationUser);
-        return GraduationUserDetailResponse.from(graduationUser,user.getPhone() ,status);
+
+        return GraduationUserDetailResponse.from(graduationUser,phone ,status);
     }
 
     public GraduationUserBatchDeleteResponse deleteGraduationUsers(GraduationUserBatchDeleteRequest request) {
