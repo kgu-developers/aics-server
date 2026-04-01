@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,5 +59,8 @@ public class UserQueryService {
 
 	public Map<String, String> getUserNameMapByIds(List<String> authorIds) {
 		return getAllUsersByIds(authorIds).stream().collect(Collectors.toMap(User::getId, User::getName));
+	}
+	public Optional<User> findById(String userId) {
+		return userRepository.findById(userId);
 	}
 }
