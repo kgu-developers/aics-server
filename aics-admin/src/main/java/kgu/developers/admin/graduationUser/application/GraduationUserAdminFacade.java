@@ -140,14 +140,11 @@ public class GraduationUserAdminFacade {
 
     public GraduationUserDetailResponse getGraduationUserById(Long graduationUserId) {
         GraduationUser graduationUser = graduationUserQueryService.getById(graduationUserId);
-        String phone = "";
-        try {
-            User user = userQueryService.getUserById(graduationUser.getUserId());
-            phone = user.getPhone() != null ? user.getPhone() : "";
-        } catch (UserNotFoundException ignored) {
-        }
-        GraduationUserStatusResponse status = buildSubmissionStatus(graduationUser);
+        String phone = userQueryService.findById(graduationUser.getUserId())
+                .map(User::getPhone)
+                .orElse("");
 
+        GraduationUserStatusResponse status = buildSubmissionStatus(graduationUser);
         return GraduationUserDetailResponse.from(graduationUser,phone ,status);
     }
 
