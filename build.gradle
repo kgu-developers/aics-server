@@ -56,8 +56,8 @@ subprojects {
 
 		implementation 'net.coobird:thumbnailator:0.4.20'
 
-		implementation 'org.apache.poi:poi:5.5.0'
-		implementation 'org.apache.poi:poi-ooxml:5.5.0'
+		implementation 'org.apache.poi:poi:5.5.1'
+		implementation 'org.apache.poi:poi-ooxml:5.5.1'
 
 		testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'
 		testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher'
