@@ -54,7 +54,7 @@ subprojects {
 		implementation 'io.jsonwebtoken:jjwt:0.9.1'
 		implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
-		implementation 'net.coobird:thumbnailator:0.4.20'
+		implementation 'net.coobird:thumbnailator:0.4.21'
 
 		implementation 'org.apache.poi:poi:5.5.0'
 		implementation 'org.apache.poi:poi-ooxml:5.5.0'
