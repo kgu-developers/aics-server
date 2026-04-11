@@ -49,7 +49,7 @@ subprojects {
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
 
-		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8'
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 
 		implementation 'io.jsonwebtoken:jjwt:0.9.1'
 		implementation 'javax.xml.bind:jaxb-api:2.3.1'
@@ -64,7 +64,7 @@ subprojects {
 		testFixturesImplementation 'org.springframework.boot:spring-boot-starter-security'
 		testFixturesImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		testFixturesImplementation 'org.projectlombok:lombok'
-		testFixturesImplementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8'
+		testFixturesImplementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
 		testFixturesImplementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	}
 
